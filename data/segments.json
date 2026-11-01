@@ -1,0 +1,64 @@
+{
+  "segments": [
+    {
+      "id": "pensionari_rural",
+      "name": "Pensionari rurali",
+      "blurb": "Așteaptă pensia, primăria și o veste bună la poartă.",
+      "color": "#8d6e63"
+    },
+    {
+      "id": "pensionari_urban",
+      "name": "Pensionari urbani",
+      "blurb": "Urmăresc știrile, dar nu cred nimic până nu apare la televizor.",
+      "color": "#a1887f"
+    },
+    {
+      "id": "tineri_urbani",
+      "name": "Tineri urbani",
+      "blurb": "Vor joburi, chirii mai mici și să nu le spună nimeni ce să facă.",
+      "color": "#42a5f5"
+    },
+    {
+      "id": "studenti",
+      "name": "Studenți",
+      "blurb": "Au o diplomă în lucru și un bilet de avion în favorite.",
+      "color": "#26c6da"
+    },
+    {
+      "id": "muncitori",
+      "name": "Muncitori industriali",
+      "blurb": "Știu ce înseamnă o fabrică închisă și o promisiune electorală.",
+      "color": "#ef6c00"
+    },
+    {
+      "id": "agricultori",
+      "name": "Agricultori",
+      "blurb": "Depind de vreme, de subvenții și de cine le promite mai mult.",
+      "color": "#7cb342"
+    },
+    {
+      "id": "antreprenori",
+      "name": "Antreprenori și freelanceri",
+      "blurb": "Calculează taxele înainte să calculeze votul.",
+      "color": "#ab47bc"
+    },
+    {
+      "id": "bugetari",
+      "name": "Bugetari",
+      "blurb": "Profesori, medici, funcționari: salariul vine pe 15, nervii zilnic.",
+      "color": "#5c6bc0"
+    },
+    {
+      "id": "someri",
+      "name": "Șomeri și precari",
+      "blurb": "Cel mai greu segment de mobilizat și cel mai ușor de uitat.",
+      "color": "#757575"
+    },
+    {
+      "id": "diaspora",
+      "name": "Diaspora",
+      "blurb": "Votează de departe, se enervează aproape și trimite bani acasă.",
+      "color": "#26a69a"
+    }
+  ]
+}

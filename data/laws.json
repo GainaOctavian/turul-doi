@@ -1,0 +1,125 @@
+{
+  "laws": [
+    {
+      "id": "salarizare",
+      "name": "Legea salarizării unitare",
+      "text": "Toți bugetarii primesc mai mult, doar că nu se știe când și cât.",
+      "capital": 40,
+      "effects": {
+        "segments": { "bugetari": 0.05, "pensionari_urban": 0.01 },
+        "funds": { "self": -70 }
+      }
+    },
+    {
+      "id": "reforma-fiscala",
+      "name": "Reforma fiscală",
+      "text": "TVA-ul se mută de colo-colo, iar nimeni nu mai știe cât plătește.",
+      "capital": 45,
+      "effects": {
+        "segments": { "antreprenori": -0.05, "bugetari": 0.02 },
+        "funds": { "self": 90 }
+      }
+    },
+    {
+      "id": "austeritate",
+      "name": "Austeritate bugetară",
+      "text": "Se taie din toate, în mod egal, inclusiv din cele care nu existau.",
+      "capital": 35,
+      "effects": {
+        "segments": { "bugetari": -0.06, "tineri_urbani": -0.03 },
+        "convert": [{ "from": "studenti", "to": "diaspora", "share": 0.15 }],
+        "funds": { "self": 110 }
+      }
+    },
+    {
+      "id": "pensii",
+      "name": "Majorarea pensiilor",
+      "text": "Pensiile cresc. Sursa finanțării: un sertar de la Finanțe.",
+      "capital": 35,
+      "effects": {
+        "segments": { "pensionari_rural": 0.07, "pensionari_urban": 0.05 },
+        "funds": { "self": -100 }
+      }
+    },
+    {
+      "id": "amnistie",
+      "name": "Amnistia fiscală",
+      "text": "Cine a avut datorii le uită. Cine a plătit primește o scrisoare.",
+      "capital": 30,
+      "effects": {
+        "segments": { "antreprenori": 0.05, "bugetari": -0.02 },
+        "funds": { "self": 60 }
+      }
+    },
+    {
+      "id": "descentralizare",
+      "name": "Descentralizare administrativă",
+      "text": "Banii ajung la județe, împreună cu responsabilitatea.",
+      "capital": 40,
+      "effects": {
+        "segments": { "bugetari": 0.02, "agricultori": 0.02 },
+        "countyBoostAll": 0.06
+      }
+    },
+    {
+      "id": "averi",
+      "name": "Impozit pe marile averi",
+      "text": "Cei cu multe case plătesc mai mult. Cei cu puține case aplaudă.",
+      "capital": 45,
+      "effects": {
+        "segments": { "antreprenori": -0.04, "pensionari_rural": 0.03, "someri": 0.02 },
+        "funds": { "self": 80 }
+      }
+    },
+    {
+      "id": "prima-casa",
+      "name": "Prima casă 2.0",
+      "text": "Tinerii primesc credit garantat de stat pentru o garsonieră la preț de vilă.",
+      "capital": 35,
+      "effects": {
+        "segments": { "tineri_urbani": 0.05, "antreprenori": 0.02 },
+        "funds": { "self": -60 }
+      }
+    },
+    {
+      "id": "invatamant",
+      "name": "Legea învățământului",
+      "text": "Se reformează educația. Prima măsură: se reformează din nou anul viitor.",
+      "capital": 40,
+      "effects": {
+        "segments": { "studenti": 0.05, "bugetari": 0.03 },
+        "funds": { "self": -70 }
+      }
+    },
+    {
+      "id": "sanatate",
+      "name": "Reforma sănătății",
+      "text": "Spitalele primesc bani, dar numai pentru vopsit holurile.",
+      "capital": 40,
+      "effects": {
+        "segments": { "bugetari": 0.04, "pensionari_urban": 0.02 },
+        "funds": { "self": -60 }
+      }
+    },
+    {
+      "id": "energie",
+      "name": "Plafonarea prețurilor la energie",
+      "text": "Facturile se plafonează. Furnizorii se plafonează la rândul lor, la buzunarul statului.",
+      "capital": 35,
+      "effects": {
+        "segments": { "pensionari_urban": 0.03, "muncitori": 0.02, "antreprenori": -0.02 },
+        "funds": { "self": -70 }
+      }
+    },
+    {
+      "id": "autostrazi",
+      "name": "Programul autostrăzi 2030",
+      "text": "Se promit 1.000 km de autostradă. Se inaugurează 40, dar cu trei benzi.",
+      "capital": 50,
+      "effects": {
+        "segments": { "muncitori": 0.04, "agricultori": 0.01 },
+        "funds": { "self": -90 }
+      }
+    }
+  ]
+}

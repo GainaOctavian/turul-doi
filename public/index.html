@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Turul Doi — joc satiric despre politica românească</title>
+    <meta
+      name="description"
+      content="Turul Doi: un joc satiric despre politica din România. Harta influenței pe județe, segmente de votanți și politicieni reali."
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0d13'/%3E%3Crect x='6' y='7' width='7' height='18' fill='%230b3d91'/%3E%3Crect x='13' y='7' width='7' height='18' fill='%23f2c200'/%3E%3Crect x='20' y='7' width='7' height='18' fill='%23d81e2c'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div id="start" class="start">
+      <div class="start-inner">
+        <div class="brand">
+          <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
+          <h1>TURUL DOI</h1>
+          <p class="tagline">Un joc satiric despre cum se câștigă România, județ cu județ.</p>
+        </div>
+
+        <div class="modes" role="tablist">
+          <button class="mode active" data-mode="solo" role="tab">Solo</button>
+          <button class="mode" data-mode="multi" role="tab">Multiplayer</button>
+        </div>
+
+        <div id="start-fields" class="start-fields"></div>
+
+        <div class="pick-label">Alege partidul</div>
+        <div id="party-grid" class="party-grid"></div>
+
+        <div class="start-actions">
+          <button id="start-btn" class="primary">Începe campania</button>
+          <span id="start-error" class="start-error"></span>
+        </div>
+
+        <p class="disclaimer">
+          Satiră. Personajele sunt reale; statisticile și faptele marcate „fake” sunt inventate și
+          intenționat absurde. Jocul nu este o sursă de știri și nu conține acuzații reale.
+        </p>
+      </div>
+    </div>
+
+    <div id="app" class="app hidden">
+      <header id="topbar" class="topbar"></header>
+      <main class="main">
+        <section class="map-panel">
+          <div class="map-head">
+            <div>
+              <h2>Harta influenței</h2>
+              <p id="map-sub" class="muted">Click pe un județ pentru detalii</p>
+            </div>
+            <div id="map-legend" class="legend"></div>
+          </div>
+          <div class="map-wrap">
+            <svg id="map" viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid meet"></svg>
+            <div id="tooltip" class="tooltip hidden"></div>
+          </div>
+          <div id="poll-strip" class="poll-strip"></div>
+        </section>
+
+        <aside class="side">
+          <nav id="tabs" class="tabs"></nav>
+          <div id="panel" class="panel"></div>
+        </aside>
+      </main>
+      <footer id="ticker" class="ticker"></footer>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="modal" class="modal hidden"></div>
+
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

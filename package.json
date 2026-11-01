@@ -1,0 +1,16 @@
+{
+  "name": "turul-doi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Joc satiric despre politica românească: harta influenței pe județe, segmente de votanți și politicieni reali.",
+  "scripts": {
+    "start": "node server.mjs",
+    "start:ctl": "node server.mjs --ctl",
+    "ctl": "node bin/turul-doi-ctl.mjs",
+    "test": "node --test tests/engine.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,557 @@
+{
+  "note": "Evenimentele sunt satiră. Cele inspirate din fapte reale sunt exagerate intenționat până la absurd; nu sunt știri și nu descriu fapte reale. Efectele se aplică segmentelor de votanți, partidelor și politicienilor.",
+  "events": [
+    {
+      "id": "diploma-avion",
+      "title": "Breaking News: diploma de bac, găsită în avion",
+      "text": "Marcel Ciolacu anunță că și-a găsit diploma de bac în avionul Nordis, la clasa business. Școala confirmă că diploma există, dar nu era a lui.",
+      "weight": 6,
+      "minDay": 4,
+      "effects": {
+        "segments": { "tineri_urbani": -0.02 },
+        "party": { "psd": -0.035, "aur": 0.02 },
+        "politician": { "id": "ciolacu", "stat": "visibility", "delta": 4 }
+      }
+    },
+    {
+      "id": "iohannis-sibiu",
+      "title": "Cotroceniul se mută la Sibiu",
+      "text": "Klaus Iohannis anunță că mută Cotroceniul la Sibiu pentru „eficiență administrativă”. Angajații au aflat din presă și au cerut diurne.",
+      "weight": 4,
+      "minDay": 6,
+      "effects": {
+        "countyParty": { "sibiu": { "pnl": 0.22 } },
+        "party": { "pnl": 0.015 },
+        "segments": { "pensionari_urban": 0.02 }
+      }
+    },
+    {
+      "id": "autostrada-cutremur",
+      "title": "Cutremur de 4,5 la inaugurarea autostrăzii",
+      "text": "La inaugurarea autostrăzii Sibiu–Craiova, un cutremur de 4,5 grade a oprit discursurile. Sorin Grindeanu și-a cerut scuze că și-a scăpat ceasul; ceasul a ajuns la Craiova înaintea convoiului.",
+      "weight": 5,
+      "minDay": 8,
+      "effects": {
+        "countyParty": { "sibiu": { "psd": -0.12 }, "dolj": { "psd": -0.1 } },
+        "segments": { "muncitori": 0.03, "pensionari_rural": -0.01 },
+        "politician": { "id": "grindeanu", "stat": "gaffes", "delta": 6 }
+      }
+    },
+    {
+      "id": "nicusor-tarife",
+      "title": "Nicușor Dan refuză presa, Trump primește tema",
+      "text": "Întrebat despre coaliție, Nicușor Dan a refuzat să comenteze și i-a dat lui Trump tema să calculeze tarifele. Trump a cerut prelungire și a trimis factura la Cotroceni.",
+      "weight": 5,
+      "minDay": 5,
+      "effects": {
+        "party": { "usr": 0.02, "aur": 0.015 },
+        "segments": { "antreprenori": 0.03, "pensionari_rural": -0.02 }
+      }
+    },
+    {
+      "id": "austeritate-invatamant",
+      "title": "Austeritate pe învățământ",
+      "text": "Guvernul taie 25% din bugetul învățământului. Studenții descoperă că un bilet de avion costă mai puțin decât o chirie în Cluj.",
+      "weight": 7,
+      "minDay": 10,
+      "effects": {
+        "segments": { "tineri_urbani": -0.05, "bugetari": -0.04 },
+        "convert": [{ "from": "studenti", "to": "diaspora", "share": 0.22 }],
+        "party": { "usr": 0.02, "aur": 0.03, "psd": -0.02 }
+      }
+    },
+    {
+      "id": "medici-pleaca",
+      "title": "Medicii pleacă în Germania",
+      "text": "Un spital din provincie a rămas fără trei medici într-o săptămână. Toți au plecat în Germania, unde li s-a promis un salariu și un aparat RMN care funcționează.",
+      "weight": 6,
+      "minDay": 6,
+      "effects": {
+        "segments": { "bugetari": -0.05 },
+        "convert": [{ "from": "bugetari", "to": "diaspora", "share": 0.28 }],
+        "party": { "psd": -0.02, "usr": 0.015 }
+      }
+    },
+    {
+      "id": "profesori-greva",
+      "title": "Greva profesorilor",
+      "text": "Profesorii intră în grevă pentru salarii. Elevii sărbătoresc, părinții nu, iar ministrul promite că „totul se va rezolva după alegeri”.",
+      "weight": 5,
+      "minDay": 7,
+      "effects": {
+        "segments": { "bugetari": 0.04, "tineri_urbani": -0.02 },
+        "party": { "pnl": -0.025, "psd": -0.015 }
+      }
+    },
+    {
+      "id": "pensii-majorate",
+      "title": "Pensiile cresc cu 15%",
+      "text": "Guvernul majorează pensiile cu 15%, după ce a găsit banii într-un sertar de la Finanțe. Sertarul era al altui minister.",
+      "weight": 5,
+      "minDay": 9,
+      "effects": {
+        "segments": { "pensionari_rural": 0.07, "pensionari_urban": 0.05 },
+        "funds": { "psd": -60, "pnl": -40 },
+        "party": { "psd": 0.03 }
+      }
+    },
+    {
+      "id": "seceta",
+      "title": "Secetă în sudul țării",
+      "text": "Seceta a compromis recoltele din sud. Fermierii cer subvenții, iar ministrul agriculturii a promis că va ploua „în limite bugetare”.",
+      "weight": 6,
+      "minDay": 8,
+      "effects": {
+        "segments": { "agricultori": -0.07, "someri": 0.03 },
+        "countyParty": {
+          "teleorman": { "psd": -0.08 },
+          "olt": { "psd": -0.06 },
+          "dolj": { "psd": -0.05 }
+        },
+        "party": { "aur": 0.02 }
+      }
+    },
+    {
+      "id": "salariu-minim",
+      "title": "Salariul minim crește",
+      "text": "Salariul minim crește cu 10%. Antreprenorii spun că vor concedia, muncitorii spun că vor cheltui, iar statisticile spun că ambele se întâmplă.",
+      "weight": 4,
+      "minDay": 10,
+      "effects": {
+        "segments": { "muncitori": 0.05, "antreprenori": -0.04 },
+        "party": { "psd": 0.025, "pnl": -0.01 }
+      }
+    },
+    {
+      "id": "it-concedieri",
+      "title": "Concedieri în IT",
+      "text": "Trei companii de IT concediază 2.000 de oameni și angajează imediat 200 de stagiari. „E o restructurare strategică”, explică un director aflat la ski.",
+      "weight": 5,
+      "minDay": 12,
+      "effects": {
+        "segments": { "antreprenori": -0.05 },
+        "convert": [{ "from": "antreprenori", "to": "someri", "share": 0.18 }],
+        "party": { "usr": -0.02, "aur": 0.02 }
+      }
+    },
+    {
+      "id": "tiktok-trend",
+      "title": "Un politician devine viral pe TikTok",
+      "text": "Un clip cu un politician dansând pe manea a strâns 4 milioane de vizualizări. Consilierii spun că a fost „strategie”, bodyguardul spune că a fost accident.",
+      "weight": 5,
+      "minDay": 4,
+      "effects": {
+        "segments": { "tineri_urbani": 0.04, "studenti": 0.03 },
+        "party": { "aur": 0.02, "usr": 0.01 }
+      }
+    },
+    {
+      "id": "fake-news",
+      "title": "Val de știri false",
+      "text": "O știre falsă despre „taxa pe aer” a fost distribuită de 300.000 de ori. Guvernul a demontat-o, dar nimeni nu a citit demontarea.",
+      "weight": 6,
+      "minDay": 5,
+      "effects": {
+        "segments": { "pensionari_rural": -0.02, "tineri_urbani": -0.01 },
+        "party": { "aur": 0.035, "psd": -0.01 }
+      }
+    },
+    {
+      "id": "viscol",
+      "title": "Viscolul închide drumurile",
+      "text": "Viscolul a blocat 40 de drumuri naționale. Ministrul transporturilor a promis deszăpezire „în timp record”, dar utilajele erau la o inaugurare.",
+      "weight": 4,
+      "minDay": 3,
+      "effects": {
+        "segments": { "agricultori": -0.02, "pensionari_rural": -0.02 },
+        "party": { "psd": -0.015 }
+      }
+    },
+    {
+      "id": "eurovision",
+      "title": "România, locul 12 la Eurovision",
+      "text": "România a terminat pe locul 12 la Eurovision. Toți au spus că e un rezultat bun, deși nimeni nu a înțeles versurile.",
+      "weight": 3,
+      "minDay": 3,
+      "effects": {
+        "segments": { "tineri_urbani": 0.03, "studenti": 0.02 },
+        "party": { "usr": 0.01 }
+      }
+    },
+    {
+      "id": "schengen",
+      "title": "România intră complet în Schengen",
+      "text": "Controalele la frontierele terestre au dispărut. Diaspora a sărbătorit, iar vameșii au fost reconvertiți în „consultanți de mobilitate”.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "segments": { "diaspora": 0.04, "antreprenori": 0.02 },
+        "party": { "usr": 0.02, "pnl": 0.01 }
+      }
+    },
+    {
+      "id": "nato-summit",
+      "title": "Summit NATO la București",
+      "text": "Bucureștiul găzduiește un summit NATO. Circulația a fost blocată trei zile, dar toată lumea a fost de acord că e o imagine bună.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "countyParty": { "bucuresti": { "pnl": 0.1, "usr": 0.08 } },
+        "segments": { "diaspora": 0.02 },
+        "party": { "pnl": 0.02 }
+      }
+    },
+    {
+      "id": "tarife-trump",
+      "title": "Tarifele lui Trump lovesc exporturile",
+      "text": "Statele Unite impun tarife de 25% pe oțel. Guvernul anunță un „plan de reziliență” care constă într-o conferință de presă.",
+      "weight": 6,
+      "minDay": 10,
+      "effects": {
+        "segments": { "muncitori": -0.04, "antreprenori": -0.03 },
+        "countyParty": { "galati": { "psd": -0.08 }, "hunedoara": { "psd": -0.06 } },
+        "party": { "aur": 0.02 }
+      }
+    },
+    {
+      "id": "biserica-finantare",
+      "title": "Biserica primește finanțare suplimentară",
+      "text": "Guvernul alocă 200 de milioane pentru „patrimoniu spiritual”. Un preot a mulțumit și a cerut încă 200 pentru un al doilea paraclis.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "segments": { "pensionari_rural": 0.04 },
+        "party": { "psd": 0.02, "usr": -0.015 }
+      }
+    },
+    {
+      "id": "recensamant-diaspora",
+      "title": "Recensământul numără diaspora",
+      "text": "Recensământul arată că diaspora e mai mare decât se credea. Nimeni nu știe exact cu cât, pentru că nu a răspuns nimeni la telefon.",
+      "weight": 4,
+      "minDay": 7,
+      "effects": {
+        "segments": { "diaspora": 0.04 },
+        "party": { "usr": 0.015, "aur": 0.015 }
+      }
+    },
+    {
+      "id": "donatie-tractor",
+      "title": "Un fan îi dăruiește un tractor",
+      "text": "Un fermier i-a dăruit un tractor lui Marcel Ciolacu. Tractorul are 40 de ani, dar „simbolizează legătura cu pământul”.",
+      "weight": 3,
+      "minDay": 4,
+      "effects": {
+        "segments": { "pensionari_rural": 0.03, "agricultori": 0.02 },
+        "party": { "psd": 0.015 }
+      }
+    },
+    {
+      "id": "gafa-live",
+      "title": "Gafă în direct",
+      "text": "Un politician a confundat județele și a promis autostradă în „județul București”. Clipul are deja 2 milioane de vizualizări.",
+      "weight": 7,
+      "minDay": 2,
+      "effects": {
+        "segments": { "tineri_urbani": 0.02 },
+        "party": { "psd": -0.02, "pnl": -0.02 },
+        "politician": { "id": "grindeanu", "stat": "gaffes", "delta": 5 }
+      }
+    },
+    {
+      "id": "ccr-blocaj",
+      "title": "Curtea Constituțională blochează legea",
+      "text": "CCR a declarat neconstituțională o lege adoptată în 45 de minute. Parlamentul a anunțat că o va adopta din nou, în 30 de minute.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "party": { "psd": -0.02, "pnl": -0.015 },
+        "segments": { "bugetari": -0.02 }
+      }
+    },
+    {
+      "id": "canicula",
+      "title": "Caniculă record",
+      "text": "Temperaturile au trecut de 42 de grade. Primăriile au deschis puncte de răcorire în mall-uri, unde oamenii au rămas și după program.",
+      "weight": 5,
+      "minDay": 4,
+      "effects": {
+        "segments": { "pensionari_urban": -0.02, "someri": 0.01 },
+        "party": { "psd": -0.01 }
+      }
+    },
+    {
+      "id": "criza-energie",
+      "title": "Criză energetică în plină iarnă",
+      "text": "Facturile la energie s-au triplat. Guvernul promite plafonare, furnizorii promit facturi corecte, iar lumea promite că se mută la țară.",
+      "weight": 6,
+      "minDay": 9,
+      "effects": {
+        "segments": { "pensionari_urban": -0.03, "muncitori": -0.02 },
+        "party": { "aur": 0.025, "psd": -0.02 }
+      }
+    },
+    {
+      "id": "investitie-chineza",
+      "title": "Investiție chineză de un miliard",
+      "text": "O companie chineză anunță o fabrică de baterii în sudul țării. Primarul a promis 3.000 de locuri de muncă, compania a promis „cel puțin 300”.",
+      "weight": 3,
+      "minDay": 8,
+      "effects": {
+        "segments": { "muncitori": 0.04, "someri": -0.01 },
+        "countyParty": { "gorj": { "psd": 0.12 }, "dolj": { "psd": 0.08 } }
+      }
+    },
+    {
+      "id": "pod-cazut",
+      "title": "Un pod se închide de urgență",
+      "text": "Un pod construit acum 60 de ani a fost închis după ce a apărut o fisură. Ministrul a spus că fisura „există de la inaugurare”.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "segments": { "muncitori": -0.02 },
+        "party": { "pnl": -0.02, "psd": -0.02 }
+      }
+    },
+    {
+      "id": "dosar-dna",
+      "title": "DNA descinde la o primărie",
+      "text": "Procurorii au ridicat documente de la o primărie de sector. Primarul a declarat că e „o confuzie de dosare” și a plecat în concediu.",
+      "weight": 5,
+      "minDay": 7,
+      "effects": {
+        "party": { "psd": -0.03 },
+        "segments": { "bugetari": -0.01 }
+      }
+    },
+    {
+      "id": "amnistie-fiscala",
+      "title": "Amnistie fiscală pentru datornici",
+      "text": "Guvernul șterge penalitățile pentru firmele cu datorii. Cei care au plătit la timp au primit în schimb o scrisoare de mulțumire.",
+      "weight": 4,
+      "minDay": 10,
+      "effects": {
+        "segments": { "antreprenori": 0.04, "bugetari": -0.02 },
+        "party": { "pnl": 0.02, "psd": -0.01 }
+      }
+    },
+    {
+      "id": "curs-valutar",
+      "title": "Leul se depreciază",
+      "text": "Euro a trecut de 5,2 lei. Banca Națională a spus că „nu comentează”, iar oamenii au început să comenteze.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "segments": { "antreprenori": -0.03, "pensionari_urban": -0.01 },
+        "party": { "psd": -0.015 }
+      }
+    },
+    {
+      "id": "litoral-record",
+      "title": "Litoralul, plin în octombrie",
+      "text": "Constanța a avut un sezon record. Hotelierii au mulțumit turiștilor, turiștii au mulțumit vremii, vremea nu a comentat.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "countyParty": { "constanta": { "pnl": 0.12, "psd": 0.06 } },
+        "segments": { "antreprenori": 0.02 }
+      }
+    },
+    {
+      "id": "autostrada-moldova",
+      "title": "Se deschide un tronson în Moldova",
+      "text": "Un nou tronson de autostradă a fost deschis în Moldova. Șoferii au testat imediat dacă se poate intra pe contrasens.",
+      "weight": 4,
+      "minDay": 7,
+      "effects": {
+        "countyParty": {
+          "iasi": { "pnl": 0.1 },
+          "bacau": { "pnl": 0.08 },
+          "suceava": { "pnl": 0.08 },
+          "neamt": { "pnl": 0.08 }
+        },
+        "segments": { "muncitori": 0.02 }
+      }
+    },
+    {
+      "id": "spital-regional",
+      "title": "Spitalul regional, gata „în doi ani”",
+      "text": "Ministrul sănătății a anunțat că spitalul regional va fi gata în doi ani. Anunțul a fost făcut în același loc ca acum opt ani.",
+      "weight": 3,
+      "minDay": 9,
+      "effects": {
+        "countyParty": { "cluj": { "pnl": 0.08 }, "iasi": { "pnl": 0.08 } },
+        "segments": { "bugetari": 0.01 }
+      }
+    },
+    {
+      "id": "miting-aur",
+      "title": "Miting AUR în centrul capitalei",
+      "text": "AUR a strâns 20.000 de oameni în Piața Constituției. Organizatorii spun că au fost 200.000, jandarmeria spune că au fost 20.000, toți au plecat cu metroul.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "countyParty": { "bucuresti": { "aur": 0.15 } },
+        "segments": { "pensionari_rural": 0.02, "someri": 0.02 },
+        "party": { "aur": 0.03 }
+      }
+    },
+    {
+      "id": "coalitie-scandal",
+      "title": "Scandal în coaliție",
+      "text": "Partenerii de coaliție s-au certat în direct la televizor. Fiecare a spus că celălalt e „populist”, apoi au mers împreună la o ședință.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "party": { "psd": -0.02, "pnl": -0.02 },
+        "segments": { "bugetari": -0.01 }
+      }
+    },
+    {
+      "id": "lege-salarii",
+      "title": "Legea salarizării, adoptată",
+      "text": "Parlamentul a adoptat legea salarizării unitare. Toți bugetarii vor primi mai mult, doar că nu se știe când și cât.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "segments": { "bugetari": 0.03 },
+        "party": { "psd": 0.01, "pnl": 0.01 }
+      }
+    },
+    {
+      "id": "pensii-speciale",
+      "title": "Pensiile speciale rămân",
+      "text": "Reforma pensiilor speciale a fost amânată „pentru consultări”. Consultările vor avea loc după următoarele alegeri.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {
+        "segments": { "pensionari_rural": -0.02, "bugetari": 0.01 },
+        "party": { "aur": 0.02, "usr": -0.01 }
+      }
+    },
+    {
+      "id": "tineri-pleaca",
+      "title": "Tinerii pleacă",
+      "text": "Un studiu arată că 40% dintre tinerii sub 30 de ani vor să plece. Ceilalți 60% vor să plece, dar nu au bani de bilet.",
+      "weight": 6,
+      "minDay": 11,
+      "effects": {
+        "segments": { "tineri_urbani": -0.04 },
+        "convert": [{ "from": "tineri_urbani", "to": "diaspora", "share": 0.18 }],
+        "party": { "usr": -0.01, "aur": 0.02 }
+      }
+    },
+    {
+      "id": "fermieri-protest",
+      "title": "Fermierii blochează drumurile",
+      "text": "Fermierii au blocat 30 de drumuri cu tractoare. Guvernul a promis subvenții, fermierii au promis că revin dacă nu le primesc.",
+      "weight": 5,
+      "minDay": 7,
+      "effects": {
+        "segments": { "agricultori": 0.03 },
+        "countyParty": { "teleorman": { "psd": -0.06 }, "olt": { "psd": -0.05 } },
+        "party": { "aur": 0.02 }
+      }
+    },
+    {
+      "id": "primarie-inaugurare",
+      "title": "Inaugurare de piațetă",
+      "text": "Un primar a inaugurat o piațetă de 200 de metri pătrați. Banda a fost tăiată de trei ori, pentru că prima dată nu a ieșit poza.",
+      "weight": 3,
+      "minDay": 4,
+      "effects": {
+        "segments": { "pensionari_urban": 0.01 },
+        "party": { "pnl": 0.01 }
+      }
+    },
+    {
+      "id": "tiktok-politician",
+      "title": "Politicianul lunii pe TikTok",
+      "text": "Un senator a devenit viral explicând bugetul cu pâine și salam. Bugetul nu a fost explicat, dar salamul s-a vândut.",
+      "weight": 4,
+      "minDay": 6,
+      "effects": {
+        "segments": { "tineri_urbani": 0.03, "someri": 0.02 },
+        "party": { "psd": 0.015 }
+      }
+    },
+    {
+      "id": "cutremur-bucuresti",
+      "title": "Cutremur de 5,2 grade",
+      "text": "Un cutremur de 5,2 grade a fost simțit în București. Nimeni nu a coborât din bloc, dar toți au postat că au coborât.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "segments": { "pensionari_urban": -0.02 },
+        "party": { "psd": -0.02, "pnl": -0.01 }
+      }
+    },
+    {
+      "id": "iohannis-carte",
+      "title": "Iohannis lansează o carte",
+      "text": "Klaus Iohannis lansează o carte despre „tăcere și putere”. La lansare nu a vorbit nimeni.",
+      "weight": 2,
+      "minDay": 8,
+      "effects": {
+        "segments": { "pensionari_urban": 0.02 },
+        "party": { "pnl": 0.01 }
+      }
+    },
+    {
+      "id": "grindeanu-ceas",
+      "title": "Ceasul lui Grindeanu, scos la licitație",
+      "text": "Ceasul pierdut la inaugurare a fost scos la licitație. S-a vândut cu 3.000 de euro, iar cumpărătorul a cerut și autostrada.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "segments": { "tineri_urbani": 0.01 },
+        "party": { "psd": -0.01 },
+        "politician": { "id": "grindeanu", "stat": "visibility", "delta": 3 }
+      }
+    },
+    {
+      "id": "buget-criza",
+      "title": "Deficitul bugetar, peste țintă",
+      "text": "Deficitul a depășit ținta. Ministerul Finanțelor a anunțat că „ținta era orientativă”, iar Comisia Europeană a anunțat că nu e.",
+      "weight": 5,
+      "minDay": 9,
+      "effects": {
+        "funds": { "psd": -40, "pnl": -40, "usr": -20, "aur": -20 },
+        "party": { "psd": -0.02, "pnl": -0.02 }
+      }
+    },
+    {
+      "id": "salarii-bugetari",
+      "title": "Bugetarii primesc vouchere",
+      "text": "Bugetarii primesc vouchere de 500 de lei pentru „bunăstare”. Voucherele pot fi folosite doar la un magazin deschis de un consilier județean.",
+      "weight": 3,
+      "minDay": 7,
+      "effects": {
+        "segments": { "bugetari": 0.02 },
+        "party": { "psd": -0.01 }
+      }
+    },
+    {
+      "id": "diaspora-vot",
+      "title": "Cozi uriașe la vot în diaspora",
+      "text": "La ambasada din Londra s-a stat la coadă șase ore. Unii au votat, alții au plecat la muncă, toți au fost de acord că e „un semnal”.",
+      "weight": 4,
+      "minDay": 12,
+      "effects": {
+        "segments": { "diaspora": 0.03 },
+        "party": { "usr": 0.02, "aur": 0.02 }
+      }
+    },
+    {
+      "id": "reclama-guvern",
+      "title": "Campanie de informare de 10 milioane",
+      "text": "Guvernul lansează o campanie de informare de 10 milioane de euro. Campania explică ce sunt banii publici, în timp ce banii publici se termină.",
+      "weight": 3,
+      "minDay": 10,
+      "effects": {
+        "party": { "psd": -0.02 },
+        "segments": { "bugetari": -0.01 }
+      }
+    }
+  ]
+}

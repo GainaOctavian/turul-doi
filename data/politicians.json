@@ -1,0 +1,402 @@
+{
+  "note": "Statisticile de joc (carisma, răbdare, maleabilitate, gafe, vizibilitate, corupție, traseism) sunt satirice și nu sunt evaluări reale. Faptele marcate real sunt verificabile; cele marcate fake sunt intenționat absurde.",
+  "politicians": [
+    {
+      "id": "ciolacu",
+      "name": "Marcel Ciolacu",
+      "party": "psd",
+      "role": "Fost premier (2023–2025)",
+      "stats": {
+        "charisma": 62,
+        "patience": 38,
+        "malleability": 74,
+        "gaffes": 46,
+        "visibility": 82,
+        "corruption": 64,
+        "traseism": 58
+      },
+      "ability": {
+        "name": "Tractorul de fier",
+        "text": "Mobilizează ruralul, dar nu convinge orașele.",
+        "effect": {
+          "pensionari_rural": 1.25,
+          "agricultori": 1.2,
+          "tineri_urbani": 0.78
+        }
+      },
+      "facts": {
+        "real": [
+          "Premier al României între 2023 și 2025.",
+          "A demisionat de la șefia PSD în mai 2025."
+        ],
+        "fake": [
+          "Și-a găsit diploma de bac în avionul Nordis, la clasa business.",
+          "A inaugurat un pod care duce într-alt pod, tot al lui."
+        ]
+      }
+    },
+    {
+      "id": "bolojan",
+      "name": "Ilie Bolojan",
+      "party": "pnl",
+      "role": "Fost premier (2025–2026)",
+      "stats": {
+        "charisma": 48,
+        "patience": 76,
+        "malleability": 28,
+        "gaffes": 22,
+        "visibility": 66,
+        "corruption": 24,
+        "traseism": 18
+      },
+      "ability": {
+        "name": "Foarfeca bugetară",
+        "text": "Taie cheltuieli: bugetarii suspină, antreprenorii aplaudă.",
+        "effect": {
+          "bugetari": 0.82,
+          "antreprenori": 1.18,
+          "pensionari_urban": 0.9
+        }
+      },
+      "facts": {
+        "real": [
+          "Premier al României în 2025–2026.",
+          "Fost președinte al Consiliului Județean Bihor."
+        ],
+        "fake": [
+          "A tăiat cheltuielile atât de tare încât ministerele își împrumută pixuri între ele."
+        ]
+      }
+    },
+    {
+      "id": "lasconi",
+      "name": "Elena Lasconi",
+      "party": "usr",
+      "role": "Președinte USR, primar al Câmpulungului",
+      "stats": {
+        "charisma": 64,
+        "patience": 44,
+        "malleability": 36,
+        "gaffes": 58,
+        "visibility": 74,
+        "corruption": 18,
+        "traseism": 14
+      },
+      "ability": {
+        "name": "Microfonul deschis",
+        "text": "Campanie online puternică, cu risc de gafă în direct.",
+        "effect": {
+          "tineri_urbani": 1.2,
+          "studenti": 1.15,
+          "pensionari_rural": 0.85
+        }
+      },
+      "facts": {
+        "real": [
+          "Primar al Câmpulung Muscel din 2020.",
+          "Președinte al USR."
+        ],
+        "fake": [
+          "A propus ca fiecare cetățean să aibă un USR de buzunar, pentru urgențe."
+        ]
+      }
+    },
+    {
+      "id": "simion",
+      "name": "George Simion",
+      "party": "aur",
+      "role": "Președinte AUR",
+      "stats": {
+        "charisma": 78,
+        "patience": 30,
+        "malleability": 52,
+        "gaffes": 62,
+        "visibility": 88,
+        "corruption": 46,
+        "traseism": 34
+      },
+      "ability": {
+        "name": "Portavocea din piață",
+        "text": "Umple piețele, dar pierde orașele educate.",
+        "effect": {
+          "pensionari_rural": 1.2,
+          "someri": 1.18,
+          "antreprenori": 0.8
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al AUR.",
+          "Candidat la alegerile prezidențiale din 2025."
+        ],
+        "fake": [
+          "A susținut că el a descoperit România și că ceilalți doar au confirmat-o."
+        ]
+      }
+    },
+    {
+      "id": "kelemen",
+      "name": "Hunor Kelemen",
+      "party": "udmr",
+      "role": "Președinte UDMR",
+      "stats": {
+        "charisma": 42,
+        "patience": 82,
+        "malleability": 34,
+        "gaffes": 18,
+        "visibility": 52,
+        "corruption": 38,
+        "traseism": 12
+      },
+      "ability": {
+        "name": "Negociatorul etern",
+        "text": "Intră în orice coaliție și iese cu un minister.",
+        "effect": {
+          "bugetari": 1.12,
+          "pensionari_urban": 1.1,
+          "tineri_urbani": 0.92
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al UDMR din 2011.",
+          "A fost ministru al culturii."
+        ],
+        "fake": [
+          "A negociat ca toate ședințele să se țină în trei limbi, inclusiv în latină."
+        ]
+      }
+    },
+    {
+      "id": "soosaca",
+      "name": "Diana Șoșoacă",
+      "party": "sos",
+      "role": "Președinte SOS România",
+      "stats": {
+        "charisma": 70,
+        "patience": 12,
+        "malleability": 44,
+        "gaffes": 84,
+        "visibility": 80,
+        "corruption": 52,
+        "traseism": 48
+      },
+      "ability": {
+        "name": "Scandalul garantat",
+        "text": "Fură atenția tuturor, inclusiv a propriului partid.",
+        "effect": {
+          "someri": 1.15,
+          "pensionari_rural": 1.1,
+          "antreprenori": 0.75
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al SOS România.",
+          "Europarlamentar din 2024."
+        ],
+        "fake": [
+          "A dat în judecată un nor pentru că i-a stricat coafura în timpul unui discurs."
+        ]
+      }
+    },
+    {
+      "id": "gavrila",
+      "name": "Anamaria Gavrilă",
+      "party": "pot",
+      "role": "Președinte POT",
+      "stats": {
+        "charisma": 58,
+        "patience": 40,
+        "malleability": 48,
+        "gaffes": 54,
+        "visibility": 62,
+        "corruption": 44,
+        "traseism": 40
+      },
+      "ability": {
+        "name": "Misterul POT",
+        "text": "Nimeni nu știe exact ce vrea, dar toți vor să afle.",
+        "effect": {
+          "someri": 1.14,
+          "pensionari_rural": 1.12,
+          "studenti": 0.85
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al POT.",
+          "Deputat din 2024."
+        ],
+        "fake": [
+          "A anunțat că POT înseamnă „Poate Oare Trecem” și că abrevierea a fost aleasă la ruleta."
+        ]
+      }
+    },
+    {
+      "id": "nicusor",
+      "name": "Nicușor Dan",
+      "party": null,
+      "role": "Președinte al României din 2025",
+      "stats": {
+        "charisma": 56,
+        "patience": 68,
+        "malleability": 22,
+        "gaffes": 30,
+        "visibility": 90,
+        "corruption": 16,
+        "traseism": 26
+      },
+      "ability": {
+        "name": "Matematica rece",
+        "text": "Explică totul cu cifre; jumătate din sală adoarme, cealaltă jumătate se convinge.",
+        "effect": {
+          "antreprenori": 1.15,
+          "studenti": 1.1,
+          "pensionari_rural": 0.8
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al României din 2025.",
+          "Fost primar general al Bucureștiului (2020–2025)."
+        ],
+        "fake": [
+          "I-a dat lui Trump tema să îi calculeze tarifele, iar Trump a cerut prelungire."
+        ]
+      }
+    },
+    {
+      "id": "iohannis",
+      "name": "Klaus Iohannis",
+      "party": null,
+      "role": "Fost președinte (2014–2025)",
+      "stats": {
+        "charisma": 40,
+        "patience": 74,
+        "malleability": 30,
+        "gaffes": 44,
+        "visibility": 84,
+        "corruption": 28,
+        "traseism": 22
+      },
+      "ability": {
+        "name": "Tăcerea de la Cotroceni",
+        "text": "Nu spune nimic, dar toată lumea îl citează.",
+        "effect": {
+          "pensionari_urban": 1.12,
+          "bugetari": 1.08,
+          "tineri_urbani": 0.85
+        }
+      },
+      "facts": {
+        "real": [
+          "Președinte al României între 2014 și 2025.",
+          "Fost primar al Sibiului."
+        ],
+        "fake": [
+          "A mutat Cotroceniul la Sibiu, dar a uitat să anunțe angajații."
+        ]
+      }
+    },
+    {
+      "id": "grindeanu",
+      "name": "Sorin Grindeanu",
+      "party": "psd",
+      "role": "Fost premier, fost ministru al transporturilor",
+      "stats": {
+        "charisma": 46,
+        "patience": 52,
+        "malleability": 66,
+        "gaffes": 56,
+        "visibility": 64,
+        "corruption": 48,
+        "traseism": 44
+      },
+      "ability": {
+        "name": "Inaugurarea eternă",
+        "text": "Taie panglici cu o mână și promite autostrăzi cu cealaltă.",
+        "effect": {
+          "muncitori": 1.15,
+          "agricultori": 1.05,
+          "tineri_urbani": 0.9
+        }
+      },
+      "facts": {
+        "real": [
+          "Premier al României în 2017.",
+          "A fost ministru al transporturilor."
+        ],
+        "fake": [
+          "Și-a scăpat ceasul la inaugurarea autostrăzii; ceasul a ajuns la Craiova înaintea convoiului."
+        ]
+      }
+    },
+    {
+      "id": "ciuca",
+      "name": "Nicolae Ciucă",
+      "party": "pnl",
+      "role": "Fost premier (2021–2023)",
+      "stats": {
+        "charisma": 38,
+        "patience": 70,
+        "malleability": 40,
+        "gaffes": 48,
+        "visibility": 58,
+        "corruption": 34,
+        "traseism": 20
+      },
+      "ability": {
+        "name": "Ordinul de zi",
+        "text": "Vorbește ca la armată: clar, sec și fără întrebări.",
+        "effect": {
+          "bugetari": 1.1,
+          "pensionari_urban": 1.08,
+          "tineri_urbani": 0.9
+        }
+      },
+      "facts": {
+        "real": [
+          "Premier al României între 2021 și 2023.",
+          "General în rezervă."
+        ],
+        "fake": [
+          "A raportat că armata a câștigat un război împotriva birocrației, dar birocrația a cerut recurs."
+        ]
+      }
+    },
+    {
+      "id": "geoana",
+      "name": "Mircea Geoană",
+      "party": null,
+      "role": "Fost ministru de externe, candidat independent",
+      "stats": {
+        "charisma": 60,
+        "patience": 56,
+        "malleability": 58,
+        "gaffes": 40,
+        "visibility": 68,
+        "corruption": 42,
+        "traseism": 52
+      },
+      "ability": {
+        "name": "Planul strategic",
+        "text": "Are un plan pentru orice, inclusiv pentru a-și face un partid.",
+        "effect": {
+          "antreprenori": 1.1,
+          "pensionari_urban": 1.05,
+          "diaspora": 1.1
+        }
+      },
+      "facts": {
+        "real": [
+          "Fost ministru de externe.",
+          "Fost ambasador al României în Statele Unite."
+        ],
+        "fake": [
+          "A candidat independent la propriul partid și a pierdut la mustață."
+        ]
+      }
+    }
+  ]
+}

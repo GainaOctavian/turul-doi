@@ -1,0 +1,7 @@
+node_modules/
+tools/raw-romania.geojson
+docs/claude-plans/
+.turul-doi/
+.openchamber/
+*.log
+.DS_Store

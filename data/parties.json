@@ -1,0 +1,218 @@
+{
+  "parties": [
+    {
+      "id": "psd",
+      "name": "PSD",
+      "fullName": "Partidul Social Democrat",
+      "color": "#d81e2c",
+      "leader": "ciolacu",
+      "affinity": {
+        "pensionari_rural": 0.9,
+        "pensionari_urban": 0.72,
+        "tineri_urbani": 0.36,
+        "studenti": 0.3,
+        "muncitori": 0.68,
+        "agricultori": 0.82,
+        "antreprenori": 0.38,
+        "bugetari": 0.62,
+        "someri": 0.62,
+        "diaspora": 0.3
+      },
+      "bias": {
+        "olt": 1.35,
+        "dolj": 1.3,
+        "teleorman": 1.35,
+        "giurgiu": 1.32,
+        "valcea": 1.25,
+        "gorj": 1.28,
+        "mehedinti": 1.28,
+        "dambovita": 1.22,
+        "buzau": 1.2,
+        "braila": 1.18,
+        "ialomita": 1.22,
+        "calarasi": 1.2,
+        "vaslui": 1.15,
+        "galati": 1.12,
+        "botosani": 1.1
+      },
+      "strength": 1.22
+    },
+    {
+      "id": "pnl",
+      "name": "PNL",
+      "fullName": "Partidul Național Liberal",
+      "color": "#f2c200",
+      "leader": "bolojan",
+      "affinity": {
+        "pensionari_rural": 0.55,
+        "pensionari_urban": 0.78,
+        "tineri_urbani": 0.55,
+        "studenti": 0.45,
+        "muncitori": 0.52,
+        "agricultori": 0.52,
+        "antreprenori": 0.7,
+        "bugetari": 0.72,
+        "someri": 0.42,
+        "diaspora": 0.52
+      },
+      "bias": {
+        "bihor": 1.7,
+        "arad": 1.6,
+        "timis": 1.55,
+        "alba": 1.65,
+        "sibiu": 1.75,
+        "brasov": 1.5,
+        "cluj": 1.45,
+        "salaj": 1.5,
+        "satu-mare": 1.45,
+        "bistrita-nasaud": 1.45
+      },
+      "strength": 1.05
+    },
+    {
+      "id": "usr",
+      "name": "USR",
+      "fullName": "Uniunea Salvați România",
+      "color": "#1f6feb",
+      "leader": "lasconi",
+      "affinity": {
+        "pensionari_rural": 0.2,
+        "pensionari_urban": 0.46,
+        "tineri_urbani": 0.92,
+        "studenti": 0.9,
+        "muncitori": 0.36,
+        "agricultori": 0.22,
+        "antreprenori": 0.86,
+        "bugetari": 0.56,
+        "someri": 0.36,
+        "diaspora": 0.82
+      },
+      "bias": {
+        "cluj": 2.2,
+        "timis": 2,
+        "bucuresti": 1.9,
+        "ilfov": 1.7,
+        "iasi": 1.65,
+        "brasov": 1.6,
+        "sibiu": 1.5,
+        "constanta": 1.35
+      },
+      "strength": 0.95
+    },
+    {
+      "id": "aur",
+      "name": "AUR",
+      "fullName": "Alianța pentru Unirea Românilor",
+      "color": "#c9a227",
+      "leader": "simion",
+      "affinity": {
+        "pensionari_rural": 0.82,
+        "pensionari_urban": 0.56,
+        "tineri_urbani": 0.62,
+        "studenti": 0.42,
+        "muncitori": 0.72,
+        "agricultori": 0.76,
+        "antreprenori": 0.36,
+        "bugetari": 0.42,
+        "someri": 0.72,
+        "diaspora": 0.78
+      },
+      "bias": {
+        "iasi": 1.5,
+        "bacau": 1.45,
+        "suceava": 1.5,
+        "neamt": 1.45,
+        "vaslui": 1.45,
+        "botosani": 1.5,
+        "vrancea": 1.4,
+        "galati": 1.35,
+        "maramures": 1.35,
+        "constanta": 1.25
+      },
+      "strength": 1.1
+    },
+    {
+      "id": "udmr",
+      "name": "UDMR",
+      "fullName": "Uniunea Democrată Maghiară din România",
+      "color": "#00843d",
+      "leader": "kelemen",
+      "affinity": {
+        "pensionari_rural": 0.62,
+        "pensionari_urban": 0.62,
+        "tineri_urbani": 0.48,
+        "studenti": 0.42,
+        "muncitori": 0.56,
+        "agricultori": 0.62,
+        "antreprenori": 0.58,
+        "bugetari": 0.62,
+        "someri": 0.52,
+        "diaspora": 0.5
+      },
+      "bias": {
+        "harghita": 18,
+        "covasna": 20,
+        "mures": 5,
+        "satu-mare": 4,
+        "salaj": 4,
+        "bihor": 2.5,
+        "cluj": 1.4
+      },
+      "strength": 0.3
+    },
+    {
+      "id": "sos",
+      "name": "SOS",
+      "fullName": "S.O.S. România",
+      "color": "#1b2a6b",
+      "leader": "soosaca",
+      "affinity": {
+        "pensionari_rural": 0.6,
+        "pensionari_urban": 0.5,
+        "tineri_urbani": 0.36,
+        "studenti": 0.2,
+        "muncitori": 0.5,
+        "agricultori": 0.52,
+        "antreprenori": 0.26,
+        "bugetari": 0.3,
+        "someri": 0.56,
+        "diaspora": 0.4
+      },
+      "bias": {
+        "iasi": 1.15,
+        "suceava": 1.12,
+        "botosani": 1.1,
+        "galati": 1.1,
+        "constanta": 1.08
+      },
+      "strength": 0.28
+    },
+    {
+      "id": "pot",
+      "name": "POT",
+      "fullName": "Partidul Oamenilor Tineri",
+      "color": "#6b2d8b",
+      "leader": "gavrila",
+      "affinity": {
+        "pensionari_rural": 0.72,
+        "pensionari_urban": 0.46,
+        "tineri_urbani": 0.42,
+        "studenti": 0.26,
+        "muncitori": 0.52,
+        "agricultori": 0.66,
+        "antreprenori": 0.3,
+        "bugetari": 0.36,
+        "someri": 0.66,
+        "diaspora": 0.52
+      },
+      "bias": {
+        "gorj": 1.35,
+        "mehedinti": 1.2,
+        "olt": 1.12,
+        "valcea": 1.1,
+        "dolj": 1.08
+      },
+      "strength": 0.33
+    }
+  ]
+}
