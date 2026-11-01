@@ -9,6 +9,7 @@ import {
   acceptCoalition,
   fireEvent,
   runElection,
+  decide,
   ACTIONS,
 } from "./engine.mjs";
 
@@ -18,12 +19,15 @@ export const HELP = `turul-doi ctl
   poll                      sondaj național pe partide
   counties [filtru]         câștigătorul fiecărui județ
   play <partid> [nume]      joacă pentru un partid (solo/room)
-  speed <1|2|4>             viteza ceasului
+  speed <0|1|2|4>           viteza ceasului (0 = pauză)
+  pause / resume            oprește sau pornește ceasul
   act <tip> [judet] [rival] [lege]   acțiune (vezi "actions")
   actions                   acțiunile disponibile
   laws                      legile disponibile
-  politicians               profilurile politicienilor
+  politicians [partid]      profilurile politicienilor
   event <id>                declanșează un eveniment
+  decisions                 deciziile în așteptare pentru partidul tău
+  decide <id> <alegere>     răspunde la o decizie (alegerea începe de la 0)
   tick <zile>               avansează ceasul
   election                  alegeri acum
   coalition <de> <catre>    ofertă de coaliție
@@ -105,10 +109,18 @@ export function createCtl(data) {
 
       case "speed": {
         const v = Number(args[0]);
-        if (![1, 2, 4].includes(v)) return "error: speed 1, 2 sau 4";
+        if (![0, 1, 2, 4].includes(v)) return "error: speed 0 (pauză), 1, 2 sau 4";
         state.speed = v;
-        return `speed ${v}`;
+        return v === 0 ? "paused" : `speed ${v}`;
       }
+
+      case "pause":
+        state.speed = 0;
+        return "paused";
+
+      case "resume":
+        state.speed = 1;
+        return "speed 1";
 
       case "actions":
         return ACTIONS.map(
@@ -120,8 +132,28 @@ export function createCtl(data) {
 
       case "politicians":
         return data.politicians.politicians
+          .filter((p) => !args[0] || (p.party ?? "-") === args[0])
           .map((p) => `${p.id.padEnd(10)} ${p.party ?? "-"}  carisma ${p.stats.charisma} corupție ${p.stats.corruption} traseism ${p.stats.traseism}`)
           .join("\n");
+
+      case "decisions": {
+        const mine = snapshot(state, data).decisions.filter((d) => d.party === state.humans[0]);
+        if (!mine.length) return "nicio decizie în așteptare";
+        return mine
+          .map(
+            (d) =>
+              `#${d.id} (până în ziua ${d.expires}) ${d.title}\n` +
+              d.choices.map((c, i) => `  ${i}: ${c.label}${c.cost ? ` [${c.cost}]` : ""} - ${c.hint}`).join("\n"),
+          )
+          .join("\n");
+      }
+
+      case "decide": {
+        const party = state.humans[0];
+        if (!party) return "error: alege un partid cu play <partid>";
+        const res = decide(state, data, party, args[0], args[1]);
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
 
       case "act": {
         const type = args[0];

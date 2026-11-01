@@ -12,6 +12,7 @@ import {
   applyAction,
   offerCoalition,
   acceptCoalition,
+  decide,
 } from "./shared/engine.mjs";
 import { createCtl } from "./shared/ctl.mjs";
 
@@ -75,9 +76,14 @@ function sendEvent(res, event, payload) {
   res.write(`event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`);
 }
 
+// Snapshot plus who is seated at which party, so the UI can list the players.
+function view(room) {
+  return { ...snapshot(room.state, data), players: Object.fromEntries(room.players) };
+}
+
 function broadcast(room) {
   if (!room.clients.size) return;
-  const snap = snapshot(room.state, data);
+  const snap = view(room);
   for (const client of room.clients) {
     try {
       sendEvent(client.res, "state", snap);
@@ -90,7 +96,8 @@ function broadcast(room) {
 setInterval(() => {
   const now = Date.now();
   for (const room of rooms.values()) {
-    if (!room.clients.size) continue;
+    // speed 0 means paused: the clock stops for everyone in the room.
+    if (!room.clients.size || room.state.speed === 0) continue;
     const interval = Math.max(250, data.config.tickMs / (room.state.speed || 1));
     if (now - room.last >= interval) {
       room.last = now;
@@ -197,7 +204,7 @@ const server = http.createServer(async (req, res) => {
       res.write(": connected\n\n");
       const client = { res, party };
       room.clients.add(client);
-      sendEvent(res, "state", snapshot(room.state, data));
+      sendEvent(res, "state", view(room));
       const ping = setInterval(() => res.write(": ping\n\n"), 15000);
       req.on("close", () => {
         clearInterval(ping);
@@ -206,7 +213,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|coalition|accept|speed)$/);
+    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|coalition|accept|speed|decide)$/);
     if (action && req.method === "POST") {
       const room = rooms.get(action[1]);
       if (!room) return json(res, 404, { error: "Cod inexistent." });
@@ -217,6 +224,11 @@ const server = http.createServer(async (req, res) => {
       }
       if (action[2] === "action") {
         const result = applyAction(room.state, data, party, payload.action || {});
+        if (result.ok) broadcast(room);
+        return json(res, result.ok ? 200 : 400, result);
+      }
+      if (action[2] === "decide") {
+        const result = decide(room.state, data, party, payload.decision, payload.choice);
         if (result.ok) broadcast(room);
         return json(res, result.ok ? 200 : 400, result);
       }
@@ -231,7 +243,7 @@ const server = http.createServer(async (req, res) => {
         return json(res, result.ok ? 200 : 400, result);
       }
       const speed = Number(payload.speed);
-      if (![1, 2, 4].includes(speed)) return json(res, 400, { error: "Viteză invalidă." });
+      if (![0, 1, 2, 4].includes(speed)) return json(res, 400, { error: "Viteză invalidă." });
       room.state.speed = speed;
       broadcast(room);
       return json(res, 200, { ok: true });
@@ -258,6 +270,14 @@ const server = http.createServer(async (req, res) => {
   } catch (err) {
     return json(res, 500, { error: String(err?.message || err) });
   }
+});
+
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.error(`Port ${PORT} is busy. Stop the old server or run with PORT=<other>.`);
+    process.exit(1);
+  }
+  throw err;
 });
 
 server.listen(PORT, "127.0.0.1", async () => {

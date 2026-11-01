@@ -28,12 +28,15 @@ game is not running with the ctl.
 | `poll` | national poll, sorted |
 | `counties [filter]` | who leads each county (filter by id or name) |
 | `play <party> [name]` | take control of a party |
-| `speed <1\|2\|4>` | clock speed |
+| `speed <0\|1\|2\|4>` | clock speed (0 = paused) |
+| `pause` / `resume` | stop or restart the clock |
 | `act <type> [county] [rival] [law]` | run an action |
 | `actions` | action ids, costs, cooldowns, targets |
 | `laws` | laws and their capital cost |
-| `politicians` | profiles and key stats |
-| `event <id>` | fire a specific event |
+| `politicians [party]` | profiles and key stats, optionally one party |
+| `event <id>` | fire a specific event (decision events open a decision) |
+| `decisions` | pending decisions for the played party, with choice numbers |
+| `decide <id> <choice>` | answer a decision (choices start at 0) |
 | `tick <days>` | advance the clock |
 | `election` | run an election now |
 | `coalition <from> <to>` | send a coalition offer |
@@ -68,5 +71,6 @@ Batch from a file: `npm run ctl -- script.txt` (lines, `#` comments). From stdin
   multiplayer room.
 - Exit code is 1 if any line returned `error`.
 - Anything the UI shows that the ctl cannot read (map colours, toasts, modals) still needs a
-  browser check. Use `?party=<id>&day=<n>` to jump a solo game to a given day.
+  browser check. Use `?party=<id>&day=<n>` to jump a solo game to a given day, and
+  `&event=<id>` to fire one event at the start (e.g. `&event=d-greva-medici` to see a decision).
 - Tests: `npm test` (engine + one full ctl turn).

@@ -32,8 +32,13 @@ Pentru joc pe mai multe calculatoare, pornește serverul pe o mașină din rețe
 
 ## Cum se joacă
 
-- **Ceas**: o zi de joc la fiecare 2 secunde, viteză 1x/2x/4x. Campania durează 120 de
-  zile, apoi urmează alegeri și un nou ciclu.
+- **Ceas**: o zi de joc la fiecare 2 secunde, viteză 1x/2x/4x. Butonul „Pauză” (sau tasta
+  Space) oprește ceasul; în multiplayer se oprește pentru toți din cameră. Campania durează
+  120 de zile, apoi urmează alegeri și un nou ciclu.
+- **Decizii**: unele evenimente îți cer un răspuns în câteva zile (susții greva? accepți
+  donația?). Fiecare alegere mută alte segmente. Dacă nu răspunzi, decizia expiră.
+- **Echipa**: fiecare partid are mai mulți politicieni, cu portret caricatural, statistici și
+  fapte reale/satirice. Liderul contează integral în campanie, ceilalți adaugă o treime.
 - **Hartă**: fiecare județ e colorat de partidul care conduce acolo. Click pe județ pentru
   segmentele de votanți și acțiunile locale.
 - **Acțiuni**: miting, apariție TV, campanie online, înțelegere locală, atac la adversar,
@@ -99,8 +104,18 @@ Tot conținutul stă în `data/*.json` și se poate edita fără să atingi codu
 | `segments.json` | cele 10 segmente de votanți |
 | `parties.json` | partide, lideri, afinități pe segmente, bias pe județe |
 | `politicians.json` | profiluri, statistici de joc, abilități, fapte reale și satirice |
-| `events.json` | evenimentele și efectele lor |
-| `laws.json` | legile disponibile guvernului |
+| `events.json` | ~110 evenimente: naționale, pe județe, lanțuri cauză→efect și decizii |
+| `laws.json` | 24 de legi disponibile guvernului |
+
+Modelul complet (efecte, lanțuri, decizii) e în `docs/data-model.md`. Datele despre scena
+politică (liderii partidelor, premierul) sunt verificate la noiembrie 2026; când se schimbă,
+se actualizează `parties.json` și `politicians.json`.
+
+## Aspect
+
+Interfața e gândită ca o seară electorală de televiziune: albastru intens, bandă roșie
+„LIVE” derulantă cu ultimele știri, hartă ca un zid de studio. Portretele din tabul „Echipă”
+sunt desenate în cod (`public/portraits.mjs`) din câmpul `look` al fiecărui politician.
 
 ## Reguli de satiră
 

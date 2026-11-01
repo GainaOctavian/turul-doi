@@ -155,6 +155,7 @@ export function createGame(data, opts = {}) {
       stats: { ...p.stats },
       ability: p.ability,
       facts: p.facts,
+      look: p.look,
     };
   }
 
@@ -184,6 +185,9 @@ export function createGame(data, opts = {}) {
     active: null,
     lastResult: null,
     recentEvents: [],
+    fired: {},
+    decisions: [],
+    nextDecision: 1,
     log: [],
   };
 
@@ -304,48 +308,73 @@ function addSegBoost(state, partyId, segId, factor) {
   p.segBoost[segId] = clamp((p.segBoost[segId] ?? 1) * factor, 0.55, 1.9);
 }
 
+// The leader's ability counts in full; every other party member adds a third of theirs.
 function abilityFactor(state, partyId, data, segId) {
   const leader = data.parties.parties.find((p) => p.id === partyId)?.leader;
-  const ability = leader ? state.politicians[leader]?.ability?.effect : null;
-  return ability?.[segId] ?? 1;
+  let factor = state.politicians[leader]?.ability?.effect?.[segId] ?? 1;
+  for (const p of Object.values(state.politicians)) {
+    if (p.party !== partyId || p.id === leader) continue;
+    const m = p.ability?.effect?.[segId];
+    if (m) factor *= 1 + (m - 1) * 0.3;
+  }
+  return factor;
 }
 
+// Resizes segments in one county. `segments` scales a segment, `convert` moves
+// a share of one segment into another (population is conserved).
+function shiftSegments(c, spec) {
+  for (const [seg, delta] of Object.entries(spec.segments ?? {})) {
+    if (!(seg in c.segments)) continue;
+    c.segments[seg] = Math.max(0.5, c.segments[seg] * (1 + delta));
+  }
+  for (const rule of spec.convert ?? []) {
+    const from = c.segments[rule.from];
+    const to = c.segments[rule.to];
+    if (from == null || to == null) continue;
+    const moved = from * rule.share;
+    c.segments[rule.from] = Math.max(0.5, from - moved);
+    c.segments[rule.to] = to + moved;
+  }
+}
+
+// Effect keys: segments, convert (everywhere); county (only the named counties,
+// with their own segments/convert/party); party (national mood); countyParty;
+// funds; segBoost and countyBoostAll (the acting party); politician.
+// "self" stands for the acting party in party, countyParty, county.party, funds.
 function applyEffects(state, data, effects, ctx = {}) {
   if (!effects) return;
+  const who = (key) => (key === "self" ? ctx.partyId : key);
 
-  if (effects.segments) {
-    for (const c of Object.values(state.counties)) {
-      for (const [seg, delta] of Object.entries(effects.segments)) {
-        if (!(seg in c.segments)) continue;
-        c.segments[seg] = Math.max(0.5, c.segments[seg] * (1 + delta));
-      }
-    }
-  }
+  for (const c of Object.values(state.counties)) shiftSegments(c, effects);
 
-  if (effects.convert) {
-    for (const c of Object.values(state.counties)) {
-      for (const rule of effects.convert) {
-        const from = c.segments[rule.from];
-        const to = c.segments[rule.to];
-        if (from == null || to == null) continue;
-        const moved = from * rule.share;
-        c.segments[rule.from] = Math.max(0.5, from - moved);
-        c.segments[rule.to] = to + moved;
-      }
+  for (const [cid, spec] of Object.entries(effects.county ?? {})) {
+    const c = state.counties[cid];
+    if (!c) continue;
+    shiftSegments(c, spec);
+    for (const [key, amount] of Object.entries(spec.party ?? {})) {
+      if (who(key)) addCountyBoost(state, cid, who(key), amount);
     }
   }
 
   if (effects.party) {
-    for (const [pid, delta] of Object.entries(effects.party)) {
+    for (const [key, delta] of Object.entries(effects.party)) {
+      const pid = who(key);
+      if (!pid) continue;
       state.mood[pid] = clamp((state.mood[pid] ?? 1) * (1 + delta), 0.55, 1.6);
     }
   }
 
   if (effects.countyParty) {
     for (const [cid, parties] of Object.entries(effects.countyParty)) {
-      for (const [pid, amount] of Object.entries(parties)) {
-        addCountyBoost(state, cid, pid, amount);
+      for (const [key, amount] of Object.entries(parties)) {
+        if (who(key)) addCountyBoost(state, cid, who(key), amount);
       }
+    }
+  }
+
+  if (effects.segBoost && ctx.partyId) {
+    for (const [seg, factor] of Object.entries(effects.segBoost)) {
+      addSegBoost(state, ctx.partyId, seg, factor);
     }
   }
 
@@ -373,18 +402,28 @@ function applyEffects(state, data, effects, ctx = {}) {
   }
 }
 
+const CHAIN_WINDOW = 45;
+
+function recentlyFired(state, id) {
+  const day = state.fired[id];
+  return day != null && state.day - day <= CHAIN_WINDOW;
+}
+
+// An event with `after: "<id>"` is a follow-up: it only appears within
+// CHAIN_WINDOW days of its cause, and four times as likely as a normal one.
 function pickEvent(state, data) {
-  const pool = data.events.events.filter(
-    (e) => (e.minDay ?? 0) <= state.day && !state.recentEvents.includes(e.id),
-  );
+  const pool = data.events.events
+    .filter((e) => (e.minDay ?? 0) <= state.day && !state.recentEvents.includes(e.id))
+    .filter((e) => !e.after || recentlyFired(state, e.after))
+    .map((e) => ({ e, w: (e.weight ?? 1) * (e.after ? 4 : 1) }));
   if (!pool.length) return null;
-  const total = pool.reduce((s, e) => s + (e.weight ?? 1), 0);
+  const total = pool.reduce((s, x) => s + x.w, 0);
   let r = rand(state) * total;
-  for (const e of pool) {
-    r -= e.weight ?? 1;
-    if (r <= 0) return e;
+  for (const x of pool) {
+    r -= x.w;
+    if (r <= 0) return x.e;
   }
-  return pool[pool.length - 1];
+  return pool[pool.length - 1].e;
 }
 
 export function fireEvent(state, data, eventId) {
@@ -395,9 +434,40 @@ export function fireEvent(state, data, eventId) {
   applyEffects(state, data, ev.effects, {});
   state.recentEvents.push(ev.id);
   if (state.recentEvents.length > 14) state.recentEvents.shift();
+  state.fired[ev.id] = state.day;
   state.active = { ...ev, day: state.day };
   log(state, "event", ev.title, ev.text);
+
+  // Events with `choices` hand every human player a decision to answer.
+  if (ev.choices?.length) {
+    for (const partyId of state.humans) {
+      state.decisions.push({
+        id: state.nextDecision,
+        party: partyId,
+        eventId: ev.id,
+        day: state.day,
+        expires: state.day + (ev.expires ?? 8),
+      });
+      state.nextDecision += 1;
+    }
+  }
   return ev;
+}
+
+export function decide(state, data, partyId, decisionId, choiceIndex) {
+  const d = state.decisions.find((x) => x.id === Number(decisionId) && x.party === partyId);
+  if (!d) return { ok: false, error: "Decizia nu mai există." };
+  const ev = data.events.events.find((e) => e.id === d.eventId);
+  const choice = ev?.choices?.[Number(choiceIndex)];
+  if (!choice) return { ok: false, error: "Alegere invalidă." };
+  const party = state.parties[partyId];
+  const cost = choice.cost ?? 0;
+  if (party.funds < cost) return { ok: false, error: `Fonduri insuficiente (${cost} necesari).` };
+  party.funds = Math.round((party.funds - cost) * 10) / 10;
+  applyEffects(state, data, choice.effects, { partyId });
+  state.decisions = state.decisions.filter((x) => x !== d);
+  log(state, "decision", `${partyId.toUpperCase()}: ${choice.label}`, choice.text ?? ev.title);
+  return { ok: true, message: choice.text ?? `Ai ales „${choice.label}”.` };
 }
 
 function leaderId(data, partyId) {
@@ -773,6 +843,15 @@ export function tick(state, data, days = 1) {
     }
     negotiationStep(state, data);
 
+    // Unanswered decisions lapse; the event's `ignore` effects land on that party.
+    for (const d of [...state.decisions]) {
+      if (state.day <= d.expires) continue;
+      state.decisions = state.decisions.filter((x) => x !== d);
+      const ev = data.events.events.find((e) => e.id === d.eventId);
+      applyEffects(state, data, ev?.ignore, { partyId: d.party });
+      log(state, "decision", `${d.party.toUpperCase()} a ignorat decizia`, ev?.title ?? "");
+    }
+
     if (rand(state) < (data.config.eventChance ?? 0.2)) {
       fireEvent(state, data);
     }
@@ -815,6 +894,17 @@ export function snapshot(state, data) {
     negotiation: state.negotiation,
     humans: state.humans,
     active: state.active,
+    decisions: state.decisions.map((d) => {
+      const ev = data.events.events.find((e) => e.id === d.eventId);
+      return {
+        id: d.id,
+        party: d.party,
+        title: ev.title,
+        text: ev.text,
+        expires: d.expires,
+        choices: ev.choices.map((c) => ({ label: c.label, hint: c.hint ?? "", cost: c.cost ?? 0 })),
+      };
+    }),
     lastResult: state.lastResult,
     poll: {
       national: poll.national,

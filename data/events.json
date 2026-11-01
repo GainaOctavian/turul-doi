@@ -8,9 +8,18 @@
       "weight": 6,
       "minDay": 4,
       "effects": {
-        "segments": { "tineri_urbani": -0.02 },
-        "party": { "psd": -0.035, "aur": 0.02 },
-        "politician": { "id": "ciolacu", "stat": "visibility", "delta": 4 }
+        "segments": {
+          "tineri_urbani": -0.02
+        },
+        "party": {
+          "psd": -0.035,
+          "aur": 0.02
+        },
+        "politician": {
+          "id": "ciolacu",
+          "stat": "visibility",
+          "delta": 4
+        }
       }
     },
     {
@@ -20,9 +29,17 @@
       "weight": 4,
       "minDay": 6,
       "effects": {
-        "countyParty": { "sibiu": { "pnl": 0.22 } },
-        "party": { "pnl": 0.015 },
-        "segments": { "pensionari_urban": 0.02 }
+        "countyParty": {
+          "sibiu": {
+            "pnl": 0.22
+          }
+        },
+        "party": {
+          "pnl": 0.015
+        },
+        "segments": {
+          "pensionari_urban": 0.02
+        }
       }
     },
     {
@@ -32,9 +49,23 @@
       "weight": 5,
       "minDay": 8,
       "effects": {
-        "countyParty": { "sibiu": { "psd": -0.12 }, "dolj": { "psd": -0.1 } },
-        "segments": { "muncitori": 0.03, "pensionari_rural": -0.01 },
-        "politician": { "id": "grindeanu", "stat": "gaffes", "delta": 6 }
+        "countyParty": {
+          "sibiu": {
+            "psd": -0.12
+          },
+          "dolj": {
+            "psd": -0.1
+          }
+        },
+        "segments": {
+          "muncitori": 0.03,
+          "pensionari_rural": -0.01
+        },
+        "politician": {
+          "id": "grindeanu",
+          "stat": "gaffes",
+          "delta": 6
+        }
       }
     },
     {
@@ -44,8 +75,14 @@
       "weight": 5,
       "minDay": 5,
       "effects": {
-        "party": { "usr": 0.02, "aur": 0.015 },
-        "segments": { "antreprenori": 0.03, "pensionari_rural": -0.02 }
+        "party": {
+          "usr": 0.02,
+          "aur": 0.015
+        },
+        "segments": {
+          "antreprenori": 0.03,
+          "pensionari_rural": -0.02
+        }
       }
     },
     {
@@ -55,9 +92,22 @@
       "weight": 7,
       "minDay": 10,
       "effects": {
-        "segments": { "tineri_urbani": -0.05, "bugetari": -0.04 },
-        "convert": [{ "from": "studenti", "to": "diaspora", "share": 0.22 }],
-        "party": { "usr": 0.02, "aur": 0.03, "psd": -0.02 }
+        "segments": {
+          "tineri_urbani": -0.05,
+          "bugetari": -0.04
+        },
+        "convert": [
+          {
+            "from": "studenti",
+            "to": "diaspora",
+            "share": 0.22
+          }
+        ],
+        "party": {
+          "usr": 0.02,
+          "aur": 0.03,
+          "psd": -0.02
+        }
       }
     },
     {
@@ -67,9 +117,20 @@
       "weight": 6,
       "minDay": 6,
       "effects": {
-        "segments": { "bugetari": -0.05 },
-        "convert": [{ "from": "bugetari", "to": "diaspora", "share": 0.28 }],
-        "party": { "psd": -0.02, "usr": 0.015 }
+        "segments": {
+          "bugetari": -0.05
+        },
+        "convert": [
+          {
+            "from": "bugetari",
+            "to": "diaspora",
+            "share": 0.28
+          }
+        ],
+        "party": {
+          "psd": -0.02,
+          "usr": 0.015
+        }
       }
     },
     {
@@ -79,8 +140,14 @@
       "weight": 5,
       "minDay": 7,
       "effects": {
-        "segments": { "bugetari": 0.04, "tineri_urbani": -0.02 },
-        "party": { "pnl": -0.025, "psd": -0.015 }
+        "segments": {
+          "bugetari": 0.04,
+          "tineri_urbani": -0.02
+        },
+        "party": {
+          "pnl": -0.025,
+          "psd": -0.015
+        }
       }
     },
     {
@@ -90,9 +157,17 @@
       "weight": 5,
       "minDay": 9,
       "effects": {
-        "segments": { "pensionari_rural": 0.07, "pensionari_urban": 0.05 },
-        "funds": { "psd": -60, "pnl": -40 },
-        "party": { "psd": 0.03 }
+        "segments": {
+          "pensionari_rural": 0.07,
+          "pensionari_urban": 0.05
+        },
+        "funds": {
+          "psd": -60,
+          "pnl": -40
+        },
+        "party": {
+          "psd": 0.03
+        }
       }
     },
     {
@@ -102,13 +177,24 @@
       "weight": 6,
       "minDay": 8,
       "effects": {
-        "segments": { "agricultori": -0.07, "someri": 0.03 },
-        "countyParty": {
-          "teleorman": { "psd": -0.08 },
-          "olt": { "psd": -0.06 },
-          "dolj": { "psd": -0.05 }
+        "segments": {
+          "agricultori": -0.07,
+          "someri": 0.03
         },
-        "party": { "aur": 0.02 }
+        "countyParty": {
+          "teleorman": {
+            "psd": -0.08
+          },
+          "olt": {
+            "psd": -0.06
+          },
+          "dolj": {
+            "psd": -0.05
+          }
+        },
+        "party": {
+          "aur": 0.02
+        }
       }
     },
     {
@@ -118,8 +204,14 @@
       "weight": 4,
       "minDay": 10,
       "effects": {
-        "segments": { "muncitori": 0.05, "antreprenori": -0.04 },
-        "party": { "psd": 0.025, "pnl": -0.01 }
+        "segments": {
+          "muncitori": 0.05,
+          "antreprenori": -0.04
+        },
+        "party": {
+          "psd": 0.025,
+          "pnl": -0.01
+        }
       }
     },
     {
@@ -129,9 +221,20 @@
       "weight": 5,
       "minDay": 12,
       "effects": {
-        "segments": { "antreprenori": -0.05 },
-        "convert": [{ "from": "antreprenori", "to": "someri", "share": 0.18 }],
-        "party": { "usr": -0.02, "aur": 0.02 }
+        "segments": {
+          "antreprenori": -0.05
+        },
+        "convert": [
+          {
+            "from": "antreprenori",
+            "to": "someri",
+            "share": 0.18
+          }
+        ],
+        "party": {
+          "usr": -0.02,
+          "aur": 0.02
+        }
       }
     },
     {
@@ -141,8 +244,14 @@
       "weight": 5,
       "minDay": 4,
       "effects": {
-        "segments": { "tineri_urbani": 0.04, "studenti": 0.03 },
-        "party": { "aur": 0.02, "usr": 0.01 }
+        "segments": {
+          "tineri_urbani": 0.04,
+          "studenti": 0.03
+        },
+        "party": {
+          "aur": 0.02,
+          "usr": 0.01
+        }
       }
     },
     {
@@ -152,8 +261,14 @@
       "weight": 6,
       "minDay": 5,
       "effects": {
-        "segments": { "pensionari_rural": -0.02, "tineri_urbani": -0.01 },
-        "party": { "aur": 0.035, "psd": -0.01 }
+        "segments": {
+          "pensionari_rural": -0.02,
+          "tineri_urbani": -0.01
+        },
+        "party": {
+          "aur": 0.035,
+          "psd": -0.01
+        }
       }
     },
     {
@@ -163,8 +278,13 @@
       "weight": 4,
       "minDay": 3,
       "effects": {
-        "segments": { "agricultori": -0.02, "pensionari_rural": -0.02 },
-        "party": { "psd": -0.015 }
+        "segments": {
+          "agricultori": -0.02,
+          "pensionari_rural": -0.02
+        },
+        "party": {
+          "psd": -0.015
+        }
       }
     },
     {
@@ -174,8 +294,13 @@
       "weight": 3,
       "minDay": 3,
       "effects": {
-        "segments": { "tineri_urbani": 0.03, "studenti": 0.02 },
-        "party": { "usr": 0.01 }
+        "segments": {
+          "tineri_urbani": 0.03,
+          "studenti": 0.02
+        },
+        "party": {
+          "usr": 0.01
+        }
       }
     },
     {
@@ -185,8 +310,14 @@
       "weight": 3,
       "minDay": 6,
       "effects": {
-        "segments": { "diaspora": 0.04, "antreprenori": 0.02 },
-        "party": { "usr": 0.02, "pnl": 0.01 }
+        "segments": {
+          "diaspora": 0.04,
+          "antreprenori": 0.02
+        },
+        "party": {
+          "usr": 0.02,
+          "pnl": 0.01
+        }
       }
     },
     {
@@ -196,9 +327,18 @@
       "weight": 3,
       "minDay": 6,
       "effects": {
-        "countyParty": { "bucuresti": { "pnl": 0.1, "usr": 0.08 } },
-        "segments": { "diaspora": 0.02 },
-        "party": { "pnl": 0.02 }
+        "countyParty": {
+          "bucuresti": {
+            "pnl": 0.1,
+            "usr": 0.08
+          }
+        },
+        "segments": {
+          "diaspora": 0.02
+        },
+        "party": {
+          "pnl": 0.02
+        }
       }
     },
     {
@@ -208,9 +348,21 @@
       "weight": 6,
       "minDay": 10,
       "effects": {
-        "segments": { "muncitori": -0.04, "antreprenori": -0.03 },
-        "countyParty": { "galati": { "psd": -0.08 }, "hunedoara": { "psd": -0.06 } },
-        "party": { "aur": 0.02 }
+        "segments": {
+          "muncitori": -0.04,
+          "antreprenori": -0.03
+        },
+        "countyParty": {
+          "galati": {
+            "psd": -0.08
+          },
+          "hunedoara": {
+            "psd": -0.06
+          }
+        },
+        "party": {
+          "aur": 0.02
+        }
       }
     },
     {
@@ -220,8 +372,13 @@
       "weight": 4,
       "minDay": 5,
       "effects": {
-        "segments": { "pensionari_rural": 0.04 },
-        "party": { "psd": 0.02, "usr": -0.015 }
+        "segments": {
+          "pensionari_rural": 0.04
+        },
+        "party": {
+          "psd": 0.02,
+          "usr": -0.015
+        }
       }
     },
     {
@@ -231,8 +388,13 @@
       "weight": 4,
       "minDay": 7,
       "effects": {
-        "segments": { "diaspora": 0.04 },
-        "party": { "usr": 0.015, "aur": 0.015 }
+        "segments": {
+          "diaspora": 0.04
+        },
+        "party": {
+          "usr": 0.015,
+          "aur": 0.015
+        }
       }
     },
     {
@@ -242,8 +404,13 @@
       "weight": 3,
       "minDay": 4,
       "effects": {
-        "segments": { "pensionari_rural": 0.03, "agricultori": 0.02 },
-        "party": { "psd": 0.015 }
+        "segments": {
+          "pensionari_rural": 0.03,
+          "agricultori": 0.02
+        },
+        "party": {
+          "psd": 0.015
+        }
       }
     },
     {
@@ -253,9 +420,18 @@
       "weight": 7,
       "minDay": 2,
       "effects": {
-        "segments": { "tineri_urbani": 0.02 },
-        "party": { "psd": -0.02, "pnl": -0.02 },
-        "politician": { "id": "grindeanu", "stat": "gaffes", "delta": 5 }
+        "segments": {
+          "tineri_urbani": 0.02
+        },
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.02
+        },
+        "politician": {
+          "id": "grindeanu",
+          "stat": "gaffes",
+          "delta": 5
+        }
       }
     },
     {
@@ -265,8 +441,13 @@
       "weight": 4,
       "minDay": 8,
       "effects": {
-        "party": { "psd": -0.02, "pnl": -0.015 },
-        "segments": { "bugetari": -0.02 }
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.015
+        },
+        "segments": {
+          "bugetari": -0.02
+        }
       }
     },
     {
@@ -276,8 +457,13 @@
       "weight": 5,
       "minDay": 4,
       "effects": {
-        "segments": { "pensionari_urban": -0.02, "someri": 0.01 },
-        "party": { "psd": -0.01 }
+        "segments": {
+          "pensionari_urban": -0.02,
+          "someri": 0.01
+        },
+        "party": {
+          "psd": -0.01
+        }
       }
     },
     {
@@ -287,8 +473,14 @@
       "weight": 6,
       "minDay": 9,
       "effects": {
-        "segments": { "pensionari_urban": -0.03, "muncitori": -0.02 },
-        "party": { "aur": 0.025, "psd": -0.02 }
+        "segments": {
+          "pensionari_urban": -0.03,
+          "muncitori": -0.02
+        },
+        "party": {
+          "aur": 0.025,
+          "psd": -0.02
+        }
       }
     },
     {
@@ -298,8 +490,18 @@
       "weight": 3,
       "minDay": 8,
       "effects": {
-        "segments": { "muncitori": 0.04, "someri": -0.01 },
-        "countyParty": { "gorj": { "psd": 0.12 }, "dolj": { "psd": 0.08 } }
+        "segments": {
+          "muncitori": 0.04,
+          "someri": -0.01
+        },
+        "countyParty": {
+          "gorj": {
+            "psd": 0.12
+          },
+          "dolj": {
+            "psd": 0.08
+          }
+        }
       }
     },
     {
@@ -309,8 +511,13 @@
       "weight": 3,
       "minDay": 6,
       "effects": {
-        "segments": { "muncitori": -0.02 },
-        "party": { "pnl": -0.02, "psd": -0.02 }
+        "segments": {
+          "muncitori": -0.02
+        },
+        "party": {
+          "pnl": -0.02,
+          "psd": -0.02
+        }
       }
     },
     {
@@ -320,8 +527,12 @@
       "weight": 5,
       "minDay": 7,
       "effects": {
-        "party": { "psd": -0.03 },
-        "segments": { "bugetari": -0.01 }
+        "party": {
+          "psd": -0.03
+        },
+        "segments": {
+          "bugetari": -0.01
+        }
       }
     },
     {
@@ -331,8 +542,14 @@
       "weight": 4,
       "minDay": 10,
       "effects": {
-        "segments": { "antreprenori": 0.04, "bugetari": -0.02 },
-        "party": { "pnl": 0.02, "psd": -0.01 }
+        "segments": {
+          "antreprenori": 0.04,
+          "bugetari": -0.02
+        },
+        "party": {
+          "pnl": 0.02,
+          "psd": -0.01
+        }
       }
     },
     {
@@ -342,8 +559,13 @@
       "weight": 4,
       "minDay": 8,
       "effects": {
-        "segments": { "antreprenori": -0.03, "pensionari_urban": -0.01 },
-        "party": { "psd": -0.015 }
+        "segments": {
+          "antreprenori": -0.03,
+          "pensionari_urban": -0.01
+        },
+        "party": {
+          "psd": -0.015
+        }
       }
     },
     {
@@ -353,8 +575,15 @@
       "weight": 3,
       "minDay": 5,
       "effects": {
-        "countyParty": { "constanta": { "pnl": 0.12, "psd": 0.06 } },
-        "segments": { "antreprenori": 0.02 }
+        "countyParty": {
+          "constanta": {
+            "pnl": 0.12,
+            "psd": 0.06
+          }
+        },
+        "segments": {
+          "antreprenori": 0.02
+        }
       }
     },
     {
@@ -365,12 +594,22 @@
       "minDay": 7,
       "effects": {
         "countyParty": {
-          "iasi": { "pnl": 0.1 },
-          "bacau": { "pnl": 0.08 },
-          "suceava": { "pnl": 0.08 },
-          "neamt": { "pnl": 0.08 }
+          "iasi": {
+            "pnl": 0.1
+          },
+          "bacau": {
+            "pnl": 0.08
+          },
+          "suceava": {
+            "pnl": 0.08
+          },
+          "neamt": {
+            "pnl": 0.08
+          }
         },
-        "segments": { "muncitori": 0.02 }
+        "segments": {
+          "muncitori": 0.02
+        }
       }
     },
     {
@@ -380,8 +619,17 @@
       "weight": 3,
       "minDay": 9,
       "effects": {
-        "countyParty": { "cluj": { "pnl": 0.08 }, "iasi": { "pnl": 0.08 } },
-        "segments": { "bugetari": 0.01 }
+        "countyParty": {
+          "cluj": {
+            "pnl": 0.08
+          },
+          "iasi": {
+            "pnl": 0.08
+          }
+        },
+        "segments": {
+          "bugetari": 0.01
+        }
       }
     },
     {
@@ -391,9 +639,18 @@
       "weight": 4,
       "minDay": 5,
       "effects": {
-        "countyParty": { "bucuresti": { "aur": 0.15 } },
-        "segments": { "pensionari_rural": 0.02, "someri": 0.02 },
-        "party": { "aur": 0.03 }
+        "countyParty": {
+          "bucuresti": {
+            "aur": 0.15
+          }
+        },
+        "segments": {
+          "pensionari_rural": 0.02,
+          "someri": 0.02
+        },
+        "party": {
+          "aur": 0.03
+        }
       }
     },
     {
@@ -403,8 +660,13 @@
       "weight": 5,
       "minDay": 10,
       "effects": {
-        "party": { "psd": -0.02, "pnl": -0.02 },
-        "segments": { "bugetari": -0.01 }
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.02
+        },
+        "segments": {
+          "bugetari": -0.01
+        }
       }
     },
     {
@@ -414,8 +676,13 @@
       "weight": 4,
       "minDay": 8,
       "effects": {
-        "segments": { "bugetari": 0.03 },
-        "party": { "psd": 0.01, "pnl": 0.01 }
+        "segments": {
+          "bugetari": 0.03
+        },
+        "party": {
+          "psd": 0.01,
+          "pnl": 0.01
+        }
       }
     },
     {
@@ -425,8 +692,14 @@
       "weight": 4,
       "minDay": 9,
       "effects": {
-        "segments": { "pensionari_rural": -0.02, "bugetari": 0.01 },
-        "party": { "aur": 0.02, "usr": -0.01 }
+        "segments": {
+          "pensionari_rural": -0.02,
+          "bugetari": 0.01
+        },
+        "party": {
+          "aur": 0.02,
+          "usr": -0.01
+        }
       }
     },
     {
@@ -436,9 +709,20 @@
       "weight": 6,
       "minDay": 11,
       "effects": {
-        "segments": { "tineri_urbani": -0.04 },
-        "convert": [{ "from": "tineri_urbani", "to": "diaspora", "share": 0.18 }],
-        "party": { "usr": -0.01, "aur": 0.02 }
+        "segments": {
+          "tineri_urbani": -0.04
+        },
+        "convert": [
+          {
+            "from": "tineri_urbani",
+            "to": "diaspora",
+            "share": 0.18
+          }
+        ],
+        "party": {
+          "usr": -0.01,
+          "aur": 0.02
+        }
       }
     },
     {
@@ -448,9 +732,20 @@
       "weight": 5,
       "minDay": 7,
       "effects": {
-        "segments": { "agricultori": 0.03 },
-        "countyParty": { "teleorman": { "psd": -0.06 }, "olt": { "psd": -0.05 } },
-        "party": { "aur": 0.02 }
+        "segments": {
+          "agricultori": 0.03
+        },
+        "countyParty": {
+          "teleorman": {
+            "psd": -0.06
+          },
+          "olt": {
+            "psd": -0.05
+          }
+        },
+        "party": {
+          "aur": 0.02
+        }
       }
     },
     {
@@ -460,8 +755,12 @@
       "weight": 3,
       "minDay": 4,
       "effects": {
-        "segments": { "pensionari_urban": 0.01 },
-        "party": { "pnl": 0.01 }
+        "segments": {
+          "pensionari_urban": 0.01
+        },
+        "party": {
+          "pnl": 0.01
+        }
       }
     },
     {
@@ -471,8 +770,13 @@
       "weight": 4,
       "minDay": 6,
       "effects": {
-        "segments": { "tineri_urbani": 0.03, "someri": 0.02 },
-        "party": { "psd": 0.015 }
+        "segments": {
+          "tineri_urbani": 0.03,
+          "someri": 0.02
+        },
+        "party": {
+          "psd": 0.015
+        }
       }
     },
     {
@@ -482,8 +786,13 @@
       "weight": 3,
       "minDay": 6,
       "effects": {
-        "segments": { "pensionari_urban": -0.02 },
-        "party": { "psd": -0.02, "pnl": -0.01 }
+        "segments": {
+          "pensionari_urban": -0.02
+        },
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.01
+        }
       }
     },
     {
@@ -493,21 +802,34 @@
       "weight": 2,
       "minDay": 8,
       "effects": {
-        "segments": { "pensionari_urban": 0.02 },
-        "party": { "pnl": 0.01 }
+        "segments": {
+          "pensionari_urban": 0.02
+        },
+        "party": {
+          "pnl": 0.01
+        }
       }
     },
     {
       "id": "grindeanu-ceas",
       "title": "Ceasul lui Grindeanu, scos la licitație",
       "text": "Ceasul pierdut la inaugurare a fost scos la licitație. S-a vândut cu 3.000 de euro, iar cumpărătorul a cerut și autostrada.",
-      "weight": 3,
+      "weight": 4,
       "minDay": 5,
       "effects": {
-        "segments": { "tineri_urbani": 0.01 },
-        "party": { "psd": -0.01 },
-        "politician": { "id": "grindeanu", "stat": "visibility", "delta": 3 }
-      }
+        "segments": {
+          "tineri_urbani": 0.01
+        },
+        "party": {
+          "psd": -0.01
+        },
+        "politician": {
+          "id": "grindeanu",
+          "stat": "visibility",
+          "delta": 3
+        }
+      },
+      "after": "autostrada-cutremur"
     },
     {
       "id": "buget-criza",
@@ -516,8 +838,16 @@
       "weight": 5,
       "minDay": 9,
       "effects": {
-        "funds": { "psd": -40, "pnl": -40, "usr": -20, "aur": -20 },
-        "party": { "psd": -0.02, "pnl": -0.02 }
+        "funds": {
+          "psd": -40,
+          "pnl": -40,
+          "usr": -20,
+          "aur": -20
+        },
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.02
+        }
       }
     },
     {
@@ -527,8 +857,12 @@
       "weight": 3,
       "minDay": 7,
       "effects": {
-        "segments": { "bugetari": 0.02 },
-        "party": { "psd": -0.01 }
+        "segments": {
+          "bugetari": 0.02
+        },
+        "party": {
+          "psd": -0.01
+        }
       }
     },
     {
@@ -538,8 +872,13 @@
       "weight": 4,
       "minDay": 12,
       "effects": {
-        "segments": { "diaspora": 0.03 },
-        "party": { "usr": 0.02, "aur": 0.02 }
+        "segments": {
+          "diaspora": 0.03
+        },
+        "party": {
+          "usr": 0.02,
+          "aur": 0.02
+        }
       }
     },
     {
@@ -549,8 +888,1554 @@
       "weight": 3,
       "minDay": 10,
       "effects": {
-        "party": { "psd": -0.02 },
-        "segments": { "bugetari": -0.01 }
+        "party": {
+          "psd": -0.02
+        },
+        "segments": {
+          "bugetari": -0.01
+        }
+      }
+    },
+    {
+      "id": "niculescu-zoom",
+      "title": "Guvernul se întrunește pe Zoom",
+      "text": "Premierul Luca Niculescu a convocat o ședință de guvern pe Zoom, pentru a discuta ședințele de pe Zoom. Trei miniștri au vorbit cu microfonul închis, doi cu camera închisă, iar unul a intrat din greșeală în ședința altui minister.",
+      "weight": 5,
+      "minDay": 4,
+      "effects": {
+        "segments": {
+          "bugetari": -0.01
+        },
+        "party": {
+          "psd": -0.01
+        },
+        "politician": {
+          "id": "niculescu",
+          "stat": "visibility",
+          "delta": 4
+        }
+      }
+    },
+    {
+      "id": "niculescu-ocde",
+      "title": "România, tot mai aproape de OCDE",
+      "text": "Premierul anunță că România a bifat încă un capitol de aderare la OCDE. Capitolul se numește „Rezistență la birocrație” și s-a încheiat cu un memoriu de 400 de pagini, pe care nimeni nu l-a citit.",
+      "weight": 4,
+      "minDay": 6,
+      "effects": {
+        "segments": {
+          "antreprenori": 0.03,
+          "diaspora": 0.01
+        },
+        "party": {
+          "psd": 0.01,
+          "pnl": 0.01
+        }
+      }
+    },
+    {
+      "id": "motiune-amenintare",
+      "title": "Se vorbește din nou de moțiune",
+      "text": "Un lider anunță că „nu exclude nimic”, nici moțiunea, nici ploaia. Opoziția pregătește textul, puterea pregătește explicația, iar pe culoar toți pregătesc cafeaua.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "party": {
+          "psd": -0.01,
+          "pnl": -0.01,
+          "aur": 0.02
+        },
+        "segments": {
+          "antreprenori": -0.01
+        }
+      }
+    },
+    {
+      "id": "fitch-recesiune",
+      "title": "Agențiile de rating avertizează: risc de recesiune",
+      "text": "O agenție internațională avertizează că economia României ar putea încetini. Ministrul de finanțe a confirmat că economia va încetini „într-un ritm sustenabil”, adică exact cum a prevăzut bugetul.",
+      "weight": 5,
+      "minDay": 12,
+      "effects": {
+        "segments": {
+          "antreprenori": -0.03,
+          "bugetari": -0.02
+        },
+        "party": {
+          "psd": -0.015,
+          "pnl": -0.015,
+          "aur": 0.015
+        }
+      }
+    },
+    {
+      "id": "congres-usr",
+      "title": "Congres USR la Timișoara",
+      "text": "USR își alege noul Birou Național. Delegații au votat în unanimitate, prin ridicare de mână, o rezoluție care promite că „ne ținem de treabă, ne ținem de cuvânt”. Nimeni nu a întrebat ce treabă.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "countyParty": {
+          "timis": {
+            "usr": 0.08
+          }
+        },
+        "segments": {
+          "tineri_urbani": 0.01
+        },
+        "party": {
+          "usr": 0.015
+        }
+      }
+    },
+    {
+      "id": "ordonanta-urgenta",
+      "title": "Ordonanța de urgență cu 14 amendamente",
+      "text": "Guvernul adoptă o ordonanță de urgență care are mai multe alineate decât urgențe. Juriștii spun că textul e clar; tot juriștii spun că e clar în patru feluri diferite.",
+      "weight": 5,
+      "minDay": 7,
+      "effects": {
+        "segments": {
+          "antreprenori": -0.02
+        },
+        "party": {
+          "psd": -0.01,
+          "pnl": -0.01
+        }
+      }
+    },
+    {
+      "id": "bac-promovabilitate",
+      "title": "Promovabilitate record la bacalaureat",
+      "text": "Ministerul Educației anunță cea mai mare promovabilitate din istorie, după ce subiectele au fost aprobate de elevi în prealabil. Un profesor a observat că a corectat o lucrare scrisă chiar de el.",
+      "weight": 3,
+      "minDay": 8,
+      "effects": {
+        "segments": {
+          "studenti": 0.01,
+          "bugetari": 0.01
+        },
+        "party": {
+          "psd": 0.01
+        }
+      }
+    },
+    {
+      "id": "indemnizatii-parlament",
+      "title": "Parlamentarii își măresc indemnizația",
+      "text": "Parlamentarii au votat o mărire de indemnizație cu o virgulă mutată. Votul a fost unanim și a durat mai puțin decât pauza de cafea.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {
+        "party": {
+          "psd": -0.02,
+          "pnl": -0.02,
+          "usr": -0.01,
+          "aur": 0.025
+        },
+        "segments": {
+          "pensionari_rural": -0.01,
+          "someri": 0.01
+        }
+      }
+    },
+    {
+      "id": "meci-nationala",
+      "title": "Naționala câștigă, țara sărbătorește",
+      "text": "Naționala de fotbal a câștigat un meci important, iar țara a intrat în sărbătoare. Politicienii au postat câte o poză cu trofeul, deși trofeul era al altcuiva.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "segments": {
+          "tineri_urbani": 0.02,
+          "muncitori": 0.01
+        },
+        "party": {
+          "psd": 0.01,
+          "pnl": 0.01,
+          "aur": 0.01
+        }
+      }
+    },
+    {
+      "id": "tren-intarziere",
+      "title": "Trenul Cluj–București, cu cinci ore întârziere",
+      "text": "Un tren de mare viteză a ajuns la destinație cu cinci ore întârziere. Compania explică: „ajunge oricum, doar că mai târziu”.",
+      "weight": 4,
+      "minDay": 6,
+      "effects": {
+        "segments": {
+          "tineri_urbani": -0.02,
+          "studenti": -0.02
+        },
+        "countyParty": {
+          "cluj": {
+            "psd": -0.05
+          }
+        },
+        "party": {
+          "psd": -0.01
+        }
+      }
+    },
+    {
+      "id": "plafonare-energie",
+      "title": "Facturile la energie, plafonate",
+      "text": "Guvernul plafonează prețul energiei. Furnizorii plafonează și ei: rămân fără explicații. Facturile scad ușor, iar explicațiile cresc.",
+      "after": "criza-energie",
+      "weight": 5,
+      "minDay": 9,
+      "effects": {
+        "segments": {
+          "pensionari_urban": 0.03,
+          "muncitori": 0.02
+        },
+        "funds": {
+          "psd": -30
+        },
+        "party": {
+          "psd": 0.02,
+          "aur": -0.01
+        }
+      }
+    },
+    {
+      "id": "ajutor-fermieri",
+      "title": "Ajutor pentru fermieri, în limite bugetare",
+      "text": "Guvernul alocă ajutoare pentru fermieri, dar banii vor veni „imediat ce se termină ploaia”. Ministrul agriculturii a cerut ploaie la prima ședință de guvern.",
+      "after": "seceta",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "agricultori": 0.04
+        },
+        "countyParty": {
+          "teleorman": {
+            "psd": 0.05
+          },
+          "olt": {
+            "psd": 0.04
+          }
+        },
+        "party": {
+          "psd": 0.01
+        }
+      }
+    },
+    {
+      "id": "utilaje-inaugurare",
+      "title": "Utilajele de deszăpezire, găsite la o inaugurare",
+      "text": "După viscol, s-a aflat că utilajele de deszăpezire participau la o inaugurare. Șoferii au confirmat: erau acolo, pe zăpadă, în picioare.",
+      "after": "viscol",
+      "weight": 5,
+      "minDay": 6,
+      "effects": {
+        "segments": {
+          "pensionari_rural": -0.01,
+          "agricultori": -0.01
+        },
+        "party": {
+          "psd": -0.015
+        }
+      }
+    },
+    {
+      "id": "dezmintire-dezmintita",
+      "title": "Dezmințirea a fost dezmințită",
+      "text": "Dezmințirea știrii false despre „taxa pe aer” a fost la rândul ei dezmințită de un influencer cu 50.000 de urmăritori. Taxa pe aer rămâne, dar nimeni nu știe unde.",
+      "after": "fake-news",
+      "weight": 5,
+      "minDay": 8,
+      "effects": {
+        "segments": {
+          "tineri_urbani": -0.01
+        },
+        "party": {
+          "aur": 0.02,
+          "usr": -0.01
+        }
+      }
+    },
+    {
+      "id": "contramiting-usr",
+      "title": "USR face contramiting în Capitală",
+      "text": "După mitingul AUR, USR a organizat un contramiting de aceeași mărime, în aceeași piață, în aceeași oră, cu alte steaguri. Metroul a câștigat ambele mitinguri.",
+      "after": "miting-aur",
+      "weight": 5,
+      "minDay": 8,
+      "effects": {
+        "countyParty": {
+          "bucuresti": {
+            "usr": 0.09,
+            "aur": -0.04
+          }
+        },
+        "segments": {
+          "tineri_urbani": 0.01
+        }
+      }
+    },
+    {
+      "id": "studenti-protest",
+      "title": "Studenții ies în stradă",
+      "text": "Studenții protestează față de tăierea bugetului educației. Au adus pancarte, megafoane și bilete de avion, pentru cazul în care nu sunt ascultați.",
+      "after": "austeritate-invatamant",
+      "weight": 5,
+      "minDay": 12,
+      "effects": {
+        "convert": [
+          {
+            "from": "studenti",
+            "to": "diaspora",
+            "share": 0.1
+          }
+        ],
+        "party": {
+          "usr": 0.015,
+          "psd": -0.01
+        }
+      }
+    },
+    {
+      "id": "spital-sectie-inchisa",
+      "title": "O secție de spital se închide",
+      "text": "După plecarea medicilor, o secție de spital se închide „temporar, până la o dată viitoare”. Data viitoare a fost fixată pentru data viitoare.",
+      "after": "medici-pleaca",
+      "weight": 5,
+      "minDay": 9,
+      "effects": {
+        "segments": {
+          "bugetari": -0.02,
+          "pensionari_urban": -0.01
+        },
+        "convert": [
+          {
+            "from": "bugetari",
+            "to": "diaspora",
+            "share": 0.08
+          }
+        ],
+        "party": {
+          "psd": -0.015,
+          "pnl": -0.01
+        }
+      }
+    },
+    {
+      "id": "bilete-avion-record",
+      "title": "Bilete de avion, epuizate până în toamnă",
+      "text": "Companiile aeriene anunță rezervări record spre Vest. Tinerii spun că pleacă „doar pentru un an”, aceeași formulă folosită și acum zece ani.",
+      "after": "tineri-pleaca",
+      "weight": 5,
+      "minDay": 14,
+      "effects": {
+        "convert": [
+          {
+            "from": "tineri_urbani",
+            "to": "diaspora",
+            "share": 0.08
+          }
+        ],
+        "party": {
+          "aur": 0.015,
+          "usr": 0.01
+        }
+      }
+    },
+    {
+      "id": "startup-pleaca",
+      "title": "Un startup se mută în altă țară",
+      "text": "Un startup românesc de succes își mută sediul în străinătate. Fondatorul a precizat că rămâne patriot, la distanță, cu fiscalitate redusă.",
+      "after": "it-concedieri",
+      "weight": 4,
+      "minDay": 14,
+      "effects": {
+        "segments": {
+          "antreprenori": -0.02
+        },
+        "convert": [
+          {
+            "from": "antreprenori",
+            "to": "diaspora",
+            "share": 0.06
+          }
+        ],
+        "party": {
+          "pnl": -0.01
+        }
+      }
+    },
+    {
+      "id": "reconciliere-cafea",
+      "title": "Coaliția se împacă la o cafea",
+      "text": "După scandal, liderii coaliției s-au împăcat la o cafea. Cafeaua a fost plătită din banii partidului, scandalul din banii publici.",
+      "after": "coalitie-scandal",
+      "weight": 5,
+      "minDay": 12,
+      "effects": {
+        "party": {
+          "psd": 0.01,
+          "pnl": 0.01
+        }
+      }
+    },
+    {
+      "id": "primar-concediu-lung",
+      "title": "Primarul își prelungește concediul",
+      "text": "Primarul de sector, plecat în concediu după descinderea DNA, și-a prelungit concediul cu încă două săptămâni. Consilierii spun că primăria funcționează bine și fără el, ceea ce nu ajută.",
+      "after": "dosar-dna",
+      "weight": 4,
+      "minDay": 10,
+      "effects": {
+        "party": {
+          "psd": -0.01
+        },
+        "countyParty": {
+          "bucuresti": {
+            "psd": -0.04
+          }
+        }
+      }
+    },
+    {
+      "id": "pensii-inghitite",
+      "title": "Pensiile mărite, mâncate de inflație",
+      "text": "Pensiile au fost majorate, dar prețurile au fost majorate mai repede. Un pensionar a calculat că ar fi avut mai mult dacă nu se mărea nimic.",
+      "after": "pensii-majorate",
+      "weight": 5,
+      "minDay": 13,
+      "effects": {
+        "segments": {
+          "pensionari_rural": -0.02,
+          "pensionari_urban": -0.02
+        },
+        "party": {
+          "psd": -0.015,
+          "aur": 0.015
+        }
+      }
+    },
+    {
+      "id": "diploma-verificata",
+      "title": "Școala verifică diploma din avion",
+      "text": "Școala verifică diploma găsită în avionul Nordis și constată că e valabilă pentru o altă persoană, un alt an și o altă materie. Politicianul spune că diploma a fost „scrisă în spirit”.",
+      "after": "diploma-avion",
+      "weight": 5,
+      "minDay": 8,
+      "effects": {
+        "party": {
+          "psd": -0.015
+        },
+        "politician": {
+          "id": "ciolacu",
+          "stat": "gaffes",
+          "delta": 4
+        }
+      }
+    },
+    {
+      "id": "cotroceni-diurne",
+      "title": "Angajații Cotroceniului cer diurne pentru Sibiu",
+      "text": "După anunțul mutării Cotroceniului la Sibiu, angajații au cerut diurne retroactive. Sibiul a cerut rezidența, Capitala a cerut explicații.",
+      "after": "iohannis-sibiu",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "countyParty": {
+          "sibiu": {
+            "pnl": 0.05,
+            "psd": -0.03
+          }
+        },
+        "party": {
+          "pnl": 0.01
+        }
+      }
+    },
+    {
+      "id": "trump-prelungire",
+      "title": "Trump a cerut prelungire la temă",
+      "text": "Casa Albă a anunțat oficial că cere o prelungire la tema de la Nicușor Dan. Cotroceniul a răspuns: „prelungirea e aprobată, dar cu penalități”.",
+      "after": "nicusor-tarife",
+      "weight": 5,
+      "minDay": 9,
+      "effects": {
+        "segments": {
+          "antreprenori": 0.02
+        },
+        "party": {
+          "usr": 0.015
+        }
+      }
+    },
+    {
+      "id": "bloc-bulinat",
+      "title": "Blocurile bulinate, evacuate din precauție",
+      "text": "După cutremur, pe zeci de blocuri au apărut buline roșii. Locatarii au întrebat ce înseamnă; primăria a răspuns că bulina e „un semn de atenție”, nu și de soluție.",
+      "after": "cutremur-bucuresti",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "segments": {
+          "pensionari_urban": -0.015
+        },
+        "countyParty": {
+          "bucuresti": {
+            "psd": -0.04,
+            "pnl": -0.03
+          }
+        }
+      }
+    },
+    {
+      "id": "grindeanu-aniversare",
+      "title": "Autostrada Grindeanu, aniversată fără autostradă",
+      "text": "La un an de la anunțul unui nou tronson, tronsonul a fost aniversat cu tort și panglică. Din păcate, tortul era singura construcție terminată.",
+      "after": "autostrada-cutremur",
+      "weight": 4,
+      "minDay": 14,
+      "effects": {
+        "party": {
+          "psd": -0.015
+        },
+        "segments": {
+          "muncitori": 0.01
+        },
+        "politician": {
+          "id": "grindeanu",
+          "stat": "visibility",
+          "delta": 3
+        }
+      }
+    },
+    {
+      "id": "d-greva-medici",
+      "title": "Greva generală a medicilor",
+      "text": "Medicii intră în grevă generală. Ministrul spune că secțiile funcționează „la capacitate redusă”. Pacienții spun că funcționează la capacitatea de așteptare.",
+      "weight": 5,
+      "minDay": 7,
+      "effects": {
+        "segments": {
+          "bugetari": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Susții greva",
+          "hint": "Gratuit · bugetarii te apreciază, guvernul te critică",
+          "text": "Ai anunțat sprijin pentru medici. Ministrul a aflat din presă.",
+          "effects": {
+            "segBoost": {
+              "bugetari": 1.08
+            },
+            "party": {
+              "self": -0.005
+            }
+          }
+        },
+        {
+          "label": "Promiți un pachet de legi",
+          "hint": "Costă 50 · un pic de speranță",
+          "cost": 50,
+          "text": "Ai promis un pachet de legi. Pachetul are 14 anexe și o virgulă.",
+          "effects": {
+            "segBoost": {
+              "bugetari": 1.04,
+              "pensionari_urban": 1.02
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai preferat să nu comentezi. Ai comentat asta într-un comunicat.",
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "d-fabrica-concediaza",
+      "title": "O fabrică anunță concedieri colective",
+      "text": "O fabrică importantă anunță concedieri colective. Muncitorii așteaptă un semn, patronul așteaptă un ajutor de stat, iar primarul așteaptă să treacă furtuna.",
+      "weight": 5,
+      "minDay": 8,
+      "effects": {
+        "segments": {
+          "muncitori": -0.02
+        },
+        "convert": [
+          {
+            "from": "muncitori",
+            "to": "someri",
+            "share": 0.04
+          }
+        ]
+      },
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri un ajutor de stat",
+          "hint": "Costă 80 · muncitorii te susțin, antreprenorii nu",
+          "cost": 80,
+          "text": "Ai cerut un ajutor de stat pentru fabrică. Statul a promis, patronul a promis, fabrica a rămas.",
+          "effects": {
+            "segBoost": {
+              "muncitori": 1.09,
+              "antreprenori": 0.97
+            }
+          }
+        },
+        {
+          "label": "Dai vina pe guvern",
+          "hint": "Gratuit · mic câștig la muncitori",
+          "text": "Ai dat vina pe guvern. Guvernul a dat vina pe tine.",
+          "effects": {
+            "segBoost": {
+              "muncitori": 1.03
+            },
+            "party": {
+              "self": 0.005
+            }
+          }
+        },
+        {
+          "label": "Propui recalificare",
+          "hint": "Costă 40 · tinerii apreciază, muncitorii se îndoiesc",
+          "cost": 40,
+          "text": "Ai propus cursuri de recalificare. Primul curs: cum să te recalifici.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.04,
+              "muncitori": 0.98
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-dezbatere-tv",
+      "title": "O televiziune te invită la dezbatere",
+      "text": "O televiziune te invită la o dezbatere în direct, la ora de vârf. Alți invitați: patru comentatori, un moderator nervos și un fotoliu gol, rezervat unui politician care nu va veni.",
+      "weight": 5,
+      "minDay": 6,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Accepți",
+          "hint": "Costă 30 · pensionarii urbani te văd, dar riști gafa",
+          "cost": 30,
+          "text": "Ai intrat în direct și ai vorbit 12 minute. Ultimele 10 au fost despre alt subiect.",
+          "effects": {
+            "segBoost": {
+              "pensionari_urban": 1.07,
+              "bugetari": 1.03
+            },
+            "party": {
+              "self": -0.005
+            }
+          }
+        },
+        {
+          "label": "Refuzi, trimiți un purtător de cuvânt",
+          "hint": "Gratuit · fără risc, fără câștig",
+          "text": "Ai trimis un purtător de cuvânt. A vorbit mult și a spus puțin, exact cum ai cerut.",
+          "effects": {
+            "segBoost": {
+              "pensionari_urban": 1.01
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-donatie-afacerist",
+      "title": "Un om de afaceri vrea să-ți doneze",
+      "text": "Un om de afaceri îți oferă o donație generoasă pentru campanie. Nu cere nimic, doar „o întâlnire în privat, într-o zi liberă, cu discreție”.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Accepți donația",
+          "hint": "+120 fonduri · imaginea suferă",
+          "text": "Ai acceptat donația. Presa a aflat despre întâlnire înainte să o ai.",
+          "effects": {
+            "funds": {
+              "self": 120
+            },
+            "party": {
+              "self": -0.025
+            }
+          }
+        },
+        {
+          "label": "Refuzi public",
+          "hint": "Gratuit · câștigi încredere",
+          "text": "Ai refuzat public, cu o conferință de presă. Conferința a costat mai mult decât donația.",
+          "effects": {
+            "party": {
+              "self": 0.015
+            },
+            "segBoost": {
+              "tineri_urbani": 1.03,
+              "studenti": 1.03
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-sondaj-comandat",
+      "title": "Un institut îți oferă un sondaj favorabil",
+      "text": "Un institut de sondare îți oferă un sondaj în care ești cu 4 puncte mai sus. Metodologia: „am întrebat prietenii”.",
+      "weight": 4,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Cumperi sondajul",
+          "hint": "Costă 60 · un impuls rapid",
+          "cost": 60,
+          "text": "Sondajul a apărut în presă. Cifrele au fost publicate, metodologia nu.",
+          "effects": {
+            "party": {
+              "self": 0.02
+            }
+          }
+        },
+        {
+          "label": "Refuzi",
+          "hint": "Gratuit · mic plus de încredere",
+          "text": "Ai refuzat. Institutul a găsit alt client în aceeași zi.",
+          "effects": {
+            "party": {
+              "self": 0.005
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-inundatii-sud",
+      "title": "Inundații în sudul țării",
+      "text": "Râurile au ieșit din matcă în trei județe din sud. Oamenii au nevoie de saci cu nisip, iar autoritățile au nevoie de o ședință. Au făcut întâi ședința.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "segments": {
+          "agricultori": -0.02
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Trimiți ajutoare în zonă",
+          "hint": "Costă 70 · câștigi în sud",
+          "cost": 70,
+          "text": "Ai trimis ajutoare. Ajutoarele au ajuns primele, ședința a ajuns a doua.",
+          "effects": {
+            "county": {
+              "teleorman": {
+                "party": {
+                  "self": 0.1
+                }
+              },
+              "olt": {
+                "party": {
+                  "self": 0.08
+                }
+              },
+              "dolj": {
+                "party": {
+                  "self": 0.06
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "Vii personal, în cizme",
+          "hint": "Costă 30 · poze bune, un singur județ",
+          "cost": 30,
+          "text": "Ai venit în cizme noi. Pozele au ieșit bine; cizmele nu au văzut apă.",
+          "effects": {
+            "county": {
+              "teleorman": {
+                "party": {
+                  "self": 0.07
+                }
+              }
+            },
+            "segBoost": {
+              "agricultori": 1.04
+            }
+          }
+        },
+        {
+          "label": "Ceri o anchetă",
+          "hint": "Gratuit · nimic nu se schimbă",
+          "text": "Ai cerut o anchetă. Ancheta a început cu o ședință.",
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "d-primar-traseist",
+      "title": "Un primar vrea să treacă la tine",
+      "text": "Un primar cu vechime, fost în trei partide, vrea să treacă la tine. Spune că a fost mereu de partea ta, indiferent de partid, indiferent de culoare.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Îl primești cu fanfară",
+          "hint": "Gratuit · câștig local, mic cost de imagine",
+          "text": "L-ai primit cu fanfară. Fanfara a cântat imnul altui partid, din obișnuință.",
+          "effects": {
+            "countyBoostAll": 0.02,
+            "party": {
+              "self": -0.01
+            }
+          }
+        },
+        {
+          "label": "Îl refuzi politicos",
+          "hint": "Gratuit · eviți un scandal",
+          "text": "L-ai refuzat politicos. A fost găzduit imediat de un alt partid, tot politicos.",
+          "effects": {
+            "party": {
+              "self": 0.005
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-vot-corespondenta",
+      "title": "Se discută votul prin corespondență",
+      "text": "Parlamentul dezbate votul prin corespondență pentru diaspora. Argumentele sunt solide, procedurile sunt confuze, iar plicurile se numesc „plicuri albastre”.",
+      "weight": 4,
+      "minDay": 12,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Susții votul prin corespondență",
+          "hint": "Costă 40 · diaspora te vrea, ruralul dă din umeri",
+          "cost": 40,
+          "text": "Ai susținut votul prin corespondență. Diaspora a aplaudat, poștașul a tăcut.",
+          "effects": {
+            "segBoost": {
+              "diaspora": 1.09,
+              "pensionari_rural": 0.98
+            }
+          }
+        },
+        {
+          "label": "Ceri doar vot la secție",
+          "hint": "Gratuit · ruralul te aplaudă",
+          "text": "Ai cerut vot doar la secție. Diaspora a notat.",
+          "effects": {
+            "segBoost": {
+              "pensionari_rural": 1.03,
+              "diaspora": 0.96
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-clip-manele",
+      "title": "Ți se propune un clip cu manele",
+      "text": "Echipa ta de comunicare propune un clip de campanie pe ritm de manea. Consilierii spun că „ajunge la tineri”; bunica unui consilier spune că „ajunge și la bunici”.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Lansezi clipul",
+          "hint": "Costă 30 · tinerii se amuză, bugetarii nu",
+          "cost": 30,
+          "text": "Clipul a strâns 3 milioane de vizualizări. Un milion au fost de la oameni care voiau să se asigure că e real.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.07,
+              "studenti": 1.04,
+              "bugetari": 0.97
+            }
+          }
+        },
+        {
+          "label": "Alegi un clip solemn",
+          "hint": "Costă 20 · bugetarii și pensionarii aprobă",
+          "cost": 20,
+          "text": "Ai ales un clip solemn, cu orchestră. Nimeni nu l-a recunoscut, dar toți au ascultat respectuos.",
+          "effects": {
+            "segBoost": {
+              "bugetari": 1.04,
+              "pensionari_urban": 1.04,
+              "tineri_urbani": 0.98
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-protest-piata",
+      "title": "Protest în piața centrală",
+      "text": "O mulțime protestează în piața centrală împotriva unei măsuri de guvern. Cineva te-a identificat în mulțime, cineva te-a identificat acasă.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {
+        "party": {
+          "psd": -0.005,
+          "pnl": -0.005
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.005
+        }
+      },
+      "choices": [
+        {
+          "label": "Te alături protestatarilor",
+          "hint": "Gratuit · tinerii și bugetarii te aplaudă",
+          "text": "Ai mers în piață. Ai ținut o pancartă pe care scria exact ce scria pe a celorlalți.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.05,
+              "bugetari": 1.04
+            },
+            "party": {
+              "self": 0.005
+            }
+          }
+        },
+        {
+          "label": "Ceri dialog",
+          "hint": "Costă 20 · moderat, fără pericole",
+          "cost": 20,
+          "text": "Ai cerut dialog. Dialogul a început cu o masă rotundă, care s-a transformat într-o masă pătrată.",
+          "effects": {
+            "segBoost": {
+              "bugetari": 1.02,
+              "antreprenori": 1.02
+            }
+          }
+        },
+        {
+          "label": "Lași purtătorul de cuvânt",
+          "hint": "Gratuit · nimic nu se schimbă",
+          "text": "Purtătorul de cuvânt a vorbit zece minute. Zece minute au fost de liniște.",
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "d-scandal-tiktok",
+      "title": "Un consilier a postat o gafă pe TikTok",
+      "text": "Un consilier al tău a postat un clip în care „cine nu înțelege bugetul nu înțelege nici cifrele”. Clipul are 1,2 milioane de vizualizări și o mie de capturi de ecran.",
+      "weight": 4,
+      "minDay": 6,
+      "effects": {
+        "segments": {
+          "tineri_urbani": 0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.015
+        }
+      },
+      "choices": [
+        {
+          "label": "Îl concediezi",
+          "hint": "Gratuit · calm, dar puțin zgomot",
+          "text": "Ai concediat consilierul. Consilierul a postat despre asta.",
+          "effects": {
+            "party": {
+              "self": 0.005
+            }
+          }
+        },
+        {
+          "label": "Îl aperi",
+          "hint": "Gratuit · tinerii se amuză, restul mai puțin",
+          "text": "L-ai apărat. Clipul a primit o a doua viață și un al doilea scandal.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.04
+            },
+            "party": {
+              "self": -0.015
+            }
+          }
+        },
+        {
+          "label": "Faci tu un clip mai bun",
+          "hint": "Costă 40 · risc și șanse",
+          "cost": 40,
+          "text": "Ai făcut un clip și mai bun. Clipul a strâns mai multe vizualizări decât toate discursurile tale la un loc.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.06,
+              "studenti": 1.04
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-tranzactie-teren",
+      "title": "O primărie vinde un teren pe nimic",
+      "text": "Primăria unui oraș important vinde un teren public la preț de apartament în bloc. Cumpărătorul are un nume cunoscut, un notar prieten și o zi liberă.",
+      "weight": 4,
+      "minDay": 11,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri transparență",
+          "hint": "Gratuit · tinerii și antreprenorii apreciază",
+          "text": "Ai cerut transparență. Primăria a trimis un dosar de 400 de pagini în format fotografie.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.04,
+              "tineri_urbani": 1.04
+            }
+          }
+        },
+        {
+          "label": "Faci o plângere penală",
+          "hint": "Costă 40 · semnal clar, dar încet",
+          "cost": 40,
+          "text": "Ai depus o plângere penală. Plângerea a primit numărul 12.345 și a intrat în rând.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.03,
+              "bugetari": 1.03
+            },
+            "party": {
+              "self": 0.01
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-afis-electoral",
+      "title": "Afișul electoral are o greșeală de ortografie",
+      "text": "Afișul de campanie a ajuns pe 500 de panouri. Pe toate, numele orașului e scris greșit. Orașul a răspuns cu alt afiș.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {},
+      "ignore": {},
+      "choices": [
+        {
+          "label": "Refaci toate afișele",
+          "hint": "Costă 60 · imagine curată",
+          "cost": 60,
+          "text": "Ai refăcut afișele. Greșeala nouă a fost mai mică, dar greșeala veche a rămas în arhivă.",
+          "effects": {
+            "party": {
+              "self": 0.005
+            }
+          }
+        },
+        {
+          "label": "Faci glumă pe seama greșelii",
+          "hint": "Gratuit · tinerii râd cu tine",
+          "text": "Ai făcut o glumă și ai câștigat o zi de simpatie. Greșeala a rămas pe panouri.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.03,
+              "studenti": 1.03
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "harghita-zapada",
+      "title": "Sezon bun pe pârtiile din Harghita",
+      "text": "Zăpada a venit la timp, turiștii la fel, doar telescaunul a întârziat. Pensiunile sunt pline, iar primarii promit „o infrastructură pe măsură”, cândva.",
+      "weight": 3,
+      "minDay": 4,
+      "effects": {
+        "county": {
+          "harghita": {
+            "segments": {
+              "antreprenori": 0.04
+            },
+            "party": {
+              "udmr": 0.1
+            }
+          },
+          "covasna": {
+            "party": {
+              "udmr": 0.06
+            }
+          }
+        },
+        "party": {
+          "udmr": 0.01
+        }
+      }
+    },
+    {
+      "id": "valea-jiului-minele",
+      "title": "Valea Jiului: ultima mină, ultimul schimb",
+      "text": "Ultima mină din zonă închide poarta. Mineritul e istorie, recalificarea e proiect, iar proiectul a început cu un proiect.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "county": {
+          "hunedoara": {
+            "convert": [
+              {
+                "from": "muncitori",
+                "to": "someri",
+                "share": 0.1
+              }
+            ],
+            "party": {
+              "psd": -0.08,
+              "aur": 0.06
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rovinari-centrala",
+      "title": "Centrala de la Rovinari își reduce producția",
+      "text": "Centrala pe cărbune reduce producția în numele tranziției verzi. Muncitorii spun că tranziția nu e verde, e doar lungă.",
+      "weight": 4,
+      "minDay": 8,
+      "effects": {
+        "county": {
+          "gorj": {
+            "convert": [
+              {
+                "from": "muncitori",
+                "to": "someri",
+                "share": 0.08
+              }
+            ],
+            "party": {
+              "psd": -0.06,
+              "aur": 0.05,
+              "pot": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aeroport-craiova",
+      "title": "Un zbor nou la Craiova",
+      "text": "Aeroportul Craiova primește un zbor nou. Primarul a anunțat „o nouă eră”, pasagerii au anunțat că bagajul a ajuns la Roma.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "dolj": {
+            "segments": {
+              "diaspora": 0.02
+            },
+            "party": {
+              "psd": 0.07,
+              "pnl": 0.02
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "port-constanta-record",
+      "title": "Portul Constanța bate recorduri",
+      "text": "Portul Constanța a înregistrat un volum record de mărfuri. Vapoarele au fost fericite, șoferii de TIR au stat la coadă o zi și jumătate.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "county": {
+          "constanta": {
+            "segments": {
+              "muncitori": 0.03,
+              "antreprenori": 0.02
+            },
+            "party": {
+              "pnl": 0.07,
+              "psd": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "metrou-iasi",
+      "title": "Iașul primește un metrou, desenat pe hârtie",
+      "text": "Proiectul metroului din Iași a fost prezentat în fața a 200 de oameni și 4 hărți. Hărțile sunt de acum opt ani, oamenii s-au schimbat.",
+      "weight": 3,
+      "minDay": 7,
+      "effects": {
+        "county": {
+          "iasi": {
+            "segments": {
+              "tineri_urbani": 0.03
+            },
+            "party": {
+              "usr": 0.06,
+              "pnl": 0.04,
+              "aur": -0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "chirii-cluj",
+      "title": "Chiriile din Cluj depășesc salariile",
+      "text": "O garsonieră din Cluj costă cât un salariu mediu și jumătate din altul. Studenții au propus să plătească în porții, ca la restaurant.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {
+        "county": {
+          "cluj": {
+            "convert": [
+              {
+                "from": "studenti",
+                "to": "diaspora",
+                "share": 0.08
+              }
+            ],
+            "party": {
+              "usr": -0.06,
+              "aur": 0.04,
+              "pnl": -0.02
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "baterii-timisoara",
+      "title": "O fabrică de baterii vine la Timișoara",
+      "text": "O companie asiatică anunță o fabrică de baterii la Timișoara. Primarul și președintele consiliului județean au tăiat panglica de două ori, fiecare pe ale lui.",
+      "weight": 3,
+      "minDay": 8,
+      "effects": {
+        "county": {
+          "timis": {
+            "segments": {
+              "muncitori": 0.06,
+              "antreprenori": 0.03
+            },
+            "party": {
+              "pnl": 0.06,
+              "usr": 0.04
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aeroport-brasov",
+      "title": "Aeroportul Brașov: zboară un singur avion",
+      "text": "Aeroportul Brașov a avut o zi record: a aterizat un avion. Pasagerii au aplaudat la aterizare, pilotul a aplaudat la decolare.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "county": {
+          "brasov": {
+            "segments": {
+              "antreprenori": 0.02
+            },
+            "party": {
+              "pnl": 0.05,
+              "usr": 0.04
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "sibiu-teatru",
+      "title": "Festivalul de teatru, plin la Sibiu",
+      "text": "Sibiul găzduiește un festival de teatru cu spectacole în opt limbi. Un spectator a ieșit în pauză și a întrebat ce limbă e aceea; era română.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "sibiu": {
+            "segments": {
+              "tineri_urbani": 0.03
+            },
+            "party": {
+              "pnl": 0.05,
+              "usr": 0.05
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "bucuresti-trafic-blocat",
+      "title": "Capitala se blochează complet",
+      "text": "Circulația din București s-a blocat într-un singur sens, pe cinci benzi. Un șofer a ajuns la destinație la 20 de minute după ce a ajuns acasă.",
+      "weight": 4,
+      "minDay": 7,
+      "effects": {
+        "county": {
+          "bucuresti": {
+            "party": {
+              "usr": -0.05,
+              "pnl": -0.05,
+              "psd": -0.03,
+              "aur": 0.06
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ilfov-blocuri",
+      "title": "Ilfovul se umple de blocuri noi",
+      "text": "Satele din jurul Capitalei au devenit cartiere. Un ghid local spune: „aici era o vacă; acum e un parc de vaci, adică de mașini”.",
+      "weight": 3,
+      "minDay": 7,
+      "effects": {
+        "county": {
+          "ilfov": {
+            "segments": {
+              "tineri_urbani": 0.05
+            },
+            "convert": [
+              {
+                "from": "pensionari_rural",
+                "to": "pensionari_urban",
+                "share": 0.06
+              }
+            ],
+            "party": {
+              "usr": 0.05,
+              "pnl": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "suceava-sarbatori",
+      "title": "Suceava se umple de mașini cu număr străin",
+      "text": "Diaspora se întoarce acasă de sărbători. Drumurile sunt pline de mașini cu număr străin și cu portbagaje pline de cadouri, brânză și speranță.",
+      "weight": 3,
+      "minDay": 4,
+      "effects": {
+        "county": {
+          "suceava": {
+            "segments": {
+              "diaspora": 0.05
+            },
+            "party": {
+              "aur": 0.06,
+              "usr": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "spital-botosani",
+      "title": "Spital nou la Botoșani, pe hârtie",
+      "text": "Botoșaniul primește un spital nou, cu trei etaje, zece secții și o piatră de temelie. Piatra a fost pusă a treia oară, pentru că prima nu ieșea bine în poză.",
+      "weight": 3,
+      "minDay": 8,
+      "effects": {
+        "county": {
+          "botosani": {
+            "segments": {
+              "bugetari": 0.02
+            },
+            "party": {
+              "psd": 0.06,
+              "aur": -0.02
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "vaslui-statistici",
+      "title": "Vasluiul, pe primul loc la statistici nepotrivite",
+      "text": "Vasluiul conduce un clasament la care nimeni n-a vrut să participe. Primarul a cerut o renumărare; renumărarea a ieșit la fel.",
+      "weight": 3,
+      "minDay": 7,
+      "effects": {
+        "county": {
+          "vaslui": {
+            "convert": [
+              {
+                "from": "agricultori",
+                "to": "someri",
+                "share": 0.04
+              }
+            ],
+            "party": {
+              "aur": 0.06,
+              "psd": -0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "parc-eolian-teleorman",
+      "title": "Parc eolian în Teleorman, fără vânt",
+      "text": "Un parc eolian s-a inaugurat în Teleorman. Elicele s-au învârtit un minut, cât a ținut discursul, apoi au așteptat vântul.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "county": {
+          "teleorman": {
+            "segments": {
+              "muncitori": 0.03
+            },
+            "party": {
+              "psd": 0.05,
+              "pnl": 0.02
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "maramures-turism",
+      "title": "Turism record în Maramureș",
+      "text": "Cimitirul Vesel și satele tradiționale sunt pline de turiști. Un ghid spune că a explicat trei ore ce înseamnă „vesel” și nu a fost crezut.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "maramures": {
+            "segments": {
+              "antreprenori": 0.04
+            },
+            "party": {
+              "pnl": 0.05,
+              "aur": 0.02
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "oradea-europa",
+      "title": "Oradea, tot mai sus în clasamentele europene",
+      "text": "Un clasament european pune Oradea printre orașele cu cea mai mare creștere. Primarul a promis că nu se mândrește; a anunțat asta de patru ori.",
+      "weight": 3,
+      "minDay": 6,
+      "effects": {
+        "county": {
+          "bihor": {
+            "segments": {
+              "antreprenori": 0.03,
+              "tineri_urbani": 0.02
+            },
+            "party": {
+              "pnl": 0.08
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "combinat-galati",
+      "title": "Combinatul din Galați închide un cuptor",
+      "text": "Combinatul siderurgic stinge un cuptor. Șase sute de oameni se întreabă dacă e de bine sau de rău; administrația zice că „depinde de cuptor”.",
+      "weight": 4,
+      "minDay": 9,
+      "effects": {
+        "county": {
+          "galati": {
+            "convert": [
+              {
+                "from": "muncitori",
+                "to": "someri",
+                "share": 0.1
+              }
+            ],
+            "party": {
+              "psd": -0.08,
+              "aur": 0.06,
+              "sos": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "prahova-ski",
+      "title": "Sezon bun la ski pe Valea Prahovei",
+      "text": "Pârtiile din Sinaia și Predeal sunt pline. Autostrada nu e încă gata, așa că turiștii au venit pe DN1 și au ajuns, în principiu, la pârtie.",
+      "weight": 3,
+      "minDay": 4,
+      "effects": {
+        "county": {
+          "prahova": {
+            "segments": {
+              "antreprenori": 0.04
+            },
+            "party": {
+              "pnl": 0.05,
+              "usr": 0.03
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "spital-targu-mures",
+      "title": "Spitalul din Târgu Mureș, pe linia de plutire",
+      "text": "Spitalul județean primește o aparatură nouă. Medicii se bucură, pacienții se bucură, iar aparatul stă în ambalaj până vine un tehnician din alt județ.",
+      "weight": 3,
+      "minDay": 7,
+      "effects": {
+        "county": {
+          "mures": {
+            "segments": {
+              "bugetari": 0.02
+            },
+            "party": {
+              "udmr": 0.07,
+              "psd": 0.02
+            }
+          }
+        }
       }
     }
   ]

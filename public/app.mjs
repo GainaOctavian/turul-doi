@@ -5,8 +5,11 @@ import {
   applyAction,
   offerCoalition,
   acceptCoalition,
+  decide,
+  fireEvent,
   ACTIONS,
 } from "/shared/engine.mjs";
+import { portrait } from "/portraits.mjs";
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -21,6 +24,15 @@ const S = {
   game: null,
   snap: null,
   selected: "cluj",
+  lastSpeed: 1,
+  teamAll: false,
+  busy: false,
+  panelDirty: false,
+  panelHtml: "",
+  panelKey: "",
+  topbarHtml: "",
+  tickerHtml: "",
+  decisionKey: "",
   tab: "county",
   lastTick: 0,
   es: null,
@@ -81,6 +93,14 @@ async function boot() {
 
   buildStart();
   buildMap();
+  setupEvents();
+
+  // Space pauses and resumes, unless the user is typing in a field.
+  document.addEventListener("keydown", (e) => {
+    if (e.code !== "Space" || !S.snap || e.target.closest("input, select, textarea")) return;
+    e.preventDefault();
+    togglePause();
+  });
 }
 
 /* ------------------------------------------------------------- start UI */
@@ -152,6 +172,8 @@ async function startGame() {
     const params = new URLSearchParams(location.search);
     const skip = Math.max(0, Math.min(400, Number(params.get("day") || 0)));
     if (skip) tick(S.game, S.data, skip);
+    // Debug: ?event=<id> fires one event at the start (for testing decisions).
+    if (params.get("event")) fireEvent(S.game, S.data, params.get("event"));
     S.snap = snapshot(S.game, S.data);
     S.lastTick = performance.now();
     showApp();
@@ -209,9 +231,9 @@ function showApp() {
 }
 
 function soloLoop() {
-  if (!S.game) return;
+  if (!S.game || S.game.speed === 0) return;
   const now = performance.now();
-  const interval = S.data.config.tickMs / (S.game.speed || 1);
+  const interval = S.data.config.tickMs / S.game.speed;
   if (now - S.lastTick < interval) return;
   S.lastTick = now;
   tick(S.game, S.data, 1);
@@ -269,6 +291,7 @@ function render() {
   renderTabs();
   renderPanel();
   renderTicker();
+  renderDecision();
   renderToast();
   renderResult();
 }
@@ -278,10 +301,12 @@ function renderTopbar() {
   const party = s.parties[S.party];
   const daysLeft = Math.max(0, s.electionDay - s.day);
   const gov = party?.gov ? `<span class="chip" style="border-color:${color(S.party)}66">GUVERN</span>` : "";
-  $("#topbar").innerHTML = `
+  const paused = s.speed === 0;
+  const html = `
     <div class="tb-brand"><div class="flag"><i></i><i></i><i></i></div>TURUL DOI</div>
     <div class="tb-date"><b>${fmtDate(s.date)}</b><span>ziua ${s.day} · alegeri în ${daysLeft} zile</span></div>
     <div class="speeds">
+      <button data-toggle-pause class="${paused ? "active" : ""}" title="Pauză / reia (Space)">${paused ? "▶ Reia" : "❚❚ Pauză"}</button>
       ${[1, 2, 4]
         .map((v) => `<button data-speed="${v}" class="${s.speed === v ? "active" : ""}">${v}x</button>`)
         .join("")}
@@ -291,20 +316,47 @@ function renderTopbar() {
     <span class="chip"><span class="dot" style="--pc:${color(S.party)}"></span>${pname(S.party)} · <b>${num(party?.funds ?? 0)}</b> fonduri</span>
     <span class="chip">Capital <b>${num(party?.capital ?? 0)}</b></span>
     <span class="chip">Mandate <b>${num(party?.seats ?? 0)}</b></span>
-    ${S.room ? `<span class="chip">Cameră <b class="room-code">${esc(S.room)}</b></span>` : ""}
+    ${S.room ? playersChips(s) : ""}
+    ${S.room ? `<button class="chip room-chip" data-copy-room title="Copiază codul ca să intre și ceilalți">Cod cameră <b class="room-code">${esc(S.room)}</b> ⧉</button>` : ""}
   `;
-  $$("[data-speed]", $("#topbar")).forEach((btn) =>
-    btn.addEventListener("click", () => {
-      const v = Number(btn.dataset.speed);
-      if (S.mode === "solo") {
-        S.game.speed = v;
-        S.snap.speed = v;
-        renderTopbar();
-      } else {
-        post(`/api/rooms/${S.room}/speed`, { party: S.party, speed: v });
-      }
-    }),
-  );
+  if (html === S.topbarHtml) return;
+  S.topbarHtml = html;
+  $("#topbar").innerHTML = html;
+}
+
+function playersChips(s) {
+  const players = s.players ?? {};
+  return Object.entries(players)
+    .map(
+      ([pid, name]) =>
+        `<span class="chip ${pid === S.party ? "me" : ""}" title="${pname(pid)}"><span class="dot" style="--pc:${color(pid)}"></span>${esc(name)}</span>`,
+    )
+    .join("");
+}
+
+function setSpeed(v) {
+  if (v > 0) S.lastSpeed = v;
+  if (S.mode === "solo") {
+    S.game.speed = v;
+    S.snap.speed = v;
+    renderTopbar();
+  } else {
+    post(`/api/rooms/${S.room}/speed`, { party: S.party, speed: v });
+  }
+}
+
+function togglePause() {
+  if (!S.snap) return;
+  setSpeed(S.snap.speed === 0 ? S.lastSpeed : 0);
+}
+
+async function copyRoomCode() {
+  try {
+    await navigator.clipboard.writeText(S.room);
+    toast("Cod copiat", `Trimite-le celorlalți codul ${S.room}.`);
+  } catch {
+    toast("Cod cameră", `Codul este ${S.room}.`);
+  }
 }
 
 function renderMap() {
@@ -374,9 +426,33 @@ function renderTabs() {
 function renderPanel() {
   const fn = { county: panelCounty, actions: panelActions, news: panelNews, poll: panelPoll, team: panelTeam }[S.tab];
   const panel = $("#panel");
-  panel.innerHTML = fn ? fn() : "";
-  panel.scrollTop = 0;
-  wirePanel();
+  const active = document.activeElement;
+  const picking = panel.contains(active) && active.matches("select, input");
+  // Never swap the DOM under a pressed button or an open dropdown.
+  if (S.busy || picking) {
+    S.panelDirty = true;
+    return;
+  }
+  const key = `${S.tab}|${S.selected}|${S.teamAll}`;
+  const html = fn ? fn() : "";
+  if (html === S.panelHtml && key === S.panelKey) return;
+
+  const same = key === S.panelKey;
+  const top = same ? panel.scrollTop : 0;
+  const picks = {};
+  $$("select", panel).forEach((el) => (picks[el.id] = el.value));
+  const open = $$("details", panel).map((d) => d.open);
+
+  panel.innerHTML = html;
+  for (const [id, value] of Object.entries(picks)) {
+    const el = id ? document.getElementById(id) : null;
+    if (el) el.value = value;
+  }
+  if (same) $$("details", panel).forEach((d, i) => open[i] != null && (d.open = open[i]));
+  panel.scrollTop = top;
+  S.panelHtml = html;
+  S.panelKey = key;
+  S.panelDirty = false;
 }
 
 function panelCounty() {
@@ -419,19 +495,36 @@ function panelCounty() {
       )
       .join("")}
 
-    <h3>Acțiuni rapide la ${esc(c.name)}</h3>
-    <div class="row wrap">
-      <button class="btn" data-quick="rally">Miting</button>
-      <button class="btn" data-quick="deal">Înțelegere locală</button>
-    </div>
-    <div class="row" style="margin-top:8px;gap:8px">
-      <select id="rival">${S.data.parties.parties
+    <h3>Acțiuni în ${esc(c.name)}</h3>
+    ${ACTIONS.filter((a) => a.target === "county" || a.target === "county-party")
+      .map((a) => {
+        const status = actionStatus(s, S.party, a);
+        return `<div class="action-card">
+          <div class="ac-name">${a.name}</div>
+          <div class="ac-desc">${a.desc}</div>
+          <div class="ac-meta">${a.cost} fonduri · ${status}</div>
+          <button data-quick="${a.id}" ${status === "pregătit" ? "" : "disabled"}>Fă</button>
+        </div>`;
+      })
+      .join("")}
+    <div class="row" style="margin-top:4px;gap:8px">
+      <span class="muted" style="font-size:12px">Rival pentru atac</span>
+      <select id="rival" class="grow">${S.data.parties.parties
         .filter((p) => p.id !== S.party)
         .map((p) => `<option value="${p.id}">${esc(p.name)}</option>`)
         .join("")}</select>
-      <button class="btn" data-quick="attack">Atac</button>
     </div>
   `;
+}
+
+// Why an action can't be used right now, or "pregătit" when it can.
+function actionStatus(s, partyId, a) {
+  const party = s.parties[partyId];
+  const cd = party.cooldown[a.id] ?? -1;
+  if (a.requiresGovernment && !party.gov) return "doar guvernul";
+  if (cd > s.day) return `din ziua ${cd}`;
+  if (party.funds < a.cost) return "fonduri insuficiente";
+  return "pregătit";
 }
 
 function panelActions() {
@@ -580,119 +673,230 @@ function panelPoll() {
   `;
 }
 
+const STAT_LABELS = [
+  ["Carismă", "charisma"],
+  ["Răbdare", "patience"],
+  ["Maleabilitate", "malleability"],
+  ["Gafe", "gaffes"],
+  ["Vizibilitate", "visibility"],
+  ["Corupție", "corruption"],
+  ["Traseism", "traseism"],
+];
+
+function politicianCard(p, open) {
+  const col = color(p.party ?? S.party);
+  return `<div class="politician">
+    <div class="pol-head">
+      <div class="portrait">${portrait(p.look, { label: p.name })}</div>
+      <div class="grow">
+        <div class="pol-top"><b>${esc(p.name)}</b>
+          ${
+            p.party
+              ? `<span class="chip tiny"><span class="dot" style="--pc:${color(p.party)}"></span>${pname(p.party)}</span>`
+              : `<span class="chip tiny">independent</span>`
+          }</div>
+        <div class="pol-role">${esc(p.role)}</div>
+        <div class="ability"><b>${esc(p.ability.name)}</b> — ${esc(p.ability.text)}</div>
+      </div>
+    </div>
+    <details ${open ? "open" : ""}>
+      <summary>Statistici și fapte</summary>
+      <div class="stats">
+        ${STAT_LABELS.map(
+          ([label, key]) => `<div class="stat">
+            <div class="st-top"><span>${label}</span><b>${p.stats[key]}</b></div>
+            <div class="bar" style="height:3px"><i style="--pc:${col};width:${p.stats[key]}%"></i></div>
+          </div>`,
+        ).join("")}
+      </div>
+      <div class="facts">
+        ${(p.facts?.real ?? []).map((f) => `<div><span class="tag real">real</span>${esc(f)}</div>`).join("")}
+        ${(p.facts?.fake ?? []).map((f) => `<div><span class="tag fake">satiră</span>${esc(f)}</div>`).join("")}
+      </div>
+    </details>
+  </div>`;
+}
+
 function panelTeam() {
   const s = S.snap;
   const leaderId = partyById[S.party]?.leader;
-  const list = Object.values(s.politicians)
-    .filter((p) => p.party === S.party || p.id === leaderId)
+  const all = Object.values(s.politicians);
+  const mine = all
+    .filter((p) => p.party === S.party)
     .sort((a, b) => (a.id === leaderId ? -1 : b.id === leaderId ? 1 : 0));
+  const order = S.data.parties.parties.map((p) => p.id);
+  const everyone = all
+    .slice()
+    .sort((a, b) => order.indexOf(a.party ?? "~") - order.indexOf(b.party ?? "~") || a.name.localeCompare(b.name, "ro"));
+  const list = S.teamAll ? everyone : mine;
 
   return `
-    <h3>${pname(S.party)} · echipa</h3>
-    ${list
-      .map(
-        (p) => `<div class="politician">
-          <div class="pol-top"><b>${esc(p.name)}</b>
-            <span class="dot" style="--pc:${color(p.party ?? S.party)}"></span></div>
-          <div class="pol-role">${esc(p.role)}</div>
-          <div class="stats">
-            ${[
-              ["Carismă", "charisma"],
-              ["Răbdare", "patience"],
-              ["Maleabilitate", "malleability"],
-              ["Gafe", "gaffes"],
-              ["Vizibilitate", "visibility"],
-              ["Corupție", "corruption"],
-              ["Traseism", "traseism"],
-            ]
-              .map(
-                ([label, key]) => `<div class="stat">
-                  <div class="st-top"><span>${label}</span><b>${p.stats[key]}</b></div>
-                  <div class="bar" style="height:3px"><i style="--pc:${color(p.party ?? S.party)};width:${p.stats[key]}%"></i></div>
-                </div>`,
-              )
-              .join("")}
-          </div>
-          <div class="ability"><b>${esc(p.ability.name)}</b> — ${esc(p.ability.text)}</div>
-          <div class="facts">
-            ${(p.facts?.real ?? []).map((f) => `<div><span class="tag real">real</span>${esc(f)}</div>`).join("")}
-            ${(p.facts?.fake ?? []).map((f) => `<div><span class="tag fake">satiră</span>${esc(f)}</div>`).join("")}
-          </div>
-        </div>`,
-      )
-      .join("")}
-    <p class="muted" style="font-size:11px">Statisticile de joc sunt satirice. Faptele „reale” sunt verificabile; cele „satiră” sunt inventate.</p>
+    <div class="row between">
+      <h3 style="margin:0">${S.teamAll ? "Toți politicienii" : `${pname(S.party)} · echipa`}</h3>
+      <button class="btn ghost" data-team-toggle>${S.teamAll ? "Echipa mea" : `Toți (${all.length})`}</button>
+    </div>
+    <p class="muted" style="font-size:11.5px;margin:6px 0 10px">Liderul contează integral în campanie; ceilalți membri adaugă o treime din abilitatea lor.</p>
+    ${list.map((p) => politicianCard(p, !S.teamAll && p.id === leaderId)).join("")}
+    <p class="muted" style="font-size:11px">Statisticile de joc sunt satirice. Faptele „reale” sunt verificabile; cele „satiră” sunt inventate. Portretele sunt caricaturi desenate în cod.</p>
   `;
 }
 
-function wirePanel() {
+/* -------------------------------------------------------------- events */
+
+// Buttons react on pointerdown, not click, so a re-render between press and
+// release can't swallow the press. Keyboard activation still arrives as click.
+function onPress(root, selector, handler) {
+  const run = (e) => {
+    const el = e.target.closest?.(selector);
+    if (!el || !root.contains(el) || el.disabled) return;
+    handler(el, e);
+  };
+  root.addEventListener("pointerdown", (e) => {
+    if (e.button === 0) run(e);
+  });
+  root.addEventListener("click", (e) => {
+    if (e.detail === 0) run(e);
+  });
+}
+
+function setupEvents() {
+  const top = $("#topbar");
+  onPress(top, "[data-toggle-pause]", togglePause);
+  onPress(top, "[data-speed]", (el) => setSpeed(Number(el.dataset.speed)));
+  onPress(top, "[data-copy-room]", copyRoomCode);
+
   const panel = $("#panel");
-  const rival = $("#rival")?.value;
-  const law = $("#law")?.value;
+  onPress(panel, "[data-quick]", (el) => {
+    const type = el.dataset.quick;
+    const action = { type, county: S.selected };
+    if (type === "attack") action.targetParty = $("#rival")?.value;
+    doAction(action);
+  });
 
-  $$("[data-quick]", panel).forEach((btn) =>
-    btn.addEventListener("click", () => {
-      const type = btn.dataset.quick;
-      const action = { type, county: S.selected };
-      if (type === "attack") action.targetParty = $("#rival")?.value ?? rival;
-      doAction(action);
-    }),
-  );
+  onPress(panel, "[data-act]", (el) => {
+    const type = el.dataset.act;
+    const action = { type };
+    if (type === "rally" || type === "deal") action.county = S.selected;
+    if (type === "attack") {
+      action.county = S.selected;
+      action.targetParty = $("#rival")?.value;
+    }
+    if (type === "law") action.law = $("#law")?.value;
+    doAction(action);
+  });
 
-  $$("[data-act]", panel).forEach((btn) =>
-    btn.addEventListener("click", () => {
-      const type = btn.dataset.act;
-      const action = { type };
-      if (type === "rally" || type === "deal") action.county = S.selected;
-      if (type === "attack") {
-        action.county = S.selected;
-        action.targetParty = $("#rival")?.value ?? rival;
+  onPress(panel, "[data-accept]", async (el) => {
+    const from = el.dataset.accept;
+    if (S.mode === "solo") {
+      const res = acceptCoalition(S.game, S.data, S.party, from);
+      if (res.ok) {
+        S.snap = snapshot(S.game, S.data);
+        render();
       }
-      if (type === "law") action.law = $("#law")?.value ?? law;
-      doAction(action);
-    }),
+      toast(res.ok ? "Coaliție" : "Nu se poate", res.ok ? res.message : res.error);
+    } else {
+      const res = await post(`/api/rooms/${S.room}/accept`, { party: S.party, from });
+      if (!res.ok) toast("Nu se poate", res.error);
+    }
+  });
+
+  onPress(panel, "[data-coalition]", async () => {
+    const to = $("#coalition-target")?.value;
+    if (!to) return;
+    if (S.mode === "solo") {
+      const res = offerCoalition(S.game, S.data, S.party, to);
+      if (res.ok) {
+        S.snap = snapshot(S.game, S.data);
+        render();
+      }
+      toast(res.ok ? "Ofertă trimisă" : "Nu se poate", res.ok ? res.message : res.error);
+    } else {
+      const res = await post(`/api/rooms/${S.room}/coalition`, { party: S.party, to });
+      if (!res.ok) toast("Nu se poate", res.error);
+    }
+  });
+
+  onPress(panel, "[data-team-toggle]", () => {
+    S.teamAll = !S.teamAll;
+    renderPanel();
+  });
+
+  onPress($("#decision"), "[data-decide]", (el) =>
+    answerDecision(Number(el.dataset.decision), Number(el.dataset.decide)),
   );
 
-  $$("[data-accept]", panel).forEach((btn) =>
-    btn.addEventListener("click", async () => {
-      const from = btn.dataset.accept;
-      if (S.mode === "solo") {
-        const res = acceptCoalition(S.game, S.data, S.party, from);
-        if (res.ok) {
-          S.snap = snapshot(S.game, S.data);
-          render();
-        }
-        toast(res.ok ? "Coaliție" : "Nu se poate", res.ok ? res.message : res.error);
-      } else {
-        const res = await post(`/api/rooms/${S.room}/accept`, { party: S.party, from });
-        if (!res.ok) toast("Nu se poate", res.error);
-      }
-    }),
-  );
+  // Hold the side panel still while a button is pressed or a dropdown is open,
+  // then catch up with whatever changed in the meantime.
+  const release = () => {
+    S.busy = false;
+    if (S.panelDirty) renderPanel();
+  };
+  panel.addEventListener("pointerdown", () => (S.busy = true));
+  document.addEventListener("pointerup", release);
+  document.addEventListener("pointercancel", release);
+  panel.addEventListener("focusout", () => setTimeout(release, 0));
+}
 
-  $$("[data-coalition]", panel).forEach((btn) =>
-    btn.addEventListener("click", async () => {
-      const to = $("#coalition-target")?.value;
-      if (!to) return;
-      if (S.mode === "solo") {
-        const res = offerCoalition(S.game, S.data, S.party, to);
-        if (res.ok) {
-          S.snap = snapshot(S.game, S.data);
-          render();
-        }
-        toast(res.ok ? "Ofertă trimisă" : "Nu se poate", res.ok ? res.message : res.error);
-      } else {
-        const res = await post(`/api/rooms/${S.room}/coalition`, { party: S.party, to });
-        if (!res.ok) toast("Nu se poate", res.error);
-      }
-    }),
-  );
+async function answerDecision(id, choice) {
+  let res;
+  if (S.mode === "solo") {
+    res = decide(S.game, S.data, S.party, id, choice);
+    if (res.ok) {
+      S.snap = snapshot(S.game, S.data);
+      render();
+    }
+  } else {
+    res = await post(`/api/rooms/${S.room}/decide`, { party: S.party, decision: id, choice });
+  }
+  toast(res.ok ? "Decizie luată" : "Nu se poate", res.ok ? res.message : res.error);
+}
+
+function renderDecision() {
+  const box = $("#decision");
+  const mine = (S.snap.decisions ?? []).filter((d) => d.party === S.party);
+  const d = mine[0];
+  if (!d) {
+    if (S.decisionKey) {
+      box.classList.add("hidden");
+      box.innerHTML = "";
+      S.decisionKey = "";
+    }
+    return;
+  }
+  const left = Math.max(0, d.expires - S.snap.day);
+  const funds = S.snap.parties[S.party].funds;
+  const key = `${d.id}|${left}|${Math.floor(funds)}|${mine.length}`;
+  if (key === S.decisionKey) return;
+  S.decisionKey = key;
+  box.innerHTML = `
+    <div class="dec-tag">DECIZIE${mine.length > 1 ? `<small>+${mine.length - 1} în așteptare</small>` : ""}</div>
+    <div class="dec-body">
+      <b>${esc(d.title)}</b>
+      <span>${esc(d.text)}</span>
+      <div class="dec-choices">
+        ${d.choices
+          .map(
+            (c, i) => `<button class="dec-btn" data-decision="${d.id}" data-decide="${i}" ${c.cost > funds ? "disabled" : ""}>
+              <b>${esc(c.label)}</b><small>${esc(c.hint)}</small></button>`,
+          )
+          .join("")}
+      </div>
+    </div>
+    <div class="dec-left">${left}<small>zile</small></div>`;
+  box.classList.remove("hidden");
 }
 
 function renderTicker() {
-  const s = S.snap;
-  const last = [...s.log].reverse().find((l) => l.kind === "event") ?? [...s.log].reverse()[0];
-  $("#ticker").innerHTML = `<b>Breaking</b><span>${last ? `${esc(last.title)} — ${esc(last.text)}` : "Campania începe."}</span>`;
+  const news = [...S.snap.log]
+    .reverse()
+    .filter((l) => ["event", "election", "decision", "law"].includes(l.kind))
+    .slice(0, 8)
+    .map((l) => `<em>${esc(l.title)}</em> ${esc(l.text)}`);
+  const text = news.length ? news.join('<i class="sep">●</i>') : "Campania începe. Alegerile se apropie.";
+  const html = `<b class="live"><i></i>LIVE</b><div class="marquee"><span style="--dur:${Math.max(45, Math.round(text.length / 6))}s">${text}</span></div>`;
+  if (html === S.tickerHtml) return;
+  S.tickerHtml = html;
+  $("#ticker").innerHTML = html;
 }
 
 function renderToast() {

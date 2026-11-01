@@ -5,7 +5,7 @@
       "name": "PSD",
       "fullName": "Partidul Social Democrat",
       "color": "#d81e2c",
-      "leader": "ciolacu",
+      "leader": "grindeanu",
       "affinity": {
         "pensionari_rural": 0.9,
         "pensionari_urban": 0.72,
@@ -40,7 +40,7 @@
     {
       "id": "pnl",
       "name": "PNL",
-      "fullName": "Partidul Național Liberal",
+      "fullName": "Partidul NaÈ›ional Liberal",
       "color": "#f2c200",
       "leader": "bolojan",
       "affinity": {
@@ -72,9 +72,9 @@
     {
       "id": "usr",
       "name": "USR",
-      "fullName": "Uniunea Salvați România",
+      "fullName": "Uniunea SalvaÈ›i RomÃ¢nia",
       "color": "#1f6feb",
-      "leader": "lasconi",
+      "leader": "fritz",
       "affinity": {
         "pensionari_rural": 0.2,
         "pensionari_urban": 0.46,
@@ -102,7 +102,7 @@
     {
       "id": "aur",
       "name": "AUR",
-      "fullName": "Alianța pentru Unirea Românilor",
+      "fullName": "AlianÈ›a pentru Unirea RomÃ¢nilor",
       "color": "#c9a227",
       "leader": "simion",
       "affinity": {
@@ -134,7 +134,7 @@
     {
       "id": "udmr",
       "name": "UDMR",
-      "fullName": "Uniunea Democrată Maghiară din România",
+      "fullName": "Uniunea DemocratÄƒ MaghiarÄƒ din RomÃ¢nia",
       "color": "#00843d",
       "leader": "kelemen",
       "affinity": {
@@ -163,7 +163,7 @@
     {
       "id": "sos",
       "name": "SOS",
-      "fullName": "S.O.S. România",
+      "fullName": "S.O.S. RomÃ¢nia",
       "color": "#1b2a6b",
       "leader": "soosaca",
       "affinity": {
@@ -216,3 +216,4 @@
     }
   ]
 }
+

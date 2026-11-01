@@ -1,16 +1,17 @@
 :root {
-  --bg: #080b11;
-  --bg-2: #0d121b;
-  --card: #121926;
-  --card-2: #182130;
-  --line: #243044;
-  --line-2: #2f3d55;
-  --text: #e9eef7;
-  --muted: #8b99af;
-  --yellow: #ffcf3f;
-  --red: #e5484d;
+  --bg: #060a22;
+  --bg-2: #0a1030;
+  --card: #0f1740;
+  --card-2: #151f58;
+  --line: #24307a;
+  --line-2: #3345a8;
+  --text: #f2f5ff;
+  --muted: #9aa7dc;
+  --yellow: #ffd54a;
+  --red: #ff4d6d;
   --green: #3ecf8e;
-  --blue: #4c8dff;
+  --blue: #5b8dff;
+  --live: #e5173f;
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
   --radius: 14px;
 }
@@ -399,6 +400,18 @@ h1 {
 .chip .dot {
   width: 8px;
   height: 8px;
+}
+
+button.chip {
+  cursor: pointer;
+}
+
+button.chip:hover {
+  border-color: var(--line-2);
+}
+
+.chip.me {
+  border-color: var(--yellow);
 }
 
 .room-code {
@@ -1113,5 +1126,532 @@ select {
 
   .legend {
     justify-content: flex-start;
+  }
+}
+
+/* ================= Seara electorală: TV election-night theme =================
+   Overrides the base rules above. Palette lives in :root. */
+
+body {
+  background:
+    radial-gradient(1000px 520px at 10% -12%, rgba(30, 90, 255, 0.34), transparent 60%),
+    radial-gradient(800px 460px at 100% 0%, rgba(229, 23, 63, 0.18), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 7px),
+    var(--bg);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #33459f transparent;
+}
+
+/* ---------- top bar: lower-third ---------- */
+
+.app {
+  grid-template-rows: auto 1fr auto auto;
+}
+
+.topbar {
+  background: linear-gradient(90deg, #0c1760 0%, #0a1138 65%);
+  border-bottom: 3px solid var(--live);
+}
+
+.tb-brand {
+  font-size: 16px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.tb-brand::after {
+  content: "LIVE";
+  background: var(--live);
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  padding: 3px 7px;
+  border-radius: 4px;
+  margin-left: 4px;
+  animation: blink 1.6s steps(2, jump-none) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.chip {
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.speeds {
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.speeds button {
+  border-radius: 4px;
+}
+
+.speeds button.active {
+  background: var(--live);
+  color: #fff;
+}
+
+/* ---------- map: the studio wall ---------- */
+
+.map-panel {
+  background: linear-gradient(180deg, #0e1860, #080d33);
+  border-color: var(--line-2);
+  border-radius: 10px;
+}
+
+.map-head h2 {
+  display: inline-block;
+  background: var(--live);
+  color: #fff;
+  padding: 4px 12px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  transform: skewX(-8deg);
+}
+
+.map-wrap {
+  border-color: #2b3a9c;
+  background:
+    radial-gradient(700px 400px at 50% 40%, rgba(60, 110, 255, 0.28), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 4px),
+    #0a1048;
+}
+
+#map path {
+  stroke: #070b2c;
+  stroke-width: 1.3;
+}
+
+#map path.selected {
+  stroke: #fff;
+  stroke-width: 2.4;
+}
+
+.poll-mini {
+  background: #0f1850;
+  border-color: var(--line-2);
+  border-radius: 6px;
+}
+
+.poll-mini b {
+  font-size: 18px;
+}
+
+/* ---------- side panel ---------- */
+
+.side {
+  border-radius: 10px;
+  border-color: var(--line-2);
+  background: linear-gradient(180deg, #0f1850, #0a1038);
+}
+
+.tabs {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.tabs button.active {
+  border-bottom-color: var(--live);
+}
+
+.panel h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c3ccf5;
+}
+
+.panel h3::before {
+  content: "";
+  width: 4px;
+  height: 12px;
+  background: var(--live);
+  border-radius: 1px;
+}
+
+.row.between h3 {
+  margin: 0;
+}
+
+.card,
+.action-card,
+.politician {
+  background: var(--card-2);
+  border-color: var(--line-2);
+  border-radius: 8px;
+}
+
+.btn,
+.action-card button {
+  background: #1f2d86;
+  border-color: #3a4dc4;
+  border-radius: 6px;
+}
+
+.btn:hover,
+.action-card button:hover:not(:disabled) {
+  background: #2c3fb3;
+}
+
+.btn.gold {
+  background: linear-gradient(180deg, #ffe07a, #ffbf1a);
+  border: 0;
+}
+
+.bar {
+  background: #070b2c;
+}
+
+select {
+  background: #0b1250;
+  border-color: var(--line-2);
+  color: var(--text);
+}
+
+.ability {
+  background: rgba(255, 213, 74, 0.08);
+  border-color: rgba(255, 213, 74, 0.28);
+}
+
+/* ---------- politicians + portraits ---------- */
+
+.pol-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.portrait {
+  flex: 0 0 74px;
+  width: 74px;
+  height: 74px;
+}
+
+.portrait svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14);
+}
+
+.pol-head .ability {
+  margin-top: 6px;
+}
+
+.politician details summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.politician details summary:hover {
+  color: var(--text);
+}
+
+.chip.tiny {
+  padding: 1px 8px;
+  font-size: 10.5px;
+  border-radius: 4px;
+}
+
+/* ---------- decisions: the red-and-gold dock ---------- */
+
+.decision {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  margin: 0 16px 10px;
+  position: sticky;
+  bottom: 42px;
+  z-index: 40;
+  background: linear-gradient(90deg, #fff5cc, #ffe48c);
+  color: #1a1403;
+  border: 2px solid var(--yellow);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  animation: toast-in 0.25s ease;
+}
+
+.dec-tag {
+  background: var(--live);
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 8px 0 0 8px;
+  font-size: 12px;
+}
+
+.dec-tag small {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+  font-size: 10px;
+  opacity: 0.9;
+}
+
+.dec-body {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dec-body b {
+  font-size: 14px;
+}
+
+.dec-body > span {
+  font-size: 12px;
+  color: #4a3d12;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dec-choices {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.dec-btn {
+  background: #0b1250;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 11px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 160px;
+  max-width: 260px;
+}
+
+.dec-btn b {
+  font-size: 13px;
+  color: #fff;
+}
+
+.dec-btn small {
+  color: #b2bff7;
+  font-size: 11px;
+}
+
+.dec-btn:hover:not(:disabled) {
+  background: #1b2aa0;
+}
+
+.dec-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dec-left {
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--live);
+  line-height: 1;
+}
+
+.dec-left small {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4a3d12;
+  margin-top: 3px;
+}
+
+/* ---------- ticker: red breaking-news band ---------- */
+
+.ticker {
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
+  height: 36px;
+  padding: 0;
+  gap: 0;
+  background: var(--live);
+  border-top: 2px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.ticker b.live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 100%;
+  padding: 0 16px;
+  background: #fff;
+  color: var(--live);
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.ticker b.live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: blink 1.2s steps(2, jump-none) infinite;
+}
+
+.marquee {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker .marquee span {
+  display: inline-block;
+  overflow: visible;
+  text-overflow: clip;
+  padding-left: 100%;
+  color: #fff;
+  font-size: 13px;
+  animation: marquee var(--dur, 60s) linear infinite;
+}
+
+.marquee em {
+  font-style: normal;
+  font-weight: 800;
+  margin-right: 4px;
+}
+
+.marquee .sep {
+  font-style: normal;
+  margin: 0 18px;
+  opacity: 0.6;
+  font-size: 9px;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker .marquee span {
+    animation: none;
+    padding-left: 12px;
+  }
+  .tb-brand::after,
+  .ticker b.live i {
+    animation: none;
+  }
+}
+
+/* ---------- toast: breaking news banner, top right ---------- */
+
+.toast {
+  top: 74px;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  margin: 0 auto;
+  width: min(560px, calc(100vw - 24px));
+  border-left-color: var(--live);
+  background: linear-gradient(180deg, #17227a, #0d1550);
+}
+
+.toast .t-kicker {
+  color: #ff8aa0;
+}
+
+/* ---------- start screen + results ---------- */
+
+.start-inner {
+  background: linear-gradient(180deg, rgba(20, 32, 110, 0.92), rgba(8, 12, 46, 0.97));
+  border-color: var(--line-2);
+}
+
+.party-card,
+.field input {
+  background: #101a5c;
+  border-color: var(--line-2);
+}
+
+.mode.active {
+  background: var(--live);
+  color: #fff;
+  box-shadow: none;
+}
+
+.modal-card {
+  background: linear-gradient(180deg, #17227a, #0a1038);
+  border-color: var(--line-2);
+  border-top: 5px solid var(--live);
+}
+
+@media (max-width: 1080px) {
+  .decision {
+    flex-wrap: wrap;
+    margin: 0 10px 8px;
+  }
+  .dec-tag {
+    border-radius: 8px 8px 0 0;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+  }
+  .dec-body {
+    padding: 0 12px 10px;
+  }
+  .dec-left {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    padding: 0;
+    font-size: 20px;
+    color: #fff;
+  }
+  .dec-left small {
+    color: #ffd1da;
+  }
+}
+
+@media (max-width: 640px) {
+  .toast {
+    top: 64px;
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
+  .dec-btn {
+    min-width: 0;
+    flex: 1 1 140px;
+  }
+  .portrait {
+    flex-basis: 60px;
+    width: 60px;
+    height: 60px;
   }
 }

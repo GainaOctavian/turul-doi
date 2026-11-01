@@ -40,6 +40,14 @@ Events plus POST-uri, nu WebSocket. Solo rulează motorul direct în browser.
 Textul din interfață e în română, pentru că jocul e despre politica românească. Codul,
 comentariile și documentația tehnică rămân în engleză.
 
+## Note pentru UI
+
+- Panoul din dreapta și bara de sus se redesenează doar dacă HTML-ul s-a schimbat, păstrând
+  scroll-ul, selecturile și `<details>`. Nu redesena sub un buton apăsat.
+- Butoanele din bara de sus, panou și dock reacționează la `pointerdown` (`onPress` în
+  `public/app.mjs`); click-ul de la tastatură (detail 0) rămâne suportat.
+- Verifică liderii partidelor și premierul în `data/` când se schimbă scena politică.
+
 ## Personal conventions
 
 - Claude doesn't commit by default (side sessions and worktrees included) and doesn't offer to. When work is ready, give the user the commit message; the user commits, and Claude may check the result with read-only git (`git log`, `git show`, `git status`). Only when the user explicitly asks Claude to commit does Claude make that commit. Never push or merge. No `Co-Authored-By` or any Claude attribution in messages.
@@ -50,5 +58,5 @@ comentariile și documentația tehnică rămân în engleză.
 - Keep `CLAUDE.md` files current as the code changes.
 - Before handing a feature over for testing, run it end-to-end in the real app and click through it, not just type-check/build. Then list the exact steps the user must run.
 - Tests and test data never touch the user's real data/files: separate buckets/DBs/folders, never bulk-clean shared storage.
-- Everything user-facing is English (UI copy, messages, new code comments). Chat with the user may be in Romanian.
+- Everything user-facing is English (UI copy, messages, new code comments), except in this repo: the game UI and game data text are Romanian on purpose (see "UI" above). Code, comments and docs stay English. Chat with the user may be in Romanian.
 - Every app we build together has a ctl (`<app>-ctl`): a line-based command language over the app's own commands, plus built-ins for what needs a dialog or the mouse, a local opt-in endpoint (127.0.0.1 + token), a CLI and a repo skill (`.claude/skills/<app>/SKILL.md`). Build it with the first features and keep it current with every feature, in the same change: the feature must work from a script, `help` and the skill list it, and the ctl tests cover it. A feature isn't done until the ctl can drive it.
