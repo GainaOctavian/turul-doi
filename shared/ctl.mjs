@@ -5,6 +5,7 @@ import {
   tick,
   snapshot,
   applyAction,
+  applyGov,
   offerCoalition,
   acceptCoalition,
   fireEvent,
@@ -14,77 +15,110 @@ import {
 } from "./engine.mjs";
 
 export const HELP = `turul-doi ctl
-  state                     ziua, data, partidul jucat, fonduri
-  parties                   partide: id, sondaj, mandate, fonduri, guvern
+  scenario <2017|2026>      pornește un joc nou pe scenariu
+  state                     data, scenariul, partidul jucat, fonduri
+  gov                       guvernul: premier, coaliție, încredere, rating
+  parties                   partide: sondaj, mandate, fonduri, guvern
   poll                      sondaj național pe partide
   counties [filtru]         câștigătorul fiecărui județ
-  play <partid> [nume]      joacă pentru un partid (solo/room)
+  play <partid>             joacă pentru un partid
   speed <0|1|2|4>           viteza ceasului (0 = pauză)
   pause / resume            oprește sau pornește ceasul
-  act <tip> [judet] [rival] [lege]   acțiune (vezi "actions")
-  actions                   acțiunile disponibile
-  laws                      legile disponibile
+  act <tip> [judet] [rival] campanie: rally tv online deal attack promise (vezi "actions")
+  actions                   acțiunile de campanie și costul lor în M€
+  budget                    venituri și cheltuieli în M€, deficit
+  spend <linie> <M€>        setează o linie de cheltuieli (M€/an)
+  tax <vat|income|corp> <%> setează o cotă de impozitare
+  policies [minister]       politicile disponibile și starea lor
+  policy <id>               adoptă o politică; repeal <id> o abrogă
+  metrics                   indicatorii țării, cu media UE
+  sol                       standardul de viață pe segmente de votanți
+  world [indicator]         comparația cu UE și alte țări
+  cabinet                   ministerele, partidele și miniștrii
+  appoint <minister> <id>   numește un ministru (doar partidul premierului)
+  proposals                 propunerile din guvern; answer <id> <accept|reject>
+  motion                    depune o moțiune de cenzură (opoziția)
+  support <on|off>          oferă sau retrage sprijinul parlamentar
   politicians [partid]      profilurile politicienilor
   event <id>                declanșează un eveniment
-  decisions                 deciziile în așteptare pentru partidul tău
-  decide <id> <alegere>     răspunde la o decizie (alegerea începe de la 0)
-  tick <zile>               avansează ceasul
+  decisions                 deciziile în așteptare; decide <id> <alegere>
+  tick <zile>               avansează ceasul; month [n] = 30 de zile
   election                  alegeri acum
-  coalition <de> <catre>    ofertă de coaliție
-  accept <catre> <de>       acceptă oferta
+  coalition <de> <catre>    ofertă de coaliție; accept <catre> <de>
   events                    ultimele evenimente
   help                      acest text`;
 
-export function createCtl(data) {
-  const room = { state: createGame(data, { seed: 12345 }) };
-  const parties = data.parties.parties;
+const f0 = (n) => Math.round(n).toLocaleString("ro-RO");
+const f1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
+const pct = (v) => `${(v * 100).toFixed(1)}%`;
 
-  function findParty(id) {
-    return parties.find((p) => p.id === id)?.id ?? null;
-  }
+export function createCtl(data, opts = {}) {
+  const room = { state: createGame(data, { seed: 12345, scenario: opts.scenario ?? "2026" }) };
+  const find = (arr, id) => arr.find((x) => x.id === id);
 
-  function fmtPct(v) {
-    return `${(v * 100).toFixed(1)}%`;
-  }
+  const partyIds = () => room.state.partyIds;
+  const me = () => room.state.humans[0];
+  const need = () => (me() ? null : "error: alege un partid cu play <partid>");
 
   function run(line) {
     const raw = String(line ?? "").trim();
     if (!raw) return "";
     const [cmd, ...args] = raw.split(/\s+/);
     const state = room.state;
+    const gov = () => snapshot(state, data).gov;
 
     switch (cmd) {
       case "help":
         return HELP;
+
+      case "scenario": {
+        if (!find(data.scenarios.scenarios, args[0])) return "error: scenarii: 2017, 2026";
+        room.state = createGame(data, { seed: 12345, scenario: args[0] });
+        return `scenariu ${args[0]}: ${find(data.scenarios.scenarios, args[0]).name}`;
+      }
 
       case "state": {
         const snap = snapshot(state, data);
         const human = state.humans[0] ?? "-";
         const p = human !== "-" ? state.parties[human] : null;
         return [
-          `day ${snap.day} (${snap.date})`,
-          `election in ${Math.max(0, snap.electionDay - snap.day)} days`,
-          `playing ${human}${p ? ` funds ${p.funds} capital ${p.capital}` : ""}`,
-          `speed ${snap.speed} events ${snap.log.filter((l) => l.kind === "event").length}`,
+          `scenariu ${state.scenario}`,
+          `ziua ${snap.day} (${snap.date})`,
+          `alegeri în ${Math.max(0, snap.electionDay - snap.day)} zile`,
+          `joci ${human}${p ? ` fonduri ${p.funds} M€ capital ${p.capital}` : ""}`,
+          `viteza ${snap.speed}`,
+        ].join("\n");
+      }
+
+      case "gov": {
+        const g = gov();
+        const snap = snapshot(state, data);
+        const name = (id) => state.politicians[id]?.name ?? "-";
+        return [
+          `premier ${name(g.gov.pm)} (${g.gov.pmParty ?? "independent"})`,
+          `coaliție ${g.gov.coalition.join("+") || "-"}  sprijin ${Object.keys(g.gov.support).join(",") || "-"}`,
+          `încredere ${g.gov.confidence}  aprobare ${g.gov.approval}`,
+          `rating ${g.rating.level} (${g.rating.outlook})  încordare ${g.rating.strain}`,
+          `alegeri în ${Math.max(0, snap.electionDay - snap.day)} zile`,
         ].join("\n");
       }
 
       case "parties": {
         const snap = snapshot(state, data);
-        return parties
-          .map((p) => {
-            const s = state.parties[p.id];
-            return `${p.id.padEnd(5)} ${fmtPct(snap.parties[p.id].share).padStart(6)} seats ${String(s.seats).padStart(3)} funds ${String(s.funds).padStart(5)}${s.gov ? " GOV" : ""}`;
+        return partyIds()
+          .map((id) => {
+            const s = state.parties[id];
+            return `${id.padEnd(5)} ${pct(snap.parties[id].share).padStart(6)} mandate ${String(s.seats).padStart(3)} fonduri ${String(s.funds).padStart(5)} M€${s.gov ? " GUVERN" : ""}`;
           })
           .join("\n");
       }
 
       case "poll": {
         const snap = snapshot(state, data);
-        return parties
+        return partyIds()
           .slice()
-          .sort((a, b) => snap.poll.national[b.id] - snap.poll.national[a.id])
-          .map((p) => `${p.id.padEnd(5)} ${fmtPct(snap.poll.national[p.id])}`)
+          .sort((a, b) => snap.poll.national[b] - snap.poll.national[a])
+          .map((id) => `${id.padEnd(5)} ${pct(snap.poll.national[id])}`)
           .join("\n");
       }
 
@@ -95,16 +129,15 @@ export function createCtl(data) {
           .filter((c) => c.id.includes(filter) || c.name.toLowerCase().includes(filter))
           .map((c) => {
             const top = Object.entries(snap.poll.counties[c.id]).sort((a, b) => b[1] - a[1])[0];
-            return `${c.id.padEnd(18)} ${top[0]} ${fmtPct(top[1])}`;
+            return `${c.id.padEnd(18)} ${top[0]} ${pct(top[1])}`;
           })
           .join("\n");
       }
 
       case "play": {
-        const id = findParty(args[0]);
-        if (!id) return `error: partid necunoscut (${args[0] ?? ""})`;
-        state.humans = [id];
-        return `playing ${id}`;
+        if (!partyIds().includes(args[0])) return `error: partid necunoscut în scenariu (${partyIds().join(", ")})`;
+        state.humans = [args[0]];
+        return `playing ${args[0]}`;
       }
 
       case "speed": {
@@ -123,37 +156,7 @@ export function createCtl(data) {
         return "speed 1";
 
       case "actions":
-        return ACTIONS.map(
-          (a) => `${a.id.padEnd(8)} cost ${String(a.cost).padStart(3)} cd ${a.cooldown} ${a.target}`,
-        ).join("\n");
-
-      case "laws":
-        return data.laws.laws.map((l) => `${l.id.padEnd(14)} capital ${l.capital}  ${l.name}`).join("\n");
-
-      case "politicians":
-        return data.politicians.politicians
-          .filter((p) => !args[0] || (p.party ?? "-") === args[0])
-          .map((p) => `${p.id.padEnd(10)} ${p.party ?? "-"}  carisma ${p.stats.charisma} corupție ${p.stats.corruption} traseism ${p.stats.traseism}`)
-          .join("\n");
-
-      case "decisions": {
-        const mine = snapshot(state, data).decisions.filter((d) => d.party === state.humans[0]);
-        if (!mine.length) return "nicio decizie în așteptare";
-        return mine
-          .map(
-            (d) =>
-              `#${d.id} (până în ziua ${d.expires}) ${d.title}\n` +
-              d.choices.map((c, i) => `  ${i}: ${c.label}${c.cost ? ` [${c.cost}]` : ""} - ${c.hint}`).join("\n"),
-          )
-          .join("\n");
-      }
-
-      case "decide": {
-        const party = state.humans[0];
-        if (!party) return "error: alege un partid cu play <partid>";
-        const res = decide(state, data, party, args[0], args[1]);
-        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
-      }
+        return ACTIONS.map((a) => `${a.id.padEnd(8)} ${String(a.cost).padStart(4)} M€  cd ${a.cooldown}  ${a.target}`).join("\n");
 
       case "act": {
         const type = args[0];
@@ -164,23 +167,157 @@ export function createCtl(data) {
           action.county = args[1];
           action.targetParty = args[2];
         }
-        if (type === "law") action.law = args[1];
-        const party = state.humans[0];
-        if (!party) return "error: alege un partid cu play <partid>";
-        const res = applyAction(state, data, party, action);
+        if (need()) return need();
+        const res = applyAction(state, data, me(), action);
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
+
+      case "budget": {
+        const g = gov();
+        const fl = g.budget.flows;
+        const gdp = g.macro.gdp;
+        const line = (name, v) => `  ${name.padEnd(28)} ${f0(v).padStart(8)} M€  ${((v / gdp) * 100).toFixed(1).padStart(5)}% PIB`;
+        const out = [`PIB ${f0(gdp)} M€`, "VENITURI"];
+        for (const r of data.government.revenueLines) out.push(line(r.name, fl.revenue[r.id]));
+        out.push(line("Total venituri", fl.revTotal), "CHELTUIELI");
+        for (const l of data.government.spendLines) out.push(line(l.name, fl.spend[l.id]));
+        for (const l of data.government.fixedSpend) out.push(line(l.name, fl.spend[l.id]));
+        out.push(line("Total cheltuieli", fl.spendTotal));
+        out.push(`  Sold ${f0(fl.balance)} M€  deficit ${f1(g.macro.deficitPct)}% PIB  datorie ${f1(g.macro.debtPct)}% PIB`);
+        out.push(`  Taxe: TVA ${g.budget.tax.vat}%  venit ${g.budget.tax.income}%  profit ${g.budget.tax.corp}%`);
+        return out.join("\n");
+      }
+
+      case "spend": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "setSpend", line: args[0], amount: Number(args[1]) });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "tax": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "setTax", tax: args[0], rate: Number(args[1]) });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "policies": {
+        const g = gov();
+        return data.policies.policies
+          .filter((p) => !args[0] || p.ministry === args[0])
+          .map((p) => `${g.policies[p.id] != null ? "[x]" : "[ ]"} ${p.id.padEnd(22)} ${p.ministry.padEnd(11)} capital ${String(p.capital).padStart(2)}  ${p.name}`)
+          .join("\n");
+      }
+
+      case "policy":
+      case "repeal": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "policy", id: args[0], on: cmd === "policy" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "metrics": {
+        const g = gov();
+        const snap = snapshot(state, data);
+        const eu = snap.world.countries.eu;
+        const ro = snap.world.countries.ro;
+        const rows = [];
+        for (const m of data.government.metrics) {
+          const v = g.macro[m.id] ?? g.metrics[m.id] ?? (m.id === "debt" ? g.macro.debtPct : m.id === "deficit" ? g.macro.deficitPct : m.id === "interest" ? g.budget.flows.spend.interest : m.id === "motorwayDensity" ? ro.motorwayDensity : m.id === "pensionReal" ? g.macro.pensionIdx : m.id === "gdp" ? g.macro.gdp : undefined);
+          const euv = m.eu ? eu[m.eu] : null;
+          rows.push(`${m.name.padEnd(30)} ${String(typeof v === "number" ? Math.round(v * 10 ** m.decimals) / 10 ** m.decimals : v).padStart(9)} ${m.unit.padEnd(11)}${euv != null ? ` UE ${euv}` : ""}`);
+        }
+        return rows.join("\n");
+      }
+
+      case "sol": {
+        const g = gov();
+        return data.segments.segments
+          .map((s) => `${s.id.padEnd(18)} SoL ${String(g.sol[s.id]).padStart(5)}  așteptări ${String(g.solExpect[s.id]).padStart(5)}  satisfacție ${g.sat[s.id]}`)
+          .join("\n");
+      }
+
+      case "world": {
+        const snap = snapshot(state, data);
+        const inds = args[0] ? data.countries.indicators.filter((i) => i.id === args[0]) : data.countries.indicators;
+        if (!inds.length) return `error: indicatori: ${data.countries.indicators.map((i) => i.id).join(", ")}`;
+        const ids = data.countries.countries.map((c) => c.id);
+        const head = ["".padEnd(10), ...ids.map((c) => c.padStart(7))].join("");
+        const rows = inds.map((i) => [i.short.padEnd(10), ...ids.map((c) => String(snap.world.countries[c][i.id]).padStart(7))].join(""));
+        return [head, ...rows].join("\n");
+      }
+
+      case "cabinet": {
+        const g = gov();
+        return g.gov.ministries
+          .map((m) => `${m.id.padEnd(12)} ${(m.party ?? "indep.").padEnd(7)} ${(m.name ?? "(vacant)").padEnd(26)} competență ${m.competence}`)
+          .join("\n");
+      }
+
+      case "appoint": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "appoint", ministry: args[0], politician: args[1] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "proposals": {
+        const g = gov();
+        if (!g.proposals.length) return "nicio propunere";
+        return g.proposals.map((p) => `#${p.id} ${p.from}->${p.to ?? "indep."} (${p.ministry}) ${p.label} [${p.status}]`).join("\n");
+      }
+
+      case "answer": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "answer", id: Number(args[0]), accept: args[1] === "accept" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "motion": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "motion" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "support": {
+        if (need()) return need();
+        const res = applyGov(state, data, me(), { type: "support", on: args[0] !== "off" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "politicians":
+        return Object.values(state.politicians)
+          .filter((p) => !args[0] || (p.party ?? "-") === args[0])
+          .map((p) => `${p.id.padEnd(12)} ${(p.party ?? "-").padEnd(5)} carisma ${p.stats.charisma} corupție ${p.stats.corruption} traseism ${p.stats.traseism}  ${p.role}`)
+          .join("\n");
 
       case "event": {
         const ev = fireEvent(state, data, args[0]);
         return ev ? `event ${ev.id}: ${ev.title}` : "error: eveniment necunoscut";
       }
 
-      case "tick": {
-        const n = Number(args[0] ?? 1);
-        if (!Number.isFinite(n) || n < 1) return "error: tick <zile>";
-        tick(state, data, Math.min(1000, Math.floor(n)));
-        return `day ${state.day} (${snapshot(state, data).date})`;
+      case "decisions": {
+        const mine = snapshot(state, data).decisions.filter((d) => d.party === state.humans[0]);
+        if (!mine.length) return "nicio decizie în așteptare";
+        return mine
+          .map(
+            (d) =>
+              `#${d.id} (până în ziua ${d.expires}) ${d.title}\n` +
+              d.choices.map((c, i) => `  ${i}: ${c.label}${c.cost ? ` [${c.cost} M€]` : ""} - ${c.hint}`).join("\n"),
+          )
+          .join("\n");
+      }
+
+      case "decide": {
+        if (need()) return need();
+        const res = decide(state, data, me(), args[0], args[1]);
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "tick":
+      case "month": {
+        const n = Number(args[0] ?? 1) * (cmd === "month" ? 30 : 1);
+        if (!Number.isFinite(n) || n < 1) return `error: ${cmd} <număr>`;
+        tick(state, data, Math.min(2000, Math.floor(n)));
+        return `ziua ${state.day} (${snapshot(state, data).date})`;
       }
 
       case "election": {
@@ -201,8 +338,8 @@ export function createCtl(data) {
 
       case "events":
         return state.log
-          .filter((l) => l.kind === "event" || l.kind === "election")
-          .slice(-10)
+          .filter((l) => ["event", "election", "rating", "world"].includes(l.kind))
+          .slice(-12)
           .map((l) => `d${l.day} ${l.title}`)
           .join("\n");
 

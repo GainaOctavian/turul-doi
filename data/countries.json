@@ -1,0 +1,81 @@
+{
+  "note": "Valori orientative, rotunjite, folosite doar pentru comparație în joc. Nu sunt date oficiale. România este simulată de joc; celelalte țări au traiectorii simple, cu șocuri și evenimente plauzibile.",
+  "indicators": [
+    { "id": "gdpPps", "name": "PIB/locuitor (UE = 100)", "short": "PIB/loc.", "unit": "", "decimals": 0, "better": "high" },
+    { "id": "growth", "name": "Creștere economică", "short": "Creștere", "unit": "%", "decimals": 1, "better": "high" },
+    { "id": "inflation", "name": "Inflație", "short": "Inflație", "unit": "%", "decimals": 1, "better": "low" },
+    { "id": "unemployment", "name": "Șomaj", "short": "Șomaj", "unit": "%", "decimals": 1, "better": "low" },
+    { "id": "deficit", "name": "Deficit (+) / excedent (−)", "short": "Deficit", "unit": "% PIB", "decimals": 1, "better": "low" },
+    { "id": "debt", "name": "Datorie publică", "short": "Datorie", "unit": "% PIB", "decimals": 0, "better": "low" },
+    { "id": "lifeExp", "name": "Speranța de viață", "short": "Viață", "unit": "ani", "decimals": 1, "better": "high" },
+    { "id": "cpi", "name": "Indice de corupție (CPI)", "short": "CPI", "unit": "/100", "decimals": 0, "better": "high" },
+    { "id": "earlyLeavers", "name": "Abandon școlar", "short": "Abandon", "unit": "%", "decimals": 1, "better": "low" },
+    { "id": "arope", "name": "Risc de sărăcie/excluziune", "short": "Sărăcie", "unit": "%", "decimals": 1, "better": "low" },
+    { "id": "motorwayDensity", "name": "Autostrăzi", "short": "Autostrăzi", "unit": "km/1000 km²", "decimals": 1, "better": "high" }
+  ],
+  "countries": [
+    { "id": "eu", "name": "Media UE-27", "short": "UE-27", "color": "#9aa7dc", "beta": 1.0, "vol": 0.15 },
+    { "id": "ro", "name": "România", "short": "România", "color": "#ffcf3f", "player": true },
+    { "id": "de", "name": "Germania", "short": "Germania", "color": "#ff6b6b", "beta": 1.2, "vol": 0.25 },
+    { "id": "fr", "name": "Franța", "short": "Franța", "color": "#4c8dff", "beta": 0.9, "vol": 0.2 },
+    { "id": "it", "name": "Italia", "short": "Italia", "color": "#3ecf8e", "beta": 1.0, "vol": 0.25 },
+    { "id": "es", "name": "Spania", "short": "Spania", "color": "#ff9f43", "beta": 1.2, "vol": 0.3 },
+    { "id": "pl", "name": "Polonia", "short": "Polonia", "color": "#ff7ac6", "beta": 1.1, "vol": 0.3 },
+    { "id": "hu", "name": "Ungaria", "short": "Ungaria", "color": "#a77bff", "beta": 1.3, "vol": 0.35 },
+    { "id": "bg", "name": "Bulgaria", "short": "Bulgaria", "color": "#26c6da", "beta": 1.0, "vol": 0.3 },
+    { "id": "cz", "name": "Cehia", "short": "Cehia", "color": "#c9a227", "beta": 1.2, "vol": 0.3 },
+    { "id": "gr", "name": "Grecia", "short": "Grecia", "color": "#8bc34a", "beta": 1.3, "vol": 0.3 }
+  ],
+  "series": {
+    "2017": {
+      "eu": { "gdpPps": 100, "growth": 2.0, "inflation": 1.5, "unemployment": 8.0, "deficit": 1.5, "debt": 83, "lifeExp": 81.0, "cpi": 66, "earlyLeavers": 10.7, "arope": 23.5, "motorwayDensity": 16.5 },
+      "de": { "gdpPps": 123, "growth": 2.2, "inflation": 1.9, "unemployment": 3.9, "deficit": -0.9, "debt": 68, "lifeExp": 81.0, "cpi": 81, "earlyLeavers": 10.2, "arope": 19.7, "motorwayDensity": 36.0 },
+      "fr": { "gdpPps": 104, "growth": 1.2, "inflation": 1.6, "unemployment": 10.0, "deficit": 3.4, "debt": 98, "lifeExp": 82.7, "cpi": 69, "earlyLeavers": 8.8, "arope": 18.2, "motorwayDensity": 18.7 },
+      "it": { "gdpPps": 96, "growth": 1.3, "inflation": 1.0, "unemployment": 11.7, "deficit": 2.5, "debt": 135, "lifeExp": 82.8, "cpi": 47, "earlyLeavers": 13.8, "arope": 30.0, "motorwayDensity": 22.5 },
+      "es": { "gdpPps": 91, "growth": 3.0, "inflation": 3.0, "unemployment": 18.0, "deficit": 4.5, "debt": 99, "lifeExp": 83.1, "cpi": 58, "earlyLeavers": 19.0, "arope": 27.9, "motorwayDensity": 31.0 },
+      "pl": { "gdpPps": 70, "growth": 3.1, "inflation": 1.8, "unemployment": 5.5, "deficit": 2.4, "debt": 54, "lifeExp": 77.5, "cpi": 62, "earlyLeavers": 5.2, "arope": 21.9, "motorwayDensity": 5.4 },
+      "hu": { "gdpPps": 68, "growth": 2.2, "inflation": 2.6, "unemployment": 4.5, "deficit": 1.7, "debt": 76, "lifeExp": 75.7, "cpi": 48, "earlyLeavers": 12.4, "arope": 28.2, "motorwayDensity": 16.0 },
+      "bg": { "gdpPps": 49, "growth": 3.8, "inflation": 0.6, "unemployment": 6.8, "deficit": -1.0, "debt": 29, "lifeExp": 74.8, "cpi": 41, "earlyLeavers": 13.8, "arope": 40.4, "motorwayDensity": 7.2 },
+      "cz": { "gdpPps": 90, "growth": 2.5, "inflation": 2.5, "unemployment": 3.7, "deficit": -0.7, "debt": 37, "lifeExp": 79.1, "cpi": 55, "earlyLeavers": 6.6, "arope": 13.3, "motorwayDensity": 15.5 },
+      "gr": { "gdpPps": 67, "growth": 0.2, "inflation": 1.1, "unemployment": 23.0, "deficit": -0.5, "debt": 180, "lifeExp": 81.4, "cpi": 44, "earlyLeavers": 6.2, "arope": 35.6, "motorwayDensity": 13.5 }
+    },
+    "2026": {
+      "eu": { "gdpPps": 100, "growth": 1.3, "inflation": 2.2, "unemployment": 5.9, "deficit": 3.2, "debt": 82, "lifeExp": 81.5, "cpi": 64, "earlyLeavers": 9.2, "arope": 20.8, "motorwayDensity": 19.0 },
+      "de": { "gdpPps": 116, "growth": 0.7, "inflation": 2.1, "unemployment": 3.8, "deficit": 2.9, "debt": 64, "lifeExp": 81.2, "cpi": 77, "earlyLeavers": 12.0, "arope": 20.9, "motorwayDensity": 36.0 },
+      "fr": { "gdpPps": 98, "growth": 0.8, "inflation": 1.6, "unemployment": 7.7, "deficit": 5.4, "debt": 116, "lifeExp": 83.0, "cpi": 67, "earlyLeavers": 7.6, "arope": 20.5, "motorwayDensity": 19.0 },
+      "it": { "gdpPps": 96, "growth": 0.6, "inflation": 1.7, "unemployment": 6.1, "deficit": 3.0, "debt": 137, "lifeExp": 83.6, "cpi": 54, "earlyLeavers": 9.8, "arope": 22.8, "motorwayDensity": 22.5 },
+      "es": { "gdpPps": 93, "growth": 2.2, "inflation": 2.5, "unemployment": 10.4, "deficit": 2.5, "debt": 100, "lifeExp": 84.0, "cpi": 56, "earlyLeavers": 13.0, "arope": 25.5, "motorwayDensity": 31.5 },
+      "pl": { "gdpPps": 82, "growth": 3.3, "inflation": 3.0, "unemployment": 3.1, "deficit": 6.3, "debt": 60, "lifeExp": 78.4, "cpi": 53, "earlyLeavers": 4.5, "arope": 16.5, "motorwayDensity": 8.2 },
+      "hu": { "gdpPps": 76, "growth": 1.2, "inflation": 4.3, "unemployment": 4.4, "deficit": 4.9, "debt": 75, "lifeExp": 76.8, "cpi": 41, "earlyLeavers": 11.5, "arope": 17.5, "motorwayDensity": 19.0 },
+      "bg": { "gdpPps": 66, "growth": 3.0, "inflation": 3.4, "unemployment": 3.5, "deficit": 3.1, "debt": 27, "lifeExp": 75.9, "cpi": 43, "earlyLeavers": 12.5, "arope": 29.5, "motorwayDensity": 8.3 },
+      "cz": { "gdpPps": 91, "growth": 2.2, "inflation": 2.4, "unemployment": 2.9, "deficit": 2.4, "debt": 43, "lifeExp": 79.9, "cpi": 56, "earlyLeavers": 6.2, "arope": 11.8, "motorwayDensity": 15.8 },
+      "gr": { "gdpPps": 70, "growth": 2.0, "inflation": 2.7, "unemployment": 8.5, "deficit": -0.5, "debt": 148, "lifeExp": 82.0, "cpi": 49, "earlyLeavers": 3.8, "arope": 26.5, "motorwayDensity": 14.5 }
+    }
+  },
+  "events": [
+    { "id": "w-energie", "country": "global", "title": "Șoc pe piața energiei", "text": "Prețurile la energie urcă brusc pe piețele europene. Guvernele caută soluții, consumatorii caută facturile.", "weight": 3, "cooldown": 5, "effects": { "energy": 35, "inflation": 1.2, "cycle": -0.5 } },
+    { "id": "w-recesiune", "country": "global", "title": "Încetinire economică globală", "text": "Comerțul mondial încetinește și cererea scade. Băncile centrale urmăresc cifrele cu atenție.", "weight": 2, "cooldown": 6, "effects": { "cycle": -1.8, "energy": -10, "inflation": -0.4 } },
+    { "id": "w-boom", "country": "global", "title": "Reluare economică globală", "text": "Comerțul și investițiile revin. Fabricile lucrează pe trei schimburi, iar analiștii revin la optimism.", "weight": 2.5, "cooldown": 4, "effects": { "cycle": 1.2, "inflation": 0.2 } },
+    { "id": "w-dobanzi-sus", "country": "global", "title": "BCE ridică dobânzile", "text": "Banca Centrală Europeană majorează dobânzile pentru a ține inflația sub control. Creditele devin mai scumpe.", "weight": 2, "cooldown": 4, "effects": { "ecb": 0.75, "cycle": -0.3, "inflation": -0.3 } },
+    { "id": "w-dobanzi-jos", "country": "global", "title": "BCE reduce dobânzile", "text": "Banca Centrală Europeană relaxează politica monetară. Statele se îndatorează mai ieftin.", "weight": 2, "cooldown": 4, "effects": { "ecb": -0.5, "cycle": 0.3 } },
+    { "id": "w-comert", "country": "global", "title": "Tensiuni comerciale între marile blocuri", "text": "Se impun noi tarife vamale în comerțul transatlantic. Exportatorii își refac planurile.", "weight": 2, "cooldown": 4, "effects": { "cycle": -0.7, "inflation": 0.3 } },
+    { "id": "w-pandemie", "country": "global", "title": "Epidemie cu impact economic", "text": "O epidemie se extinde rapid și lovește serviciile și transporturile. Guvernele iau măsuri de urgență.", "weight": 0.5, "cooldown": 10, "effects": { "cycle": -2.6, "inflation": -0.4, "energy": -15 } },
+    { "id": "w-energie-jos", "country": "global", "title": "Energia se ieftinește", "text": "Prețurile la energie scad după o iarnă blândă și depozite pline. Facturile respiră ușurate.", "weight": 2, "cooldown": 4, "effects": { "energy": -25, "inflation": -0.5, "cycle": 0.3 } },
+    { "id": "c-de-recesiune", "country": "de", "title": "Industria germană intră în recesiune tehnică", "text": "Producția industrială din Germania scade două trimestre la rând, cu efecte în lanțul de aprovizionare din Europa Centrală.", "weight": 2, "cooldown": 5, "effects": { "growth": -0.9, "unemployment": 0.3, "euGrowth": -0.15 } },
+    { "id": "c-de-investitii", "country": "de", "title": "Germania aprobă un pachet mare de investiții", "text": "Berlinul pune bani în infrastructură și apărare. Datoria crește, dar crește și comanda de utilaje.", "weight": 1.5, "cooldown": 6, "effects": { "growth": 0.6, "deficit": 0.8, "euGrowth": 0.12 } },
+    { "id": "c-fr-guvern", "country": "fr", "title": "Guvernul francez cade după votul bugetului", "text": "Parlamentul de la Paris respinge bugetul, iar guvernul pleacă. Piețele așteaptă un nou plan de reducere a deficitului.", "weight": 2, "cooldown": 4, "effects": { "growth": -0.3, "deficit": 0.4, "cpi": -1 } },
+    { "id": "c-fr-pensii", "country": "fr", "title": "Franța ajustează sistemul de pensii", "text": "Reforma crește treptat vârsta de pensionare. Sindicatele ies în stradă, bugetul respiră.", "weight": 1, "cooldown": 6, "effects": { "deficit": -0.3, "growth": -0.1 } },
+    { "id": "c-it-spread", "country": "it", "title": "Prima de risc a Italiei crește", "text": "Diferența dintre dobânzile italiene și cele germane se mărește. Roma promite disciplină bugetară.", "weight": 1.5, "cooldown": 4, "effects": { "deficit": 0.3, "growth": -0.2, "debt": 1.5 } },
+    { "id": "c-it-pnrr", "country": "it", "title": "Italia accelerează proiectele europene", "text": "Fondurile de redresare ajung mai repede pe șantiere. Economia italiană primește un impuls.", "weight": 1.5, "cooldown": 5, "effects": { "growth": 0.5, "deficit": 0.2 } },
+    { "id": "c-es-turism", "country": "es", "title": "Sezon turistic record în Spania", "text": "Turiștii pun pe harta Spaniei un nou record. Hotelierii zâmbesc, iar locuitorii se uită la chirii.", "weight": 2, "cooldown": 4, "effects": { "growth": 0.6, "unemployment": -0.4 } },
+    { "id": "c-es-inundatii", "country": "es", "title": "Inundații grave în Spania", "text": "Ploile torențiale produc pagube mari într-o regiune importantă. Guvernul deblochează fonduri de urgență.", "weight": 1, "cooldown": 6, "effects": { "growth": -0.2, "deficit": 0.2 } },
+    { "id": "c-pl-aparare", "country": "pl", "title": "Polonia crește masiv cheltuielile de apărare", "text": "Varșovia investește în armată și în industria locală. Deficitul crește, comenzile industriale la fel.", "weight": 2, "cooldown": 5, "effects": { "growth": 0.4, "deficit": 0.6 } },
+    { "id": "c-hu-fonduri", "country": "hu", "title": "UE menține înghețate fondurile pentru Ungaria", "text": "Bruxelles-ul condiționează banii de reforme privind statul de drept. Bugetul de la Budapesta caută alte surse.", "weight": 2, "cooldown": 4, "effects": { "growth": -0.6, "cpi": -1 } },
+    { "id": "c-hu-inflatie", "country": "hu", "title": "Inflația rămâne ridicată în Ungaria", "text": "Prețurile continuă să urce mai repede decât în vecinătate. Banca centrală păstrează dobânzile mari.", "weight": 1.5, "cooldown": 4, "effects": { "inflation": 1.2, "growth": -0.2 } },
+    { "id": "c-bg-euro", "country": "bg", "title": "Bulgaria adoptă moneda euro", "text": "Lev-ul dispare, euro apare. Prețurile se rotunjesc în sus, iar costurile de finanțare scad ușor.", "weight": 3, "cooldown": 20, "minYear": 2026, "effects": { "inflation": 0.5, "growth": 0.2, "cpi": 1 } },
+    { "id": "c-cz-auto", "country": "cz", "title": "Industria auto cehă cere ajutor", "text": "Constructorii auto reduc producția după scăderea comenzilor. Guvernul discută măsuri pentru locurile de muncă.", "weight": 1.5, "cooldown": 5, "effects": { "growth": -0.5, "unemployment": 0.2 } },
+    { "id": "c-gr-rating", "country": "gr", "title": "Grecia primește o creștere de rating", "text": "Agențiile îmbunătățesc ratingul Greciei după ani de disciplină bugetară. Dobânzile scad.", "weight": 1.5, "cooldown": 5, "effects": { "deficit": -0.3, "debt": -3, "growth": 0.2 } },
+    { "id": "c-gr-incendii", "country": "gr", "title": "Incendii mari în Grecia", "text": "Zeci de mii de hectare ard în plin sezon turistic. Guvernul anunță despăgubiri.", "weight": 1.5, "cooldown": 5, "effects": { "growth": -0.2, "deficit": 0.1 } },
+    { "id": "c-eu-aparare", "country": "eu", "title": "UE lansează un instrument comun pentru apărare", "text": "Statele membre pot împrumuta în comun pentru achiziții militare. Comenzile cresc, la fel și datoria comună.", "weight": 1.5, "cooldown": 6, "effects": { "growth": 0.2, "deficit": 0.2 } }
+  ]
+}

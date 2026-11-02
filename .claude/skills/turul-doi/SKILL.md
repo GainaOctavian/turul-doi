@@ -1,6 +1,6 @@
 ---
 name: turul-doi
-description: Drive the Turul Doi game from a script or terminal — inspect state, play a party, run actions, advance the clock, fire events, run elections. Use when asked to check, test or script the turul-doi game, or to verify a game change end-to-end.
+description: Drive the Turul Doi game from a script or terminal — pick a scenario (2017/2026), play a party, run campaign actions, change the budget and taxes, adopt policies, appoint ministers, advance the clock, read indicators and EU comparisons, fire events, run elections. Use when asked to check, test or script the turul-doi game, or to verify a game change end-to-end.
 ---
 
 # turul-doi ctl
@@ -17,49 +17,50 @@ npm run ctl -- state
 
 `start:ctl` writes `.turul-doi/ctl.json` (port + token, 127.0.0.1 only). The CLI reads it
 from the current directory, so run commands from the repo root. If the file is missing, the
-game is not running with the ctl.
+game is not running with the ctl. If port 4173 is busy, stop the old server first.
 
 ## Commands
 
 | Command | What it does |
 | --- | --- |
-| `state` | day, date, days to election, party played, funds, capital, speed |
-| `parties` | every party: poll share, seats, funds, government flag |
-| `poll` | national poll, sorted |
-| `counties [filter]` | who leads each county (filter by id or name) |
-| `play <party> [name]` | take control of a party |
-| `speed <0\|1\|2\|4>` | clock speed (0 = paused) |
-| `pause` / `resume` | stop or restart the clock |
-| `act <type> [county] [rival] [law]` | run an action |
-| `actions` | action ids, costs, cooldowns, targets |
-| `laws` | laws and their capital cost |
-| `politicians [party]` | profiles and key stats, optionally one party |
-| `event <id>` | fire a specific event (decision events open a decision) |
-| `decisions` | pending decisions for the played party, with choice numbers |
-| `decide <id> <choice>` | answer a decision (choices start at 0) |
-| `tick <days>` | advance the clock |
+| `scenario <2017\|2026>` | start a fresh game on a scenario |
+| `state` / `gov` | date, party played, funds (M€) / PM, coalition, confidence, rating |
+| `parties` / `poll` / `counties [filter]` | party table, national poll, county winners |
+| `play <party>` | take control of a party of the scenario (2017 has alde/pmp, 2026 has aur/sos/pot) |
+| `speed <0\|1\|2\|4>`, `pause`, `resume` | clock speed (0 = paused) |
+| `actions`, `act <type> [county] [rival]` | campaign actions and their M€ cost |
+| `budget` | revenue and spending lines in M€ and % of GDP, balance, taxes |
+| `spend <line> <M€/yr>` | set a spending line (pensions, social, health, education, defense, order, infra, agri, admin) |
+| `tax <vat\|income\|corp> <rate>` | set a tax rate |
+| `policies [ministry]`, `policy <id>`, `repeal <id>` | list / adopt / repeal policies |
+| `metrics`, `sol`, `world [indicator]` | country indicators with EU averages, standard of living, comparison table |
+| `cabinet`, `appoint <ministry> <politician>` | ministries and ministers; reshuffle (PM's party only) |
+| `proposals`, `answer <id> <accept\|reject>` | cross-ministry proposals |
+| `motion`, `support <on\|off>` | opposition motion of no confidence; supporting party withdraws/renews support |
+| `politicians [party]` | profiles and key stats |
+| `event <id>`, `decisions`, `decide <id> <choice>` | fire an event; pending decisions and answers |
+| `tick <days>`, `month [n]` | advance the clock (month = 30 days) |
 | `election` | run an election now |
-| `coalition <from> <to>` | send a coalition offer |
-| `accept <to> <from>` | accept an offer |
-| `events` | recent events and elections |
+| `coalition <from> <to>`, `accept <to> <from>` | coalition offers during negotiations |
+| `events` | recent events, elections, rating moves, world news |
 | `help` | the list above |
 
-Action types: `rally` (county), `tv`, `online`, `deal` (county), `attack` (county + rival),
-`promise`, `law` (law id; only if in government).
+Budget changes follow ownership: a ministry's party sets its lines and policies; other
+government parties send a proposal; the opposition can only file a motion.
 
 ## Typical verification run
 
 ```bash
-npm run ctl -- play psd
-npm run ctl -- "act rally cluj"
-npm run ctl -- "act online"
-npm run ctl -- "tick 30"
-npm run ctl -- poll
-npm run ctl -- parties
-npm run ctl -- "event austeritate-invatamant"
-npm run ctl -- counties
-npm run ctl -- "tick 100"          # reaches the election, forms a government
-npm run ctl -- state
+npm run ctl -- "scenario 2026"
+npm run ctl -- "play psd"
+npm run ctl -- budget
+npm run ctl -- "policy indexare-pensii"
+npm run ctl -- "month 6"
+npm run ctl -- metrics
+npm run ctl -- sol
+npm run ctl -- "world deficit"
+npm run ctl -- "tick 760"          # reaches the election, forms a government
+npm run ctl -- gov
 ```
 
 Batch from a file: `npm run ctl -- script.txt` (lines, `#` comments). From stdin:
@@ -71,6 +72,8 @@ Batch from a file: `npm run ctl -- script.txt` (lines, `#` comments). From stdin
   multiplayer room.
 - Exit code is 1 if any line returned `error`.
 - Anything the UI shows that the ctl cannot read (map colours, toasts, modals) still needs a
-  browser check. Use `?party=<id>&day=<n>` to jump a solo game to a given day, and
-  `&event=<id>` to fire one event at the start (e.g. `&event=d-greva-medici` to see a decision).
-- Tests: `npm test` (engine + one full ctl turn).
+  browser check. Use `?scenario=2017&party=psd&day=40` to start a solo game on a given scenario
+  and day, and `&event=<id>` to fire one event at the start.
+- `node tools/sim.mjs <scenario> <years>` runs an AI-only game and prints macro numbers; use it
+  after changing the economy model.
+- Tests: `npm test` (engine, data integrity, scenarios, government, ctl).

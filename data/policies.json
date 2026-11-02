@@ -1,0 +1,244 @@
+{
+  "note": "Politici pe care le poate adopta un minister. Sumele din `spend` și `revenue` sunt în % din PIB pe an (se transformă în M€). `sol` mută standardul de viață al segmentului (puncte), `drift` mută un indicator pe an, `lean` (-1 austeritate … +1 cheltuieli populare) decide cât de bine se înțeleg partidele cu ea.",
+  "policies": [
+    {
+      "id": "indexare-pensii",
+      "name": "Indexarea pensiilor peste inflație",
+      "text": "Pensiile cresc cu inflația plus o majorare. Pensionarii simt, Finanțele simt și ele.",
+      "ministry": "munca", "capital": 30, "lean": 0.8,
+      "spend": { "pensions": 0.35 },
+      "effects": { "sol": { "pensionari_rural": 4, "pensionari_urban": 4 } }
+    },
+    {
+      "id": "pensii-speciale",
+      "name": "Reforma pensiilor speciale",
+      "text": "Pensiile speciale se aliniază la regula generală. Cei vizați au pregătit deja o contestație.",
+      "ministry": "munca", "capital": 45, "lean": -0.6,
+      "spend": { "pensions": -0.2 },
+      "effects": { "sol": { "bugetari": -2 }, "drift": { "cpi": 0.2 }, "confidence": -5 }
+    },
+    {
+      "id": "salariu-minim",
+      "name": "Majorarea salariului minim",
+      "text": "Salariul minim crește cu 15%. Muncitorii cheltuiesc, firmele recalculează, statisticile confirmă ambele variante.",
+      "ministry": "munca", "capital": 25, "lean": 0.7,
+      "revenue": { "social": 0.08 },
+      "effects": { "sol": { "muncitori": 4 }, "wage": 0.8, "unemployment": 0.15, "inflation": 0.25 }
+    },
+    {
+      "id": "ajutor-somaj",
+      "name": "Ajutor de șomaj prelungit",
+      "text": "Ajutorul se plătește încă șase luni. Cererea se completează în trei exemplare, din care două sunt ale statului.",
+      "ministry": "munca", "capital": 25, "lean": 0.6,
+      "spend": { "social": 0.1 },
+      "effects": { "sol": { "someri": 4 } }
+    },
+    {
+      "id": "alocatii-copii",
+      "name": "Alocații mărite pentru copii",
+      "text": "Familiile primesc mai mult pe copil. Un funcționar a calculat că suma acoperă exact o jumătate de rucsac.",
+      "ministry": "munca", "capital": 30, "lean": 0.5,
+      "spend": { "social": 0.2 },
+      "effects": { "sol": { "tineri_urbani": 1.5, "muncitori": 1 }, "drift": { "arope": -0.4 } }
+    },
+    {
+      "id": "reforma-spitale",
+      "name": "Reforma spitalelor regionale",
+      "text": "Se construiesc spitale regionale și se reorganizează cele mici. Primele au deja planul, ultimele au deja protestul.",
+      "ministry": "sanatate", "capital": 45, "lean": -0.1,
+      "spend": { "health": 0.3 },
+      "effects": { "drift": { "health": 1.5 } }
+    },
+    {
+      "id": "salarii-medici",
+      "name": "Salarii mai mari pentru medici și asistente",
+      "text": "Salariile cresc cu 20%. Medicii examinează oferta, apoi examinează și ofertele din Germania.",
+      "ministry": "sanatate", "capital": 30, "lean": 0.4,
+      "spend": { "health": 0.2 },
+      "effects": { "sol": { "bugetari": 2 }, "drift": { "health": 0.8 }, "emigration": -8 }
+    },
+    {
+      "id": "educatie-5pct",
+      "name": "Finanțare crescută pentru educație",
+      "text": "Educația urcă spre cifra promisă în lege de zeci de ani. Cifra rămâne înaintea bugetului, dar cu un pas mai puțin.",
+      "ministry": "educatie", "capital": 50, "lean": 0.3,
+      "spend": { "education": 0.5 },
+      "effects": { "drift": { "education": 1.2 } }
+    },
+    {
+      "id": "burse-campusuri",
+      "name": "Burse și campusuri universitare",
+      "text": "Se construiesc cămine noi și se mărește bursa. Primul cămin are chiar și uși.",
+      "ministry": "educatie", "capital": 30, "lean": 0.3,
+      "spend": { "education": 0.1 },
+      "effects": { "sol": { "studenti": 4 } }
+    },
+    {
+      "id": "autostrazi-accelerat",
+      "name": "Program accelerat de autostrăzi",
+      "text": "Se promit mai mulți kilometri pe an. Se inaugurează unii, restul sunt „în execuție”.",
+      "ministry": "transport", "capital": 40, "lean": 0.2,
+      "spend": { "infra": 0.4 },
+      "effects": { "motorwayBoost": 1.5, "sol": { "muncitori": 1 } }
+    },
+    {
+      "id": "cale-ferata",
+      "name": "Modernizarea căilor ferate",
+      "text": "Trenurile primesc linii noi, iar întârzierile primesc explicații noi.",
+      "ministry": "transport", "capital": 35, "lean": 0,
+      "spend": { "infra": 0.25 },
+      "effects": { "drift": { "infra": 1 } }
+    },
+    {
+      "id": "statut-startup",
+      "name": "Statut fiscal pentru startup-uri",
+      "text": "Firmele noi plătesc mai puțin în primii ani. Contabilii plătesc mai puțin în nopți nedormite.",
+      "ministry": "economie", "capital": 30, "lean": -0.7,
+      "revenue": { "corp": -0.05 },
+      "effects": { "growth": 0.1, "sol": { "antreprenori": 3, "tineri_urbani": 1 } }
+    },
+    {
+      "id": "subventii-industrie",
+      "name": "Ajutor de stat pentru industrie",
+      "text": "Fabricile primesc ajutor ca să rămână. Unele rămân.",
+      "ministry": "economie", "capital": 30, "lean": 0.5,
+      "spend": { "other": 0.15 },
+      "effects": { "growth": 0.1, "sol": { "muncitori": 2 } }
+    },
+    {
+      "id": "digitalizare",
+      "name": "Digitalizarea administrației",
+      "text": "Formularele devin online. Ghișeul rămâne, pentru cine vrea să verifice dacă s-a salvat.",
+      "ministry": "economie", "capital": 35, "lean": -0.2,
+      "spend": { "admin": 0.08 },
+      "effects": { "drift": { "cpi": 0.5 }, "compliance": 0.02, "sol": { "antreprenori": 2 } }
+    },
+    {
+      "id": "prima-casa",
+      "name": "Program de locuințe pentru tineri",
+      "text": "Statul garantează credite pentru prima locuință. Prețurile garantează și ele ceva: că urcă.",
+      "ministry": "economie", "capital": 25, "lean": 0.4,
+      "spend": { "other": 0.1 },
+      "effects": { "sol": { "tineri_urbani": 3, "studenti": 1 }, "comp": { "housing": 0.06 }, "inflation": 0.1 }
+    },
+    {
+      "id": "e-factura",
+      "name": "e-Factura și combaterea evaziunii",
+      "text": "Facturile intră în sistem înainte să intre în buzunar. Se strâng mai mulți bani, se strâng și mai multe nervi.",
+      "ministry": "finante", "capital": 30, "lean": -0.3,
+      "spend": { "admin": 0.04 },
+      "effects": { "compliance": 0.05, "sol": { "antreprenori": -1 } }
+    },
+    {
+      "id": "taxa-banci",
+      "name": "Taxă pe activele băncilor",
+      "text": "Băncile contribuie mai mult. Băncile explică, pe larg, de ce nu pot.",
+      "ministry": "finante", "capital": 30, "lean": 0.6,
+      "revenue": { "other": 0.25 },
+      "effects": { "growth": -0.08, "sol": { "antreprenori": -0.5 } }
+    },
+    {
+      "id": "impozit-progresiv",
+      "name": "Impozit pe venit în două trepte",
+      "text": "Cine câștigă mai mult plătește mai mult. Cine câștigă mai mult își caută un consultant.",
+      "ministry": "finante", "capital": 45, "lean": 0.7,
+      "revenue": { "income": 0.45 },
+      "effects": { "sol": { "antreprenori": -2.5, "muncitori": -1 }, "growth": -0.05 }
+    },
+    {
+      "id": "tva-alimente",
+      "name": "TVA redus pentru alimente de bază",
+      "text": "Pâinea și laptele costă mai puțin. Statul încasează mai puțin și speră la o minune.",
+      "ministry": "finante", "capital": 25, "lean": 0.7,
+      "revenue": { "vat": -0.3 },
+      "effects": { "inflation": -0.5, "sol": { "pensionari_rural": 3, "pensionari_urban": 2, "muncitori": 1.5 } }
+    },
+    {
+      "id": "anticoruptie",
+      "name": "Legi anticorupție întărite",
+      "text": "Procurorii primesc mai multă independență. Politicienii primesc mai multe emoții.",
+      "ministry": "justitie", "capital": 40, "lean": -0.4,
+      "spend": { "admin": 0.03 },
+      "effects": { "drift": { "cpi": 1.2 }, "sol": { "diaspora": 3, "antreprenori": 2, "tineri_urbani": 1 }, "confidence": -5 }
+    },
+    {
+      "id": "ordonanta-gratiere",
+      "name": "Ordonanță de urgență pentru grațiere",
+      "text": "Se modifică Codul penal într-o seară, prin ordonanță. Dimineața sunt oameni în Piața Victoriei.",
+      "ministry": "justitie", "capital": 25, "lean": 0.2,
+      "effects": { "drift": { "cpi": -1.5 }, "sol": { "diaspora": -5, "tineri_urbani": -3, "antreprenori": -2 }, "confidence": 3, "event": "proteste-oug" }
+    },
+    {
+      "id": "subventii-fermieri",
+      "name": "Subvenții pentru fermieri",
+      "text": "Banii merg direct la ferme. Fermele au nevoie de adresă, iar adresa de un dosar.",
+      "ministry": "agricultura", "capital": 25, "lean": 0.5,
+      "spend": { "agri": 0.1 },
+      "effects": { "sol": { "agricultori": 4 } }
+    },
+    {
+      "id": "irigatii",
+      "name": "Sistem național de irigații",
+      "text": "Se refac canalele. Seceta citește știrile și își face un plan.",
+      "ministry": "agricultura", "capital": 30, "lean": 0,
+      "spend": { "agri": 0.12 },
+      "effects": { "growth": 0.05, "sol": { "agricultori": 2 } }
+    },
+    {
+      "id": "aparare-25",
+      "name": "Apărarea la 2,5% din PIB",
+      "text": "Angajamentul NATO devine buget. Armata primește echipamente; contribuabilul primește explicații.",
+      "ministry": "aparare", "capital": 35, "lean": -0.1,
+      "spend": { "defense": 0.35 },
+      "effects": { "growth": 0.03 }
+    },
+    {
+      "id": "reforma-politie",
+      "name": "Reforma poliției și jandarmeriei",
+      "text": "Mai puține birouri, mai multe patrule. Patrulele au deja un birou.",
+      "ministry": "interne", "capital": 30, "lean": 0,
+      "spend": { "order": 0.1 },
+      "effects": { "drift": { "safety": 1, "cpi": 0.2 } }
+    },
+    {
+      "id": "plafonare-energie",
+      "name": "Plafonarea prețurilor la energie",
+      "text": "Facturile se plafonează. Statul acoperă diferența, din banii cuiva care încă nu a aflat.",
+      "ministry": "energie", "capital": 30, "lean": 0.7,
+      "spend": { "other": 0.3 },
+      "effects": { "inflation": -0.8, "sol": { "pensionari_urban": 2, "pensionari_rural": 1.5, "muncitori": 1.5 } }
+    },
+    {
+      "id": "regenerabile",
+      "name": "Accelerarea energiei regenerabile",
+      "text": "Panourile se instalează, rețeaua se modernizează, iar avizele își fac loc în rând.",
+      "ministry": "energie", "capital": 35, "lean": -0.2,
+      "spend": { "infra": 0.12 },
+      "effects": { "inflation": -0.15, "growth": 0.05 }
+    },
+    {
+      "id": "capacitate-fonduri",
+      "name": "Capacitate administrativă pentru fonduri UE",
+      "text": "Se angajează specialiști în proiecte europene. Primul proiect: un proiect pentru angajarea specialiștilor.",
+      "ministry": "fonduri", "capital": 35, "lean": -0.2,
+      "spend": { "admin": 0.05 },
+      "effects": { "euAbsorption": 0.15, "growth": 0.08 }
+    },
+    {
+      "id": "reducere-aparat",
+      "name": "Reducerea aparatului de stat",
+      "text": "Se taie posturi „acolo unde nu se simte”. Se simte peste tot.",
+      "ministry": "premier", "capital": 40, "lean": -0.8,
+      "spend": { "admin": -0.3 },
+      "effects": { "sol": { "bugetari": -4 }, "unemployment": 0.1, "confidence": -3 }
+    },
+    {
+      "id": "salarii-publice",
+      "name": "Majorarea salariilor în sectorul public",
+      "text": "Bugetarii primesc mai mult. Bugetul primește o foaie de calcul nouă.",
+      "ministry": "premier", "capital": 30, "lean": 0.7,
+      "spend": { "admin": 0.3 },
+      "effects": { "sol": { "bugetari": 4 }, "inflation": 0.1 }
+    }
+  ]
+}

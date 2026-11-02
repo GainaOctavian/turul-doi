@@ -20,7 +20,7 @@
         <div class="brand">
           <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
           <h1>TURUL DOI</h1>
-          <p class="tagline">Un joc satiric despre cum se câștigă România, județ cu județ.</p>
+          <p class="tagline">Guvernezi România: buget, taxe, miniștri, indicatori și alegeri, în milioane de euro.</p>
         </div>
 
         <div class="modes" role="tablist">
@@ -30,11 +30,14 @@
 
         <div id="start-fields" class="start-fields"></div>
 
+        <div class="pick-label">Alege scenariul</div>
+        <div id="scenario-grid" class="scenario-grid"></div>
+
         <div class="pick-label">Alege partidul</div>
         <div id="party-grid" class="party-grid"></div>
 
         <div class="start-actions">
-          <button id="start-btn" class="primary">Începe campania</button>
+          <button id="start-btn" class="primary">Începe jocul</button>
           <span id="start-error" class="start-error"></span>
         </div>
 
@@ -47,7 +50,8 @@
 
     <div id="app" class="app hidden">
       <header id="topbar" class="topbar"></header>
-      <main class="main">
+      <nav id="sections" class="sections" aria-label="Secțiuni"></nav>
+      <main id="view-politics" class="main">
         <section class="map-panel">
           <div class="map-head">
             <div>
@@ -68,6 +72,10 @@
           <div id="panel" class="panel"></div>
         </aside>
       </main>
+      <section id="view-dash" class="dashview hidden">
+        <nav id="subtabs" class="subtabs"></nav>
+        <div id="dash-body" class="dash-body"></div>
+      </section>
       <div id="decision" class="decision hidden"></div>
       <footer id="ticker" class="ticker"></footer>
     </div>

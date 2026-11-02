@@ -35,7 +35,8 @@
         "galati": 1.12,
         "botosani": 1.1
       },
-      "strength": 1.22
+      "lean": 0.6,
+      "oppGain": 0.3
     },
     {
       "id": "pnl",
@@ -67,7 +68,8 @@
         "satu-mare": 1.45,
         "bistrita-nasaud": 1.45
       },
-      "strength": 1.05
+      "lean": -0.5,
+      "oppGain": 0.3
     },
     {
       "id": "usr",
@@ -97,7 +99,8 @@
         "sibiu": 1.5,
         "constanta": 1.35
       },
-      "strength": 0.95
+      "lean": -0.2,
+      "oppGain": 0.3
     },
     {
       "id": "aur",
@@ -129,7 +132,8 @@
         "maramures": 1.35,
         "constanta": 1.25
       },
-      "strength": 1.1
+      "lean": 0.4,
+      "oppGain": 0.45
     },
     {
       "id": "udmr",
@@ -158,7 +162,8 @@
         "bihor": 2.5,
         "cluj": 1.4
       },
-      "strength": 0.3
+      "lean": -0.1,
+      "oppGain": 0.15
     },
     {
       "id": "sos",
@@ -185,7 +190,8 @@
         "galati": 1.1,
         "constanta": 1.08
       },
-      "strength": 0.28
+      "lean": 0.3,
+      "oppGain": 0.4
     },
     {
       "id": "pot",
@@ -212,8 +218,64 @@
         "valcea": 1.1,
         "dolj": 1.08
       },
-      "strength": 0.33
+      "lean": 0.3,
+      "oppGain": 0.4
+    },
+    {
+      "id": "alde",
+      "name": "ALDE",
+      "fullName": "Alianța Liberalilor și Democraților",
+      "color": "#ff8a3d",
+      "leader": "tariceanu",
+      "lean": 0.1,
+      "affinity": {
+        "pensionari_rural": 0.55,
+        "pensionari_urban": 0.55,
+        "tineri_urbani": 0.3,
+        "studenti": 0.22,
+        "muncitori": 0.5,
+        "agricultori": 0.55,
+        "antreprenori": 0.55,
+        "bugetari": 0.5,
+        "someri": 0.4,
+        "diaspora": 0.3
+      },
+      "bias": {
+        "valcea": 1.3,
+        "constanta": 1.2,
+        "ilfov": 1.3,
+        "teleorman": 1.2,
+        "dolj": 1.1
+      },
+      "oppGain": 0.2
+    },
+    {
+      "id": "pmp",
+      "name": "PMP",
+      "fullName": "Partidul Mișcarea Populară",
+      "color": "#16a085",
+      "leader": "basescu",
+      "lean": -0.3,
+      "affinity": {
+        "pensionari_rural": 0.42,
+        "pensionari_urban": 0.58,
+        "tineri_urbani": 0.45,
+        "studenti": 0.35,
+        "muncitori": 0.35,
+        "agricultori": 0.4,
+        "antreprenori": 0.55,
+        "bugetari": 0.5,
+        "someri": 0.3,
+        "diaspora": 0.72
+      },
+      "bias": {
+        "bucuresti": 1.4,
+        "constanta": 1.6,
+        "ilfov": 1.3,
+        "tulcea": 1.2,
+        "brasov": 1.1
+      },
+      "oppGain": 0.3
     }
   ]
 }
-

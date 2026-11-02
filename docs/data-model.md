@@ -1,156 +1,127 @@
 # Model de date
 
-Tot conținutul de joc e JSON, în `data/`. Motorul nu are altă sursă de adevăr.
+Tot conținutul de joc e JSON, în `data/`. Motorul nu are altă sursă de adevăr. Lista fișierelor
+e în `shared/data-files.mjs` (serverul, testele și browserul o folosesc la fel).
 
-## Fișiere
+Sumele de bani sunt în **milioane de euro (M€)**: bugetul statului, banii partidelor, costul
+campaniilor și al deciziilor.
 
-### `config.json`
+## Straturi
 
-```json
-{ "campaignDays": 120, "totalSeats": 330, "startDate": "2027-01-01",
-  "startFunds": 350, "startCapital": 25, "eventChance": 0.24,
-  "aiEveryDays": 3, "tickMs": 2000, "daysPerTick": 1, "maxLog": 120 }
+```mermaid
+flowchart LR
+  D[data/*.json] --> E[engine.mjs<br/>partide, sondaj, alegeri,<br/>evenimente, campanie]
+  E --> G[gov.mjs<br/>buget, taxe, indicatori,<br/>SoL, cabinet]
+  E --> W[world.mjs<br/>UE + țări simulate]
+  G -->|aprobare pe segmente| E
+  W -->|ciclu, energie, BCE| G
+  E --> S[snapshot] --> UI[public/*]
 ```
 
-### `counties.json`
+Guvernarea influențează sondajele: standardul de viață al fiecărui segment (SoL) față de
+așteptările lui devine un multiplicator pentru partidele de la guvernare și pentru opoziție.
 
-42 de intrări. `pop` e în mii de locuitori; indicii sunt valori de model între 0 și 1.
+## Scenarii (`scenarios.json`)
+
+Un scenariu fixează: data de start și a alegerilor, partidele, liderii, sondajul de start
+(`startPoll`, la care motorul își calibrează puterea partidelor), mandatele din Parlament,
+grupul minorităților, guvernul (premier, coaliție, sprijin, ministere și miniștri),
+economia, bugetul și indicatorii de plecare.
 
 ```json
-{ "id": "cluj", "name": "Cluj", "pop": 679,
-  "urban": 0.67, "students": 1.0, "agriculture": 0.25, "industry": 0.55, "diaspora": 0.35 }
+{ "id": "2026", "startDate": "2026-11-02", "electionDate": "2028-12-03",
+  "parties": ["psd", "pnl", "usr", "aur", "udmr", "sos", "pot"],
+  "leaders": { "psd": "grindeanu" },
+  "startPoll": { "aur": 0.31 }, "parliament": { "psd": 86 }, "minoritySeats": 19,
+  "government": { "pm": "niculescu", "pmParty": "psd", "coalition": ["psd"],
+                  "support": ["pnl", "udmr"], "confidence": 52,
+                  "ministries": { "finante": { "party": null, "minister": "nazare" } } },
+  "economy": { "gdp": 388000, "growth": 0.9, "potential": 2.8, "inflation": 4.8,
+               "tax": { "vat": 21 }, "revenue": { "vat": 7.4 }, "spend": { "pensions": 8.4 },
+               "metrics": { "health": 55 }, "rating": { "level": "BBB-", "outlook": "negativ" } } }
 ```
 
-Segmentele unui județ se calculează din acești indici (`buildSegments` în `engine.mjs`),
-apoi sunt normalizate ca suma să dea `pop`.
+`revenue` și `spend` sunt în % din PIB. Guvernele, rezultatele din 2016 și miniștrii sunt reale
+(2017: Grindeanu la învestire; 2026: Niculescu la învestire). Sondajul de start din 2026,
+economia și bugetul sunt estimări de joc.
 
-### `segments.json`
+## Guvernare (`government.json`, `policies.json`)
 
-10 segmente: `pensionari_rural`, `pensionari_urban`, `tineri_urbani`, `studenti`,
-`muncitori`, `agricultori`, `antreprenori`, `bugetari`, `someri`, `diaspora`.
-Fiecare are `name`, `blurb`, `color`.
+- `ministries`: 14 ministere, fiecare cu culoare și pârghiile pe care le controlează.
+- `spendLines`: 9 linii de cheltuieli editabile (pensii, sănătate, educație, infrastructură…),
+  cu intervalul permis față de nivelul de bază (`min`/`max`).
+- `taxes`: TVA, impozit pe venit, impozit pe profit (elasticitate, efect asupra creșterii).
+- `metrics`, `metricGroups`: indicatorii afișați în secțiunea Țara, cu cheia pentru media UE.
+- `sol`: ponderile cu care fiecare segment își măsoară standardul de viață.
+- `policies.json`: 31 de politici ale ministerelor. `spend`/`revenue` în % PIB pe an,
+  `effects.sol` (puncte SoL), `drift` (indicator pe an), `lean` (-1 austeritate … +1 cheltuieli).
 
-### `parties.json`
+Cine poate schimba ce: o pârghie aparține ministerului care o controlează, iar ministerul
+partidului care îl deține. Ceilalți din guvern trimit o **propunere**; partidele din opoziție
+pot doar depune o moțiune. Partidul premierului poate face remanieri.
 
-```json
-{ "id": "psd", "name": "PSD", "fullName": "...", "color": "#d81e2c",
-  "leader": "grindeanu", "strength": 1.22,
-  "affinity": { "pensionari_rural": 0.9, "...": 0.3 },
-  "bias": { "olt": 1.35, "dolj": 1.3 } }
-```
+## Lume (`countries.json`)
 
-Votul unui partid într-un județ = Σ(segment × affinity × segBoost) × strength × bias ×
-mood × (1 + countyBoost).
+`series["2017"|"2026"]` dă valorile de plecare pentru media UE și nouă țări, la 11 indicatori.
+Valorile sunt orientative. `events` sunt evenimente globale sau pe țară, cu pondere, cooldown
+și efecte mărginite (ciclu economic, energie, dobânda BCE, șocuri pe creștere/inflație/deficit).
 
-### `politicians.json`
+## Partide, politicieni, segmente, județe
 
-```json
-{ "id": "ciolacu", "name": "Marcel Ciolacu", "party": "psd", "role": "...",
-  "stats": { "charisma": 62, "patience": 38, "malleability": 74, "gaffes": 46,
-             "visibility": 82, "corruption": 44, "traseism": 40 },
-  "ability": { "name": "...", "text": "...", "effect": { "segment": 1.25 } },
-  "facts": { "real": ["..."], "fake": ["..."] },
-  "look": { "hair": "short", "hairColor": "#2b2623", "skin": "#e8b896",
-            "glasses": false, "facial": "none", "suit": "#23324d", "tie": "#b3261e" } }
-```
+- `parties.json`: afinități pe segmente, bias pe județe, `lean` fiscal, `oppGain` (cât câștigă
+  din nemulțumirea față de guvern). Puterea de start se calibrează per scenariu.
+- `politicians.json`: `scenarios: { "2017": {…suprascrieri}, "2026": {} }` spune în ce scenarii
+  există fiecare persoană și cum se schimbă rolul/partidul/faptele. `look` desenează portretul.
+- `segments.json`: 10 segmente de votanți. `counties.json`: 42 de unități, cu indici de model.
 
-33 de profiluri. `party: null` = independent sau din afara jocului (Nicușor Dan, Iohannis,
-Niculescu, Georgescu, Ponta etc.). Abilitatea liderului amplifică acțiunile pe segmentele din
-`effect`; ceilalți membri ai partidului adaugă o treime din abilitatea lor.
-
-`look` desenează portretul caricatural (`public/portraits.mjs`): `hair` (short, side, bald,
-long, bob, bun, curly), `facial` (none, mustache, stubble, beard), culori hex.
-
-Fiecare fapt `real` trebuie să poată fi verificat; datele curente (liderii partidelor,
-premierul) se verifică din nou când se schimbă scena politică.
-
-### `events.json`
+## Evenimente (`events.json`)
 
 ```json
-{ "id": "austeritate-invatamant", "title": "...", "text": "...",
-  "weight": 7, "minDay": 10,
+{ "id": "austeritate-invatamant", "scenarios": ["2017", "2026"], "months": [9, 10, 11],
+  "weight": 7, "minDay": 10, "after": "alt-eveniment",
   "effects": {
     "segments": { "tineri_urbani": -0.05 },
     "convert": [{ "from": "studenti", "to": "diaspora", "share": 0.22 }],
-    "party": { "usr": 0.02 },
-    "countyParty": { "sibiu": { "pnl": 0.22 } },
-    "funds": { "psd": -60 },
-    "politician": { "id": "grindeanu", "stat": "gaffes", "delta": 6 } } }
+    "county": { "hunedoara": { "convert": [], "party": { "psd": -0.08 } } },
+    "party": { "gov": -0.02, "usr": 0.02 },
+    "macro": { "growth": -0.2, "inflation": 0.3 }, "metric": { "cpi": -1 },
+    "confidence": -6, "sol": { "bugetari": -3 }, "budget": { "admin": 0.2 },
+    "funds": { "psd": -1.2 } } }
 ```
 
-Efectele `segments` și `convert` se aplică tuturor județelor; `convert` mută votanți fără
-să schimbe populația. `weight` e probabilitatea relativă; `minDay` întârzie evenimentul; un
-eveniment nu se repetă în ultimele 14.
-
-**Efecte locale** (`county`): doar județele numite se schimbă, cu `segments`, `convert` și
-`party` propriu (Valea Jiului: muncitori → șomeri doar în Hunedoara).
-
-```json
-"county": { "hunedoara": { "convert": [{ "from": "muncitori", "to": "someri", "share": 0.1 }],
-                           "party": { "psd": -0.08 } } }
-```
-
-**Lanțuri** (`after`): `"after": "diploma-avion"` face din eveniment o urmare. Apare doar în
-cel mult 45 de zile după cauză și are de patru ori mai multe șanse.
-
-**Decizii** (`choices`): evenimentul cere un răspuns de la fiecare jucător. Fiecare alegere
-are `label`, `hint` (ce vede jucătorul), `text` (rezultatul), `cost` opțional și `effects`.
-`ignore` se aplică dacă decizia expiră (implicit 8 zile, `expires`). În `choices[].effects`,
-`self` înseamnă partidul care a ales și se pot folosi `segBoost` (preferința partidului pentru
-un segment), `party`, `county` și `funds`.
-
-```json
-{ "id": "d-donatie-afacerist", "choices": [
-  { "label": "Accepți donația", "hint": "+120 fonduri · imaginea suferă",
-    "text": "...", "effects": { "funds": { "self": 120 }, "party": { "self": -0.025 } } } ] }
-```
-
-### `laws.json`
-
-```json
-{ "id": "austeritate", "name": "...", "text": "...", "capital": 35,
-  "effects": { "segments": { "bugetari": -0.06 },
-               "funds": { "self": 110 },
-               "countyBoostAll": 0.06 } }
-```
-
-`self` = partidul care promulgă. `countyBoostAll` dă boost în toate județele.
-
-### `romania-map.json`
-
-Generat de `tools/build-map.mjs`. `viewBox` + 42 de `{ id, name, d }` (path SVG).
+- `scenarios`, `months`: unde și când poate apărea.
+- `after`: urmare a altui eveniment (apare în maximum 45 de zile, cu șanse de 4 ori mai mari).
+- `choices` (+ `ignore`, `expires`): decizie pentru jucători. Fiecare alegere are `label`,
+  `hint`, `text`, `cost` (M€) și `effects`; `self` = partidul care alege.
+- În efecte, `gov`/`opp`/`self` înseamnă partidele de la guvernare, celelalte, respectiv jucătorul.
+- `macro` adaugă șocuri (creștere, inflație, șomaj) care se estompează; `metric` mută direct un
+  indicator; `sol` dă un șoc temporar standardului de viață; `budget` schimbă permanent o linie.
 
 ## Starea jocului
 
-`createGame` produce o stare serializabilă:
+`createGame(data, { scenario, seed, humans })` produce o stare serializabilă:
 
 ```
-day, speed, electionDay, resultUntil, rng,
-config, counties{ id: { pop, segments, boost } },
-parties{ id: { funds, capital, boost, segBoost, cooldown, seats, share, gov } },
-politicians{ id: { stats, ability, facts } },
-mood{ id }, coalitions[], offers[], humans[], active, lastResult, recentEvents[], log[],
-fired{ eventId: day }, decisions[ { id, party, eventId, expires } ], nextDecision
+scenario, day, date, speed (0 = pauză), electionDay, partyIds, leaders, strength, rng,
+counties{ segments, boost }, parties{ funds, capital, seats, gov, segBoost, cooldown },
+politicians, mood, govMult, coalitions[], offers[], negotiation, decisions[], fired{}, log[],
+macro{ gdp, growth, inflation, unemployment, debt, rate… }, budget{ tax, ratio, paid, flows },
+metrics{ health, education, infra, safety, cpi, arope, lifeExp, motorwayKm… },
+sol, solExpect, sat, comp, gov{ pm, coalition, support, ministries, confidence },
+policies{}, proposals[], rating{}, hist{}, world{ cycle, energy, ecb, countries }
 ```
 
-`speed: 0` înseamnă pauză. Clientul (solo) și serverul (camere) nu mai apelează `tick` cât
-timp viteza e 0.
+`tick(state, data, days)` avansează ceasul: campania și AI-ul în fiecare zi, iar la fiecare 30
+de zile lumea (`worldMonthly`) și guvernarea (`govMonthly`: venituri, cheltuieli, datorie,
+rating, creștere, inflație, servicii, emigrare, SoL, încredere, AI de guvernare).
+`snapshot(state, data)` e ce primește UI-ul (fără seria lungă `hist` dacă `opts.hist` e fals).
 
-`tick(state, data, days)` avansează ceasul: decay, venit, tururi AI, evenimente, alegeri.
-`snapshot(state, data)` e ce primește UI-ul (include sondajul calculat).
+## Fluxuri
 
-## Fluxul unei acțiuni
-
-1. UI (solo) sau POST `/api/rooms/:cod/action` (multiplayer).
-2. `applyAction` validează cooldown, fonduri, țintă, guvern.
-3. Se scad fondurile, se setează cooldown, se aplică boost-uri pe județ/segmente.
-4. `snapshot` → randare hartă, panel, ticker.
-
-## Fluxul unei decizii
-
-1. `fireEvent` pe un eveniment cu `choices` creează câte o decizie pentru fiecare partid
-   uman (`state.decisions`).
-2. `snapshot` le trimite cu etichetele alegerilor (nu și cu efectele).
-3. UI arată dock-ul „DECIZIE”; click → `decide` (solo) sau POST `/api/rooms/:cod/decide`.
-4. Alegerea aplică efectele pentru acel partid și scoate decizia. Dacă expiră, se aplică
-   `ignore`.
+1. Acțiune de campanie: `applyAction` → cost în M€, cooldown, boost pe județ/segmente.
+2. Acțiune de guvern: `applyGov` → `govAction` verifică proprietatea pârghiei, cooldown și
+   capitalul politic; fie execută, fie creează o propunere pentru ministerul altui partid.
+3. Decizie: `fireEvent` creează decizii pentru jucători; `decide` aplică efectele alegerii.
+4. Cădere de guvern: încrederea sub 18 sau o moțiune → `fallGovernment` → formare nouă
+   (negocieri de 10 zile, apoi `formGovernment` împarte ministerele proporțional).
+5. Alegeri la data fixă: mandate prin D'Hondt, coaliții, guvern nou, ministere redistribuite.

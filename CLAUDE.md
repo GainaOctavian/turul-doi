@@ -1,52 +1,47 @@
 # Turul Doi
 
-Joc de browser, satiră politică românească: hartă de influență pe județe, segmente de
-votanți care își schimbă mărimea, politicieni reali cu profiluri și un ceas în timp real.
+Joc de browser despre guvernarea României, satiric dar ancorat în realitate: scenarii (2017,
+2026), buget în M€, indicatori și comparații cu UE, harta electorală pe județe. Vezi
+`README.md` și `docs/data-model.md`.
 
 ## Cum rulează
 
 ```bash
-npm start          # http://127.0.0.1:4173
-npm run start:ctl  # același server + endpoint-ul de control (bin/turul-doi-ctl.mjs)
+npm start          # http://127.0.0.1:4173 (dacă portul e ocupat, oprește serverul vechi)
+npm run start:ctl  # același server + endpoint-ul de control
 npm test           # node:test, fără dependențe
 npm run ctl -- state
+node tools/sim.mjs 2026 4   # simulare AI de reglaj pentru economie
 ```
 
-Fără build step și fără dependențe npm. Serverul e `node:http`; multiplayerul e Server-Sent
-Events plus POST-uri, nu WebSocket. Solo rulează motorul direct în browser.
+## Arhitectură
 
-## Structură
-
-- `shared/engine.mjs` — motorul pur (stare JSON, `createGame`, `tick`, `applyAction`,
-  `computePoll`, `snapshot`). Rulează identic în browser și pe server.
-- `shared/ctl.mjs` — limbajul de comenzi al ctl-ului, peste motor.
-- `server.mjs` — fișiere statice, camere SSE, endpoint `/ctl` (doar 127.0.0.1, token).
-- `bin/turul-doi-ctl.mjs` — CLI-ul; citește `.turul-doi/ctl.json`.
-- `public/` — UI fără framework: `index.html`, `style.css`, `app.mjs`.
-- `data/` — tot conținutul editabil: județe, segmente, partide, politicieni, evenimente,
-  legi, harta (generată de `tools/build-map.mjs`).
-- `docs/` — arhitectură și model de date. `docs/claude-plans/` e gitignored.
-
-## Reguli de satiră
-
-- Faptele marcate `real` trebuie să fie verificabile.
-- Faptele marcate `fake` sunt inventate și intenționat absurde; niciodată despre viața
-  privată, copii, boli sau acuzații penale plauzibile.
-- Statisticile (corupție, traseism etc.) sunt de joc, nu evaluări ale persoanelor.
-- UI-ul spune clar că e satiră.
+- `shared/engine.mjs` (partide, sondaj, alegeri, evenimente, campanie), `shared/gov.mjs`
+  (buget, taxe, indicatori, SoL, cabinet), `shared/world.mjs` (UE și țări). Același cod rulează
+  în browser (solo) și pe server (multiplayer).
+- `public/app.mjs` (start, hartă, panouri politice, evenimente), `public/dash.mjs` (ecranele
+  Guvern/Țara/Lume/Știri), `public/kit.mjs` (formatare și componente), `public/portraits.mjs`.
+- Datele sunt în `data/`; lista de fișiere e în `shared/data-files.mjs`. Un fișier nou de date
+  se adaugă acolo.
+- Bani: totul în M€ (bugetul statului, partidele, costul acțiunilor). Cheltuielile se rețin ca
+  procent din PIB; sliderul din UI e în M€/an.
 
 ## UI
 
-Textul din interfață e în română, pentru că jocul e despre politica românească. Codul,
-comentariile și documentația tehnică rămân în engleză.
+- Textul din interfață e în română, deliberat; codul, comentariile și documentația rămân în engleză.
+- Cinci secțiuni color-coded (Politică, Guvern, Țara, Lume, Știri). Culoarea secțiunii e `--sec`.
+- Panourile se redesenează doar dacă HTML-ul s-a schimbat (`makePatcher`), păstrând scroll-ul,
+  selecturile și `<details>`; nu redesena sub un buton apăsat sau un slider tras.
+- Butoanele reacționează la `pointerdown` (`onPress`); click-ul de la tastatură (detail 0) rămâne.
+- Selecturile controlate de starea jocului au `data-live` ca să nu fie restaurate din DOM-ul vechi.
 
-## Note pentru UI
+## Date reale
 
-- Panoul din dreapta și bara de sus se redesenează doar dacă HTML-ul s-a schimbat, păstrând
-  scroll-ul, selecturile și `<details>`. Nu redesena sub un buton apăsat.
-- Butoanele din bara de sus, panou și dock reacționează la `pointerdown` (`onPress` în
-  `public/app.mjs`); click-ul de la tastatură (detail 0) rămâne suportat.
-- Verifică liderii partidelor și premierul în `data/` când se schimbă scena politică.
+- Faptele `real` trebuie să fie verificabile. Verifică liderii partidelor, premierul și miniștrii
+  înainte să le scrii (căutare pe web); la 2 noiembrie 2026: Grindeanu la PSD, Fritz la USR,
+  Niculescu premier din 20 octombrie 2026.
+- Cifrele macro și bugetare din scenarii sunt estimări de joc; țările din comparație sunt orientative.
+- Satiră: faptele `fake` sunt absurde, niciodată despre viața privată sau acuzații plauzibile.
 
 ## Personal conventions
 

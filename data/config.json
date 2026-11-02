@@ -1,12 +1,10 @@
 {
-  "campaignDays": 120,
   "totalSeats": 330,
-  "startDate": "2027-01-01",
-  "startFunds": 350,
-  "startCapital": 25,
-  "eventChance": 0.24,
+  "startFunds": 7,
+  "startCapital": 60,
+  "eventChance": 0.1,
   "aiEveryDays": 3,
   "tickMs": 2000,
-  "daysPerTick": 1,
-  "maxLog": 120
+  "termDays": 1461,
+  "maxLog": 160
 }

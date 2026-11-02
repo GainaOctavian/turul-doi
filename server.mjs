@@ -10,11 +10,13 @@ import {
   tick,
   snapshot,
   applyAction,
+  applyGov,
   offerCoalition,
   acceptCoalition,
   decide,
 } from "./shared/engine.mjs";
 import { createCtl } from "./shared/ctl.mjs";
+import { DATA_FILES } from "./shared/data-files.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const PUBLIC = join(ROOT, "public");
@@ -24,15 +26,9 @@ const CTL = process.env.TURUL_DOI_CTL === "1" || process.argv.includes("--ctl");
 const readJson = async (file) =>
   JSON.parse(await readFile(join(ROOT, "data", file), "utf8"));
 
-const data = {
-  config: await readJson("config.json"),
-  segments: await readJson("segments.json"),
-  parties: await readJson("parties.json"),
-  politicians: await readJson("politicians.json"),
-  counties: await readJson("counties.json"),
-  events: await readJson("events.json"),
-  laws: await readJson("laws.json"),
-};
+const data = Object.fromEntries(
+  await Promise.all(Object.entries(DATA_FILES).map(async ([key, file]) => [key, await readJson(file)])),
+);
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -59,11 +55,11 @@ function roomCode() {
   }
 }
 
-function createRoom(seed = Date.now()) {
+function createRoom(seed = Date.now(), scenario = "2026") {
   const code = roomCode();
   const room = {
     code,
-    state: createGame(data, { seed }),
+    state: createGame(data, { seed, scenario }),
     clients: new Set(),
     last: Date.now(),
     players: new Map(),
@@ -77,13 +73,14 @@ function sendEvent(res, event, payload) {
 }
 
 // Snapshot plus who is seated at which party, so the UI can list the players.
-function view(room) {
-  return { ...snapshot(room.state, data), players: Object.fromEntries(room.players) };
+// The long history series only go out once a month (and on connect).
+function view(room, hist = true) {
+  return { ...snapshot(room.state, data, { hist }), players: Object.fromEntries(room.players) };
 }
 
 function broadcast(room) {
   if (!room.clients.size) return;
-  const snap = view(room);
+  const snap = view(room, room.state.day % 30 === 0);
   for (const client of room.clients) {
     try {
       sendEvent(client.res, "state", snap);
@@ -158,16 +155,30 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (path === "/api/rooms" && req.method === "POST") {
-      const room = createRoom();
-      return json(res, 200, { code: room.code });
+      const { scenario } = await body(req);
+      const known = data.scenarios.scenarios.some((s) => s.id === scenario);
+      const room = createRoom(Date.now(), known ? scenario : "2026");
+      return json(res, 200, { code: room.code, scenario: room.state.scenario });
+    }
+
+    const info = path.match(/^\/api\/rooms\/([A-Z0-9]+)$/);
+    if (info && req.method === "GET") {
+      const room = rooms.get(info[1]);
+      if (!room) return json(res, 404, { error: "Cod inexistent." });
+      return json(res, 200, {
+        code: room.code,
+        scenario: room.state.scenario,
+        partyIds: room.state.partyIds,
+        taken: Object.fromEntries(room.players),
+      });
     }
 
     if (path === "/api/rooms/join" && req.method === "POST") {
       const { code, party, name } = await body(req);
       const room = rooms.get(String(code || "").toUpperCase());
       if (!room) return json(res, 404, { error: "Cod inexistent." });
-      if (!data.parties.parties.some((p) => p.id === party)) {
-        return json(res, 400, { error: "Partid inexistent." });
+      if (!room.state.partyIds.includes(party)) {
+        return json(res, 400, { error: "Partidul nu există în acest scenariu." });
       }
       if (room.players.has(party)) {
         return json(res, 409, { error: "Partidul e deja luat." });
@@ -186,7 +197,7 @@ const server = http.createServer(async (req, res) => {
       const party = url.searchParams.get("party");
       const name = url.searchParams.get("name") || "";
       if (party && !room.players.has(party)) {
-        if (!data.parties.parties.some((p) => p.id === party)) {
+        if (!room.state.partyIds.includes(party)) {
           res.writeHead(400).end("no party");
           return;
         }
@@ -213,7 +224,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|coalition|accept|speed|decide)$/);
+    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|gov|coalition|accept|speed|decide)$/);
     if (action && req.method === "POST") {
       const room = rooms.get(action[1]);
       if (!room) return json(res, 404, { error: "Cod inexistent." });
@@ -224,6 +235,11 @@ const server = http.createServer(async (req, res) => {
       }
       if (action[2] === "action") {
         const result = applyAction(room.state, data, party, payload.action || {});
+        if (result.ok) broadcast(room);
+        return json(res, result.ok ? 200 : 400, result);
+      }
+      if (action[2] === "gov") {
+        const result = applyGov(room.state, data, party, payload.action || {});
         if (result.ok) broadcast(room);
         return json(res, result.ok ? 200 : 400, result);
       }

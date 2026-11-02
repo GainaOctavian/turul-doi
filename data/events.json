@@ -1,5 +1,5 @@
 {
-  "note": "Evenimentele sunt satiră. Cele inspirate din fapte reale sunt exagerate intenționat până la absurd; nu sunt știri și nu descriu fapte reale. Efectele se aplică segmentelor de votanți, partidelor și politicienilor.",
+  "note": "Evenimentele sunt satiră. Cele inspirate din fapte reale sunt exagerate intenționat; nu sunt știri. `scenarios` limitează evenimentul la un scenariu. Bani de partid în M€. Efecte noi: macro, metric, confidence, sol, budget.",
   "events": [
     {
       "id": "diploma-avion",
@@ -20,7 +20,10 @@
           "stat": "visibility",
           "delta": 4
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "iohannis-sibiu",
@@ -40,7 +43,11 @@
         "segments": {
           "pensionari_urban": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "autostrada-cutremur",
@@ -66,7 +73,11 @@
           "stat": "gaffes",
           "delta": 6
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "nicusor-tarife",
@@ -83,7 +94,10 @@
           "antreprenori": 0.03,
           "pensionari_rural": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "austeritate-invatamant",
@@ -108,7 +122,11 @@
           "aur": 0.03,
           "psd": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "medici-pleaca",
@@ -131,7 +149,11 @@
           "psd": -0.02,
           "usr": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "profesori-greva",
@@ -148,7 +170,11 @@
           "pnl": -0.025,
           "psd": -0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "pensii-majorate",
@@ -162,13 +188,17 @@
           "pensionari_urban": 0.05
         },
         "funds": {
-          "psd": -60,
-          "pnl": -40
+          "psd": -1.2,
+          "pnl": -0.8
         },
         "party": {
           "psd": 0.03
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "seceta",
@@ -195,7 +225,16 @@
         "party": {
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8,
+        9
+      ]
     },
     {
       "id": "salariu-minim",
@@ -212,7 +251,11 @@
           "psd": 0.025,
           "pnl": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "it-concedieri",
@@ -235,7 +278,11 @@
           "usr": -0.02,
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "tiktok-trend",
@@ -252,7 +299,10 @@
           "aur": 0.02,
           "usr": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "fake-news",
@@ -269,7 +319,11 @@
           "aur": 0.035,
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "viscol",
@@ -285,7 +339,17 @@
         "party": {
           "psd": -0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2,
+        3
+      ]
     },
     {
       "id": "eurovision",
@@ -301,7 +365,13 @@
         "party": {
           "usr": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ],
+      "months": [
+        5
+      ]
     },
     {
       "id": "schengen",
@@ -318,7 +388,10 @@
           "usr": 0.02,
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "nato-summit",
@@ -339,7 +412,11 @@
         "party": {
           "pnl": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "tarife-trump",
@@ -363,7 +440,10 @@
         "party": {
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "biserica-finantare",
@@ -379,7 +459,11 @@
           "psd": 0.02,
           "usr": -0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "recensamant-diaspora",
@@ -395,7 +479,10 @@
           "usr": 0.015,
           "aur": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "donatie-tractor",
@@ -411,7 +498,10 @@
         "party": {
           "psd": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "gafa-live",
@@ -432,7 +522,11 @@
           "stat": "gaffes",
           "delta": 5
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "ccr-blocaj",
@@ -448,7 +542,11 @@
         "segments": {
           "bugetari": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "canicula",
@@ -464,7 +562,16 @@
         "party": {
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7,
+        8
+      ]
     },
     {
       "id": "criza-energie",
@@ -481,7 +588,17 @@
           "aur": 0.025,
           "psd": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        11,
+        12,
+        1,
+        2
+      ]
     },
     {
       "id": "investitie-chineza",
@@ -502,7 +619,11 @@
             "psd": 0.08
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "pod-cazut",
@@ -518,7 +639,11 @@
           "pnl": -0.02,
           "psd": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "dosar-dna",
@@ -533,7 +658,11 @@
         "segments": {
           "bugetari": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "amnistie-fiscala",
@@ -550,7 +679,11 @@
           "pnl": 0.02,
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "curs-valutar",
@@ -566,7 +699,11 @@
         "party": {
           "psd": -0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "litoral-record",
@@ -584,7 +721,15 @@
         "segments": {
           "antreprenori": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        9,
+        10
+      ]
     },
     {
       "id": "autostrada-moldova",
@@ -610,7 +755,11 @@
         "segments": {
           "muncitori": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "spital-regional",
@@ -630,7 +779,11 @@
         "segments": {
           "bugetari": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "miting-aur",
@@ -651,7 +804,10 @@
         "party": {
           "aur": 0.03
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "coalitie-scandal",
@@ -667,7 +823,11 @@
         "segments": {
           "bugetari": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "lege-salarii",
@@ -683,7 +843,11 @@
           "psd": 0.01,
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "pensii-speciale",
@@ -700,7 +864,11 @@
           "aur": 0.02,
           "usr": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "tineri-pleaca",
@@ -723,7 +891,11 @@
           "usr": -0.01,
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "fermieri-protest",
@@ -746,7 +918,18 @@
         "party": {
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
     },
     {
       "id": "primarie-inaugurare",
@@ -761,7 +944,11 @@
         "party": {
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "tiktok-politician",
@@ -777,7 +964,10 @@
         "party": {
           "psd": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "cutremur-bucuresti",
@@ -793,7 +983,11 @@
           "psd": -0.02,
           "pnl": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "iohannis-carte",
@@ -808,7 +1002,11 @@
         "party": {
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "grindeanu-ceas",
@@ -829,7 +1027,11 @@
           "delta": 3
         }
       },
-      "after": "autostrada-cutremur"
+      "after": "autostrada-cutremur",
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "buget-criza",
@@ -839,16 +1041,20 @@
       "minDay": 9,
       "effects": {
         "funds": {
-          "psd": -40,
-          "pnl": -40,
-          "usr": -20,
-          "aur": -20
+          "psd": -0.8,
+          "pnl": -0.8,
+          "usr": -0.4,
+          "aur": -0.4
         },
         "party": {
           "psd": -0.02,
           "pnl": -0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "salarii-bugetari",
@@ -863,7 +1069,10 @@
         "party": {
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "diaspora-vot",
@@ -879,7 +1088,11 @@
           "usr": 0.02,
           "aur": 0.02
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "reclama-guvern",
@@ -894,7 +1107,11 @@
         "segments": {
           "bugetari": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "niculescu-zoom",
@@ -914,7 +1131,10 @@
           "stat": "visibility",
           "delta": 4
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "niculescu-ocde",
@@ -931,7 +1151,10 @@
           "psd": 0.01,
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "motiune-amenintare",
@@ -948,7 +1171,11 @@
         "segments": {
           "antreprenori": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "fitch-recesiune",
@@ -966,7 +1193,11 @@
           "pnl": -0.015,
           "aur": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "congres-usr",
@@ -986,7 +1217,11 @@
         "party": {
           "usr": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "ordonanta-urgenta",
@@ -1002,7 +1237,11 @@
           "psd": -0.01,
           "pnl": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "bac-promovabilitate",
@@ -1018,7 +1257,13 @@
         "party": {
           "psd": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ],
+      "months": [
+        7
+      ]
     },
     {
       "id": "indemnizatii-parlament",
@@ -1037,7 +1282,11 @@
           "pensionari_rural": -0.01,
           "someri": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "meci-nationala",
@@ -1055,7 +1304,11 @@
           "pnl": 0.01,
           "aur": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "tren-intarziere",
@@ -1076,7 +1329,11 @@
         "party": {
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "plafonare-energie",
@@ -1091,13 +1348,24 @@
           "muncitori": 0.02
         },
         "funds": {
-          "psd": -30
+          "psd": -0.6
         },
         "party": {
           "psd": 0.02,
           "aur": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
     },
     {
       "id": "ajutor-fermieri",
@@ -1121,7 +1389,17 @@
         "party": {
           "psd": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8,
+        9,
+        10
+      ]
     },
     {
       "id": "utilaje-inaugurare",
@@ -1138,7 +1416,17 @@
         "party": {
           "psd": -0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2,
+        3
+      ]
     },
     {
       "id": "dezmintire-dezmintita",
@@ -1155,7 +1443,11 @@
           "aur": 0.02,
           "usr": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "contramiting-usr",
@@ -1174,7 +1466,10 @@
         "segments": {
           "tineri_urbani": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "studenti-protest",
@@ -1195,7 +1490,11 @@
           "usr": 0.015,
           "psd": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "spital-sectie-inchisa",
@@ -1220,7 +1519,11 @@
           "psd": -0.015,
           "pnl": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "bilete-avion-record",
@@ -1241,7 +1544,11 @@
           "aur": 0.015,
           "usr": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "startup-pleaca",
@@ -1264,7 +1571,11 @@
         "party": {
           "pnl": -0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "reconciliere-cafea",
@@ -1278,7 +1589,11 @@
           "psd": 0.01,
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "primar-concediu-lung",
@@ -1296,7 +1611,11 @@
             "psd": -0.04
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "pensii-inghitite",
@@ -1314,7 +1633,11 @@
           "psd": -0.015,
           "aur": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "diploma-verificata",
@@ -1332,7 +1655,10 @@
           "stat": "gaffes",
           "delta": 4
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "cotroceni-diurne",
@@ -1351,7 +1677,11 @@
         "party": {
           "pnl": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "trump-prelungire",
@@ -1367,7 +1697,10 @@
         "party": {
           "usr": 0.015
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "bloc-bulinat",
@@ -1386,7 +1719,11 @@
             "pnl": -0.03
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "grindeanu-aniversare",
@@ -1407,7 +1744,11 @@
           "stat": "visibility",
           "delta": 3
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "d-greva-medici",
@@ -1441,8 +1782,8 @@
         },
         {
           "label": "Promiți un pachet de legi",
-          "hint": "Costă 50 · un pic de speranță",
-          "cost": 50,
+          "hint": "Costă 1,0 M€ · un pic de speranță",
+          "cost": 1,
           "text": "Ai promis un pachet de legi. Pachetul are 14 anexe și o virgulă.",
           "effects": {
             "segBoost": {
@@ -1457,6 +1798,10 @@
           "text": "Ai preferat să nu comentezi. Ai comentat asta într-un comunicat.",
           "effects": {}
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1485,8 +1830,8 @@
       "choices": [
         {
           "label": "Ceri un ajutor de stat",
-          "hint": "Costă 80 · muncitorii te susțin, antreprenorii nu",
-          "cost": 80,
+          "hint": "Costă 1,6 M€ · muncitorii te susțin, antreprenorii nu",
+          "cost": 1.6,
           "text": "Ai cerut un ajutor de stat pentru fabrică. Statul a promis, patronul a promis, fabrica a rămas.",
           "effects": {
             "segBoost": {
@@ -1510,8 +1855,8 @@
         },
         {
           "label": "Propui recalificare",
-          "hint": "Costă 40 · tinerii apreciază, muncitorii se îndoiesc",
-          "cost": 40,
+          "hint": "Costă 0,8 M€ · tinerii apreciază, muncitorii se îndoiesc",
+          "cost": 0.8,
           "text": "Ai propus cursuri de recalificare. Primul curs: cum să te recalifici.",
           "effects": {
             "segBoost": {
@@ -1520,6 +1865,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1533,8 +1882,8 @@
       "choices": [
         {
           "label": "Accepți",
-          "hint": "Costă 30 · pensionarii urbani te văd, dar riști gafa",
-          "cost": 30,
+          "hint": "Costă 0,6 M€ · pensionarii urbani te văd, dar riști gafa",
+          "cost": 0.6,
           "text": "Ai intrat în direct și ai vorbit 12 minute. Ultimele 10 au fost despre alt subiect.",
           "effects": {
             "segBoost": {
@@ -1556,6 +1905,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1569,11 +1922,11 @@
       "choices": [
         {
           "label": "Accepți donația",
-          "hint": "+120 fonduri · imaginea suferă",
+          "hint": "+2,4 M€ · imaginea suferă",
           "text": "Ai acceptat donația. Presa a aflat despre întâlnire înainte să o ai.",
           "effects": {
             "funds": {
-              "self": 120
+              "self": 2.4
             },
             "party": {
               "self": -0.025
@@ -1594,6 +1947,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1607,8 +1964,8 @@
       "choices": [
         {
           "label": "Cumperi sondajul",
-          "hint": "Costă 60 · un impuls rapid",
-          "cost": 60,
+          "hint": "Costă 1,2 M€ · un impuls rapid",
+          "cost": 1.2,
           "text": "Sondajul a apărut în presă. Cifrele au fost publicate, metodologia nu.",
           "effects": {
             "party": {
@@ -1626,6 +1983,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1647,8 +2008,8 @@
       "choices": [
         {
           "label": "Trimiți ajutoare în zonă",
-          "hint": "Costă 70 · câștigi în sud",
-          "cost": 70,
+          "hint": "Costă 1,4 M€ · câștigi în sud",
+          "cost": 1.4,
           "text": "Ai trimis ajutoare. Ajutoarele au ajuns primele, ședința a ajuns a doua.",
           "effects": {
             "county": {
@@ -1672,8 +2033,8 @@
         },
         {
           "label": "Vii personal, în cizme",
-          "hint": "Costă 30 · poze bune, un singur județ",
-          "cost": 30,
+          "hint": "Costă 0,6 M€ · poze bune, un singur județ",
+          "cost": 0.6,
           "text": "Ai venit în cizme noi. Pozele au ieșit bine; cizmele nu au văzut apă.",
           "effects": {
             "county": {
@@ -1694,6 +2055,15 @@
           "text": "Ai cerut o anchetă. Ancheta a început cu o ședință.",
           "effects": {}
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        4,
+        5,
+        6
       ]
     },
     {
@@ -1726,6 +2096,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1739,8 +2113,8 @@
       "choices": [
         {
           "label": "Susții votul prin corespondență",
-          "hint": "Costă 40 · diaspora te vrea, ruralul dă din umeri",
-          "cost": 40,
+          "hint": "Costă 0,8 M€ · diaspora te vrea, ruralul dă din umeri",
+          "cost": 0.8,
           "text": "Ai susținut votul prin corespondență. Diaspora a aplaudat, poștașul a tăcut.",
           "effects": {
             "segBoost": {
@@ -1760,6 +2134,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1773,8 +2151,8 @@
       "choices": [
         {
           "label": "Lansezi clipul",
-          "hint": "Costă 30 · tinerii se amuză, bugetarii nu",
-          "cost": 30,
+          "hint": "Costă 0,6 M€ · tinerii se amuză, bugetarii nu",
+          "cost": 0.6,
           "text": "Clipul a strâns 3 milioane de vizualizări. Un milion au fost de la oameni care voiau să se asigure că e real.",
           "effects": {
             "segBoost": {
@@ -1786,8 +2164,8 @@
         },
         {
           "label": "Alegi un clip solemn",
-          "hint": "Costă 20 · bugetarii și pensionarii aprobă",
-          "cost": 20,
+          "hint": "Costă 0,4 M€ · bugetarii și pensionarii aprobă",
+          "cost": 0.4,
           "text": "Ai ales un clip solemn, cu orchestră. Nimeni nu l-a recunoscut, dar toți au ascultat respectuos.",
           "effects": {
             "segBoost": {
@@ -1797,6 +2175,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1833,8 +2215,8 @@
         },
         {
           "label": "Ceri dialog",
-          "hint": "Costă 20 · moderat, fără pericole",
-          "cost": 20,
+          "hint": "Costă 0,4 M€ · moderat, fără pericole",
+          "cost": 0.4,
           "text": "Ai cerut dialog. Dialogul a început cu o masă rotundă, care s-a transformat într-o masă pătrată.",
           "effects": {
             "segBoost": {
@@ -1849,6 +2231,9 @@
           "text": "Purtătorul de cuvânt a vorbit zece minute. Zece minute au fost de liniște.",
           "effects": {}
         }
+      ],
+      "scenarios": [
+        "2026"
       ]
     },
     {
@@ -1893,8 +2278,8 @@
         },
         {
           "label": "Faci tu un clip mai bun",
-          "hint": "Costă 40 · risc și șanse",
-          "cost": 40,
+          "hint": "Costă 0,8 M€ · risc și șanse",
+          "cost": 0.8,
           "text": "Ai făcut un clip și mai bun. Clipul a strâns mai multe vizualizări decât toate discursurile tale la un loc.",
           "effects": {
             "segBoost": {
@@ -1903,6 +2288,9 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2026"
       ]
     },
     {
@@ -1931,8 +2319,8 @@
         },
         {
           "label": "Faci o plângere penală",
-          "hint": "Costă 40 · semnal clar, dar încet",
-          "cost": 40,
+          "hint": "Costă 0,8 M€ · semnal clar, dar încet",
+          "cost": 0.8,
           "text": "Ai depus o plângere penală. Plângerea a primit numărul 12.345 și a intrat în rând.",
           "effects": {
             "segBoost": {
@@ -1944,6 +2332,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -1957,8 +2349,8 @@
       "choices": [
         {
           "label": "Refaci toate afișele",
-          "hint": "Costă 60 · imagine curată",
-          "cost": 60,
+          "hint": "Costă 1,2 M€ · imagine curată",
+          "cost": 1.2,
           "text": "Ai refăcut afișele. Greșeala nouă a fost mai mică, dar greșeala veche a rămas în arhivă.",
           "effects": {
             "party": {
@@ -1977,6 +2369,10 @@
             }
           }
         }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
       ]
     },
     {
@@ -2004,7 +2400,16 @@
         "party": {
           "udmr": 0.01
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2
+      ]
     },
     {
       "id": "valea-jiului-minele",
@@ -2028,7 +2433,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "rovinari-centrala",
@@ -2053,7 +2462,10 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "aeroport-craiova",
@@ -2073,7 +2485,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "port-constanta-record",
@@ -2094,7 +2510,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "metrou-iasi",
@@ -2115,7 +2535,10 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "chirii-cluj",
@@ -2140,7 +2563,10 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "baterii-timisoara",
@@ -2161,7 +2587,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "aeroport-brasov",
@@ -2181,7 +2611,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "sibiu-teatru",
@@ -2201,7 +2635,14 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6
+      ]
     },
     {
       "id": "bucuresti-trafic-blocat",
@@ -2220,7 +2661,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "ilfov-blocuri",
@@ -2247,7 +2692,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "suceava-sarbatori",
@@ -2267,7 +2716,16 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        4,
+        8,
+        12
+      ]
     },
     {
       "id": "spital-botosani",
@@ -2287,7 +2745,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "vaslui-statistici",
@@ -2311,7 +2773,10 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2026"
+      ]
     },
     {
       "id": "parc-eolian-teleorman",
@@ -2331,7 +2796,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "maramures-turism",
@@ -2351,7 +2820,17 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ]
     },
     {
       "id": "oradea-europa",
@@ -2371,7 +2850,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "combinat-galati",
@@ -2396,7 +2879,11 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     },
     {
       "id": "prahova-ski",
@@ -2416,7 +2903,16 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2
+      ]
     },
     {
       "id": "spital-targu-mures",
@@ -2436,7 +2932,477 @@
             }
           }
         }
-      }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "weight": 8,
+      "minDay": 24,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "metric": {
+          "cpi": -2
+        },
+        "confidence": -8,
+        "sol": {
+          "diaspora": -4,
+          "tineri_urbani": -3,
+          "studenti": -3
+        },
+        "party": {
+          "psd": -0.04,
+          "usr": 0.05,
+          "pnl": 0.02
+        },
+        "politician": {
+          "id": "iordache",
+          "stat": "gaffes",
+          "delta": 8
+        }
+      },
+      "id": "ordonanta-13-2017",
+      "title": "Guvernul adoptă o ordonanță de grațiere într-o ședință de seară",
+      "text": "Într-o ședință convocată pentru alt subiect, guvernul adoptă o ordonanță care modifică Codul penal. Dimineața, România află din presă."
+    },
+    {
+      "weight": 8,
+      "minDay": 24,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "confidence": -6,
+        "sol": {
+          "tineri_urbani": -2,
+          "diaspora": -2
+        },
+        "party": {
+          "psd": -0.03,
+          "usr": 0.06,
+          "pnl": 0.02
+        }
+      },
+      "id": "proteste-2017",
+      "after": "ordonanta-13-2017",
+      "title": "Sute de mii de oameni în stradă",
+      "text": "Zeci de orașe ies la proteste, iar în Piața Victoriei se adună cel mai mare protest din ultimii ani. Președintele se alătură protestatarilor, premierul spune că „nu e o ordonanță, e o discuție”."
+    },
+    {
+      "weight": 8,
+      "minDay": 24,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "confidence": 3,
+        "party": {
+          "psd": -0.01,
+          "usr": 0.02
+        }
+      },
+      "id": "abrogare-oug-2017",
+      "after": "proteste-2017",
+      "title": "Guvernul abrogă ordonanța",
+      "text": "După zile de proteste, guvernul abrogă ordonanța printr-o altă ordonanță. Ministrul justiției pleacă, ordonanța pleacă, protestatarii rămân să verifice."
+    },
+    {
+      "weight": 0,
+      "minDay": 0,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "confidence": -8,
+        "sol": {
+          "tineri_urbani": -2,
+          "diaspora": -3,
+          "studenti": -2
+        },
+        "party": {
+          "gov": -0.03,
+          "usr": 0.04
+        }
+      },
+      "id": "proteste-oug",
+      "title": "Proteste după o ordonanță de urgență",
+      "text": "O ordonanță adoptată la ore târzii scoate lumea în stradă. Pancartele sunt mai creative decât textul ordonanței."
+    },
+    {
+      "weight": 3,
+      "minDay": 120,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "confidence": -12,
+        "party": {
+          "psd": -0.015
+        }
+      },
+      "id": "criza-premier-2017",
+      "title": "PSD și premierul nu se mai înțeleg",
+      "text": "Președintele partidului cere schimbări în cabinet, premierul spune că guvernează, iar telefoanele se aud din ce în ce mai rar."
+    },
+    {
+      "weight": 4,
+      "minDay": 60,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "sol": {
+          "bugetari": 3
+        },
+        "budget": {
+          "admin": 0.2
+        },
+        "macro": {
+          "inflation": 0.15
+        },
+        "party": {
+          "psd": 0.015
+        }
+      },
+      "id": "salarizare-2017",
+      "title": "Legea salarizării unitare în sectorul public",
+      "text": "Salariile din sectorul public se aliniază și cresc. Bugetarii zâmbesc, Finanțele numără."
+    },
+    {
+      "weight": 4,
+      "minDay": 40,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "macro": {
+          "growth": 0.4
+        },
+        "sol": {
+          "muncitori": 2,
+          "antreprenori": 1
+        },
+        "party": {
+          "gov": 0.015
+        }
+      },
+      "id": "record-crestere-2017",
+      "title": "România, între primele din UE la creștere economică",
+      "text": "Datele arată o creștere puternică, susținută de consum. Guvernul anunță un record; economiștii anunță o notă de subsol."
+    },
+    {
+      "weight": 4,
+      "minDay": 30,
+      "scenarios": [
+        "2017"
+      ],
+      "effects": {
+        "sol": {
+          "antreprenori": -1.5,
+          "agricultori": -1
+        },
+        "confidence": -2
+      },
+      "id": "fonduri-2014-2020",
+      "title": "Absorbția fondurilor europene rămâne mică",
+      "text": "Banii europeni din bugetul 2014–2020 au fost absorbiți abia în proporție mică. Proiectele sunt depuse, avizate, reavizate și așteptate."
+    },
+    {
+      "weight": 4,
+      "minDay": 12,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "confidence": -6,
+        "metric": {
+          "cpi": -1
+        },
+        "party": {
+          "gov": -0.02
+        }
+      },
+      "id": "scandal-minister",
+      "title": "Scandal la un minister",
+      "text": "O anchetă despre achiziții publice atinge un minister. Ministrul spune că nu știe, secretarul de stat spune că ministrul știe, iar facturile spun altceva."
+    },
+    {
+      "weight": 3,
+      "minDay": 10,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "metric": {
+          "health": -2
+        },
+        "sol": {
+          "pensionari_rural": -2,
+          "pensionari_urban": -2
+        },
+        "macro": {
+          "growth": -0.1
+        },
+        "party": {
+          "gov": -0.01
+        }
+      },
+      "id": "epidemie-gripa",
+      "title": "Epidemie de gripă încarcă spitalele",
+      "text": "Spitalele de urgență sunt pline, iar medicii fac ture duble. Ministerul spune că „sistemul rezistă”; sistemul spune altceva.",
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "weight": 3,
+      "minDay": 14,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "metric": {
+          "infra": -1.5
+        },
+        "macro": {
+          "growth": -0.15
+        },
+        "sol": {
+          "agricultori": -3
+        }
+      },
+      "id": "inundatii-mari",
+      "title": "Inundații puternice în mai multe județe",
+      "text": "Râurile ies din matcă, podurile cedează, iar drumurile devin ape. Primarii cer fonduri, prefecții cer rapoarte, iar apele cer răbdare.",
+      "months": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "weight": 3,
+      "minDay": 20,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "macro": {
+          "growth": -0.15
+        },
+        "confidence": -3,
+        "sol": {
+          "antreprenori": -2
+        }
+      },
+      "id": "fonduri-pierdute",
+      "title": "România pierde fonduri europene neabsorbite",
+      "text": "Termenul-limită trece, iar o parte din bani nu mai poate fi cheltuită. Ministerul anunță că „proiectele sunt în pregătire”, dar nu au unde să se mai pregătească."
+    },
+    {
+      "weight": 3,
+      "minDay": 14,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "macro": {
+          "growth": 0.15,
+          "unemployment": -0.1
+        },
+        "sol": {
+          "muncitori": 2
+        },
+        "party": {
+          "gov": 0.01
+        }
+      },
+      "id": "investitie-straina",
+      "title": "O mare investiție străină vine în România",
+      "text": "O companie internațională anunță o fabrică nouă. Primarul a anunțat 3.000 de locuri de muncă; compania a precizat că „sunt posibile”."
+    },
+    {
+      "weight": 3,
+      "minDay": 16,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "sol": {
+          "bugetari": -3
+        },
+        "confidence": -4,
+        "macro": {
+          "growth": -0.1
+        },
+        "party": {
+          "gov": -0.015
+        }
+      },
+      "id": "greva-generala-bugetari",
+      "title": "Grevă generală în sectorul public",
+      "text": "Profesorii, medicii și funcționarii intră în grevă. Au venit și cei care nu au grevă în contract, ca să se asigure că nu lipsesc."
+    },
+    {
+      "weight": 3,
+      "minDay": 14,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "macro": {
+          "growth": 0.2
+        },
+        "sol": {
+          "antreprenori": 2,
+          "muncitori": 1
+        }
+      },
+      "id": "export-boom",
+      "title": "Exporturile depășesc așteptările",
+      "text": "Comenzile externe cresc peste prognoză. Fabricile angajează, camioanele așteaptă la vamă, iar ministerul anunță că „e meritul tuturor”."
+    },
+    {
+      "weight": 4,
+      "minDay": 10,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "macro": {
+          "inflation": 0.6
+        },
+        "sol": {
+          "pensionari_rural": -2,
+          "pensionari_urban": -2,
+          "muncitori": -2
+        },
+        "party": {
+          "gov": -0.015
+        }
+      },
+      "id": "inflatie-surpriza",
+      "title": "Inflația depășește așteptările",
+      "text": "Prețurile cresc mai repede decât s-a estimat. Banca centrală recalculează, cumpărătorii recalculează, iar casierii nu mai pot recalcula."
+    },
+    {
+      "weight": 3,
+      "minDay": 24,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "confidence": -3,
+        "party": {
+          "gov": -0.01
+        }
+      },
+      "id": "deficit-peste-tinta",
+      "title": "Execuția bugetară depășește ținta de deficit",
+      "text": "Datele lunare arată un deficit peste ținta anunțată. Ministerul spune că e o diferență „tehnică”, Comisia spune că tehnicile sunt aceleași."
+    },
+    {
+      "weight": 2,
+      "minDay": 18,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "confidence": -2,
+        "sol": {
+          "antreprenori": -1
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "id": "atac-cibernetic",
+      "title": "Atac cibernetic asupra unor instituții",
+      "text": "Mai multe site-uri publice sunt blocate o zi. Un funcționar a găsit o soluție: a rămas la ghișeu."
+    },
+    {
+      "weight": 3,
+      "minDay": 20,
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "sol": {
+          "diaspora": 2,
+          "tineri_urbani": 1
+        },
+        "party": {
+          "usr": 0.01
+        }
+      },
+      "id": "anchete-condamnari",
+      "title": "O anchetă mare se încheie cu condamnări",
+      "text": "După ani de dosare, instanța pronunță sentințe într-un caz de corupție de mare anvergură. Avocații anunță apel; presa anunță dosarul."
+    },
+    {
+      "weight": 5,
+      "minDay": 6,
+      "scenarios": [
+        "2026"
+      ],
+      "effects": {
+        "confidence": -3,
+        "party": {
+          "gov": -0.01
+        },
+        "sol": {
+          "bugetari": 1
+        }
+      },
+      "id": "rectificare-bugetara",
+      "title": "Rectificarea bugetară ajunge în Parlament",
+      "text": "Guvernul cere Parlamentului o rectificare pentru spitale și funcționarea statului. Opoziția cere explicații, coaliția cere răbdare, iar spitalele cer facturile plătite."
+    },
+    {
+      "weight": 4,
+      "minDay": 10,
+      "scenarios": [
+        "2026"
+      ],
+      "effects": {
+        "macro": {
+          "growth": -0.1
+        },
+        "confidence": -2,
+        "sol": {
+          "antreprenori": -1
+        }
+      },
+      "id": "pnrr-termen",
+      "title": "Proiectele PNRR rămân în urmă înaintea termenului final",
+      "text": "Din lista proiectelor, câteva sunt gata, multe sunt „în ultima etapă”, iar altele au ajuns la tabelul cu proiecte posibile."
     }
   ]
 }
