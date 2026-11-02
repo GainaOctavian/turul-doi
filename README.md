@@ -6,10 +6,10 @@ milioane de euro, schimbi taxe, adopți politici, numești miniștri, urmăreșt
 datoria, ratingul și indicatorii țării față de media UE, iar la alegeri votanții judecă ce au
 simțit. Harta cu cele 42 de unități administrativ-teritoriale rămâne câmpul de luptă electoral.
 
-Satiră, nu știri. Personajele sunt reale; faptele marcate „satiră” sunt inventate și
-intenționat absurde. Jocul nu conține acuzații reale și nu e o sursă de informare. Guvernele,
-rezultatele din 2016 și listele de miniștri din scenarii sunt reale; sondajele de start din
-2026, economia și bugetul sunt estimări de joc.
+Jocul amestecă fapte verificabile cu umor și nu e o sursă de informare. Guvernele,
+rezultatele din 2016 și 2024 și listele de miniștri din scenarii sunt reale; sondajele de start
+din 2026, economia și bugetul sunt estimări de joc. Statisticile politicienilor sunt valori de
+joc, nu evaluări ale persoanelor.
 
 ## Pornire
 
@@ -32,10 +32,14 @@ oprește ceasul pentru toți. Pentru joc în rețea, pornește serverul pe o ma�
 
 ## Cum se joacă
 
-Interfața are cinci secțiuni, fiecare cu culoarea ei:
+Interfața are șapte secțiuni, fiecare cu culoarea ei:
 
 - **Politică** (albastru): harta influenței, județe (inclusiv București, cu marker propriu),
   campanie, sondaj și coaliții, echipa de politicieni cu portrete.
+- **Parlament** (cyan): legi în dezbatere și voturi, catalogul de legi pe care le poți depune
+  (și din opoziție), moțiuni de cenzură, negocieri de culise și relațiile cu fiecare partid.
+- **Partid** (roz): profilul partidului (categorii de interes și direcție, pe care le poți
+  muta), coeziune, oamenii partidului, fuziuni, absorbții și plecări din partid.
 - **Guvern** (verde): prezentare (premier, încredere, rating, deficit, majoritate), buget,
   politici, cabinet, propuneri.
 - **Țara** (galben): indicatori economici, sociali, de servicii și de infrastructură, plus
@@ -56,9 +60,25 @@ Reguli în pași mari:
 - **Standardul de viață (SoL)**: fiecare segment își măsoară viața (salarii, pensii, prețuri,
   servicii, taxe…) față de așteptări. Peste așteptări, câștigă partidele de la guvernare.
 - **Campanie și decizii**: acțiuni de campanie în județe, decizii cu răspuns în câteva zile,
-  evenimente satirice cu urmări și efecte locale.
+  știri cu urmări și efecte locale (peste 290, fără repetări până se termină toate cele potrivite momentului).
 - **Alegeri**: la data fixă (la 4 ani), prin D'Hondt național cu prag de 5%; după alegeri,
   negocieri de coaliție și ministere împărțite proporțional.
+- **Partide mici**: pe lângă partidele din Parlament poți juca formațiuni care au candidat și au
+  rămas sub prag (2017: PRU, PRM, PER; 2026: SENS, Forța Dreptei, REPER, PSD Unit, DREPT; rezultatele
+  din 2016 și 2024 sunt reale). Fără mandate, jocul tău e drumul spre Parlament: campanie, decizii și
+  fuziuni. Fiecare partid candidează singur: 5% pe țară sau 20% în patru județe. Unde nu s-a găsit
+  un lider verificat, partidul apare cu „conducere colectivă”.
+- **Parlament**: orice partid cu mandate poate depune o lege (8 capital politic), la guvernare
+  sau în opoziție, și votează legile altora. Votul din plen depinde de programul partidului, de
+  relația cu inițiatorul și de înțelegerile din culise: servicii (capital), „sprijin logistic”
+  (M€, cu risc de scandal) și schimburi de voturi. Moțiunea de cenzură e tot un vot (166).
+  Capitalul politic și relațiile cu fiecare partid (care cresc din coaliții, sprijin, legi
+  votate împreună și schimburi de voturi) fac negocierile mai ieftine.
+- **Fuziuni și plecări**: nu există alianțe cu prag. Parlamentarii de pe lista ta rămân ai
+  tăi, dar poți propune o fuziune (un nume nou, de exemplu SENS-DREPT) sau o absorbție; după ea
+  joci mai departe cu noul grup. Oamenii pot pleca oricând să formeze alte grupări (istorice
+  precum PDL din PNL sau PLUS din USR, ori noi). La formarea guvernului, fiecare partid își
+  alege singur oamenii pentru ministerele lui, gratuit, în primele 10 zile.
 
 Parametri de URL pentru teste: `?scenario=2017&party=psd&day=40&event=d-greva-medici`.
 
@@ -110,22 +130,23 @@ Tot conținutul stă în `data/*.json` și se poate edita fără să atingi codu
 | `government.json` | ministere, linii de buget, taxe, indicatori, ponderile SoL, rating |
 | `policies.json` | 31 de politici cu efecte pe buget, segmente și indicatori |
 | `countries.json` | UE și nouă țări (valori de start, evenimente externe) |
-| `parties.json` | 9 partide: afinități, bias pe județe, `lean`, `oppGain` |
-| `politicians.json` | 63 de profiluri (reale + fapte satirice), pe scenarii, cu portret |
-| `events.json` | ~130 de evenimente: naționale, sezoniere, pe județe, lanțuri, decizii |
+| `parties.json` | 17 partide, parlamentare și extraparlamentare: afinități, bias pe județe, `lean`, `oppGain` |
+| `politicians.json` | 65 de profiluri cu fapte verificabile (inclusiv cazuri publice cunoscute), pe scenarii, cu portret |
+| `events.json` | ~290 de evenimente: naționale, sezoniere, pe județe, lanțuri, decizii (`tools/news-pool.mjs` a generat mare parte) |
+| `bills.json` | 30 de legi care pot fi depuse și votate: poziție, categorii afectate, efecte |
+| `splinters.json` | modele istorice de grupări care se desprind (PDL, PLUS, UNPR, PRO, PC) |
 | `segments.json`, `counties.json`, `config.json` | segmente de votanți, județe, parametri |
 | `romania-map.json` | harta (generată de `tools/build-map.mjs`) |
 
 Modelul complet e în `docs/data-model.md`.
 
-## Reguli de satiră
+## Reguli pentru conținut
 
-- Faptele marcate `real` trebuie să fie verificabile; datele despre scena politică se
-  actualizează când se schimbă guvernele sau conducerea partidelor.
-- Faptele marcate `fake` sunt inventate și intenționat absurde. Niciodată despre viața
-  privată, copii, boli sau acuzații penale plauzibile.
+- Faptele despre persoane trebuie să fie verificabile (căutare pe web) și să țină de viața
+  publică: funcții, hotărâri, dosare cunoscute. Nu se inventează acuzații.
 - Statisticile (corupție, traseism, maleabilitate) sunt valori de joc, nu evaluări ale
   persoanelor reale.
+- Umorul e dozat: știrile sunt în general sobre, cu ironie ușoară, nu glume la fiecare rând.
 - Valorile pentru țările din comparație sunt orientative, nu date oficiale.
 
 ## Harta

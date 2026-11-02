@@ -8,6 +8,9 @@ import {
   applyGov,
   offerCoalition,
   acceptCoalition,
+  applyParl,
+  consumeRenamed,
+  splinterOptions,
   fireEvent,
   runElection,
   decide,
@@ -45,6 +48,18 @@ export const HELP = `turul-doi ctl
   tick <zile>               avansează ceasul; month [n] = 30 de zile
   election                  alegeri acum
   coalition <de> <catre>    ofertă de coaliție; accept <catre> <de>
+  lists                     listele la alegeri: prag 5%, procent, județe peste 20%
+  parl                      Parlamentul: legi în dezbatere, voturi, relații
+  laws                      catalogul de legi pe care le poți depune
+  bill <lege>               depune o lege (și opoziția poate)
+  vote <nr> <yes|no|abstain> votezi o lege sau o moțiune
+  lobby <nr> <partid> <favor|money|swap>  negociere de culise
+  rel [partid]              relațiile tale cu celelalte partide
+  merge <partid> <fusion|absorb> [nume]   propune fuziune sau absorbție
+  merge-answer <partid> <yes|no>  răspunzi unei oferte
+  split [frac] [model]      oamenii pleacă și formează o grupare nouă (ex: split 0.3 pdl)
+  profile [partid]          profilul partidului: categorii, direcție, oameni
+  shift <categorie|left|right>  mută direcția partidului
   events                    ultimele evenimente
   help                      acest text`;
 
@@ -273,7 +288,7 @@ export function createCtl(data, opts = {}) {
 
       case "motion": {
         if (need()) return need();
-        const res = applyGov(state, data, me(), { type: "motion" });
+        const res = applyParl(state, data, me(), { type: "motion" });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
@@ -324,6 +339,87 @@ export function createCtl(data, opts = {}) {
         runElection(state, data);
         const r = state.lastResult;
         return `winner ${r.winner} gov ${r.gov.join("+")} seats ${r.seats[r.winner]}`;
+      }
+
+      case "lists": {
+        const snap = snapshot(state, data);
+        return snap.lists
+          .map((l) => `${l.parties.join("+").padEnd(14)} ${pct(l.share).padStart(6)}  prag ${pct(l.need)}  județe>20%: ${l.strongCounties}  ${l.passes ? "intră în Parlament" : "sub prag"}`)
+          .join("\n");
+      }
+
+      case "parl": {
+        const p = snapshot(state, data).parl;
+        const lines = p.bills.map((b) => `#${b.id} [${b.kind}] ${b.title} (${b.from}) vot ziua ${b.vote}  ${Object.entries(b.stance).map(([k, v]) => k + ":" + v).join(" ")}`);
+        lines.push(...p.done.slice(0, 6).map((d) => `  închis #${d.id} ${d.title} (${d.from}): ${d.status} ${d.tally.yes}-${d.tally.no}`));
+        return lines.join("\n") || "niciun vot în desfășurare";
+      }
+
+      case "laws":
+        return snapshot(state, data).parl.catalog.map((b) => `${b.id.padEnd(22)} ${b.title}${b.openNow ? " [în dezbatere]" : b.passedDay != null ? ` [adoptată ziua ${b.passedDay}]` : ""}`).join("\n");
+
+      case "bill": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "bill", bill: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "vote": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "vote", id: args[0], vote: args[1] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "lobby": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "lobby", id: args[0], target: args[1], how: args[2] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "rel": {
+        const who = args[0] ?? me();
+        const rel = snapshot(state, data).parl.rel[who];
+        if (!rel) return "error: alege un partid";
+        return Object.entries(rel).sort((x, y) => y[1] - x[1]).map(([k, v]) => `${k.padEnd(12)} ${v}`).join("\n");
+      }
+
+      case "merge": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "merge", target: args[0], mode: args[1], name: args.slice(2).join(" ") });
+        const ren = consumeRenamed(state);
+        if (ren[me()]) state.humans = state.humans.map((h) => ren[h] ?? h);
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "merge-answer": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "merge-answer", from: args[0], accept: args[1] !== "no" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "split": {
+        if (need()) return need();
+        const frac = Number(args[0]);
+        const res = applyParl(state, data, me(), { type: "split", frac: Number.isFinite(frac) ? frac : 0.25, template: args[1] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "profile": {
+        const id = args[0] ?? me();
+        const snap = snapshot(state, data);
+        const def = snap.defs[id] ?? data.parties.parties.find((p) => p.id === id);
+        if (!def) return "error: alege un partid";
+        const aff = Object.entries(def.affinity).sort((x, y) => y[1] - x[1]).map(([k, v]) => `${k} ${v}`).join(", ");
+        const people = Object.values(state.politicians).filter((p) => p.party === id).map((p) => p.name).join(", ");
+        return `${def.name} lean ${def.lean} coeziune ${snap.parl.cohesion[id]} capital ${snap.parties[id].capital}\ncategorii: ${aff}\noameni: ${people || "-"}\nmodele de despărțire: ${splinterOptions(state, data, id).map((t) => t.id).join(", ") || "-"}`;
+      }
+
+      case "shift": {
+        if (need()) return need();
+        const dir = args[0];
+        const change = dir === "left" ? { lean: 1 } : dir === "right" ? { lean: -1 } : { segment: dir };
+        const res = applyParl(state, data, me(), { type: "shift", ...change });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
       case "coalition": {

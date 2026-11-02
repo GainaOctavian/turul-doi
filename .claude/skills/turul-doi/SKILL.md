@@ -26,7 +26,7 @@ game is not running with the ctl. If port 4173 is busy, stop the old server firs
 | `scenario <2017\|2026>` | start a fresh game on a scenario |
 | `state` / `gov` | date, party played, funds (M€) / PM, coalition, confidence, rating |
 | `parties` / `poll` / `counties [filter]` | party table, national poll, county winners |
-| `play <party>` | take control of a party of the scenario (2017 has alde/pmp, 2026 has aur/sos/pot) |
+| `play <party>` | take control of a party of the scenario (2017 has alde/pmp and the small pru/prm/per; 2026 has aur/sos/pot and the small sens/fd/reper/psdu/drept) |
 | `speed <0\|1\|2\|4>`, `pause`, `resume` | clock speed (0 = paused) |
 | `actions`, `act <type> [county] [rival]` | campaign actions and their M€ cost |
 | `budget` | revenue and spending lines in M€ and % of GDP, balance, taxes |
@@ -36,12 +36,20 @@ game is not running with the ctl. If port 4173 is busy, stop the old server firs
 | `metrics`, `sol`, `world [indicator]` | country indicators with EU averages, standard of living, comparison table |
 | `cabinet`, `appoint <ministry> <politician>` | ministries and ministers; reshuffle (PM's party only) |
 | `proposals`, `answer <id> <accept\|reject>` | cross-ministry proposals |
-| `motion`, `support <on\|off>` | opposition motion of no confidence; supporting party withdraws/renews support |
+| `motion`, `support <on\|off>` | opposition motion of no confidence (a 166-vote plenary vote, can be lobbied); supporting party withdraws/renews support |
 | `politicians [party]` | profiles and key stats |
 | `event <id>`, `decisions`, `decide <id> <choice>` | fire an event; pending decisions and answers |
 | `tick <days>`, `month [n]` | advance the clock (month = 30 days) |
 | `election` | run an election now |
 | `coalition <from> <to>`, `accept <to> <from>` | coalition offers during negotiations |
+| `lists` | electoral lists: share, threshold (5%), counties above 20%, whether they get in |
+| `parl`, `laws` | open votes with each party's stance; catalogue of laws |
+| `bill <law>`, `vote <n> <yes\|no\|abstain>` | file a law (any party with seats, also in opposition); vote |
+| `lobby <n> <party> <favor\|money\|swap>` | backroom deals on an open vote; price falls with relations |
+| `rel [party]` | relations with every other party |
+| `merge <party> <fusion\|absorb> [name]`, `merge-answer <party> <yes\|no>` | fusion or absorption; the player continues as the new group |
+| `split [frac] [template]` | people leave and form a new group (pdl, plus, unpr, pro, pc or a new one) |
+| `profile [party]`, `shift <segment\|left\|right>` | party profile (interest categories, lean, cohesion); shift direction |
 | `events` | recent events, elections, rating moves, world news |
 | `help` | the list above |
 

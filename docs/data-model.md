@@ -45,6 +45,37 @@ economia, bugetul și indicatorii de plecare.
 (2017: Grindeanu la învestire; 2026: Niculescu la învestire). Sondajul de start din 2026,
 economia și bugetul sunt estimări de joc.
 
+### Partide extraparlamentare
+
+`parties` din scenariu poate include formațiuni fără intrare în `parliament`: pornesc cu 0
+mandate, `startPoll` sub 5% (2016: PRU 2,79%, PRM 1,04%, PER ~0,9%; 2024: SENS 2,99%,
+Forța Dreptei 2,05%, PSDU 1,92%, REPER 1,24%, DREPT 1,16%) și se calibrează ca celelalte.
+`leaders[id]` poate fi `null` (conducere colectivă) dacă nu există un lider verificat.
+
+Fiecare partid candidează singur: 5% național sau 20% în patru județe (`snapshot.lists`).
+Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi Parlament).
+
+## Parlament (`bills.json`, `splinters.json`, `shared/parl.mjs`)
+
+- `bills.json`: legi cu `lean` (− piață, + intervenționism), `interest` (segment → −1..1) și
+  `effects` (aceeași sintaxă ca evenimentele: `sol`, `metric`, `macro`, `budget`, `party`, `funds`).
+  `party.self` e inițiatorul.
+- `state.parl`: `bills` (voturi deschise, `kind` `law` sau `motion`), `rel` (relații 0–100 pe
+  perechi, `a|b` sortat), `passed`, `done`, `mergeOffers`, `cool`.
+- Înclinația unui partid față de o lege: interesele lui (afinitate × interes), distanța `lean`,
+  relația cu inițiatorul, rolul (guvern/opoziție) și înțelegerile (`deals`, `pledged`). Coeziunea
+  mută o parte din voturi în sens opus. Moțiunea trece cu 166 de voturi.
+- Culise: `favor` (capital politic), `money` (M€, 15% risc de scandal), `swap` (votezi legea lor).
+  Prețul scade cu relația; sub 15 nu mai vorbesc.
+- `state.defs`: definiții de partid modificate (fuziuni, plecări, schimbarea direcției); citește
+  mereu prin `partyDef(state, data, id)`. `state.renamed` ({vechi: nou}) se consumă cu
+  `consumeRenamed`, ca jucătorul să continue cu noul grup.
+- `fuse` (fuziune sau absorbție): sumă de mandate, fonduri și oameni; strength calibrată să
+  rămână suma sondajelor. `splitParty`: oamenii cu cel mai mare traseism pleacă, împreună cu o
+  parte din mandate și fonduri; șabloanele istorice sunt în `splinters.json`.
+- La formarea guvernului `gov.formUntil` = ziua + 10: fiecare partid numește gratuit oamenii pentru
+  ministerele lui (`appoint`).
+
 ## Guvernare (`government.json`, `policies.json`)
 
 - `ministries`: 14 ministere, fiecare cu culoare și pârghiile pe care le controlează.

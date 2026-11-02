@@ -13,6 +13,8 @@ import {
   applyGov,
   offerCoalition,
   acceptCoalition,
+  applyParl,
+  consumeRenamed,
   decide,
 } from "./shared/engine.mjs";
 import { createCtl } from "./shared/ctl.mjs";
@@ -75,7 +77,7 @@ function sendEvent(res, event, payload) {
 // Snapshot plus who is seated at which party, so the UI can list the players.
 // The long history series only go out once a month (and on connect).
 function view(room, hist = true) {
-  return { ...snapshot(room.state, data, { hist }), players: Object.fromEntries(room.players) };
+  return { ...snapshot(room.state, data, { hist }), players: Object.fromEntries(room.players), renamed: room.renamed ?? {} };
 }
 
 function broadcast(room) {
@@ -224,7 +226,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|gov|coalition|accept|speed|decide)$/);
+    const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|gov|parl|coalition|accept|speed|decide)$/);
     if (action && req.method === "POST") {
       const room = rooms.get(action[1]);
       if (!room) return json(res, 404, { error: "Cod inexistent." });
@@ -247,6 +249,22 @@ const server = http.createServer(async (req, res) => {
         const result = decide(room.state, data, party, payload.decision, payload.choice);
         if (result.ok) broadcast(room);
         return json(res, result.ok ? 200 : 400, result);
+      }
+      if (action[2] === "parl") {
+        const result = applyParl(room.state, data, party, payload.action || {});
+        // A merger renames parties: move the seats and tell the clients once.
+        const renamed = consumeRenamed(room.state);
+        for (const [from, to] of Object.entries(renamed)) {
+          if (room.players.has(from)) {
+            if (!room.players.has(to)) room.players.set(to, room.players.get(from));
+            room.players.delete(from);
+          }
+          for (const c of room.clients) if (c.party === from) c.party = to;
+        }
+        room.renamed = renamed;
+        if (result.ok) broadcast(room);
+        room.renamed = {};
+        return json(res, result.ok ? 200 : 400, { ...result, renamed });
       }
       if (action[2] === "coalition") {
         const result = offerCoalition(room.state, data, party, payload.to);

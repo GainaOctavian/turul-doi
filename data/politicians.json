@@ -24,16 +24,10 @@
           "tineri_urbani": 0.78
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României între 2023 și 2025.",
-          "A demisionat de la șefia PSD în mai 2025."
-        ],
-        "fake": [
-          "Și-a găsit diploma de bac în avionul Nordis, la clasa business.",
-          "A inaugurat un pod care duce într-alt pod, tot al lui."
-        ]
-      },
+      "facts": [
+        "Premier al României între 2023 și 2025.",
+        "A demisionat de la șefia PSD în mai 2025."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#2b2623",
@@ -70,16 +64,12 @@
           "tineri_urbani": 0.9
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României în 2017.",
-          "Ales președinte al PSD cu drepturi depline, după demisia lui Ciolacu.",
-          "A fost ministru al transporturilor."
-        ],
-        "fake": [
-          "Și-a scăpat ceasul la inaugurarea autostrăzii; ceasul a ajuns la Craiova înaintea convoiului."
-        ]
-      },
+      "facts": [
+        "Premier al României în 2017.",
+        "Ales președinte al PSD cu drepturi depline, după demisia lui Ciolacu.",
+        "A fost ministru al transporturilor.",
+        "Guvernul lui a adoptat în 2017 OUG 13, abrogată după proteste, iar în iunie 2017 a fost demis de propriul partid printr-o moțiune de cenzură."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#3a3430",
@@ -93,15 +83,10 @@
         "2017": {
           "party": "psd",
           "role": "Prim-ministru din ianuarie 2017",
-          "facts": {
-            "real": [
-              "Prim-ministru din 4 ianuarie 2017.",
-              "A fost desemnat după ce președintele a refuzat prima propunere a PSD."
-            ],
-            "fake": [
-              "Și-a scăpat ceasul la o inaugurare; ceasul a ajuns la Craiova înaintea convoiului."
-            ]
-          }
+          "facts": [
+            "Prim-ministru din 4 ianuarie 2017.",
+            "A fost desemnat după ce președintele a refuzat prima propunere a PSD."
+          ]
         },
         "2026": {}
       }
@@ -129,15 +114,11 @@
           "studenti": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României în 2017.",
-          "Președinte al Consiliului Național al PSD."
-        ],
-        "fake": [
-          "A promis că guvernul rezolvă totul în două săptămâni, apoi a cerut încă două."
-        ]
-      },
+      "facts": [
+        "Premier al României în 2017.",
+        "Președinte al Consiliului Național al PSD.",
+        "A preluat guvernul după căderea lui Grindeanu și a demisionat în ianuarie 2018, după ce partidul i-a retras sprijinul."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#8d8d8d",
@@ -174,15 +155,10 @@
           "tineri_urbani": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Primar general al Bucureștiului între 2016 și 2020.",
-          "Vicepreședinte PSD pentru București-Ilfov."
-        ],
-        "fake": [
-          "A promis zăpadă artificială pentru toate sectoarele, inclusiv pentru tramvaie."
-        ]
-      },
+      "facts": [
+        "Primar general al Bucureștiului între 2016 și 2020.",
+        "Vicepreședinte PSD pentru București-Ilfov."
+      ],
       "look": {
         "hair": "long",
         "hairColor": "#d9b25f",
@@ -196,14 +172,9 @@
         "2017": {
           "party": "psd",
           "role": "Primar general al Bucureștiului din 2016",
-          "facts": {
-            "real": [
-              "Primar general al Bucureștiului din 2016."
-            ],
-            "fake": [
-              "A promis zăpadă artificială pentru toate sectoarele, inclusiv pentru tramvaie."
-            ]
-          }
+          "facts": [
+            "Primar general al Bucureștiului din 2016."
+          ]
         },
         "2026": {}
       }
@@ -231,15 +202,10 @@
           "tineri_urbani": 0.95
         }
       },
-      "facts": {
-        "real": [
-          "Ministru al sănătății între 2021 și 2023.",
-          "Medic specialist în microbiologie."
-        ],
-        "fake": [
-          "A prescris campaniei electorale trei zile de repaus la pat."
-        ]
-      },
+      "facts": [
+        "Ministru al sănătății între 2021 și 2023.",
+        "Medic specialist în microbiologie."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#9a9a9a",
@@ -276,15 +242,10 @@
           "tineri_urbani": 0.9
         }
       },
-      "facts": {
-        "real": [
-          "A fost primar al Sectorului 4 al Capitalei.",
-          "Vicepreședinte PSD."
-        ],
-        "fake": [
-          "A inaugurat un loc de joacă atât de mare încât copiii au cerut buletin."
-        ]
-      },
+      "facts": [
+        "A fost primar al Sectorului 4 al Capitalei.",
+        "Vicepreședinte PSD."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#1f1a17",
@@ -321,15 +282,10 @@
           "agricultori": 0.95
         }
       },
-      "facts": {
-        "real": [
-          "Ministru al apărării între 2021 și 2023.",
-          "Sociolog și profesor universitar."
-        ],
-        "fake": [
-          "A făcut un sondaj în care 100% din respondenți așteaptă rezultatele sondajului."
-        ]
-      },
+      "facts": [
+        "Ministru al apărării între 2021 și 2023.",
+        "Sociolog și profesor universitar."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#b5b5b5",
@@ -366,16 +322,11 @@
           "pensionari_urban": 0.9
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României din 2025; guvernul a căzut prin moțiune de cenzură pe 5 mai 2026.",
-          "Fost primar al Oradiei.",
-          "Fost președinte al Consiliului Județean Bihor."
-        ],
-        "fake": [
-          "A tăiat cheltuielile atât de tare încât ministerele își împrumută pixuri între ele."
-        ]
-      },
+      "facts": [
+        "Premier al României din 2025; guvernul a căzut prin moțiune de cenzură pe 5 mai 2026.",
+        "Fost primar al Oradiei.",
+        "Fost președinte al Consiliului Județean Bihor."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#7a7a7a",
@@ -412,15 +363,10 @@
           "tineri_urbani": 0.9
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României între 2021 și 2023.",
-          "General în rezervă."
-        ],
-        "fake": [
-          "A raportat că armata a câștigat un război împotriva birocrației, dar birocrația a cerut recurs."
-        ]
-      },
+      "facts": [
+        "Premier al României între 2021 și 2023.",
+        "General în rezervă."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#a6a6a6",
@@ -458,15 +404,10 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Primar al Cluj-Napoca din 2008.",
-          "Premier al României între 2008 și 2012."
-        ],
-        "fake": [
-          "Are un ceas care sună doar la inaugurări de piste de biciclete."
-        ]
-      },
+      "facts": [
+        "Primar al Cluj-Napoca din 2008.",
+        "Premier al României între 2008 și 2012."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#6e6e6e",
@@ -504,14 +445,9 @@
           "tineri_urbani": 0.92
         }
       },
-      "facts": {
-        "real": [
-          "A fost ministru al justiției în mai multe guverne."
-        ],
-        "fake": [
-          "A depus un amendament la propriul dosar de amendamente."
-        ]
-      },
+      "facts": [
+        "A fost ministru al justiției în mai multe guverne."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#9c9c9c",
@@ -548,14 +484,9 @@
           "muncitori": 0.92
         }
       },
-      "facts": {
-        "real": [
-          "A fost ministru al energiei și ministru al cercetării."
-        ],
-        "fake": [
-          "A prezentat un grafic care arată cum scade factura dacă nu te mai uiți la ea."
-        ]
-      },
+      "facts": [
+        "A fost ministru al energiei și ministru al cercetării."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#1f1a17",
@@ -592,15 +523,10 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Europarlamentar din 2014.",
-          "Propus premier în criza politică din 2026; nominalizarea nu a trecut."
-        ],
-        "fake": [
-          "A explicat bugetul UE în trei limbi, fără ca să se înțeleagă în vreuna."
-        ]
-      },
+      "facts": [
+        "Europarlamentar din 2014.",
+        "Propus premier în criza politică din 2026; nominalizarea nu a trecut."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#2b2623",
@@ -638,16 +564,11 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al USR din iunie 2025.",
-          "Primar al Timișoarei, ales în 2020.",
-          "S-a născut în Germania."
-        ],
-        "fake": [
-          "A introdus la Timișoara un semafor care așteaptă și el să treacă pe verde."
-        ]
-      },
+      "facts": [
+        "Președinte al USR din iunie 2025.",
+        "Primar al Timișoarei, ales în 2020.",
+        "S-a născut în Germania."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#6d4c35",
@@ -684,15 +605,10 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "S-a clasat pe locul doi în primul tur din noiembrie 2024, scrutin anulat ulterior.",
-          "Primar al Câmpulung Muscel, ales în 2020."
-        ],
-        "fake": [
-          "A propus ca fiecare cetățean să aibă un USR de buzunar, pentru urgențe."
-        ]
-      },
+      "facts": [
+        "S-a clasat pe locul doi în primul tur din noiembrie 2024, scrutin anulat ulterior.",
+        "Primar al Câmpulung Muscel, ales în 2020."
+      ],
       "look": {
         "hair": "bob",
         "hairColor": "#8a5a2b",
@@ -729,15 +645,10 @@
           "pensionari_rural": 0.88
         }
       },
-      "facts": {
-        "real": [
-          "A fost președinte al USR.",
-          "Candidat la alegerile prezidențiale din 2019."
-        ],
-        "fake": [
-          "A înființat un comitet pentru înființarea unui comitet."
-        ]
-      },
+      "facts": [
+        "A fost președinte al USR.",
+        "Candidat la alegerile prezidențiale din 2019."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#3a2f28",
@@ -774,14 +685,9 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "A fost ministru al transporturilor în 2021."
-        ],
-        "fake": [
-          "A promis un tren direct București–Cluj care pleacă înainte să ajungă."
-        ]
-      },
+      "facts": [
+        "A fost ministru al transporturilor în 2021."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#3a2f28",
@@ -819,14 +725,9 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "A fost ministră de externe în guvernul Bolojan."
-        ],
-        "fake": [
-          "A trimis o notă diplomatică în format meme, cu subtitrări."
-        ]
-      },
+      "facts": [
+        "A fost ministră de externe în guvernul Bolojan."
+      ],
       "look": {
         "hair": "long",
         "hairColor": "#2b2623",
@@ -863,14 +764,9 @@
           "agricultori": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "A fost ministră a mediului în 2025."
-        ],
-        "fake": [
-          "A plantat un copac și a cerut să fie înscris în Registrul Agricol."
-        ]
-      },
+      "facts": [
+        "A fost ministră a mediului în 2025."
+      ],
       "look": {
         "hair": "long",
         "hairColor": "#a9753c",
@@ -907,15 +803,11 @@
           "antreprenori": 0.8
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al AUR.",
-          "A ajuns în turul doi al alegerilor prezidențiale din mai 2025."
-        ],
-        "fake": [
-          "A susținut că el a descoperit România și că ceilalți doar au confirmat-o."
-        ]
-      },
+      "facts": [
+        "Președinte al AUR.",
+        "A ajuns în turul doi al alegerilor prezidențiale din mai 2025.",
+        "Are interdicție de intrare în Republica Moldova; prima oară a fost declarat persona non grata în 2018."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#2b2623",
@@ -952,15 +844,10 @@
           "tineri_urbani": 0.92
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al UDMR din 2011.",
-          "A fost ministru al culturii."
-        ],
-        "fake": [
-          "A negociat ca toate ședințele să se țină în trei limbi, inclusiv în latină."
-        ]
-      },
+      "facts": [
+        "Președinte al UDMR din 2011.",
+        "A fost ministru al culturii."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#8d8d8d",
@@ -998,15 +885,10 @@
           "antreprenori": 0.75
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al SOS România.",
-          "Europarlamentar din 2024."
-        ],
-        "fake": [
-          "A dat în judecată un nor pentru că i-a stricat coafura în timpul unui discurs."
-        ]
-      },
+      "facts": [
+        "Președinte al SOS România.",
+        "Europarlamentar din 2024."
+      ],
       "look": {
         "hair": "bob",
         "hairColor": "#1f1a17",
@@ -1043,15 +925,10 @@
           "studenti": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al POT.",
-          "Deputat din 2024."
-        ],
-        "fake": [
-          "A anunțat că POT înseamnă „Poate Oare Trecem” și că abrevierea a fost aleasă la ruleta."
-        ]
-      },
+      "facts": [
+        "Președinte al POT.",
+        "Deputat din 2024."
+      ],
       "look": {
         "hair": "long",
         "hairColor": "#5a3a24",
@@ -1088,16 +965,11 @@
           "pensionari_rural": 0.8
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al României din 2025.",
-          "Fost primar general al Bucureștiului (2020–2025).",
-          "Matematician de formație."
-        ],
-        "fake": [
-          "I-a dat lui Trump tema să îi calculeze tarifele, iar Trump a cerut prelungire."
-        ]
-      },
+      "facts": [
+        "Președinte al României din 2025.",
+        "Fost primar general al Bucureștiului (2020–2025).",
+        "Matematician de formație."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#6e6e6e",
@@ -1111,15 +983,10 @@
         "2017": {
           "party": "usr",
           "role": "Fondator și președinte USR (2016–2017)",
-          "facts": {
-            "real": [
-              "A fondat USR în 2016.",
-              "Matematician de formație."
-            ],
-            "fake": [
-              "A calculat în direct câte primării ar funcționa dacă toate ședințele s-ar muta în pădure."
-            ]
-          }
+          "facts": [
+            "A fondat USR în 2016.",
+            "Matematician de formație."
+          ]
         },
         "2026": {}
       }
@@ -1147,15 +1014,10 @@
           "tineri_urbani": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al României între 2014 și 2025.",
-          "Fost primar al Sibiului."
-        ],
-        "fake": [
-          "A mutat Cotroceniul la Sibiu, dar a uitat să anunțe angajații."
-        ]
-      },
+      "facts": [
+        "Președinte al României între 2014 și 2025.",
+        "Fost primar al Sibiului."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#c4c4c4",
@@ -1169,15 +1031,10 @@
         "2017": {
           "party": null,
           "role": "Președintele României din 2014",
-          "facts": {
-            "real": [
-              "Președinte al României din 2014.",
-              "Fost primar al Sibiului."
-            ],
-            "fake": [
-              "A mutat Cotroceniul la Sibiu, dar a uitat să anunțe angajații."
-            ]
-          }
+          "facts": [
+            "Președinte al României din 2014.",
+            "Fost primar al Sibiului."
+          ]
         },
         "2026": {}
       }
@@ -1206,15 +1063,10 @@
           "pensionari_rural": 0.92
         }
       },
-      "facts": {
-        "real": [
-          "Învestit prim-ministru pe 20 octombrie 2026.",
-          "Fost secretar de stat, coordonator național pentru aderarea la OCDE."
-        ],
-        "fake": [
-          "A cerut ca ședințele de guvern să fie și pe Zoom, pentru ședințele de pe Zoom."
-        ]
-      },
+      "facts": [
+        "Învestit prim-ministru pe 20 octombrie 2026.",
+        "Fost secretar de stat, coordonator național pentru aderarea la OCDE."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#6d4c35",
@@ -1252,15 +1104,11 @@
           "studenti": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "A câștigat primul tur al alegerilor prezidențiale din noiembrie 2024.",
-          "Turul a fost anulat de Curtea Constituțională în decembrie 2024."
-        ],
-        "fake": [
-          "A cerut să fie anulată retroactiv și campania, pentru siguranță."
-        ]
-      },
+      "facts": [
+        "A câștigat primul tur al alegerilor prezidențiale din noiembrie 2024.",
+        "Turul a fost anulat de Curtea Constituțională în decembrie 2024.",
+        "Câștigătorul primului tur din 2024; Curtea Constituțională a anulat alegerile pe 6 decembrie 2024."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#a8a8a8",
@@ -1297,15 +1145,11 @@
           "studenti": 0.9
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României între 2012 și 2015.",
-          "A fondat partidul Pro România în 2018."
-        ],
-        "fake": [
-          "A promis un partid nou la fiecare ediție de Crăciun."
-        ]
-      },
+      "facts": [
+        "Premier al României între 2012 și 2015.",
+        "A fondat partidul Pro România în 2018.",
+        "În 2012, CNATDCU a stabilit că teza lui de doctorat conține plagiat, iar titlul i-a fost retras în 2016."
+      ],
       "look": {
         "hair": "side",
         "hairColor": "#1f1a17",
@@ -1319,14 +1163,9 @@
         "2017": {
           "party": null,
           "role": "Fost premier (2012–2015)",
-          "facts": {
-            "real": [
-              "Premier al României între 2012 și 2015."
-            ],
-            "fake": [
-              "A promis un partid nou la fiecare ediție de Crăciun."
-            ]
-          }
+          "facts": [
+            "Premier al României între 2012 și 2015."
+          ]
         },
         "2026": {}
       }
@@ -1355,15 +1194,10 @@
           "pensionari_rural": 0.85
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României între 2015 și 2017.",
-          "Fost comisar european pentru agricultură."
-        ],
-        "fake": [
-          "A condus un guvern în care ministerele primeau și ele ședințe de feedback."
-        ]
-      },
+      "facts": [
+        "Premier al României între 2015 și 2017.",
+        "Fost comisar european pentru agricultură."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#b9b9b9",
@@ -1377,17 +1211,15 @@
         "2017": {
           "party": null,
           "role": "Fost premier tehnocrat (2015–2017)",
-          "facts": {
-            "real": [
-              "Premier al României între 2015 și 2017.",
-              "Fost comisar european pentru agricultură."
-            ],
-            "fake": [
-              "A condus un guvern în care ministerele primeau și ele ședințe de feedback."
-            ]
-          }
+          "facts": [
+            "Premier al României între 2015 și 2017.",
+            "Fost comisar european pentru agricultură."
+          ]
         },
-        "2026": {}
+        "2026": {
+          "party": "reper",
+          "role": "Fost premier, fondator REPER"
+        }
       }
     },
     {
@@ -1413,15 +1245,10 @@
           "pensionari_urban": 0.95
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României în 2021.",
-          "Fost președinte al Senatului."
-        ],
-        "fake": [
-          "A promis un deficit atât de mic încât nu se vede cu ochiul liber."
-        ]
-      },
+      "facts": [
+        "Premier al României în 2021.",
+        "Fost președinte al Senatului."
+      ],
       "look": {
         "hair": "side",
         "hairColor": "#3a2f28",
@@ -1458,16 +1285,11 @@
           "pensionari_rural": 0.88
         }
       },
-      "facts": {
-        "real": [
-          "Premier al României între 2019 și 2020.",
-          "Fost președinte al PNL.",
-          "A fondat Forța Dreptei."
-        ],
-        "fake": [
-          "A convocat o conferință de presă despre conferințele de presă, dar a lipsit chiar el."
-        ]
-      },
+      "facts": [
+        "Premier al României între 2019 și 2020.",
+        "Fost președinte al PNL.",
+        "A fondat Forța Dreptei."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#8c8c8c",
@@ -1481,17 +1303,15 @@
         "2017": {
           "party": "pnl",
           "role": "Lider liberal în opoziție",
-          "facts": {
-            "real": [
-              "A fost unul dintre liderii opoziției față de guvernul Grindeanu.",
-              "Fost vicepreședinte al PNL."
-            ],
-            "fake": [
-              "A convocat o conferință de presă despre conferințele de presă, dar a lipsit chiar el."
-            ]
-          }
+          "facts": [
+            "A fost unul dintre liderii opoziției față de guvernul Grindeanu.",
+            "Fost vicepreședinte al PNL."
+          ]
         },
-        "2026": {}
+        "2026": {
+          "party": "fd",
+          "role": "Președinte Forța Dreptei, fost premier"
+        }
       }
     },
     {
@@ -1517,15 +1337,10 @@
           "tineri_urbani": 0.95
         }
       },
-      "facts": {
-        "real": [
-          "Președinte al PMP.",
-          "Propus premier în criza politică din 2026; nominalizarea nu a trecut."
-        ],
-        "fake": [
-          "A cerut Parlamentului să voteze și vecinii, ca să iasă cvorumul."
-        ]
-      },
+      "facts": [
+        "Președinte al PMP.",
+        "Propus premier în criza politică din 2026; nominalizarea nu a trecut."
+      ],
       "look": {
         "hair": "short",
         "hairColor": "#2b2623",
@@ -1562,16 +1377,11 @@
           "diaspora": 1.1
         }
       },
-      "facts": {
-        "real": [
-          "Fost ministru de externe.",
-          "Fost secretar general adjunct al NATO.",
-          "Fost ambasador al României în Statele Unite."
-        ],
-        "fake": [
-          "A candidat independent la propriul partid și a pierdut la mustață."
-        ]
-      },
+      "facts": [
+        "Fost ministru de externe.",
+        "Fost secretar general adjunct al NATO.",
+        "Fost ambasador al României în Statele Unite."
+      ],
       "look": {
         "hair": "side",
         "hairColor": "#8c8c8c",
@@ -1620,16 +1430,12 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Președinte al PSD din 2015.",
-          "Președintele Camerei Deputaților din decembrie 2016.",
-          "Nu poate fi premier din cauza unei condamnări cu suspendare."
-        ],
-        "fake": [
-          "A cerut ca toate ședințele de partid să înceapă cu o ședință pregătitoare pentru ședința de partid."
-        ]
-      }
+      "facts": [
+        "Președinte al PSD din 2015.",
+        "Președintele Camerei Deputaților din decembrie 2016.",
+        "Nu poate fi premier din cauza unei condamnări cu suspendare.",
+        "În 2019, Înalta Curte l-a condamnat definitiv la 3 ani și 6 luni de închisoare cu executare, în dosarul angajărilor fictive de la DGASPC Teleorman."
+      ]
     },
     {
       "ability": {
@@ -1666,16 +1472,11 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Președinte ALDE.",
-          "Președintele Senatului din decembrie 2016.",
-          "Premier al României între 2004 și 2008."
-        ],
-        "fake": [
-          "Și-a făcut un partid atât de mic încât ședințele se țin într-un lift, dar liftul are președinte."
-        ]
-      }
+      "facts": [
+        "Președinte ALDE.",
+        "Președintele Senatului din decembrie 2016.",
+        "Premier al României între 2004 și 2008."
+      ]
     },
     {
       "ability": {
@@ -1713,16 +1514,12 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Președinte al României între 2004 și 2014.",
-          "Fost primar general al Bucureștiului (2000–2004).",
-          "Senator din decembrie 2016."
-        ],
-        "fake": [
-          "A cerut vremii să se comporte ca la Constanța."
-        ]
-      }
+      "facts": [
+        "Președinte al României între 2004 și 2014.",
+        "Fost primar general al Bucureștiului (2000–2004).",
+        "Senator din decembrie 2016.",
+        "În 2012, Parlamentul l-a suspendat din funcție, dar referendumul pentru demitere a fost invalidat de prezența redusă la vot."
+      ]
     },
     {
       "ability": {
@@ -1759,15 +1556,10 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Președinte interimar al PNL în ianuarie 2017.",
-          "Deputat."
-        ],
-        "fake": [
-          "A depus o moțiune de cenzură și a atașat și lista de cumpărături, pentru economie de timp."
-        ]
-      }
+      "facts": [
+        "Președinte interimar al PNL în ianuarie 2017.",
+        "Deputat."
+      ]
     },
     {
       "ability": null,
@@ -1796,14 +1588,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul finanțelor publice din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A prezentat un buget atât de optimist încât ministerul a ținut o conferință de presă ca să-l explice și lui."
-        ]
-      }
+      "facts": [
+        "Ministrul finanțelor publice din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -1832,14 +1619,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul economiei din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A inaugurat un parc industrial care în prima zi a primit mai mulți vizitatori decât investitori."
-        ]
-      }
+      "facts": [
+        "Ministrul economiei din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -1868,14 +1650,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul sănătății din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A promis spitale atât de curate încât pacienții să fie tentați să le viziteze și sănătoși."
-        ]
-      }
+      "facts": [
+        "Ministrul sănătății din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -1904,14 +1681,10 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul educației și cercetării din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A cerut ca tabla să fie înlocuită cu o prezentare, iar prezentarea cu o tablă."
-        ]
-      }
+      "facts": [
+        "Ministrul educației și cercetării din 4 ianuarie 2017.",
+        "A fost condamnat definitiv în 2012 în dosarul Trofeul Calității, fiind primul fost premier trimis la închisoare."
+      ]
     },
     {
       "ability": null,
@@ -1940,14 +1713,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul transporturilor și infrastructurii din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A promis un tren care ajunge primul, urmat de anunțul că a ajuns."
-        ]
-      }
+      "facts": [
+        "Ministrul transporturilor și infrastructurii din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -1976,14 +1744,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul apărării naționale din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A cerut o paradă militară pentru un ordin semnat chiar de el."
-        ]
-      }
+      "facts": [
+        "Ministrul apărării naționale din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2012,14 +1775,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul afacerilor interne din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A prezentat o strategie de ordine publică, ordonată alfabetic."
-        ]
-      }
+      "facts": [
+        "Ministrul afacerilor interne din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2048,15 +1806,11 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul justiției din 4 ianuarie 2017.",
-          "A pus pe agendă proiectele de grațiere și amnistie din ianuarie 2017."
-        ],
-        "fake": [
-          "A propus o lege care să intre în vigoare ieri, ca să evite dezbaterile de azi."
-        ]
-      }
+      "facts": [
+        "Ministrul justiției din 4 ianuarie 2017.",
+        "A pus pe agendă proiectele de grațiere și amnistie din ianuarie 2017.",
+        "În ianuarie 2017, ca ministru al Justiției, a susținut OUG 13, care modifica abuzul în serviciu; ordonanța a fost abrogată după proteste de amploare."
+      ]
     },
     {
       "ability": null,
@@ -2085,14 +1839,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul afacerilor externe din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A negociat cu un ambasador până când ambasadorul a început să negocieze cu el."
-        ]
-      }
+      "facts": [
+        "Ministrul afacerilor externe din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2121,14 +1870,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul agriculturii și dezvoltării rurale din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A recomandat roșiilor să crească mai repede, în limitele legii."
-        ]
-      }
+      "facts": [
+        "Ministrul agriculturii și dezvoltării rurale din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2157,14 +1901,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul muncii și justiției sociale din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A anunțat o majorare de pensii calculată pe un șervețel; șervețelul a primit apoi aviz de la Finanțe."
-        ]
-      }
+      "facts": [
+        "Ministrul muncii și justiției sociale din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2193,14 +1932,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul energiei din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A promis că nu va fi frig în iarna următoare, în limitele termostatelor existente."
-        ]
-      }
+      "facts": [
+        "Ministrul energiei din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2229,14 +1963,9 @@
       "scenarios": {
         "2017": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul fondurilor europene din 4 ianuarie 2017."
-        ],
-        "fake": [
-          "A depus un proiect pentru a depune un proiect pe fonduri europene."
-        ]
-      }
+      "facts": [
+        "Ministrul fondurilor europene din 4 ianuarie 2017."
+      ]
     },
     {
       "ability": null,
@@ -2265,14 +1994,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul finanțelor în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A prezentat deficitul pe o hartă a Europei, cu România colorată în „atenție”."
-        ]
-      }
+      "facts": [
+        "Ministrul finanțelor în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2301,14 +2025,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul sănătății în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A promis liste de așteptare atât de scurte încât pacienții să nu mai aibă ce aștepta."
-        ]
-      }
+      "facts": [
+        "Ministrul sănătății în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2337,14 +2056,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul economiei în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A lansat un portal pentru antreprenori care se încarcă mai repede decât investițiile."
-        ]
-      }
+      "facts": [
+        "Ministrul economiei în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2373,14 +2087,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul transporturilor în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A promis un tronson care se inaugurează înainte de a fi terminat, pentru eficiență."
-        ]
-      }
+      "facts": [
+        "Ministrul transporturilor în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2409,14 +2118,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul apărării în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A raportat că armata are mai multe planuri decât pantofi."
-        ]
-      }
+      "facts": [
+        "Ministrul apărării în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2445,14 +2149,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Viceprim-ministru și ministrul afacerilor interne în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A cerut patrule noi, cu hărți mai noi."
-        ]
-      }
+      "facts": [
+        "Viceprim-ministru și ministrul afacerilor interne în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2481,14 +2180,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul justiției în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A propus o lege care se aplică imediat, după aviz, apoi după încă un aviz."
-        ]
-      }
+      "facts": [
+        "Ministrul justiției în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2517,14 +2211,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul agriculturii în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A recomandat ploii să respecte calendarul agricol."
-        ]
-      }
+      "facts": [
+        "Ministrul agriculturii în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2553,14 +2242,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul muncii în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A calculat o pensie minimă care să fie, matematic, mai mare decât ea însăși."
-        ]
-      }
+      "facts": [
+        "Ministrul muncii în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2589,14 +2273,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul investițiilor și proiectelor europene în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A depus o cerere de finanțare pentru o aplicație care calculează timpul necesar cererilor de finanțare."
-        ]
-      }
+      "facts": [
+        "Ministrul investițiilor și proiectelor europene în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2625,14 +2304,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul afacerilor externe în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A trimis o notă diplomatică pe care a semnat-o, apoi a primit-o."
-        ]
-      }
+      "facts": [
+        "Ministrul afacerilor externe în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2661,14 +2335,9 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul energiei în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A anunțat că prețul energiei a scăzut, în unitățile de măsură potrivite."
-        ]
-      }
+      "facts": [
+        "Ministrul energiei în guvernul Niculescu, din octombrie 2026."
+      ]
     },
     {
       "ability": null,
@@ -2697,13 +2366,88 @@
       "scenarios": {
         "2026": {}
       },
-      "facts": {
-        "real": [
-          "Ministrul educației în guvernul Niculescu, din octombrie 2026."
-        ],
-        "fake": [
-          "A cerut tuturor elevilor să-și facă temele, inclusiv ministerului."
-        ]
+      "facts": [
+        "Ministrul educației în guvernul Niculescu, din octombrie 2026."
+      ]
+    },
+    {
+      "id": "diaconu",
+      "name": "Bogdan Diaconu",
+      "party": "pru",
+      "role": "Președinte PRU, fost deputat",
+      "scenarios": {
+        "2017": {}
+      },
+      "stats": {
+        "charisma": 58,
+        "patience": 30,
+        "malleability": 40,
+        "gaffes": 52,
+        "visibility": 46,
+        "corruption": 28,
+        "traseism": 44
+      },
+      "ability": {
+        "name": "Tonul patriotic",
+        "text": "Vorbește tare despre unitate și strânge voturi din ambele părți ale sălii.",
+        "effect": {
+          "pensionari_rural": 1.12,
+          "someri": 1.1,
+          "antreprenori": 0.85
+        }
+      },
+      "facts": [
+        "Președinte al Partidului România Unită.",
+        "Candidat al PRU la Primăria Capitalei în 2016."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#2b2623",
+        "skin": "#e8b896",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#3a4a63",
+        "tie": "#a67c52"
+      }
+    },
+    {
+      "id": "macsut",
+      "name": "Andrei Macsut",
+      "party": "sens",
+      "role": "Președinte SENS",
+      "scenarios": {
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 52,
+        "patience": 60,
+        "malleability": 36,
+        "gaffes": 26,
+        "visibility": 36,
+        "corruption": 8,
+        "traseism": 14
+      },
+      "ability": {
+        "name": "Campania verde",
+        "text": "Vorbește despre sănătate, educație și natură; orașele ascultă politicos.",
+        "effect": {
+          "tineri_urbani": 1.15,
+          "studenti": 1.15,
+          "diaspora": 1.1,
+          "pensionari_rural": 0.85
+        }
+      },
+      "facts": [
+        "Președinte al partidului SENS."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#3a2f28",
+        "skin": "#eac09e",
+        "glasses": true,
+        "facial": "stubble",
+        "suit": "#2a5a46",
+        "tie": null
       }
     }
   ]

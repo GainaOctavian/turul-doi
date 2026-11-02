@@ -276,6 +276,215 @@
         "brasov": 1.1
       },
       "oppGain": 0.3
+    },
+    {
+      "oppGain": 0.35,
+      "id": "pru",
+      "name": "PRU",
+      "fullName": "Partidul România Unită",
+      "color": "#a67c52",
+      "leader": "diaconu",
+      "lean": 0.35,
+      "affinity": {
+        "pensionari_rural": 0.7,
+        "pensionari_urban": 0.55,
+        "tineri_urbani": 0.4,
+        "studenti": 0.25,
+        "muncitori": 0.6,
+        "agricultori": 0.65,
+        "antreprenori": 0.3,
+        "bugetari": 0.4,
+        "someri": 0.65,
+        "diaspora": 0.5
+      },
+      "bias": {
+        "bucuresti": 1.4,
+        "ilfov": 1.2,
+        "prahova": 1.1
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "prm",
+      "name": "PRM",
+      "fullName": "Partidul România Mare",
+      "color": "#9b2335",
+      "leader": null,
+      "lean": 0.4,
+      "affinity": {
+        "pensionari_rural": 0.65,
+        "pensionari_urban": 0.5,
+        "tineri_urbani": 0.3,
+        "studenti": 0.2,
+        "muncitori": 0.55,
+        "agricultori": 0.6,
+        "antreprenori": 0.25,
+        "bugetari": 0.4,
+        "someri": 0.6,
+        "diaspora": 0.35
+      },
+      "bias": {
+        "gorj": 1.2,
+        "olt": 1.1,
+        "dolj": 1.1
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "per",
+      "name": "PER",
+      "fullName": "Partidul Ecologist Român",
+      "color": "#43a047",
+      "leader": null,
+      "lean": -0.1,
+      "affinity": {
+        "pensionari_rural": 0.3,
+        "pensionari_urban": 0.4,
+        "tineri_urbani": 0.5,
+        "studenti": 0.5,
+        "muncitori": 0.3,
+        "agricultori": 0.3,
+        "antreprenori": 0.45,
+        "bugetari": 0.4,
+        "someri": 0.3,
+        "diaspora": 0.45
+      },
+      "bias": {
+        "bucuresti": 1.2,
+        "ilfov": 1.1
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "sens",
+      "name": "SENS",
+      "fullName": "Sănătate, Educație, Natură, Sustenabilitate",
+      "color": "#00a896",
+      "leader": "macsut",
+      "lean": -0.2,
+      "affinity": {
+        "pensionari_rural": 0.2,
+        "pensionari_urban": 0.4,
+        "tineri_urbani": 0.85,
+        "studenti": 0.85,
+        "muncitori": 0.3,
+        "agricultori": 0.15,
+        "antreprenori": 0.6,
+        "bugetari": 0.45,
+        "someri": 0.3,
+        "diaspora": 0.7
+      },
+      "bias": {
+        "bucuresti": 1.6,
+        "cluj": 1.3,
+        "timis": 1.2,
+        "iasi": 1.2
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "fd",
+      "name": "FD",
+      "fullName": "Forța Dreptei",
+      "color": "#4a90d9",
+      "leader": "orban",
+      "lean": -0.6,
+      "affinity": {
+        "pensionari_rural": 0.3,
+        "pensionari_urban": 0.5,
+        "tineri_urbani": 0.5,
+        "studenti": 0.4,
+        "muncitori": 0.3,
+        "agricultori": 0.3,
+        "antreprenori": 0.75,
+        "bugetari": 0.45,
+        "someri": 0.25,
+        "diaspora": 0.55
+      },
+      "bias": {
+        "bucuresti": 1.3,
+        "ilfov": 1.3,
+        "arges": 1.1,
+        "dambovita": 1.1
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "reper",
+      "name": "REPER",
+      "fullName": "Reînnoim Proiectul European al României",
+      "color": "#ff9f1c",
+      "leader": "ciolos",
+      "lean": -0.3,
+      "affinity": {
+        "pensionari_rural": 0.2,
+        "pensionari_urban": 0.45,
+        "tineri_urbani": 0.7,
+        "studenti": 0.6,
+        "muncitori": 0.3,
+        "agricultori": 0.2,
+        "antreprenori": 0.7,
+        "bugetari": 0.5,
+        "someri": 0.25,
+        "diaspora": 0.75
+      },
+      "bias": {
+        "bucuresti": 1.5,
+        "cluj": 1.3,
+        "brasov": 1.2,
+        "sibiu": 1.2
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "psdu",
+      "name": "PSDU",
+      "fullName": "Partidul Social Democrat Unit",
+      "color": "#b5446e",
+      "leader": null,
+      "lean": 0.5,
+      "affinity": {
+        "pensionari_rural": 0.6,
+        "pensionari_urban": 0.55,
+        "tineri_urbani": 0.3,
+        "studenti": 0.25,
+        "muncitori": 0.5,
+        "agricultori": 0.6,
+        "antreprenori": 0.35,
+        "bugetari": 0.55,
+        "someri": 0.5,
+        "diaspora": 0.3
+      },
+      "bias": {
+        "teleorman": 1.2,
+        "dolj": 1.1,
+        "olt": 1.1
+      }
+    },
+    {
+      "oppGain": 0.35,
+      "id": "drept",
+      "name": "DREPT",
+      "fullName": "Dreptate și Respect în Europa pentru Toți",
+      "color": "#6a89cc",
+      "leader": null,
+      "lean": 0,
+      "affinity": {
+        "pensionari_rural": 0.3,
+        "pensionari_urban": 0.5,
+        "tineri_urbani": 0.5,
+        "studenti": 0.4,
+        "muncitori": 0.35,
+        "agricultori": 0.3,
+        "antreprenori": 0.55,
+        "bugetari": 0.5,
+        "someri": 0.3,
+        "diaspora": 0.55
+      },
+      "bias": {
+        "bucuresti": 1.2,
+        "cluj": 1.1
+      }
     }
   ]
 }

@@ -6,6 +6,8 @@ import {
   applyGov,
   offerCoalition,
   acceptCoalition,
+  applyParl,
+  consumeRenamed,
   decide,
   fireEvent,
   scenarioOf,
@@ -33,7 +35,7 @@ const S = {
   snap: null,
   selected: "cluj",
   section: "politica",
-  sub: { politica: "county", guvern: "overview", tara: "metrics", lume: "compare", stiri: "all" },
+  sub: { politica: "county", parlament: "votes", partid: "profile", guvern: "overview", tara: "metrics", lume: "compare", stiri: "all" },
   draft: { spend: {}, tax: {} },
   polFilter: "all",
   worldInd: "growth",
@@ -121,6 +123,7 @@ function scenarioRole(sc, p) {
   if (g.pmParty === p) return ["premier", "Partidul premierului"];
   if (g.coalition.includes(p)) return ["guvern", "La guvernare"];
   if (g.support.includes(p)) return ["sprijin", "Sprijin parlamentar"];
+  if (!(p in sc.parliament)) return ["extra", "Extraparlamentar"];
   return ["opozitie", "În opoziție"];
 }
 
@@ -147,7 +150,7 @@ function renderPartyGrid() {
       const taken = S.taken[id];
       return `<button class="party-card ${id === S.party ? "active" : ""} ${taken ? "taken" : ""}" data-party="${id}" ${taken ? "disabled" : ""} style="--pc:${p.color}">
         <div class="pc-top"><span class="dot" style="--pc:${p.color}"></span>${esc(p.name)}<span class="role ${role}">${label}</span></div>
-        <div class="pc-leader">${esc(leader?.name ?? "")}</div>
+        <div class="pc-leader">${esc(leader?.name ?? "Conducere colectivă")}</div>
         <div class="pc-desc">${taken ? `Ocupat de ${esc(taken)}` : esc(PARTY_BLURB[id] ?? p.fullName)}</div>
       </button>`;
     })
@@ -335,6 +338,10 @@ function selectCounty(id) {
 
 function render() {
   if (!S.snap) return;
+  // Merged and split parties live in the snapshot; a merger may also rename mine.
+  for (const [id, d] of Object.entries(S.snap.defs ?? {})) partyById[id] = d;
+  const to = S.snap.renamed?.[S.party];
+  if (to) S.party = to;
   S.partyById = partyById;
   renderTopbar();
   renderSections();
@@ -508,6 +515,7 @@ function makePatcher(el, onDirty) {
     const picks = {};
     // Selects driven by game state (data-live) are not restored from the old DOM.
     $$("select", el).forEach((s) => s.id && !s.dataset.live && (picks[s.id] = s.value));
+    $$("input[type=text]", el).forEach((s) => s.id && (picks[s.id] = s.value));
     const open = $$("details", el).map((d) => d.open);
     el.innerHTML = html;
     for (const [id, v] of Object.entries(picks)) {
@@ -662,17 +670,21 @@ function panelPoll() {
     )
     .join("");
   const total = 330;
+  const listOf = (id) => s.lists.find((l) => l.parties.includes(id));
 
   return `
+    ${roadCard()}
     <h3>Sondaj național</h3>
     ${rows
-      .map(
-        ([pid, v]) => `<div style="margin-bottom:9px">
-          <div class="row between" style="font-size:12px"><span><span class="dot" style="--pc:${color(pid)}"></span> ${pname(pid)}</span><b>${pct(v)}</b></div>
-          <div class="bar" style="margin-top:3px"><i style="--pc:${color(pid)};width:${(v * 100).toFixed(1)}%"></i></div>
-        </div>`,
-      )
+      .map(([pid, v]) => {
+        const l = listOf(pid);
+        return `<div style="margin-bottom:9px">
+          <div class="row between" style="font-size:12px"><span><span class="dot" style="--pc:${color(pid)}"></span> ${pname(pid)}${l && !l.passes ? ` <span class="below">sub prag</span>` : ""}</span><b>${pct(v)}</b></div>
+          <div class="bar" style="margin-top:3px"><i style="--pc:${color(pid)};width:${Math.min(100, v * 300).toFixed(1)}%"></i></div>
+        </div>`;
+      })
       .join("")}
+
 
     <h3>Mandate (${total}, majoritatea 166)</h3>
     <div class="card">
@@ -712,6 +724,22 @@ function panelPoll() {
   `;
 }
 
+// Where a party that is below the threshold stands, and how it can get in.
+function roadCard() {
+  const s = S.snap;
+  const l = s.lists.find((x) => x.parties.includes(S.party));
+  if (!l || l.passes) return "";
+  const left = Math.max(0, s.electionDay - s.day);
+  const gap = Math.max(0, l.need - l.share);
+  return `<div class="card road">
+    <div class="road-h"><b>Drumul spre Parlament</b><span>${num(left)} zile până la alegeri</span></div>
+    <div class="road-bar"><i style="width:${Math.min(100, (l.share / l.need) * 100).toFixed(1)}%"></i><u></u></div>
+    <div class="road-n"><b>${pct(l.share)}</b> din ${pct(l.need)} necesar${l.parties.length > 1 ? " (alianță)" : ""} · mai lipsesc ${pct(gap)}</div>
+    <div class="road-n">Sau 20% în patru județe: ${l.strongCounties} din 4 până acum.</div>
+    <p class="muted" style="font-size:11.5px;margin:6px 0 0">Campania, deciziile și fuziunile cu partide asemănătoare (tabul Partid) te pot duce peste prag. Sub prag, voturile nu dau mandate.</p>
+  </div>`;
+}
+
 const STAT_LABELS = [
   ["Carismă", "charisma"],
   ["Răbdare", "patience"],
@@ -745,8 +773,7 @@ function politicianCard(p, open) {
         ).join("")}
       </div>
       <div class="facts">
-        ${(p.facts?.real ?? []).map((f) => `<div><span class="tag real">real</span>${esc(f)}</div>`).join("")}
-        ${(p.facts?.fake ?? []).map((f) => `<div><span class="tag fake">satiră</span>${esc(f)}</div>`).join("")}
+        ${(Array.isArray(p.facts) ? p.facts : []).map((f) => `<div>${esc(f)}</div>`).join("")}
       </div>
     </details>
   </div>`;
@@ -770,7 +797,7 @@ function panelTeam() {
     </div>
     <p class="muted" style="font-size:11.5px;margin:6px 0 10px">Liderul contează integral în campanie; ceilalți membri adaugă o treime din abilitatea lor. Miniștrii influențează cât de bine folosește ministerul banii.</p>
     ${list.map((p) => politicianCard(p, !S.teamAll && p.id === leaderId)).join("")}
-    <p class="muted" style="font-size:11px">Statisticile de joc sunt satirice. Faptele „reale” sunt verificabile; cele „satiră” sunt inventate. Portretele sunt caricaturi desenate în cod.</p>
+    <p class="muted" style="font-size:11px">Statisticile de joc sunt estimări. Portretele sunt caricaturi desenate în cod.</p>
   `;
 }
 
@@ -927,6 +954,21 @@ async function govDo(action) {
   return res;
 }
 
+async function parlDo(action) {
+  let res;
+  if (S.mode === "solo") {
+    res = applyParl(S.game, S.data, S.party, action);
+    const renamed = consumeRenamed(S.game);
+    if (renamed[S.party]) S.party = renamed[S.party];
+    if (res.ok) refreshSolo();
+  } else {
+    res = await post(`/api/rooms/${S.room}/parl`, { party: S.party, action });
+    if (res.renamed?.[S.party]) S.party = res.renamed[S.party];
+  }
+  toast(res.ok ? "Parlament" : "Nu se poate", res.ok ? res.message : res.error);
+  return res;
+}
+
 function setupDash() {
   const dash = $("#view-dash");
   const g = () => S.snap.gov;
@@ -962,7 +1004,16 @@ function setupDash() {
     "policy-off": (el) => govDo({ type: "policy", id: el.dataset.id, on: false }),
     appoint: (el) => govDo({ type: "appoint", ministry: el.dataset.m, politician: $(`#appoint-${el.dataset.m}`)?.value }),
     answer: (el) => govDo({ type: "answer", id: Number(el.dataset.id), accept: el.dataset.accept === "1" }),
-    motion: () => govDo({ type: "motion" }),
+    motion: () => parlDo({ type: "motion" }),
+    "parl-motion": () => parlDo({ type: "motion" }),
+    "parl-vote": (el) => parlDo({ type: "vote", id: Number(el.dataset.id), vote: el.dataset.vote }),
+    "parl-lobby": (el) => parlDo({ type: "lobby", id: Number(el.dataset.id), target: $(`#lt-${el.dataset.id}`)?.value, how: $(`#lh-${el.dataset.id}`)?.value }),
+    "parl-bill": (el) => parlDo({ type: "bill", bill: el.dataset.id }),
+    "shift-seg": (el) => parlDo({ type: "shift", segment: el.dataset.seg }),
+    "shift-lean": (el) => parlDo({ type: "shift", lean: Number(el.dataset.dir) }),
+    "merge-offer": () => parlDo({ type: "merge", target: $("#merge-t")?.value, mode: $("#merge-m")?.value, name: $("#merge-n")?.value }),
+    "merge-answer": (el) => parlDo({ type: "merge-answer", from: el.dataset.from, accept: el.dataset.accept === "1" }),
+    "split-go": () => parlDo({ type: "split", frac: Number($("#split-f")?.value), template: $("#split-t")?.value || undefined, name: $("#split-n")?.value }),
     support: (el) => govDo({ type: "support", on: el.dataset.on === "1" }),
     "decision-focus": () => toast("Decizie", "Răspunde în caseta de jos."),
   };

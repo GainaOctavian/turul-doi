@@ -2,11 +2,14 @@
 // state `S` (data + latest snapshot + UI drafts) and returns an HTML string.
 import { portrait } from "/portraits.mjs";
 import * as K from "/kit.mjs";
+import { PARL_VIEWS, PARTY_VIEWS } from "/parl-ui.mjs";
 
 const { esc, fmt, meur, pct1, share, signed, tone, arrow, spark, bar, badge, dot, statCard, section } = K;
 
 export const SECTIONS = [
   { id: "politica", name: "Politică", color: "#5b8dff", subs: [["county", "Județ"], ["actions", "Campanie"], ["poll", "Sondaj"], ["team", "Echipă"]] },
+  { id: "parlament", name: "Parlament", color: "#4cc9f0", subs: [["votes", "Voturi"], ["laws", "Legi"], ["relations", "Relații"]] },
+  { id: "partid", name: "Partid", color: "#f07fb5", subs: [["profile", "Profil"], ["mergers", "Fuziuni și plecări"]] },
   { id: "guvern", name: "Guvern", color: "#2fbf8a", subs: [["overview", "Prezentare"], ["budget", "Buget"], ["policies", "Politici"], ["cabinet", "Cabinet"], ["proposals", "Propuneri"]] },
   { id: "tara", name: "Țara", color: "#ffb02e", subs: [["metrics", "Indicatori"], ["sol", "Standard de viață"]] },
   { id: "lume", name: "Lume", color: "#a77bff", subs: [["compare", "Comparații"], ["table", "Tabel"], ["events", "Evenimente"]] },
@@ -26,6 +29,7 @@ export function roleOf(S, id) {
   if (gv.pmParty === id && gv.coalition.includes(id)) return "premier";
   if (gv.coalition.includes(id)) return "guvern";
   if (id in gv.support) return gv.support[id] ? "sprijin" : "retras";
+  if ((S.snap.parties[id]?.seats ?? 0) === 0) return "extra";
   return "opozitie";
 }
 
@@ -35,6 +39,7 @@ export const ROLE_LABEL = {
   sprijin: "Sprijin parlamentar",
   retras: "Sprijin retras",
   opozitie: "În opoziție",
+  extra: "Extraparlamentar",
 };
 
 const ownerOf = (S, mid) => G(S).gov.ministries.find((m) => m.id === mid)?.party ?? null;
@@ -156,10 +161,22 @@ function overview(S) {
     }),
   ];
 
+  const myList = s.lists.find((x) => x.parties.includes(S.party));
+  const road =
+    myList && !myList.passes
+      ? section(
+          "Drumul spre Parlament",
+          `<div class="road-bar"><i style="width:${Math.min(100, (myList.share / myList.need) * 100).toFixed(1)}%"></i><u></u></div>
+           <div class="road-n"><b>${share(myList.share)}</b> din ${share(myList.need)} necesar · ${fmt(Math.max(0, s.electionDay - s.day))} zile până la alegeri · județe peste 20%: ${myList.strongCounties} din 4</div>`,
+          { sub: "Partidul tău nu are mandate. Campania, deciziile și fuziunile din tabul Partid te pot duce peste prag; guvernarea o urmărești din tribune." },
+        )
+      : "";
+
   return `
     <div class="you ${role}">Tu conduci ${partyBadge(S, S.party)} <strong>${ROLE_LABEL[role]}</strong>
       ${mine ? `<a data-do="decision-focus">${mine} decizie în așteptare</a>` : ""}
       ${open ? `<a data-do="go" data-sec="guvern" data-sub="proposals">${open} propunere de răspuns</a>` : ""}</div>
+    ${road}
     <div class="grid cards">${cards.join("")}</div>
     ${section("Majoritatea parlamentară", seatBar(S), { sub: "Coaliția, sprijinul din afara guvernului și grupul minorităților față de pragul de 166." })}
     ${section("Ce simt oamenii", `<div class="satlist">${satBars(S)}</div>`, { sub: "Satisfacția față de ce se aștepta fiecare grup. Contează la următoarele alegeri.", right: `<a class="more" data-do="go" data-sec="tara" data-sub="sol">Standard de viață →</a>` })}
@@ -560,6 +577,8 @@ export function renderView(S, sec, sub) {
   if (sec === "guvern") {
     return { overview, budget: budgetView, policies: policiesView, cabinet: cabinetView, proposals: proposalsView }[sub]?.(S) ?? "";
   }
+  if (sec === "parlament") return PARL_VIEWS[sub]?.(S) ?? "";
+  if (sec === "partid") return PARTY_VIEWS[sub]?.(S) ?? "";
   if (sec === "tara") return { metrics: metricsView, sol: solView }[sub]?.(S) ?? "";
   if (sec === "lume") return { compare: compareView, table: tableView, events: worldEvents }[sub]?.(S) ?? "";
   if (sec === "stiri") return newsView(S, sub);
@@ -572,5 +591,9 @@ export function badges(S) {
   const out = {};
   const open = g.proposals.filter((p) => p.to === S.party && p.status === "open").length;
   if (open) out.guvern = open;
+  const votes = S.snap.parl.bills.filter((b) => !b.votes[S.party]).length;
+  if (votes) out.parlament = votes;
+  const offers = S.snap.parl.mergeOffers.filter((o) => o.to === S.party).length;
+  if (offers) out.partid = offers;
   return out;
 }

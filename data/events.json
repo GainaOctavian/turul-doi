@@ -5,7 +5,7 @@
       "id": "diploma-avion",
       "title": "Breaking News: diploma de bac, găsită în avion",
       "text": "Marcel Ciolacu anunță că și-a găsit diploma de bac în avionul Nordis, la clasa business. Școala confirmă că diploma există, dar nu era a lui.",
-      "weight": 6,
+      "weight": 2,
       "minDay": 4,
       "effects": {
         "segments": {
@@ -23,13 +23,14 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "iohannis-sibiu",
       "title": "Cotroceniul se mută la Sibiu",
       "text": "Klaus Iohannis anunță că mută Cotroceniul la Sibiu pentru „eficiență administrativă”. Angajații au aflat din presă și au cerut diurne.",
-      "weight": 4,
+      "weight": 2,
       "minDay": 6,
       "effects": {
         "countyParty": {
@@ -47,7 +48,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "autostrada-cutremur",
@@ -288,7 +290,7 @@
       "id": "tiktok-trend",
       "title": "Un politician devine viral pe TikTok",
       "text": "Un clip cu un politician dansând pe manea a strâns 4 milioane de vizualizări. Consilierii spun că a fost „strategie”, bodyguardul spune că a fost accident.",
-      "weight": 5,
+      "weight": 2,
       "minDay": 4,
       "effects": {
         "segments": {
@@ -302,7 +304,8 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "fake-news",
@@ -355,7 +358,7 @@
       "id": "eurovision",
       "title": "România, locul 12 la Eurovision",
       "text": "România a terminat pe locul 12 la Eurovision. Toți au spus că e un rezultat bun, deși nimeni nu a înțeles versurile.",
-      "weight": 3,
+      "weight": 1,
       "minDay": 3,
       "effects": {
         "segments": {
@@ -371,7 +374,8 @@
       ],
       "months": [
         5
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "schengen",
@@ -488,7 +492,7 @@
       "id": "donatie-tractor",
       "title": "Un fan îi dăruiește un tractor",
       "text": "Un fermier i-a dăruit un tractor lui Marcel Ciolacu. Tractorul are 40 de ani, dar „simbolizează legătura cu pământul”.",
-      "weight": 3,
+      "weight": 1,
       "minDay": 4,
       "effects": {
         "segments": {
@@ -501,13 +505,14 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "gafa-live",
       "title": "Gafă în direct",
       "text": "Un politician a confundat județele și a promis autostradă în „județul București”. Clipul are deja 2 milioane de vizualizări.",
-      "weight": 7,
+      "weight": 3,
       "minDay": 2,
       "effects": {
         "segments": {
@@ -526,7 +531,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "ccr-blocaj",
@@ -935,7 +941,7 @@
       "id": "primarie-inaugurare",
       "title": "Inaugurare de piațetă",
       "text": "Un primar a inaugurat o piațetă de 200 de metri pătrați. Banda a fost tăiată de trei ori, pentru că prima dată nu a ieșit poza.",
-      "weight": 3,
+      "weight": 1,
       "minDay": 4,
       "effects": {
         "segments": {
@@ -948,13 +954,14 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "tiktok-politician",
       "title": "Politicianul lunii pe TikTok",
       "text": "Un senator a devenit viral explicând bugetul cu pâine și salam. Bugetul nu a fost explicat, dar salamul s-a vândut.",
-      "weight": 4,
+      "weight": 2,
       "minDay": 6,
       "effects": {
         "segments": {
@@ -967,7 +974,8 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "cutremur-bucuresti",
@@ -993,7 +1001,7 @@
       "id": "iohannis-carte",
       "title": "Iohannis lansează o carte",
       "text": "Klaus Iohannis lansează o carte despre „tăcere și putere”. La lansare nu a vorbit nimeni.",
-      "weight": 2,
+      "weight": 1,
       "minDay": 8,
       "effects": {
         "segments": {
@@ -1006,13 +1014,14 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "grindeanu-ceas",
       "title": "Ceasul lui Grindeanu, scos la licitație",
       "text": "Ceasul pierdut la inaugurare a fost scos la licitație. S-a vândut cu 3.000 de euro, iar cumpărătorul a cerut și autostrada.",
-      "weight": 4,
+      "weight": 2,
       "minDay": 5,
       "effects": {
         "segments": {
@@ -1031,7 +1040,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "buget-criza",
@@ -1098,7 +1108,7 @@
       "id": "reclama-guvern",
       "title": "Campanie de informare de 10 milioane",
       "text": "Guvernul lansează o campanie de informare de 10 milioane de euro. Campania explică ce sunt banii publici, în timp ce banii publici se termină.",
-      "weight": 3,
+      "weight": 1,
       "minDay": 10,
       "effects": {
         "party": {
@@ -1111,13 +1121,14 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "niculescu-zoom",
       "title": "Guvernul se întrunește pe Zoom",
       "text": "Premierul Luca Niculescu a convocat o ședință de guvern pe Zoom, pentru a discuta ședințele de pe Zoom. Trei miniștri au vorbit cu microfonul închis, doi cu camera închisă, iar unul a intrat din greșeală în ședința altui minister.",
-      "weight": 5,
+      "weight": 2,
       "minDay": 4,
       "effects": {
         "segments": {
@@ -1134,7 +1145,8 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "niculescu-ocde",
@@ -1269,7 +1281,7 @@
       "id": "indemnizatii-parlament",
       "title": "Parlamentarii își măresc indemnizația",
       "text": "Parlamentarii au votat o mărire de indemnizație cu o virgulă mutată. Votul a fost unanim și a durat mai puțin decât pauza de cafea.",
-      "weight": 4,
+      "weight": 2,
       "minDay": 9,
       "effects": {
         "party": {
@@ -1286,13 +1298,14 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "meci-nationala",
       "title": "Naționala câștigă, țara sărbătorește",
       "text": "Naționala de fotbal a câștigat un meci important, iar țara a intrat în sărbătoare. Politicienii au postat câte o poză cu trofeul, deși trofeul era al altcuiva.",
-      "weight": 3,
+      "weight": 1,
       "minDay": 5,
       "effects": {
         "segments": {
@@ -1308,13 +1321,14 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "tren-intarziere",
       "title": "Trenul Cluj–București, cu cinci ore întârziere",
       "text": "Un tren de mare viteză a ajuns la destinație cu cinci ore întârziere. Compania explică: „ajunge oricum, doar că mai târziu”.",
-      "weight": 4,
+      "weight": 2,
       "minDay": 6,
       "effects": {
         "segments": {
@@ -1333,7 +1347,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "plafonare-energie",
@@ -1406,7 +1421,7 @@
       "title": "Utilajele de deszăpezire, găsite la o inaugurare",
       "text": "După viscol, s-a aflat că utilajele de deszăpezire participau la o inaugurare. Șoferii au confirmat: erau acolo, pe zăpadă, în picioare.",
       "after": "viscol",
-      "weight": 5,
+      "weight": 2,
       "minDay": 6,
       "effects": {
         "segments": {
@@ -1426,14 +1441,15 @@
         1,
         2,
         3
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "dezmintire-dezmintita",
       "title": "Dezmințirea a fost dezmințită",
       "text": "Dezmințirea știrii false despre „taxa pe aer” a fost la rândul ei dezmințită de un influencer cu 50.000 de urmăritori. Taxa pe aer rămâne, dar nimeni nu știe unde.",
       "after": "fake-news",
-      "weight": 5,
+      "weight": 2,
       "minDay": 8,
       "effects": {
         "segments": {
@@ -1447,7 +1463,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "contramiting-usr",
@@ -1530,7 +1547,7 @@
       "title": "Bilete de avion, epuizate până în toamnă",
       "text": "Companiile aeriene anunță rezervări record spre Vest. Tinerii spun că pleacă „doar pentru un an”, aceeași formulă folosită și acum zece ani.",
       "after": "tineri-pleaca",
-      "weight": 5,
+      "weight": 2,
       "minDay": 14,
       "effects": {
         "convert": [
@@ -1548,7 +1565,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "startup-pleaca",
@@ -1582,7 +1600,7 @@
       "title": "Coaliția se împacă la o cafea",
       "text": "După scandal, liderii coaliției s-au împăcat la o cafea. Cafeaua a fost plătită din banii partidului, scandalul din banii publici.",
       "after": "coalitie-scandal",
-      "weight": 5,
+      "weight": 2,
       "minDay": 12,
       "effects": {
         "party": {
@@ -1593,14 +1611,15 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "primar-concediu-lung",
       "title": "Primarul își prelungește concediul",
       "text": "Primarul de sector, plecat în concediu după descinderea DNA, și-a prelungit concediul cu încă două săptămâni. Consilierii spun că primăria funcționează bine și fără el, ceea ce nu ajută.",
       "after": "dosar-dna",
-      "weight": 4,
+      "weight": 2,
       "minDay": 10,
       "effects": {
         "party": {
@@ -1615,14 +1634,15 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "pensii-inghitite",
       "title": "Pensiile mărite, mâncate de inflație",
       "text": "Pensiile au fost majorate, dar prețurile au fost majorate mai repede. Un pensionar a calculat că ar fi avut mai mult dacă nu se mărea nimic.",
       "after": "pensii-majorate",
-      "weight": 5,
+      "weight": 2,
       "minDay": 13,
       "effects": {
         "segments": {
@@ -1637,14 +1657,15 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "diploma-verificata",
       "title": "Școala verifică diploma din avion",
       "text": "Școala verifică diploma găsită în avionul Nordis și constată că e valabilă pentru o altă persoană, un alt an și o altă materie. Politicianul spune că diploma a fost „scrisă în spirit”.",
       "after": "diploma-avion",
-      "weight": 5,
+      "weight": 2,
       "minDay": 8,
       "effects": {
         "party": {
@@ -1658,14 +1679,15 @@
       },
       "scenarios": [
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "cotroceni-diurne",
       "title": "Angajații Cotroceniului cer diurne pentru Sibiu",
       "text": "După anunțul mutării Cotroceniului la Sibiu, angajații au cerut diurne retroactive. Sibiul a cerut rezidența, Capitala a cerut explicații.",
       "after": "iohannis-sibiu",
-      "weight": 5,
+      "weight": 2,
       "minDay": 10,
       "effects": {
         "countyParty": {
@@ -1681,7 +1703,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "trump-prelungire",
@@ -1707,7 +1730,7 @@
       "title": "Blocurile bulinate, evacuate din precauție",
       "text": "După cutremur, pe zeci de blocuri au apărut buline roșii. Locatarii au întrebat ce înseamnă; primăria a răspuns că bulina e „un semn de atenție”, nu și de soluție.",
       "after": "cutremur-bucuresti",
-      "weight": 4,
+      "weight": 2,
       "minDay": 8,
       "effects": {
         "segments": {
@@ -1723,14 +1746,15 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "grindeanu-aniversare",
       "title": "Autostrada Grindeanu, aniversată fără autostradă",
       "text": "La un an de la anunțul unui nou tronson, tronsonul a fost aniversat cu tort și panglică. Din păcate, tortul era singura construcție terminată.",
       "after": "autostrada-cutremur",
-      "weight": 4,
+      "weight": 2,
       "minDay": 14,
       "effects": {
         "party": {
@@ -1748,7 +1772,8 @@
       "scenarios": [
         "2017",
         "2026"
-      ]
+      ],
+      "tuned": true
     },
     {
       "id": "d-greva-medici",
@@ -3403,6 +3428,3399 @@
       "id": "pnrr-termen",
       "title": "Proiectele PNRR rămân în urmă înaintea termenului final",
       "text": "Din lista proiectelor, câteva sunt gata, multe sunt „în ultima etapă”, iar altele au ajuns la tabelul cu proiecte posibile."
+    },
+    {
+      "id": "ro-export-auto",
+      "title": "Exporturile auto ating un nou record",
+      "text": "Fabricile de componente auto din vest și din centru raportează comenzi pline pentru anul următor. Salariile din industrie cresc, dar firmele spun că nu mai găsesc oameni.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": 2
+        },
+        "macro": {
+          "growth": 0.12,
+          "unemployment": -0.05
+        },
+        "party": {
+          "gov": 0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-fabrica-inchide",
+      "title": "O fabrică se mută în Asia",
+      "text": "Un producător de componente anunță că închide linia din România și o mută în Asia. Peste 800 de oameni primesc preaviz.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": -2
+        },
+        "macro": {
+          "unemployment": 0.06
+        },
+        "party": {
+          "gov": -0.008,
+          "opp": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-salarii-it",
+      "title": "Piața IT încetinește",
+      "text": "După ani de creștere, firmele de software opresc angajările. Programatorii juniori caută primul loc de muncă mai mult decât în anii trecuți.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": -1.5,
+          "antreprenori": -0.5
+        },
+        "macro": {
+          "growth": -0.05
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pib-trimestru",
+      "title": "Economia crește peste așteptări",
+      "text": "Institutul de Statistică revizuiește creșterea economică în sus. Consumul și investițiile din fonduri europene au contat mai mult decât s-a crezut.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "growth": 0.2
+        },
+        "party": {
+          "gov": 0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pib-scadere",
+      "title": "Creștere sub așteptări",
+      "text": "Cifrele trimestriale arată o economie care încetinește. Analiștii pun vina pe consumul slab și pe condițiile din zona euro.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "growth": -0.2
+        },
+        "party": {
+          "gov": -0.008,
+          "opp": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-bursa-record",
+      "title": "Bursa de la București, la un maxim istoric",
+      "text": "Indicele BET depășește nivelul de dinainte de criza financiară. Investitorii mici revin pe piață, iar firmele de brokeraj anunță conturi noi.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": 1
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-salarii-medii",
+      "title": "Salariul mediu net trece un prag simbolic",
+      "text": "Salariul mediu net trece pentru prima dată un prag rotund. Sindicatele spun că media ascunde diferențe mari între București și restul țării.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": 1,
+          "bugetari": 0.5
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-infl-alimente",
+      "title": "Alimentele se scumpesc mai repede decât restul",
+      "text": "Prețurile la lactate, ulei și carne cresc peste media inflației. Comercianții dau vina pe producători, producătorii pe transport, transportatorii pe motorină.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "pensionari_rural": -2,
+          "pensionari_urban": -1.5,
+          "muncitori": -1
+        },
+        "macro": {
+          "inflation": 0.15
+        },
+        "party": {
+          "gov": -0.01
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-infl-scade",
+      "title": "Inflația încetinește trei luni la rând",
+      "text": "Rata anuală a inflației scade, iar Banca Națională vorbește pentru prima dată de o posibilă reducere a dobânzii.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": -0.2
+        },
+        "sol": {
+          "muncitori": 0.5
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-dobanda-rate",
+      "title": "Ratele la bancă cresc după o nouă ajustare a dobânzilor",
+      "text": "Românii cu credite în lei văd cum rata lunară crește cu câteva zeci de lei. La ghișeu, formula e explicată într-un singur sens: „așa e piața”.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": -1,
+          "tineri_urbani": -1
+        },
+        "macro": {
+          "growth": -0.05
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-firme-noi",
+      "title": "Mai multe firme noi decât închise",
+      "text": "Registrul Comerțului arată un număr mai mare de firme înființate decât radiate. Cele mai multe sunt PFA, în servicii și comerț online.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": 1.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-evaziune-record",
+      "title": "ANAF anunță o evaziune descoperită record",
+      "text": "Inspectorii fiscali raportează sume recuperate mai mari ca în anul precedent, în special din controale în comerțul cu cereale și combustibili.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": -0.5
+        },
+        "metric": {
+          "cpi": 0.5
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-datorie-record",
+      "title": "Datoria publică trece un nou prag",
+      "text": "Datoria publică nominală e mai mare ca niciodată. Ministerul Finanțelor spune că raportul la PIB rămâne sub media europeană, opoziția spune că dobânzile contează mai mult.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "growth": -0.03
+        },
+        "party": {
+          "gov": -0.008,
+          "opp": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-leu-slab",
+      "title": "Leul se depreciază față de euro",
+      "text": "Cursul euro urcă la un nou maxim. Importatorii își refac listele de prețuri, iar cei cu credite în valută se uită nervos la cifre.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": 0.1
+        },
+        "sol": {
+          "antreprenori": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-turism-vara",
+      "title": "Litoralul și muntele, pline în sezon",
+      "text": "Hotelurile din stațiunile mari au locuri ocupate aproape tot sezonul. Prețurile cresc, dar la fel și numărul turiștilor străini.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": 1
+        },
+        "macro": {
+          "growth": 0.05
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "ro-turism-slab",
+      "title": "Sezon turistic slab",
+      "text": "Mai puțini turiști decât anul trecut: vremea, scumpirile și concurența Bulgariei și Greciei se văd în încasări.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": -1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ro-gaze-romgaz",
+      "title": "Producția internă de gaze crește",
+      "text": "Un nou zăcământ intră în exploatare, iar importurile de gaze scad. Autoritățile vorbesc despre independență energetică, specialiștii despre preț.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": -0.05
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cadastru",
+      "title": "Cadastrul general avansează lent",
+      "text": "Programul de înregistrare a proprietăților a ajuns la jumătate din țară. Proprietarii așteaptă ani buni un act clar pentru terenul pe care îl au deja.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-leasing-camioane",
+      "title": "Transportatorii cer reducerea accizei la motorină",
+      "text": "Firmele de transport amenință cu un protest în Capitală, cu camioane încolonate. Guvernul spune că discută, transportatorii spun că au mai auzit asta.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": -1
+        },
+        "macro": {
+          "inflation": 0.05
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-shopping-vanzari",
+      "title": "Vânzările din retail cresc în decembrie",
+      "text": "Magazinele raportează cele mai mari încasări din ultimii ani, iar comerțul online crește mai repede decât cel fizic.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 0.5,
+          "antreprenori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12
+      ]
+    },
+    {
+      "id": "ro-datorii-primarii",
+      "title": "Primăriile mici nu mai pot plăti facturile",
+      "text": "Zeci de comune sărace cer ajutor de la bugetul central pentru plata utilităților la școli și dispensare. Banii nu ajung până la sfârșitul anului.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "bugetari": -1
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-spital-nou",
+      "title": "Se inaugurează un spital regional după ani de întârzieri",
+      "text": "Primul spital regional din seria promisă primește pacienți. Mai sunt două în construcție, iar despre al treilea se știe doar că „e în pregătire”.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": 1.2
+        },
+        "sol": {
+          "pensionari_urban": 1
+        },
+        "party": {
+          "gov": 0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-medicamente-lipsa",
+      "title": "Lipsă de antibiotice în farmacii",
+      "text": "Mai multe tratamente uzuale lipsesc din farmacii pentru câteva săptămâni. Ministerul spune că aprovizionarea se normalizează, pacienții caută rețeta prin trei județe.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.8
+        },
+        "sol": {
+          "pensionari_urban": -1.5,
+          "pensionari_rural": -1.5
+        },
+        "party": {
+          "gov": -0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-vaccin-copii",
+      "title": "Acoperirea vaccinală la copii scade",
+      "text": "Medicii de familie avertizează că tot mai puțini copii sunt vaccinați la timp. Rujeola a revenit în câteva județe.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.6,
+          "lifeExp": -0.05
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-campanie-screening",
+      "title": "Campanie de screening în județele cu mortalitate ridicată",
+      "text": "Caravane medicale ajung în comunele izolate pentru analize și consulturi gratuite. Succesul se măsoară în persoane care au venit prima dată la medic.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": 0.8,
+          "lifeExp": 0.05
+        },
+        "sol": {
+          "pensionari_rural": 1
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-asistente-pleaca",
+      "title": "Asistentele medicale pleacă în vest",
+      "text": "Spitalele județene raportează câteva zeci de posturi libere în fiecare secție. Agențiile de recrutare din Germania sunt prezente la târgurile de job.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.7
+        },
+        "sol": {
+          "bugetari": -1
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-urgente-aglomerate",
+      "title": "Aglomerație la camerele de gardă",
+      "text": "Pacienții petrec ore la urgențe pentru afecțiuni care puteau fi rezolvate de medicul de familie. Ghidurile noi încearcă să facă ordine în flux.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.4
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        1,
+        2,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "ro-gripa-sezon",
+      "title": "Sezonul gripal începe devreme",
+      "text": "Valul de infecții respiratorii umple spitalele de copii. Școlile anunță absențe în masă, iar farmaciile epuizează sirop și paracetamol.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.5
+        },
+        "macro": {
+          "growth": -0.03
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        11,
+        12,
+        1
+      ]
+    },
+    {
+      "id": "ro-telemedicina",
+      "title": "Medicii de familie primesc platformă de consultații online",
+      "text": "Sistemul de telemedicină permite programări și rețete la distanță. În zonele cu internet slab, entuziasmul rămâne teoretic.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": 0.5
+        },
+        "sol": {
+          "pensionari_rural": 0.3,
+          "tineri_urbani": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cancer-registru",
+      "title": "Registrul național al cancerului devine funcțional",
+      "text": "După ani de amânări, medicii pot vedea într-un singur loc istoricul pacienților oncologici. Statisticile vor fi, în sfârșit, comparabile cu cele europene.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": 0.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-contract-medici",
+      "title": "Medicii de familie cer renegocierea contractului cadru",
+      "text": "Asociațiile medicilor de familie spun că finanțarea cabinetelor nu mai acoperă costurile. Unele cabinete din mediul rural riscă să se închidă.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.4
+        },
+        "sol": {
+          "pensionari_rural": -1
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pret-medicamente",
+      "title": "Medicamentele compensate se scumpesc",
+      "text": "Lista de medicamente compensate scade, iar pensionarii cu boli cronice plătesc mai mult din buzunar. Ministerul promite o listă revizuită.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "pensionari_urban": -2,
+          "pensionari_rural": -2
+        },
+        "party": {
+          "gov": -0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-spital-modernizat",
+      "title": "Un spital județean primește un tomograf nou",
+      "text": "Echipamentul scurtează cu săptămâni așteptarea pentru investigații. Doi dintre medicii spitalului spun că ar mai fi nevoie de personal care să-l folosească.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": 0.5
+        },
+        "sol": {
+          "pensionari_urban": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-bac-rezultate",
+      "title": "Rezultatele de la Bacalaureat: rata de promovare scade",
+      "text": "Aproape jumătate dintre absolvenții din anumite județe nu iau examenul. La București procentul e mult mai bun, iar diferența devine subiect de dezbatere.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": -0.6
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7
+      ]
+    },
+    {
+      "id": "ro-evaluare-nationala",
+      "title": "Rezultate la Evaluarea Națională",
+      "text": "Elevii din mediul urban obțin note mai mari, iar la sate multe școli nu au niciun elev peste nota 8. Ministerul anunță un plan pentru școlile cu rezultate slabe.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": "ro-scoli-renovate",
+      "title": "Sute de școli rurale primesc grupuri sanitare în interior",
+      "text": "Programul de renovare ajunge la ultimele școli cu toaleta în curte. Primarii spun că banii au venit mai târziu decât lucrările.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": 0.6,
+          "earlyLeavers": -0.2
+        },
+        "sol": {
+          "bugetari": 0.5,
+          "agricultori": 0.5
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-profesori-salarii",
+      "title": "Profesorii cer salarii în raport cu media pe economie",
+      "text": "Sindicatele din învățământ amenință cu grevă de avertisment. Ministerul spune că situația bugetară nu permite majorări imediate.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "bugetari": -1
+        },
+        "party": {
+          "gov": -0.007
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-manuale-intarziere",
+      "title": "Manualele ajung la elevi cu luni de întârziere",
+      "text": "Elevii din clasele mici încep anul școlar cu fotocopii. Editurile spun că nu au primit comenzile la timp, ministerul spune că le-a trimis.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": -0.4
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        9,
+        10
+      ]
+    },
+    {
+      "id": "ro-universitati-clasament",
+      "title": "Două universități românești intră într-un clasament internațional",
+      "text": "Rezultatul e la limita inferioară a clasamentului, dar e prima dată în ultimii ani. Rectorii cer finanțare pentru cercetare.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": 0.4
+        },
+        "sol": {
+          "studenti": 0.8
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-burse-studenti",
+      "title": "Studenții primesc burse mai mari",
+      "text": "Valoarea burselor sociale crește pentru prima dată din ultimii ani. Asociațiile studențești spun că e un început, nu o soluție.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "studenti": 2
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cantine-scolare",
+      "title": "Masa caldă ajunge în mai multe școli",
+      "text": "Programul de masă caldă pentru elevi se extinde în școlile din zone sărace. Unii copii mănâncă la școală singura masă caldă a zilei.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": 0.4,
+          "earlyLeavers": -0.3
+        },
+        "sol": {
+          "muncitori": 0.5
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-abandon-sat",
+      "title": "Abandonul școlar rămâne ridicat în mediul rural",
+      "text": "Datele arată că tot mai mulți adolescenți din sate părăsesc școala după clasa a VIII-a. Cauzele sunt greu de rezolvat prin ordin de ministru.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "earlyLeavers": 0.3
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-an-scolar-start",
+      "title": "Anul școlar începe cu clase suprapopulate",
+      "text": "În orașele mari, clasele depășesc numărul de locuri. Primăriile promit corpuri noi de clădire „din anul viitor”.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        9
+      ]
+    },
+    {
+      "id": "ro-cercetare-fonduri",
+      "title": "Fondurile pentru cercetare cresc cu un sfert",
+      "text": "Institutele de cercetare primesc o finanțare mai mare, iar granturile pentru tineri cercetători se dublează. Mulți dintre ei spun că vor reveni acasă dacă regulile rămân stabile.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "education": 0.4
+        },
+        "sol": {
+          "studenti": 0.5,
+          "tineri_urbani": 0.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-gradinite-noi",
+      "title": "Se deschid grădinițe noi în cartierele mari",
+      "text": "Părinții din cartierele noi de blocuri găsesc loc la grădiniță pentru prima oară după ani. Listele de așteptare rămân lungi în alte părți.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 1
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ro-autostrada-deschisa",
+      "title": "Un nou tronson de autostradă se deschide traficului",
+      "text": "Șoferii economisesc ore pe un traseu pe care înainte îl făceau pe drumuri naționale. Primele zile au fost pline de curioși care au venit să vadă dacă merge bine.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 1.2
+        },
+        "sol": {
+          "antreprenori": 1
+        },
+        "party": {
+          "gov": 0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-santier-oprit",
+      "title": "Un șantier de autostradă se oprește din lipsa unui aviz",
+      "text": "Constructorul spune că așteaptă o autorizație, instituția spune că a trimis-o, iar între ele s-a scurs o lună.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": -0.5
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cai-ferate-modernizare",
+      "title": "Un tronson feroviar modernizat reduce timpul de călătorie",
+      "text": "Trenul dintre două orașe mari ajunge cu o oră mai repede. Pasagerii constată că problema rămâne numărul de vagoane, nu doar șinele.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.8
+        },
+        "sol": {
+          "tineri_urbani": 0.8,
+          "studenti": 0.5
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-tren-nou",
+      "title": "Primele trenuri noi intră pe linie",
+      "text": "Garniturile cumpărate prin fonduri europene circulă pe prima rută. Călătorii observă că vagoanele sunt curate, încă.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.6
+        },
+        "sol": {
+          "tineri_urbani": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-podul-dunare",
+      "title": "Podul peste Dunăre rămâne în așteptare",
+      "text": "Proiectul podului nou peste Dunăre trece prin încă o etapă de proceduri. Șoferii continuă să aștepte la bac.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-metrou-lucrari",
+      "title": "Lucrările la metrou blochează o zonă a Capitalei",
+      "text": "Trafic redirecționat, comercianți nemulțumiți și un șantier care avansează constant, ceea ce nu se mai întâmplă des.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.4
+        },
+        "sol": {
+          "antreprenori": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-aeroport-nou",
+      "title": "Un aeroport regional primește zboruri noi",
+      "text": "Companiile low-cost adaugă rute către vest. Turismul local speră să devină mai mult decât un cuvânt din prezentările de proiect.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.5
+        },
+        "sol": {
+          "diaspora": 1,
+          "antreprenori": 0.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-drumuri-judetene",
+      "title": "Drumurile județene, refăcute după ani",
+      "text": "Consiliile județene folosesc fonduri europene pentru asfaltare. În câteva comune, o parte din drum e gata, iar cealaltă parte se votează în ședința următoare.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.6
+        },
+        "sol": {
+          "agricultori": 0.8
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ro-gropi-iarna",
+      "title": "Gropile apar după dezgheț",
+      "text": "Primăria, constructorul și iarna își atribuie reciproc vina. Șoferii își atribuie vina doar jantelor.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "ro-internet-rural",
+      "title": "Internetul în bandă largă ajunge în sate izolate",
+      "text": "Zeci de comune se conectează la fibră optică prin proiect european. Elevii pot face lecții online fără să urce dealul după semnal.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.5,
+          "education": 0.3
+        },
+        "sol": {
+          "agricultori": 0.6,
+          "tineri_urbani": 0.3
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-energie-retea",
+      "title": "Rețeaua electrică cedează într-o furtună",
+      "text": "Zeci de localități rămân fără curent două zile. Compania de distribuție promite investiții, locuitorii promit că își amintesc.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": -0.4
+        },
+        "sol": {
+          "agricultori": -0.8
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "ro-apa-potabila",
+      "title": "Mai multe sate primesc apă curentă",
+      "text": "Un program de investiții bagă conducte în comune unde până acum se folosea fântâna. Primarii au făcut deja programul inaugurării.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": 0.5,
+          "health": 0.3
+        },
+        "sol": {
+          "pensionari_rural": 0.8
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-dna-dosar",
+      "title": "DNA trimite în judecată un fost ministru",
+      "text": "Procurorii anticorupție susțin că ministrul a favorizat o firmă la achiziții. Fostul demnitar spune că dosarul e politic și că așteaptă să-și dovedească nevinovăția.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.5
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-condamnare-primar",
+      "title": "Un primar este condamnat definitiv pentru luare de mită",
+      "text": "Instanța supremă a menținut condamnarea. Consiliul local alege un viceprimar interimar, iar în piață se discută despre cine urmează.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.4
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-justitie-legi",
+      "title": "Proiectele de modificare a legilor justiției, în dezbatere",
+      "text": "Magistrații spun că proiectul le afectează independența, Guvernul spune că propune o reformă necesară. Asociațiile profesionale au publicat deja trei comunicate.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.4
+        },
+        "party": {
+          "gov": -0.006,
+          "opp": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-dosare-vechi",
+      "title": "Instanțele se aglomerează",
+      "text": "Dosarele vechi se prescriu mai repede decât se judecă. Judecătorii cer mai mult personal auxiliar, iar justițiabilii cer termene reale.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-legea-avertizori",
+      "title": "Avertizorii de integritate câștigă un proces important",
+      "text": "Un angajat al unei instituții publice, mutat disciplinar după ce a semnalat nereguli, a fost reintegrat de instanță. Cazul devine exemplu pentru alții.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.4
+        },
+        "sol": {
+          "tineri_urbani": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-achizitii-publice",
+      "title": "Achizițiile publice trec pe o platformă nouă",
+      "text": "Toate licitațiile se vor derula electronic, cu documentele publice. Firmele mici spun că cerințele sunt dificile, cele mari spun că le fac deja.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.5
+        },
+        "sol": {
+          "antreprenori": 0.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-declaratii-avere",
+      "title": "O investigație ziaristică descoperă averi neexplicate",
+      "text": "Jurnaliștii compară declarațiile de avere cu proprietățile reale ale mai multor aleși locali. Agenția de integritate promite verificări.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.3
+        },
+        "sol": {
+          "tineri_urbani": 0.3
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cazier-candidat",
+      "title": "Un candidat cu antecedente penale apare pe liste",
+      "text": "Partidele își trimit listele electorale, iar presa verifică fiecare nume. Pe unele liste apar condamnați cu pedeapsă suspendată.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.3
+        },
+        "party": {
+          "gov": -0.004,
+          "opp": -0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-protest-magistrati",
+      "title": "Magistrații protestează în fața Curții de Apel",
+      "text": "Judecători și procurori ies în stradă cu robele pe umeri, un lucru rar. Guvernul spune că le înțelege nemulțumirea și le cere să aștepte.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.3
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-extradare",
+      "title": "Instanța aprobă extradarea unui om de afaceri",
+      "text": "Fugarul, urmărit într-un dosar de evaziune, a fost prins într-o țară din vestul Europei. Avocații săi anunță contestații pe trei niveluri.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cetateni-plangeri",
+      "title": "Numărul sesizărilor către Avocatul Poporului crește",
+      "text": "Oamenii se plâng mai ales de întârzieri în emiterea actelor și de lipsa de răspuns din partea instituțiilor.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.2
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cnp-cartea-identitate",
+      "title": "Cărțile electronice de identitate ajung la mai mulți români",
+      "text": "Statul distribuie primele cărți de identitate electronice. În unele județe, programările sunt disponibile după trei luni.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.2
+        },
+        "sol": {
+          "tineri_urbani": 0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-schengen-frontiere",
+      "title": "România aderă la un nou nivel al spațiului Schengen",
+      "text": "Camioanele fac mai puțin la graniță, iar transportatorii spun că economisesc săptămâni pe an. Autoritățile vorbesc despre oportunități.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "antreprenori": 1.5,
+          "diaspora": 0.5
+        },
+        "macro": {
+          "growth": 0.08
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-bruxelles-raport",
+      "title": "Comisia Europeană publică raportul anual",
+      "text": "Raportul remarcă progrese în absorbția fondurilor, dar cere accelerarea reformelor. Guvernul citește primul paragraf, opoziția citește restul.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": 0.2
+        },
+        "party": {
+          "gov": 0.002,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-fonduri-pnrr-intarzieri",
+      "title": "Jaloanele PNRR sunt amânate",
+      "text": "Guvernul cere prelungirea unor termene pentru investiții. Primăriile spun că procedurile sunt prea complicate, ministerele spun că primăriile n-au proiecte gata.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "growth": -0.08
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-fonduri-ue-record",
+      "title": "Rata de absorbție a fondurilor europene crește",
+      "text": "România contractează mai mult decât în anul precedent, iar plățile către beneficiari ajung mai repede. Mai sunt zeci de proiecte blocate la avize.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "growth": 0.1
+        },
+        "metric": {
+          "infra": 0.4
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-moldova-vizita",
+      "title": "Vizită oficială la Chișinău",
+      "text": "Delegații de la București și Chișinău semnează acorduri pe energie, transport și educație. Discuțiile despre integrare rămân prudente.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-ucraina-granita",
+      "title": "Fluxul de camioane la frontiera cu Ucraina crește",
+      "text": "Transportatorii ucraineni și români folosesc mai mult porturile românești. Fermierii se plâng de concurența cerealelor, portarii de cozile.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -1.5
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-nato-exercitii",
+      "title": "Exerciții NATO pe teritoriul României",
+      "text": "Militari aliați desfășoară exerciții în apropierea Mării Negre. Localnicii se obișnuiesc cu convoaiele, iar comercianții se bucură de câțiva clienți în plus.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-diaspora-raport",
+      "title": "Studiu: din ce în ce mai mulți români revin acasă",
+      "text": "Un sondaj arată că o parte dintre emigranți se gândesc să revină, dar spun că ar avea nevoie de școli, spitale și loc de muncă mai bun.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "diaspora": 0.5
+        },
+        "macro": {
+          "unemployment": -0.02
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-brexit-romani",
+      "title": "Românii din Marea Britanie își reglează statutul",
+      "text": "Termenul pentru statutul de rezident se apropie. Consulatele sunt pline, iar ambasada publică ghiduri.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "diaspora": -0.5
+        }
+      },
+      "scenarios": [
+        "2017"
+      ]
+    },
+    {
+      "id": "ro-uniunea-energetica",
+      "title": "România semnează un acord energetic regional",
+      "text": "Țara se conectează la o nouă conductă și la o interconexiune electrică. Specialiștii spun că efectul se simte peste doi ani.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": -0.05
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-summit-ue",
+      "title": "Premierul participă la un summit european",
+      "text": "Discuțiile despre buget și migrație se încheie cu un comunicat. Delegația română a negociat două paragrafe și un fus orar.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-comisar-european",
+      "title": "Un comisar european vizitează România",
+      "text": "Oficialul vorbește despre agricultură și piața internă. Fermierii îl invită la câmp, iar el acceptă, în limita agendei.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 0.5
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parlamentul-european",
+      "title": "Eurodeputații români votează un pachet important",
+      "text": "Legislația europeană pe care o votează ajunge să schimbe regulile pentru agricultori și producători. Declarațiile din țară vin după vot.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-sondaj-incredere-ue",
+      "title": "Încrederea în UE rămâne ridicată",
+      "text": "Românii spun, mai mult decât media europeană, că au încredere în instituțiile UE și mai puțin în cele naționale.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.002,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-turisti-ucraineni",
+      "title": "Refugiații ucraineni primesc sprijin pentru integrare",
+      "text": "Programul oferă cursuri de limbă, acces la școli și la locuri de muncă. Autoritățile locale spun că resursele sunt limitate.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "bugetari": -0.3
+        },
+        "party": {
+          "gov": 0.002
+        }
+      },
+      "scenarios": [
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-recolta-grau",
+      "title": "Recolta de grâu depășește media",
+      "text": "Fermierii strâng mai mult decât anul trecut, dar prețul la poartă nu urmează. Depozitele sunt pline, iar silozurile sunt scumpe.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 1
+        },
+        "macro": {
+          "inflation": -0.05
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "ro-gripa-aviara",
+      "title": "Focar de gripă aviară într-o fermă",
+      "text": "Autoritățile sanitare veterinare restricționează circulația păsărilor din zonă. Fermierii cer despăgubiri, iar prețul ouălor urcă.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -1.5
+        },
+        "macro": {
+          "inflation": 0.05
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "ro-subventii-intarziate",
+      "title": "Subvențiile APIA întârzie",
+      "text": "Fermierii așteaptă banii de pe hectar, iar creditele din bănci nu așteaptă. Agenția spune că plățile pornesc „în curând”.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -2
+        },
+        "party": {
+          "gov": -0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-sistem-irigatii",
+      "title": "Reabilitarea sistemului de irigații începe",
+      "text": "Zeci de mii de hectare vor avea apă pentru culturi după ani de secetă. Fermierii spun că au nevoie și de taxe mai mici la apă.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 1.5
+        },
+        "metric": {
+          "infra": 0.3
+        },
+        "party": {
+          "gov": 0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pret-cereale",
+      "title": "Prețul cerealelor scade pe piețele globale",
+      "text": "Agricultorii care au vândut devreme câștigă, cei care au așteptat mai mult pierd. Cooperativele spun că ar fi putut negocia mai bine împreună.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-branza-etichete",
+      "title": "Noile reguli de etichetare pentru produsele tradiționale",
+      "text": "Producătorii mici trebuie să respecte reguli de igienă și etichetare care costă. Asociațiile cer perioade de tranziție.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -1,
+          "antreprenori": 0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-targuri-agricole",
+      "title": "Târgurile de produse locale revin în orașe",
+      "text": "Fermierii vând direct consumatorilor, fără intermediari. În câteva localități, piața a devenit evenimentul săptămânii.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 1,
+          "pensionari_urban": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        4,
+        5,
+        6,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "ro-vin-recolta",
+      "title": "Recolta de struguri, peste așteptări",
+      "text": "Podgoriile raportează un an foarte bun pentru vin, iar crame mici câștigă premii internaționale. Exporturile cresc ușor.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 1,
+          "antreprenori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        9,
+        10
+      ]
+    },
+    {
+      "id": "ro-inundatie-ferme",
+      "title": "Inundațiile afectează terenuri agricole",
+      "text": "Mii de hectare de culturi rămân sub apă după ploi puternice. Fermierii cer despăgubiri și o aplicare mai rapidă a asigurărilor.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -2.5
+        },
+        "party": {
+          "gov": -0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "ro-cooperative",
+      "title": "Se înființează cooperative de fermieri",
+      "text": "Grupuri de producători se unesc pentru a cumpăra în comun semințe și utilaje. Un sistem simplu, pe care mulți îl cunosc din alte țări.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": 1
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-energie-verde-parc",
+      "title": "Un parc fotovoltaic intră în funcțiune",
+      "text": "Cea mai mare centrală solară din zonă se conectează la rețea. Compania promite zeci de locuri de muncă permanente, după cele temporare.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": -0.03
+        },
+        "metric": {
+          "infra": 0.3
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-carbune-inchidere",
+      "title": "Prima centrală pe cărbune iese din funcțiune",
+      "text": "Angajații primesc programe de recalificare, iar comunitatea locală discută despre o industrie nouă. Sindicatele spun că promisiunile trebuie scrise în contract.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": -1.5
+        },
+        "party": {
+          "gov": -0.004,
+          "opp": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-nuclear-reactor",
+      "title": "Proiectul de la Cernavodă avansează",
+      "text": "Noile reactoare primesc aprobări, iar investitorii vorbesc despre energie stabilă și prețuri mai mici. Costul e discutat mai puțin decât data de finalizare.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "macro": {
+          "inflation": -0.03
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-gaze-pret",
+      "title": "Prețul gazelor urcă după un vârf pe piețele europene",
+      "text": "Facturile din sezonul rece cresc, iar guvernul discută mecanisme de compensare pentru consumatorii vulnerabili.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "pensionari_urban": -1.5,
+          "pensionari_rural": -1.5
+        },
+        "macro": {
+          "inflation": 0.12
+        },
+        "party": {
+          "gov": -0.008
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        10,
+        11,
+        12,
+        1
+      ]
+    },
+    {
+      "id": "ro-incalzire-oras",
+      "title": "Termoficarea unui oraș mare se oprește în plină iarnă",
+      "text": "Zeci de mii de apartamente rămân fără căldură câteva zile. Primăria, furnizorul și ministerul se acuză reciproc, apoi se pun de acord că a fost o avarie.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "infra": -0.4
+        },
+        "sol": {
+          "pensionari_urban": -1.5
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "ro-eficienta-blocuri",
+      "title": "Programul de izolare a blocurilor ajunge la mii de apartamente",
+      "text": "Termosistemele se montează în cartiere întregi, iar facturile la încălzire scad cu aproape o treime pentru cei care locuiesc acolo.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "pensionari_urban": 1,
+          "muncitori": 0.5
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-masini-electrice",
+      "title": "Vânzările de mașini electrice cresc",
+      "text": "Programul Rabla Plus contribuie la o creștere a vânzărilor. Stațiile de încărcare sunt încă prea puține în afara orașelor mari.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 0.5
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-poluare-orase",
+      "title": "Calitatea aerului scade în orașele mari",
+      "text": "Traficul și încălzirea individuală urcă nivelul de particule, iar autoritățile recomandă locuitorilor să rămână în casă. Termenul exact e „când trece”.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.4
+        },
+        "sol": {
+          "tineri_urbani": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "ro-incendii-padure",
+      "title": "Incendii de pădure în zonele de deal",
+      "text": "Pompierii luptă cu flăcările câteva zile, iar elicopterele ajută. Silvicultorii spun că vara aceasta a fost mai uscată decât media.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": -0.3
+        },
+        "sol": {
+          "agricultori": -1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ro-reciclare-rata",
+      "title": "Rata de reciclare rămâne sub țintele europene",
+      "text": "România colectează selectiv mai puțin decât media UE. Autoritățile promit sisteme de garanție-returnare pentru sticle și doze.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-sgr",
+      "title": "Sistemul garanție-returnare se extinde",
+      "text": "Românii duc sticlele și dozele la automate și primesc înapoi garanția. La început, cozile; după trei luni, rutina.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 0.3
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-panouri-solare-vouchere",
+      "title": "Cererile pentru panouri solare depășesc fondurile",
+      "text": "Programul de vouchere pentru gospodării se epuizează în câteva ore după ce platforma se deschide. Mulți spun că platforma s-a blocat la minut.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 0.5,
+          "agricultori": 0.5
+        },
+        "macro": {
+          "inflation": -0.03
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-natalitate-minim",
+      "title": "Natalitatea atinge un nou minim",
+      "text": "Numărul născuților scade pentru încă un an. Demografii spun că scăderea e legată de emigrație, nu doar de politicile pentru familii.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": -0.5
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pensii-varsta",
+      "title": "Se discută creșterea vârstei de pensionare",
+      "text": "Experții spun că echilibrul sistemului cere schimbări, iar partidele cântăresc cât de repede vor să discute despre ele înainte de alegeri.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "pensionari_urban": -0.5,
+          "muncitori": -0.5
+        },
+        "party": {
+          "gov": -0.004,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-salarii-sector-public",
+      "title": "Bugetarii cer indexarea salariilor",
+      "text": "Sindicatele din sectorul public spun că inflația le-a mâncat creșterile. Ministerul Finanțelor spune că spațiul fiscal e limitat.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "bugetari": -1.5
+        },
+        "party": {
+          "gov": -0.006
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-protest-fermieri-camioane",
+      "title": "Transportatori și fermieri protestează împreună",
+      "text": "Tractoare și camioane încolonate în fața sediului Guvernului. Poliția rutieră a primit o zi lungă, iar primarul a primit o grămadă de reclamații.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -1,
+          "antreprenori": -0.5
+        },
+        "party": {
+          "gov": -0.007
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-voluntari-inundatii",
+      "title": "Voluntarii ajută localitățile afectate de inundații",
+      "text": "Mii de oameni donează și se mobilizează pentru comunitățile din zonă. Autoritățile spun că ajutorul oficial urmează.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 0.3
+        },
+        "metric": {
+          "safety": 0.2
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "ro-dialog-social",
+      "title": "Sindicate și patronate semnează un acord",
+      "text": "Partenerii sociali convin asupra unei creșteri etapizate a salariului minim și a unor facilități pentru firmele mici. Acordul e fragil, dar e un acord.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": 1,
+          "antreprenori": 0.3
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-cercetari-sociale",
+      "title": "Cercetare: cine pleacă din România și de ce",
+      "text": "Un studiu arată că cei care pleacă sunt tineri cu studii medii și superioare, care spun că pleacă pentru siguranța veniturilor și pentru servicii publice mai previzibile.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": -0.5,
+          "diaspora": 0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-orase-mici-declin",
+      "title": "Orașele mici își pierd populația",
+      "text": "Recensământul și datele de stare civilă arată că mai multe orașe mici au pierdut peste o zecime din locuitori într-un deceniu.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "muncitori": -0.5,
+          "pensionari_urban": -0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-chirii-urcat",
+      "title": "Chiriile cresc în marile orașe",
+      "text": "Chiria medie pentru o garsonieră trece pragul de 400 de euro în orașele universitare. Studenții împart apartamente în șase.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "studenti": -2,
+          "tineri_urbani": -1.5
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-case-prima",
+      "title": "Programul pentru prima casă se reia",
+      "text": "Garanțiile statului ajută mii de tineri să obțină credit. Criticii spun că programul împinge în sus prețul locuințelor.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "tineri_urbani": 1.5,
+          "studenti": 0.5
+        },
+        "macro": {
+          "growth": 0.04
+        },
+        "party": {
+          "gov": 0.005
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-mortalitate-rutiera",
+      "title": "România rămâne în coada Europei la siguranța rutieră",
+      "text": "Statistica deceselor în accidente rutiere e printre cele mai slabe din UE. Poliția cere radare noi, iar șoferii cer drumuri noi.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": -0.3
+        },
+        "party": {
+          "gov": -0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-criminalitate-scade",
+      "title": "Criminalitatea scade pentru al treilea an",
+      "text": "Poliția raportează mai puține infracțiuni contra persoanei și mai multe fraude online. Cetățenii spun că se simt la fel de sigur ca înainte, sau la fel de nesigur.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": 0.5
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-fraude-online",
+      "title": "Fraudele online ajung la un nou record",
+      "text": "Escrocii folosesc mesaje false de la bănci și curieri pentru a păcăli victimele. Poliția îndeamnă oamenii să nu dea nimănui codurile din SMS.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": -0.2
+        },
+        "sol": {
+          "pensionari_urban": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-doua-viteze-rural",
+      "title": "Decalajul urban-rural se adâncește",
+      "text": "Datele arată că veniturile din sate cresc mai lent. În același timp, serviciile publice rămân mai greu de accesat.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "agricultori": -0.5,
+          "pensionari_rural": -0.7
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-cluj-startup",
+      "title": "Cluj atrage o nouă investiție în tehnologie",
+      "text": "O companie de software își deschide un centru de dezvoltare cu câteva sute de locuri de muncă. Chiriile din oraș vor continua să crească.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "cluj": {
+            "party": {
+              "usr": 0.04,
+              "pnl": 0.03
+            }
+          }
+        },
+        "sol": {
+          "tineri_urbani": 1,
+          "antreprenori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-iasi-universitate",
+      "title": "Iașiul inaugurează un campus nou",
+      "text": "Universitatea își extinde spațiile de cazare și laboratoarele. Studenții spun că se bucură, mai ales de cămine.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "iasi": {
+            "party": {
+              "usr": 0.03,
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "studenti": 1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-timis-industrie",
+      "title": "Timișoara primește o fabrică de componente electronice",
+      "text": "Investitorul vorbește despre 1.200 de locuri de muncă, iar comunitatea vorbește despre apartamente și transport în comun.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "timis": {
+            "party": {
+              "pnl": 0.03,
+              "usr": 0.03
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1,
+          "tineri_urbani": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-brasov-aeroport",
+      "title": "Aeroportul de la Brașov atrage companii low-cost",
+      "text": "Zboruri noi către vestul Europei ajută turismul de iarnă și afacerile locale. Autoritățile promit extinderea terminalului.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "brasov": {
+            "party": {
+              "pnl": 0.03
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-constanta-port",
+      "title": "Portul Constanța crește traficul de mărfuri",
+      "text": "Rutele de tranzit către Ucraina au adus mai multe nave în port. Autoritățile vorbesc despre investiții în căi ferate către terminale.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "constanta": {
+            "party": {
+              "psd": 0.02,
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1,
+          "antreprenori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-dolj-automobile",
+      "title": "Uzina auto din Craiova primește un nou model",
+      "text": "Producția crește, iar furnizorii locali anunță angajări. Salariile din județ sunt mai mari decât în regiunile vecine.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "dolj": {
+            "party": {
+              "psd": 0.04
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-gorj-energie",
+      "title": "Oltenia: tranziția energetică ajunge la ordinea zilei",
+      "text": "Minele și centralele pe cărbune își reduc activitatea, iar angajații discută despre proiecte alternative. Mulți nu cred promisiunile până nu văd contractele.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "gorj": {
+            "party": {
+              "psd": -0.04,
+              "aur": 0.04
+            }
+          }
+        },
+        "sol": {
+          "muncitori": -1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-bihor-oradea",
+      "title": "Oradea, între cele mai bune orașe pentru calitatea vieții",
+      "text": "Un clasament național plasează Oradea în frunte. Primăria spune că rezultatul vine din investiții continue și mai puține comunicate.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "bihor": {
+            "party": {
+              "pnl": 0.03,
+              "udmr": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 0.5,
+          "tineri_urbani": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-suceava-granita",
+      "title": "Punct nou de frontieră la Suceava",
+      "text": "Noul punct de trecere reduce timpul de așteptare. Comercianții din zonă se așteaptă la mai mulți clienți din Ucraina.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "suceava": {
+            "party": {
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-prahova-turism",
+      "title": "Valea Prahovei: sezon bun pe pârtii",
+      "text": "Stațiunile sunt pline în weekenduri, iar traficul pe DN1 se întinde pe kilometri. Locuitorii cer un drum alternativ de ani buni.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "prahova": {
+            "party": {
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "ro-l-galati-combinat",
+      "title": "Combinatul din Galați primește comenzi din export",
+      "text": "Oțelăria funcționează la capacitate mai mare și își reia angajările. Salariații cer garanția că nu e doar o încălzire temporară.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "galati": {
+            "party": {
+              "psd": 0.03
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-arges-uzina",
+      "title": "Argeș: fabrica de mașini își extinde producția",
+      "text": "Fabrica din Mioveni anunță un nou model și mai multe schimburi. Furnizorii din zonă respiră ușurați.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "arges": {
+            "party": {
+              "psd": 0.02,
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-neamt-fabrici",
+      "title": "Neamț: investiții în industria ușoară",
+      "text": "O fabrică de textile își modernizează liniile, iar angajații primesc cursuri de recalificare. Salariile rămân modeste, dar stabile.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "neamt": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 0.8
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-bacau-aeroport",
+      "title": "Aeroportul din Bacău, mai ocupat decât în anii trecuți",
+      "text": "Zborurile spre diaspora cresc pe fondul sărbătorilor, iar autoritățile discută despre linii noi. Terminalul e mic, entuziasmul e mare.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "bacau": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "diaspora": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7,
+        8,
+        12
+      ]
+    },
+    {
+      "id": "ro-l-teleorman-sat",
+      "title": "Satele din Teleorman se golesc",
+      "text": "Un raport arată că unele comune au pierdut peste o cincime din populație în ultimul deceniu. Primarii cer proiecte de dezvoltare, nu doar amintiri.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "teleorman": {
+            "party": {
+              "psd": -0.03
+            }
+          }
+        },
+        "sol": {
+          "agricultori": -1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-vaslui-spital",
+      "title": "Vaslui primește un spital nou",
+      "text": "Pacienții din județ nu vor mai călători ore întregi pentru investigații. Autoritățile promit medici, pacienții promit răbdare.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "vaslui": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "pensionari_rural": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-maramures-turism",
+      "title": "Maramureș: turismul rural crește",
+      "text": "Pensiunile din sate sunt pline în sezon, iar meșteșugarii își vând produsele direct. Drumurile rămân subiectul preferat de conversație.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "maramures": {
+            "party": {
+              "pnl": 0.02,
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 1,
+          "agricultori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ro-l-hunedoara-tranzitie",
+      "title": "Hunedoara: fonduri pentru tranziția justă",
+      "text": "Județul primește bani europeni pentru reconversia fostelor zone miniere. Primele proiecte pornesc în orașele cele mai afectate.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "hunedoara": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 0.8
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-sibiu-festival",
+      "title": "Sibiul găzduiește un festival internațional",
+      "text": "Turiștii umplu pensiunile, iar centrul vechi devine o scenă mare. Localnicii spun că le place, dar că se bucură și când se termină.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "sibiu": {
+            "party": {
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 0.8
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": "ro-l-dambovita-industrie",
+      "title": "Dâmbovița: un nou parc industrial",
+      "text": "Zeci de firme se mută într-un parc logistic la ieșirea din Târgoviște. Șoferii de camion sunt cei mai mulțumiți.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "dambovita": {
+            "party": {
+              "psd": 0.02,
+              "pnl": 0.02
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-mures-targu",
+      "title": "Târgu Mureș: protest pentru spitalul regional",
+      "text": "Locuitorii cer accelerarea lucrărilor la spitalul promis de ani. Autoritățile spun că procedurile avansează, localnicii spun că le văd pe hârtie.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "mures": {
+            "party": {
+              "udmr": 0.02,
+              "psd": -0.02
+            }
+          }
+        },
+        "sol": {
+          "pensionari_urban": -0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-olt-slatina",
+      "title": "Olt: o fabrică de aluminiu își reia producția",
+      "text": "Reluarea producției readuce oamenii la lucru, iar autoritățile discută despre prețul energiei. Fabrica rămâne dependentă de contracte.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "olt": {
+            "party": {
+              "psd": 0.03
+            }
+          }
+        },
+        "sol": {
+          "muncitori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-braila-dunare",
+      "title": "Brăila: lucrări pe malul Dunării",
+      "text": "Orașul își modernizează cheiul și parcurile. Comerțul se bucură, iar locuitorii se bucură de plimbări.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "braila": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-l-tulcea-delta",
+      "title": "Delta Dunării: sezon bun pentru turism",
+      "text": "Pensiunile sunt pline, iar ghizii spun că oaspeții vin tot mai des din străinătate. Ecologiștii cer reguli clare pentru bărci.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "tulcea": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "antreprenori": 1
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "ro-l-calarasi-agricultura",
+      "title": "Călărași: fermele mari își cresc profitul",
+      "text": "Marile exploatații obțin recolte mai bune, iar fermele mici spun că lor nu le-au rămas prea multe de împărțit.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "county": {
+          "calarasi": {
+            "party": {
+              "psd": 0.02
+            }
+          }
+        },
+        "sol": {
+          "agricultori": 0.5
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-absenteism",
+      "title": "Prezența la vot în Parlament, în discuție",
+      "text": "O analiză arată că la unele votări lipsesc zeci de parlamentari. Liderii de grup promit sancțiuni, iar grupurile își numără voturile cu mai multă atenție.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003,
+          "opp": -0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-comisie-ancheta",
+      "title": "Se înființează o comisie de anchetă parlamentară",
+      "text": "Opoziția cere audierea unor miniștri într-un caz de achiziții. Majoritatea acceptă comisia, cu o condiție: să nu fie condusă de opoziție.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.004,
+          "opp": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-lege-imunitate",
+      "title": "Parlamentul dezbate regimul imunității",
+      "text": "Dezbaterea despre cine poate fi ridicat din imunitate revine în plen. Voturile sunt incerte, iar jurnaliștii numără deputați la ușa sălii.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "cpi": -0.3
+        },
+        "party": {
+          "gov": -0.003,
+          "opp": -0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-buget-vot",
+      "title": "Votul final pe buget se amână",
+      "text": "Coaliția negociază amendamente până la ultima oră. Ministrul Finanțelor spune că discuțiile sunt „tehnice”, iar liderii de partid spun că sunt „politice”.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        11,
+        12
+      ]
+    },
+    {
+      "id": "ro-parl-vacanta",
+      "title": "Deputații pleacă în vacanță după o sesiune încărcată",
+      "text": "Pe ultima zi, Camera votează zeci de legi într-o singură ședință. Câteva au fost citite de cel puțin doi parlamentari.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.002,
+          "opp": -0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ],
+      "months": [
+        7
+      ]
+    },
+    {
+      "id": "ro-parl-trasee",
+      "title": "Doi parlamentari își schimbă partidul",
+      "text": "Pleacă din grup „din motive de principiu” și intră în altul „din motive de principii noi”. Echilibrul voturilor se mută cu două locuri.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-lege-referendum",
+      "title": "Se discută un referendum național",
+      "text": "Propunerea de a consulta populația în privința unei modificări constituționale creează tensiuni în coaliție. Opoziția cere data și întrebarea clar formulate.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003,
+          "opp": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-parl-audieri-ministri",
+      "title": "Ministrul, audiat în comisie",
+      "text": "Parlamentarii cer explicații despre un contract, iar ministrul vorbește o oră fără să atingă subiectul. Comisia hotărăște să-l invite din nou.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-sondaj-nou",
+      "title": "Sondaj nou: partidele își schimbă locurile",
+      "text": "Un institut publică un sondaj în care ordinea primelor partide se schimbă. Fiecare partid găsește motive să spună că rezultatul îl avantajează.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.002,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-dezbatere-electorala",
+      "title": "Dezbatere televizată între liderii partidelor",
+      "text": "Zece oameni vorbesc despre buget, sănătate și educație în rate de câte 90 de secunde. Moderatorul pierde de două ori controlul orei.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.002,
+          "opp": 0.002
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-campanie-afise",
+      "title": "Afișe electorale în fiecare oraș",
+      "text": "Primăriile cer partidelor să strângă afișele atârnate ilegal. Fiecare partid spune că afișele rămase sunt ale altuia.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.001,
+          "opp": -0.001
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-miting-mare",
+      "title": "Un miting reunește zeci de mii de oameni",
+      "text": "Un partid de opoziție umple o piață centrală, iar liderii săi vorbesc despre schimbare. Organizatorii spun că au fost 50.000 de oameni, jandarmeria spune 20.000.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "party": {
+          "gov": -0.003,
+          "opp": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-voluntari-tineri",
+      "title": "Tinerii se implică în campanii locale",
+      "text": "Tot mai mulți studenți lucrează pentru candidați la alegerile locale. Mulți spun că vor să vadă cum se face politică din interior.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "sol": {
+          "studenti": 0.3,
+          "tineri_urbani": 0.3
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-armata-modernizare",
+      "title": "Armata primește echipamente noi",
+      "text": "Primele echipamente cumpărate prin programul de înzestrare ajung la unități. Generalii vorbesc despre capabilități, soldații despre cazărmi încălzite.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": 0.3
+        },
+        "party": {
+          "gov": 0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-politie-salarii",
+      "title": "Polițiștii cer majorări salariale",
+      "text": "Sindicatele din Ministerul de Interne cer indexarea salariilor și condiții mai bune. Ministrul spune că discută, sindicatele spun că așteaptă.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": -0.3
+        },
+        "sol": {
+          "bugetari": -0.5
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-pompieri-interventii",
+      "title": "Pompierii și paramedicii, tot mai solicitați",
+      "text": "Echipajele de intervenție au mai multe apeluri decât anul trecut. Statul promite ambulanțe noi în câteva luni.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": -0.2,
+          "health": -0.2
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-atac-cibernetic-spital",
+      "title": "Atac cibernetic asupra unui spital",
+      "text": "Sistemele informatice ale unui spital sunt blocate câteva zile. Medicii lucrează pe hârtie, iar autoritățile caută atacatorii.",
+      "weight": 4,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "health": -0.4,
+          "safety": -0.3
+        },
+        "party": {
+          "gov": -0.004
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "ro-contrabanda-frontiera",
+      "title": "Granița cu Ucraina, sub supraveghere sporită",
+      "text": "Poliția de frontieră descoperă o rețea de contrabandă cu țigări și combustibil. Localnicii spun că știau de ani buni.",
+      "weight": 3,
+      "minDay": 5,
+      "effects": {
+        "metric": {
+          "safety": 0.3
+        },
+        "party": {
+          "gov": 0.003
+        }
+      },
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     }
   ]
 }

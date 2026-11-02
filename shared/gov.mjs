@@ -1,7 +1,8 @@
 // Governing the country: budget (in million euro), taxes, public services,
 // standard of living per voter segment, the cabinet, and the people who run it.
 // Pure functions over the shared game state, like the engine.
-import { clamp, round, rand, log } from "./util.mjs";
+import { clamp, round, rand, log, partyDef } from "./util.mjs";
+import { fileMotion } from "./parl.mjs";
 
 export const LINES = ["pensions", "social", "health", "education", "defense", "order", "infra", "agri", "admin"];
 const ALL = [...LINES, "other"];
@@ -161,7 +162,7 @@ export function ownerOf(state, ministryId) {
   return state.gov.ministries[ministryId]?.party ?? null;
 }
 
-const lean = (data, partyId) => (partyId ? find(data.parties.parties, partyId)?.lean ?? 0 : -0.2);
+const lean = (state, data, partyId) => (partyId ? partyDef(state, data, partyId)?.lean ?? 0 : -0.2);
 
 /* ----------------------------------------------------- books: money in M€ */
 
@@ -269,11 +270,11 @@ export function computeSol(state, data) {
   return out;
 }
 
-function updateGovMult(state, data) {
+export function updateGovMult(state, data) {
   const out = {};
   const g = state.gov;
   for (const p of state.partyIds) {
-    const def = find(data.parties.parties, p);
+    const def = partyDef(state, data, p);
     let role;
     if (p === g.pmParty && g.coalition.includes(p)) role = 1;
     else if (g.coalition.includes(p)) role = 0.8;
@@ -552,6 +553,7 @@ export function formGovernment(state, data, bloc) {
   g.pmParty = pmParty;
   g.pm = state.politicians[leader] ? leader : null;
   g.caretaker = false;
+  g.formUntil = state.day + 10;
   g.confidence = 58;
   g.support = {};
 
@@ -560,7 +562,7 @@ export function formGovernment(state, data, bloc) {
   if (total < MAJORITY) {
     const candidates = state.partyIds
       .filter((p) => !bloc.includes(p))
-      .sort((a, b) => distance(data, pmParty, a) - distance(data, pmParty, b));
+      .sort((a, b) => distance(state, data, pmParty, a) - distance(state, data, pmParty, b));
     for (const p of candidates) {
       if (total >= MAJORITY) break;
       g.support[p] = true;
@@ -581,9 +583,9 @@ export function formGovernment(state, data, bloc) {
   );
 }
 
-function distance(data, a, b) {
-  const pa = find(data.parties.parties, a)?.affinity ?? {};
-  const pb = find(data.parties.parties, b)?.affinity ?? {};
+function distance(state, data, a, b) {
+  const pa = partyDef(state, data, a)?.affinity ?? {};
+  const pb = partyDef(state, data, b)?.affinity ?? {};
   const keys = Object.keys(pa);
   if (!keys.length) return 1;
   let s = 0;
@@ -689,7 +691,7 @@ function execute(state, data, partyId, action) {
     // Partners react to how far the measure is from what they stand for.
     const partners = gv.coalition.filter((q) => q !== partyId);
     if (partners.length) {
-      const avg = partners.reduce((s, q) => s + (1 - Math.abs((p.lean ?? 0) - lean(data, q)) / 1.5), 0) / partners.length;
+      const avg = partners.reduce((s, q) => s + (1 - Math.abs((p.lean ?? 0) - lean(state, data, q)) / 1.5), 0) / partners.length;
       gv.confidence = clamp(gv.confidence + (avg - 0.55) * 10, 0, 100);
     }
     gv.confidence = clamp(gv.confidence + (p.effects?.confidence ?? 0), 0, 100);
@@ -713,7 +715,7 @@ function execute(state, data, partyId, action) {
     if (prevParty && prevParty !== slot.party && gv.coalition.includes(prevParty) && prevParty !== partyId) {
       gv.confidence = clamp(gv.confidence - 4, 0, 100);
     }
-    b.cool.appoint = day + 45;
+    if ((gv.formUntil ?? -1) < day) b.cool.appoint = day + 45;
     const min = find(data.government.ministries, action.ministry);
     log(state, "coalition", `Remaniere: ${min?.short ?? action.ministry}`, `${pol.name} preia ministerul.`);
     return { ok: true, message: `${pol.name} conduce acum ${min?.name ?? action.ministry}.` };
@@ -760,10 +762,15 @@ export function govAction(state, data, partyId, action) {
 
   const mid = ministryOf(state, data, action);
   const owner = ownerOf(state, mid);
-  const cd = checkCooldown(state, action);
+  const free = type === "appoint" && (g.formUntil ?? -1) >= state.day;
+  const cd = free ? null : checkCooldown(state, action);
   if (cd) return { ok: false, error: cd };
 
   if (type === "appoint") {
+    // In the ten days after a cabinet is sworn in, each party picks its own ministers for free.
+    if ((g.formUntil ?? -1) >= state.day && g.coalition.includes(partyId) && (ownerOf(state, action.ministry) === partyId || ownerOf(state, "premier") === partyId)) {
+      return execute(state, data, partyId, action);
+    }
     if (!g.coalition.includes(partyId) || ownerOf(state, "premier") !== partyId) {
       return { ok: false, error: "Doar partidul premierului poate face remanieri." };
     }
@@ -809,7 +816,7 @@ export function govAction(state, data, partyId, action) {
 }
 
 function decideProposal(state, data, prop) {
-  const ownerLean = lean(data, prop.to);
+  const ownerLean = lean(state, data, prop.to);
   const agree = 1 - Math.abs(actionLean(state, data, prop.action) - ownerLean) / 1.2;
   let p = clamp(agree, 0.1, 0.9);
   if (prop.from === state.gov.pmParty) p = clamp(p + 0.15, 0.1, 0.95);
@@ -867,35 +874,7 @@ function setSupport(state, data, partyId, on) {
 }
 
 function motion(state, data, partyId) {
-  const g = state.gov;
-  const party = state.parties[partyId];
-  if (g.caretaker) return { ok: false, error: "Guvernul e deja demis." };
-  if (g.coalition.includes(partyId)) return { ok: false, error: "Partidele din guvern nu depun moțiuni." };
-  const until = state.budget.cool.motion ?? -1;
-  if (until > state.day) return { ok: false, error: `O moțiune nouă se poate depune din ziua ${until}.` };
-  if (party.capital < 25 || party.funds < 1) return { ok: false, error: "Moțiunea costă 25 capital politic și 1 M€." };
-  party.capital = round(party.capital - 25, 1);
-  party.funds = round(party.funds - 1, 1);
-  state.budget.cool.motion = state.day + 120;
-
-  let yes = party.seats ?? 0;
-  for (const p of state.partyIds) {
-    if (p === partyId || g.coalition.includes(p)) continue;
-    if (p in g.support) {
-      if (g.support[p] === false) yes += state.parties[p].seats ?? 0;
-      continue;
-    }
-    if (state.humans.includes(p)) continue;
-    if (rand(state) < clamp((80 - g.confidence) / 60, 0.05, 0.9)) yes += state.parties[p].seats ?? 0;
-  }
-  log(state, "coalition", "Moțiune de cenzură", `${partyId.toUpperCase()} depune o moțiune. Se strâng ${yes} de voturi, din 166 necesare.`);
-  if (yes >= MAJORITY) {
-    fallGovernment(state, data, `Moțiunea depusă de ${partyId.toUpperCase()} a trecut cu ${yes} de voturi.`);
-    return { ok: true, message: "Moțiunea a trecut. Guvernul a căzut.", fell: true };
-  }
-  g.confidence = clamp(g.confidence + 4, 0, 100);
-  state.mood[partyId] = clamp((state.mood[partyId] ?? 1) * 0.99, 0.55, 1.6);
-  return { ok: true, message: `Moțiunea a eșuat (${yes} voturi).` };
+  return fileMotion(state, data, partyId);
 }
 
 /* ----------------------------------------------------------- AI governing */
@@ -912,7 +891,7 @@ function aiGovern(state, data) {
     const owner = ownerOf(state, min.id);
     if (owner && state.humans.includes(owner)) continue;
     if (rand(state) > 0.22) continue;
-    const l = lean(data, owner);
+    const l = lean(state, data, owner);
     const hawkish = m.deficitPct > 5.5 && (l < 0.45 || m.deficitPct > 7.5);
     const dovish = m.deficitPct < 3.2 || (electoral && l > -0.3 && m.deficitPct < 5);
 
@@ -1081,7 +1060,7 @@ export function govSnapshot(state, data, opts = {}) {
     comp: Object.fromEntries(Object.entries(state.comp).map(([k, v]) => [k, r(v, 3)])),
     gov: {
       pm: g.pm, pmParty: g.pmParty, coalition: g.coalition, support: g.support,
-      confidence: r(g.confidence, 0), caretaker: g.caretaker, minoritySeats: g.minoritySeats,
+      confidence: r(g.confidence, 0), caretaker: g.caretaker, formUntil: g.formUntil ?? -1, minoritySeats: g.minoritySeats,
       approval: r(clamp(50 + 40 * nationalSat(state), 0, 100), 0), ministries,
     },
     policies: Object.fromEntries(Object.entries(state.policies).map(([id, v]) => [id, v.since])),

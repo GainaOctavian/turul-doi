@@ -39,3 +39,9 @@ export function dayOf(startDate, isoDate) {
   const b = new Date(`${isoDate}T00:00:00Z`).getTime();
   return Math.round((b - a) / 86400000);
 }
+
+// A party's definition: games can merge, split or retune parties, so the live
+// copy (state.defs) wins over the base data.
+export function partyDef(state, data, id) {
+  return state.defs?.[id] ?? data.parties.parties.find((p) => p.id === id);
+}

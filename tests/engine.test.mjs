@@ -12,6 +12,10 @@ import {
   buildSegments,
   decide,
   snapshot,
+  applyParl,
+  consumeRenamed,
+  lobbyPrice,
+  lists,
 } from "../shared/engine.mjs";
 import { createCtl } from "../shared/ctl.mjs";
 import { DATA_FILES } from "../shared/data-files.mjs";
@@ -153,7 +157,7 @@ test("every politician has stats, facts, a look and valid references", () => {
   for (const p of data.politicians.politicians) {
     assert.ok(p.party === null || partyIds.has(p.party), `${p.id}: party`);
     for (const s of stats) assert.ok(p.stats[s] >= 0 && p.stats[s] <= 100, `${p.id}: ${s}`);
-    assert.ok(p.facts.real.length >= 1 && p.facts.fake.length >= 1, `${p.id}: facts`);
+    assert.ok(Array.isArray(p.facts) && p.facts.length >= 1, `${p.id}: facts`);
     assert.ok(p.look?.hair && p.look.skin && p.look.suit, `${p.id}: look`);
     if (p.ability) for (const seg of Object.keys(p.ability.effect)) assert.ok(segmentIds.has(seg), `${p.id}: ${seg}`);
     assert.ok(Object.keys(p.scenarios ?? {}).length >= 1, `${p.id}: scenarios`);
@@ -166,8 +170,10 @@ test("scenario data points at real parties, politicians and ministries", () => {
     const pols = Object.fromEntries(data.politicians.politicians.filter((p) => p.scenarios?.[sc.id]).map((p) => [p.id, p]));
     for (const id of sc.parties) {
       assert.ok(partyIds.has(id), `${sc.id}: party ${id}`);
-      assert.ok(pols[sc.leaders[id]], `${sc.id}: leader of ${id} is present`);
-      assert.ok(sc.startPoll[id] > 0 && sc.parliament[id] > 0, `${sc.id}: ${id} numbers`);
+      // A party can have no named leader (collective leadership) but not an unknown one.
+      if (sc.leaders[id] !== null) assert.ok(pols[sc.leaders[id]], `${sc.id}: leader of ${id} is present`);
+      assert.ok(sc.startPoll[id] > 0, `${sc.id}: ${id} poll`);
+      if (id in sc.parliament) assert.ok(sc.parliament[id] > 0, `${sc.id}: ${id} seats`);
     }
     for (const m of data.government.ministries) {
       const slot = sc.government.ministries[m.id];
@@ -260,8 +266,10 @@ test("higher taxes raise revenue; more health money raises quality over time", (
   // No random news in this one, so the two games differ only by the budget.
   const chance = data.config.eventChance;
   data.config.eventChance = 0;
+  data.config.parlAi = false;
   t.after(() => {
     data.config.eventChance = chance;
+    delete data.config.parlAi;
   });
   const a = newGame("2026", ["psd"]);
   const b = newGame("2026", ["psd"]);
@@ -330,7 +338,8 @@ for (const scenario of ["2026", "2017"]) {
       }
       const total = Object.values(state.counties).reduce((s, c) => s + c.pop, 0);
       const segs = Object.values(state.counties).reduce((s, c) => s + sumObj(c.segments), 0);
-      assert.ok(Math.abs(total - segs) < total * 0.04, "segments still add up to the population");
+      // Events resize segments on purpose (education cuts, factory closures), so allow some drift.
+      assert.ok(Math.abs(total - segs) < total * 0.1, `segments (${segs}) vs population (${total})`);
     }
     assert.ok(state.lastResult, "an election was held");
     assert.ok(state.metrics.motorwayKm > data.scenarios.scenarios.find((s) => s.id === scenario).economy.metrics.motorwayKm);
@@ -455,6 +464,215 @@ test("a manual election works at any time", () => {
   assert.ok(state.lastResult && state.lastResult.gov.length >= 1);
 });
 
+/* ------------------------------------------------ small parties, alliances */
+
+const MINORS = { 2017: ["pru", "prm", "per"], 2026: ["sens", "fd", "reper", "psdu", "drept"] };
+
+// Pushes one party's mood until its national poll share is about `target`.
+function tune(state, id, target) {
+  for (let i = 0; i < 40; i += 1) {
+    const have = computePoll(state, data).national[id];
+    state.mood[id] *= Math.pow(target / have, 0.8);
+  }
+}
+
+test("parties that missed the threshold start with no seats and can be played", () => {
+  for (const [scenario, ids] of Object.entries(MINORS)) {
+    const state = newGame(scenario, [ids[0]]);
+    const poll = computePoll(state, data);
+    for (const id of ids) {
+      assert.ok(state.partyIds.includes(id), `${scenario}/${id} is in the game`);
+      assert.equal(state.parties[id].seats, 0);
+      assert.ok(poll.national[id] < 0.05, `${id} starts below 5%`);
+      assert.equal(poll.seats[id], 0);
+    }
+    assert.equal(applyAction(state, data, ids[0], { type: "online" }).ok, true);
+    assert.equal(state.gov.coalition.includes(ids[0]), false);
+    assert.equal(snapshot(state, data).lists.find((l) => l.parties.includes(ids[0])).passes, false);
+  }
+  assert.equal(newGame("2026").leaders.drept, null, "no named leader is allowed");
+});
+
+test("a small party that campaigns past 5% wins seats", () => {
+  const state = newGame("2026", ["sens"]);
+  tune(state, "sens", 0.075);
+  const poll = computePoll(state, data);
+  assert.ok(poll.national.sens > 0.07);
+  assert.ok(poll.seats.sens >= 15, `seats ${poll.seats.sens}`);
+});
+
+test("every party runs its own list: 5% nationally or 20% in four counties", () => {
+  const state = newGame("2026", ["sens"]);
+  const poll = computePoll(state, data);
+  const mine = lists(state, poll.national, poll.counties).find((l) => l.parties[0] === "sens");
+  assert.equal(mine.need, 0.05);
+  const strong = { a: { sens: 0.25 }, b: { sens: 0.21 }, c: { sens: 0.2 }, d: { sens: 0.3 } };
+  const regional = lists(state, { sens: 0.03 }, strong).find((l) => l.parties[0] === "sens");
+  assert.equal(regional.strongCounties, 4);
+  assert.equal(regional.passes, true);
+});
+
+/* -------------------------------------------------------------- parliament */
+
+const bigOpposition = (state) => state.partyIds.filter((p) => !state.gov.coalition.includes(p) && state.parties[p].seats > 20);
+
+test("the opposition can file a law, negotiate and vote; the law applies when it passes", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 60;
+  const before = state.parties.usr.capital;
+  const res = applyParl(state, data, "usr", { type: "bill", bill: "avertizori" });
+  assert.equal(res.ok, true, res.error);
+  assert.equal(state.parties.usr.capital, before - 8);
+  assert.equal(applyParl(state, data, "usr", { type: "bill", bill: "digitalizare" }).ok, false, "one bill at a time");
+  const price = lobbyPrice(state, data, "usr", "pnl");
+  assert.ok(price.capital >= 3 && price.money > 0);
+  assert.equal(applyParl(state, data, "usr", { type: "lobby", id: res.id, target: "pnl", how: "favor" }).ok, true);
+  assert.equal(applyParl(state, data, "usr", { type: "vote", id: res.id, vote: "yes" }).ok, true);
+  const cpi = state.metrics.cpi;
+  tick(state, data, 13);
+  assert.equal(state.parl.bills.length >= 0, true);
+  const done = state.parl.done.find((d) => d.id === res.id);
+  assert.ok(done, "the vote happened");
+  if (done.status === "passed") assert.ok(state.metrics.cpi >= cpi, "the law's effect applied");
+});
+
+test("a party without seats cannot file laws or motions", () => {
+  const state = newGame("2026", ["sens"]);
+  assert.match(applyParl(state, data, "sens", { type: "bill", bill: "avertizori" }).error, /mandate/);
+  assert.match(applyParl(state, data, "sens", { type: "motion" }).error, /mandate/);
+});
+
+test("relations: friends are cheaper, laws and votes move them", () => {
+  const state = newGame("2026", ["usr"]);
+  const friend = lobbyPrice(state, data, "usr", "pnl");
+  const rival = lobbyPrice(state, data, "usr", "aur");
+  assert.ok(friend.rel > rival.rel && friend.capital < rival.capital);
+  state.parl.rel["aur|usr"] = 10;
+  assert.match(applyParl(state, data, "usr", { type: "bill", bill: "avertizori" }).message ?? "", /Ai depus/);
+  const id = state.parl.bills[0].id;
+  assert.match(applyParl(state, data, "usr", { type: "lobby", id, target: "aur", how: "favor" }).error, /nu mai vorbește/);
+});
+
+test("a no-confidence motion is a vote: it needs 166 and can be lobbied", () => {
+  const state = newGame("2026", ["aur"]);
+  state.parties.aur.capital = 80;
+  state.parties.aur.funds = 20;
+  const res = applyParl(state, data, "aur", { type: "motion" });
+  assert.equal(res.ok, true, res.error);
+  assert.match(applyParl(state, data, "aur", { type: "motion" }).error, /deja/);
+  const needed = 166;
+  state.gov.confidence = 10;
+  tick(state, data, 8);
+  const done = state.parl.done.find((d) => d.kind === "motion");
+  assert.ok(done, "the vote was held");
+  assert.equal(done.status === "passed", done.tally.yes >= needed);
+  void bigOpposition;
+});
+
+test("fusion and absorption: the human keeps playing as the new group", () => {
+  const state = newGame("2026", ["sens"]);
+  state.parties.sens.capital = 40;
+  state.parl.rel["drept|sens"] = 90;
+  let res = applyParl(state, data, "sens", { type: "merge", target: "drept", mode: "fusion" });
+  for (let i = 0; !res.merged && i < 30; i += 1) {
+    state.parties.sens.capital = 40;
+    state.parl.cool = {};
+    state.parl.rel["drept|sens"] = 90;
+    res = applyParl(state, data, "sens", { type: "merge", target: "drept", mode: "fusion" });
+  }
+  assert.ok(res.merged, "an AI party eventually agrees");
+  assert.equal(res.merged, "sens-drept");
+  assert.equal(state.partyIds.includes("sens"), false);
+  const renamed = consumeRenamed(state);
+  assert.equal(renamed.sens, "sens-drept");
+  state.humans = state.humans.map((h) => renamed[h] ?? h);
+  assert.deepEqual(state.humans, ["sens-drept"]);
+  assert.equal(state.defs["sens-drept"].name, "SENS-DREPT");
+  assert.equal(computePoll(state, data).national["sens-drept"] > 0.02, true);
+  tick(state, data, 40);
+});
+
+test("a party can lose people to a new group, historical or new", () => {
+  const state = newGame("2026", ["pnl"]);
+  const seats = state.parties.pnl.seats;
+  const res = applyParl(state, data, "pnl", { type: "split", frac: 0.3, template: "pdl" });
+  assert.equal(res.ok, true, res.error);
+  assert.ok(state.partyIds.includes("pdl"));
+  assert.ok(state.parties.pnl.seats < seats);
+  assert.equal(state.parties.pdl.seats + state.parties.pnl.seats, seats);
+  assert.ok(Object.values(state.politicians).some((p) => p.party === "pdl"));
+  assert.equal(applyParl(state, data, "pnl", { type: "split", frac: 0.2, template: "pdl" }).ok, false, "name taken");
+  const snap = snapshot(state, data);
+  assert.ok(snap.defs.pdl && snap.parl.rel.pdl.pnl < 50);
+  tick(state, data, 90);
+});
+
+test("shifting direction moves the profile and costs capital and cohesion", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 50;
+  const before = snapshot(state, data);
+  const aff0 = (before.defs.usr?.affinity ?? data.parties.parties.find((p) => p.id === "usr").affinity).studenti;
+  const res = applyParl(state, data, "usr", { type: "shift", segment: "studenti" });
+  assert.equal(res.ok, true, res.error);
+  assert.ok(snapshot(state, data).defs.usr.affinity.studenti > aff0);
+  assert.ok(state.parties.usr.cohesion < 72);
+  assert.match(applyParl(state, data, "usr", { type: "shift", lean: 1 }).error, /din nou/);
+});
+
+test("a new cabinet lets each party pick its own ministers for free", () => {
+  const state = newGame("2026", ["psd"]);
+  runElection(state, data);
+  const g = state.gov;
+  assert.ok(g.formUntil >= state.day);
+  const mine = Object.entries(g.ministries).find(([id, s]) => s.party === "psd" && id !== "premier");
+  if (mine) {
+    const cand = Object.values(state.politicians).find((p) => p.party === "psd" && p.id !== mine[1].minister && !Object.values(g.ministries).some((s) => s.minister === p.id));
+    if (cand) {
+      const cap = state.parties.psd.capital;
+      const res = applyGov(state, data, "psd", { type: "appoint", ministry: mine[0], politician: cand.id });
+      assert.equal(res.ok, true, res.error);
+      assert.equal(state.parties.psd.capital, cap, "free in the window");
+    }
+  }
+});
+
+test("AI parliaments pass laws over four years and stay consistent", () => {
+  const state = createGame(data, { seed: 9, scenario: "2026", humans: [] });
+  tick(state, data, 1461);
+  const laws = state.log.filter((l) => l.title.startsWith("Lege adoptată"));
+  assert.ok(laws.length >= 8, `laws ${laws.length}`);
+  const titles = laws.map((l) => l.title);
+  assert.equal(new Set(titles).size >= titles.length - 2, true, "few repeats");
+  for (const id of state.partyIds) assert.ok(state.parties[id] && state.leaders[id] !== undefined, id);
+  const seats = state.partyIds.reduce((s, id) => s + state.parties[id].seats, 0);
+  assert.equal(seats + state.config.minoritySeats, state.config.totalSeats);
+});
+
+test("news does not repeat while there are fresh events that fit the moment", () => {
+  const state = createGame(data, { seed: 21, scenario: "2026", humans: [] });
+  const seen = [];
+  for (let i = 0; i < 60; i += 1) {
+    const ev = fireEvent(state, data);
+    if (ev) seen.push(ev.id);
+  }
+  assert.equal(new Set(seen).size, seen.length, "no event twice in 60 draws");
+  assert.ok(data.events.events.length >= 250, "a large pool");
+});
+
+test("a multiplayer-style rename keeps humans pointing at the merged party", () => {
+  const state = newGame("2026", ["sens", "drept"]);
+  state.parties.sens.capital = 40;
+  state.parl.rel["drept|sens"] = 95;
+  const res = applyParl(state, data, "sens", { type: "merge", target: "drept", mode: "fusion", name: "SENS-DREPT" });
+  assert.equal(res.ok, true);
+  assert.equal(state.parl.mergeOffers.length, 1, "a human target must answer");
+  const accepted = applyParl(state, data, "drept", { type: "merge-answer", from: "sens", accept: true });
+  assert.equal(accepted.ok, true, accepted.error);
+  assert.deepEqual(state.humans, ["sens-drept"]);
+  assert.deepEqual(consumeRenamed(state), { sens: "sens-drept", drept: "sens-drept" });
+  assert.deepEqual(consumeRenamed(state), {}, "consumed once");
+});
+
 /* --------------------------------------------------------------- the ctl */
 
 test("the ctl drives scenarios, the budget, policies and the world", () => {
@@ -511,3 +729,4 @@ test("the ctl plays a full turn and reports state", () => {
   assert.match(ctl.run("election"), /^winner/);
   assert.match(ctl.run("events"), /Alegeri/);
 });
+

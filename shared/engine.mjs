@@ -3,7 +3,8 @@
 //
 // Layers: this file = parties, polls, elections, events, campaign actions.
 // gov.mjs = budget, metrics, standard of living, cabinet. world.mjs = EU + countries.
-import { clamp, rand, log, round, dateAt, dayOf } from "./util.mjs";
+import { clamp, rand, log, round, dateAt, dayOf, partyDef } from "./util.mjs";
+import { initParl, parlDaily, parlMonthly, parlSnapshot, distance } from "./parl.mjs";
 import { initWorld, worldMonthly, worldView } from "./world.mjs";
 import {
   initGov,
@@ -59,7 +60,7 @@ const money = (v) => Math.round(v * 100) / 100;
 
 // The parties that exist in this game's scenario (2017 has ALDE and PMP, 2026 has AUR).
 function plist(state, data) {
-  return state.partyIds.map((id) => data.parties.parties.find((p) => p.id === id));
+  return state.partyIds.map((id) => partyDef(state, data, id));
 }
 
 function scaleSeats(map, total) {
@@ -168,6 +169,7 @@ export function createGame(data, opts = {}) {
   calibrate(state, data, target);
   initWorld(state, data, sc);
   initGov(state, data, sc);
+  initParl(state);
 
   log(state, "system", sc.name, sc.blurb);
   return state;
@@ -254,33 +256,46 @@ export function computePoll(state, data) {
   }
 
   for (const p of parties) national[p.id] = totalPop ? national[p.id] / totalPop : 0;
-  const seats = allocateSeats(state, data, national);
+  const seats = allocateSeats(state, data, national, counties);
   return { national, counties, seats };
 }
 
-function allocateSeats(state, data, national) {
+// Every party runs its own list. It gets in with 5% nationally, or with 20% in four counties.
+const THRESHOLD = 0.05;
+
+export function lists(state, national, counties) {
+  return state.partyIds.map((id) => {
+    const share = national[id] ?? 0;
+    const strongCounties = counties ? Object.values(counties).filter((c) => (c[id] ?? 0) >= 0.2).length : 0;
+    return { parties: [id], share, need: THRESHOLD, strongCounties, passes: share >= THRESHOLD || strongCounties >= 4 };
+  });
+}
+
+function allocateSeats(state, data, national, counties) {
   const parties = plist(state, data);
   const totalSeats = state.config.totalSeats - state.config.minoritySeats;
-  const eligible = parties.filter((p) => (national[p.id] ?? 0) >= 0.05).map((p) => p.id);
   const seats = Object.fromEntries(parties.map((p) => [p.id, 0]));
+  const eligible = lists(state, national, counties).filter((l) => l.passes);
   if (eligible.length === 0) return seats;
 
-  // National D'Hondt: simple, proportional and easy to read next to the poll bars.
-  // County results still drive the campaign and colour the map.
-  const local = Object.fromEntries(eligible.map((id) => [id, 0]));
+  // National D'Hondt between lists: simple, proportional and easy to read next to the
+  // poll bars. County results still drive the campaign and colour the map.
+  const won = eligible.map(() => 0);
   for (let i = 0; i < totalSeats; i += 1) {
-    let best = eligible[0];
+    let best = 0;
     let bestV = -1;
-    for (const id of eligible) {
-      const v = (national[id] ?? 0) / (local[id] + 1);
+    eligible.forEach((l, k) => {
+      const v = l.share / (won[k] + 1);
       if (v > bestV) {
         bestV = v;
-        best = id;
+        best = k;
       }
-    }
-    local[best] += 1;
-    seats[best] += 1;
+    });
+    won[best] += 1;
   }
+  eligible.forEach((l, k) => {
+    seats[l.parties[0]] = won[k];
+  });
   return seats;
 }
 
@@ -330,7 +345,7 @@ function shiftSegments(c, spec) {
 // funds (M€); segBoost and countyBoostAll (the acting party); politician.
 // Governance keys (see gov.mjs): macro, metric, confidence, sol, budget.
 // "self" stands for the acting party; "gov"/"opp" for the governing/other parties.
-function applyEffects(state, data, effects, ctx = {}) {
+export function applyEffects(state, data, effects, ctx = {}) {
   if (!effects) return;
   const who = (key) => {
     if (key === "self") return ctx.partyId ? [ctx.partyId] : [];
@@ -410,6 +425,9 @@ function pickEvent(state, data) {
     .filter((e) => !e.months || e.months.includes(Number(state.date.slice(5, 7))))
     .filter((e) => !e.after || recentlyFired(state, e.after))
     .map((e) => ({ e, w: (e.weight ?? 1) * (e.after ? 4 : 1) }));
+  // News does not repeat until everything that fits the moment has been told once.
+  const fresh = pool.filter((x) => state.fired[x.e.id] == null);
+  if (fresh.length) pool.splice(0, pool.length, ...fresh);
   const total = pool.reduce((s, x) => s + x.w, 0);
   if (!pool.length || total <= 0) return null;
   let r = rand(state) * total;
@@ -585,6 +603,8 @@ export function applyAction(state, data, partyId, action) {
 }
 
 // Government decisions (budget, taxes, policies, cabinet, motions). See gov.mjs.
+export { applyParl, consumeRenamed, splinterOptions, relation, lobbyPrice } from "./parl.mjs";
+
 export function applyGov(state, data, partyId, action) {
   const res = govAction(state, data, partyId, action);
   if (res.ok && res.event) fireEvent(state, data, res.event);
@@ -645,25 +665,13 @@ function majorityOk(state, ids) {
   return blocSeats(state, ids) + state.config.minoritySeats >= need;
 }
 
-// Rough ideological distance from the affinity vectors: parties that chase the
-// same voters sit close together. Used only for AI coalition manners.
-function affinityDistance(data, a, b) {
-  const pa = data.parties.parties.find((p) => p.id === a)?.affinity ?? {};
-  const pb = data.parties.parties.find((p) => p.id === b)?.affinity ?? {};
-  const keys = Object.keys(pa);
-  if (!keys.length) return 1;
-  let sum = 0;
-  for (const k of keys) sum += ((pa[k] ?? 0.3) - (pb[k] ?? 0.3)) ** 2;
-  return Math.sqrt(sum / keys.length);
-}
-
 function canJoin(state, data, from, to) {
   const blocA = state.coalitions.find((c) => c.parties.includes(from));
   const blocB = state.coalitions.find((c) => c.parties.includes(to));
   const parties = new Set([...(blocA ? blocA.parties : [from]), ...(blocB ? blocB.parties : [to])]);
   if (parties.size > 4) return false;
   if (blocSeats(state, [...parties]) > 300) return false;
-  return affinityDistance(data, from, to) <= 0.28;
+  return distance(state, data, from, to) <= 0.28;
 }
 
 function setGovernment(state, data, gov) {
@@ -723,7 +731,7 @@ function aiCoalitionOffers(state, data) {
           !state.offers.some((o) => o.from === p.id && o.to === q.id) &&
           canJoin(state, data, p.id, q.id),
       )
-      .sort((a, b) => affinityDistance(data, p.id, a.id) - affinityDistance(data, p.id, b.id))[0];
+      .sort((a, b) => distance(state, data, p.id, a.id) - distance(state, data, p.id, b.id))[0];
     if (!partner) continue;
     if (rand(state) < 0.6) offerCoalition(state, data, p.id, partner.id);
   }
@@ -792,7 +800,9 @@ export function tick(state, data, days = 1) {
       worldMonthly(state, data);
       govMonthly(state, data);
       flushPending(state, data);
+      parlMonthly(state, data);
     }
+    parlDaily(state, data);
 
     // The AI campaigns hard before an election and only lightly in between.
     const toElection = state.electionDay - state.day;
@@ -880,6 +890,9 @@ export function snapshot(state, data, opts = {}) {
     mood: state.mood,
     coalitions: state.coalitions,
     offers: state.offers,
+    defs: state.defs,
+    parl: parlSnapshot(state, data),
+    lists: lists(state, poll.national, poll.counties),
     negotiation: state.negotiation,
     humans: state.humans,
     active: state.active,
@@ -907,3 +920,4 @@ export function snapshot(state, data, opts = {}) {
 }
 
 export { fallGovernment };
+

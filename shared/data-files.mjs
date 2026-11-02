@@ -11,4 +11,7 @@ export const DATA_FILES = {
   government: "government.json",
   policies: "policies.json",
   countries: "countries.json",
+  bills: "bills.json",
+  splinters: "splinters.json",
 };
+

@@ -1,0 +1,9 @@
+{
+  "splinters": [
+    { "id": "pdl", "name": "PDL", "fullName": "Partidul Democrat-Liberal", "from": ["pnl", "pmp", "udmr"], "color": "#f08a24", "lean": -0.35, "text": "Un grup de parlamentari pleacă din partid și reînființează istoricul PDL." },
+    { "id": "plus", "name": "PLUS", "fullName": "Partidul Libertate, Unitate și Solidaritate", "from": ["usr", "reper", "sens"], "color": "#f2c230", "lean": -0.25, "text": "O aripă pleacă din partid și formează o grupare nouă, cu un nume istoric din zona civică." },
+    { "id": "unpr", "name": "UNPR", "fullName": "Uniunea Națională pentru Progresul României", "from": ["psd", "alde", "psdu"], "color": "#8c6bb1", "lean": 0.3, "text": "Parlamentari din partid se desprind și își fac propriul grup, cu discurs de centru-stânga." },
+    { "id": "pro", "name": "PRO", "fullName": "Pro România", "from": ["psd", "psdu"], "color": "#d9534f", "lean": 0.4, "text": "Un grup de oameni din conducerea partidului pleacă împreună cu o parte din electorat." },
+    { "id": "pc", "name": "PC", "fullName": "Partidul Conservator", "from": ["pnl", "psd", "alde", "aur", "sos"], "color": "#5b6770", "lean": 0.05, "text": "Un grup de parlamentari pleacă din partid și redeschide un nume istoric." }
+  ]
+}

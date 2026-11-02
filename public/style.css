@@ -2916,3 +2916,122 @@ select {
     align-items: stretch;
   }
 }
+
+/* ---------- small parties: road to Parliament, alliances ---------- */
+
+.role.extra {
+  background: rgba(167, 123, 255, 0.18);
+  color: #cdb6ff;
+}
+
+.below {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--warn);
+  background: rgba(255, 176, 46, 0.14);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 4px;
+}
+
+.card.road {
+  border-color: rgba(167, 123, 255, 0.45);
+  background: linear-gradient(180deg, rgba(167, 123, 255, 0.12), rgba(21, 31, 88, 0.7));
+}
+
+.road-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.road-h span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.road-bar {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: #070b2c;
+  overflow: hidden;
+}
+
+.road-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7a5bd6, #cdb6ff);
+}
+
+.road-bar u {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #fff;
+}
+
+.road-n {
+  font-size: 12px;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.road-n b {
+  color: var(--text);
+}
+
+/* ---------- parliament and party screens ---------- */
+
+.vote-card {
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.vote-card.motion {
+  border-color: rgba(255, 77, 109, 0.5);
+}
+
+.chip.st {
+  font-size: 11px;
+  padding: 3px 8px;
+}
+
+.chip.st em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--tc);
+}
+
+.lobby {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.lobby-h {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.rel-row {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+input.sel[type="text"] {
+  min-width: 160px;
+}

@@ -1,6 +1,6 @@
 # Turul Doi
 
-Joc de browser despre guvernarea României, satiric dar ancorat în realitate: scenarii (2017,
+Joc de browser despre guvernarea României, ancorat în realitate, cu umor dozat: scenarii (2017,
 2026), buget în M€, indicatori și comparații cu UE, harta electorală pe județe. Vezi
 `README.md` și `docs/data-model.md`.
 
@@ -17,10 +17,11 @@ node tools/sim.mjs 2026 4   # simulare AI de reglaj pentru economie
 ## Arhitectură
 
 - `shared/engine.mjs` (partide, sondaj, alegeri, evenimente, campanie), `shared/gov.mjs`
-  (buget, taxe, indicatori, SoL, cabinet), `shared/world.mjs` (UE și țări). Același cod rulează
+  (buget, taxe, indicatori, SoL, cabinet), `shared/parl.mjs` (legi, voturi, culise, moțiuni,
+  relații, coeziune, fuziuni, plecări, profil), `shared/world.mjs` (UE și țări). Același cod rulează
   în browser (solo) și pe server (multiplayer).
 - `public/app.mjs` (start, hartă, panouri politice, evenimente), `public/dash.mjs` (ecranele
-  Guvern/Țara/Lume/Știri), `public/kit.mjs` (formatare și componente), `public/portraits.mjs`.
+  Guvern/Țara/Lume/Știri), `public/parl-ui.mjs` (Parlament și Partid), `public/kit.mjs` (formatare și componente), `public/portraits.mjs`.
 - Datele sunt în `data/`; lista de fișiere e în `shared/data-files.mjs`. Un fișier nou de date
   se adaugă acolo.
 - Bani: totul în M€ (bugetul statului, partidele, costul acțiunilor). Cheltuielile se rețin ca
@@ -29,7 +30,7 @@ node tools/sim.mjs 2026 4   # simulare AI de reglaj pentru economie
 ## UI
 
 - Textul din interfață e în română, deliberat; codul, comentariile și documentația rămân în engleză.
-- Cinci secțiuni color-coded (Politică, Guvern, Țara, Lume, Știri). Culoarea secțiunii e `--sec`.
+- Șapte secțiuni color-coded (Politică, Parlament, Partid, Guvern, Țara, Lume, Știri). Culoarea secțiunii e `--sec`.
 - Panourile se redesenează doar dacă HTML-ul s-a schimbat (`makePatcher`), păstrând scroll-ul,
   selecturile și `<details>`; nu redesena sub un buton apăsat sau un slider tras.
 - Butoanele reacționează la `pointerdown` (`onPress`); click-ul de la tastatură (detail 0) rămâne.
@@ -37,11 +38,13 @@ node tools/sim.mjs 2026 4   # simulare AI de reglaj pentru economie
 
 ## Date reale
 
-- Faptele `real` trebuie să fie verificabile. Verifică liderii partidelor, premierul și miniștrii
+- Faptele despre persoane trebuie să fie verificabile. Verifică liderii partidelor, premierul și miniștrii
   înainte să le scrii (căutare pe web); la 2 noiembrie 2026: Grindeanu la PSD, Fritz la USR,
   Niculescu premier din 20 octombrie 2026.
 - Cifrele macro și bugetare din scenarii sunt estimări de joc; țările din comparație sunt orientative.
-- Satiră: faptele `fake` sunt absurde, niciodată despre viața privată sau acuzații plauzibile.
+- Fără etichete „real”/„satiră”: o singură listă `facts` (fapte publice, inclusiv scandaluri cunoscute, verificate). Nu se inventează acuzații; umorul rămâne dozat.
+- Partidele pot fi create, fuzionate sau modificate în timpul jocului (`state.defs`, `partyDef()` din `shared/util.mjs`): nu citi partidul direct din `data.parties`.
+- Editează fișierele cu scripturi node sau cu tool-urile de editare, nu cu `Get-Content`/`Set-Content` (PowerShell 5.1 strică diacriticele).
 
 ## Personal conventions
 

@@ -5,92 +5,368 @@
       "id": "2026",
       "name": "2026 · Guvernul Niculescu",
       "year": 2026,
-      "blurb": "Octombrie 2026. Guvernul Bolojan a căzut prin moțiune în mai, criza a durat șase luni, iar PSD a intrat în cabinetul premierului independent Luca Niculescu. PNL și UDMR îl sprijină din afara guvernului. Deficitul e mare, ratingul e la limită, iar AUR conduce în sondaje.",
+      "blurb": "Octombrie 2026. Guvernul Bolojan a căzut prin moțiune în mai, criza a durat șase luni, iar PSD a intrat în cabinetul premierului independent Luca Niculescu. PNL și UDMR îl sprijină din afara guvernului. Deficitul e mare, ratingul e la limită, iar AUR conduce în sondaje. SENS, Forța Dreptei, REPER, PSD Unit și DREPT au rămas sub prag în 2024 și își caută drumul spre Parlament.",
       "startDate": "2026-11-02",
       "electionDate": "2028-12-03",
-      "parties": ["psd", "pnl", "usr", "aur", "udmr", "sos", "pot"],
-      "leaders": { "psd": "grindeanu", "pnl": "bolojan", "usr": "fritz", "aur": "simion", "udmr": "kelemen", "sos": "soosaca", "pot": "gavrila" },
-      "startPoll": { "aur": 0.31, "psd": 0.23, "pnl": 0.14, "usr": 0.13, "udmr": 0.06, "pot": 0.045, "sos": 0.04 },
-      "parliament": { "psd": 86, "aur": 63, "pnl": 49, "usr": 40, "sos": 28, "pot": 24, "udmr": 22 },
+      "parties": [
+        "psd",
+        "pnl",
+        "usr",
+        "aur",
+        "udmr",
+        "sos",
+        "pot",
+        "sens",
+        "fd",
+        "psdu",
+        "reper",
+        "drept"
+      ],
+      "leaders": {
+        "psd": "grindeanu",
+        "pnl": "bolojan",
+        "usr": "fritz",
+        "aur": "simion",
+        "udmr": "kelemen",
+        "sos": "soosaca",
+        "pot": "gavrila",
+        "sens": "macsut",
+        "fd": "orban",
+        "reper": "ciolos",
+        "psdu": null,
+        "drept": null
+      },
+      "startPoll": {
+        "aur": 0.31,
+        "psd": 0.23,
+        "pnl": 0.14,
+        "usr": 0.13,
+        "udmr": 0.06,
+        "pot": 0.045,
+        "sos": 0.04,
+        "sens": 0.0299,
+        "fd": 0.0205,
+        "psdu": 0.0192,
+        "reper": 0.0124,
+        "drept": 0.0116
+      },
+      "parliament": {
+        "psd": 86,
+        "aur": 63,
+        "pnl": 49,
+        "usr": 40,
+        "sos": 28,
+        "pot": 24,
+        "udmr": 22
+      },
       "minoritySeats": 19,
       "government": {
         "pm": "niculescu",
         "pmParty": "psd",
-        "coalition": ["psd"],
-        "support": ["pnl", "udmr"],
+        "coalition": [
+          "psd"
+        ],
+        "support": [
+          "pnl",
+          "udmr"
+        ],
         "confidence": 52,
         "ministries": {
-          "premier": { "party": "psd", "minister": "niculescu" },
-          "finante": { "party": null, "minister": "nazare" },
-          "economie": { "party": "psd", "minister": "zamfir" },
-          "sanatate": { "party": "psd", "minister": "rogobete" },
-          "educatie": { "party": null, "minister": "costreie" },
-          "transport": { "party": "psd", "minister": "popa" },
-          "aparare": { "party": "psd", "minister": "oprea" },
-          "interne": { "party": "psd", "minister": "neacsu" },
-          "justitie": { "party": "psd", "minister": "marinescu" },
-          "externe": { "party": null, "minister": "neculaescu" },
-          "agricultura": { "party": "psd", "minister": "barbu" },
-          "munca": { "party": "psd", "minister": "manole" },
-          "energie": { "party": null, "minister": "chisalita" },
-          "fonduri": { "party": "psd", "minister": "ghigiu" }
+          "premier": {
+            "party": "psd",
+            "minister": "niculescu"
+          },
+          "finante": {
+            "party": null,
+            "minister": "nazare"
+          },
+          "economie": {
+            "party": "psd",
+            "minister": "zamfir"
+          },
+          "sanatate": {
+            "party": "psd",
+            "minister": "rogobete"
+          },
+          "educatie": {
+            "party": null,
+            "minister": "costreie"
+          },
+          "transport": {
+            "party": "psd",
+            "minister": "popa"
+          },
+          "aparare": {
+            "party": "psd",
+            "minister": "oprea"
+          },
+          "interne": {
+            "party": "psd",
+            "minister": "neacsu"
+          },
+          "justitie": {
+            "party": "psd",
+            "minister": "marinescu"
+          },
+          "externe": {
+            "party": null,
+            "minister": "neculaescu"
+          },
+          "agricultura": {
+            "party": "psd",
+            "minister": "barbu"
+          },
+          "munca": {
+            "party": "psd",
+            "minister": "manole"
+          },
+          "energie": {
+            "party": null,
+            "minister": "chisalita"
+          },
+          "fonduri": {
+            "party": "psd",
+            "minister": "ghigiu"
+          }
         }
       },
       "economy": {
-        "gdp": 388000, "pop": 19.0, "growth": 0.9, "potential": 2.8, "drag": -1.0,
-        "inflation": 4.8, "unemployment": 6.0, "wage": 1000, "debtPct": 61, "rate": 5.2,
-        "gdpPps": 78, "ecb": 2.0, "energy": 105, "spreadBase": 1.0, "emigration": 70,
-        "rating": { "level": "BBB-", "outlook": "negativ" },
-        "tax": { "vat": 21, "income": 10, "corp": 16 },
-        "revenue": { "vat": 7.4, "income": 3.0, "corp": 2.4, "social": 9.6, "excise": 4.2, "eu": 3.0, "other": 3.6 },
-        "spend": { "pensions": 8.4, "social": 2.9, "health": 4.6, "education": 3.3, "defense": 2.3, "order": 2.2, "infra": 3.0, "agri": 1.2, "admin": 4.4, "other": 5.0 },
-        "metrics": { "health": 55, "education": 48, "infra": 52, "safety": 62, "cpi": 46, "arope": 27.9, "lifeExp": 76.4, "earlyLeavers": 16.8, "motorwayKm": 1250, "area": 238.4 }
+        "gdp": 388000,
+        "pop": 19,
+        "growth": 0.9,
+        "potential": 2.8,
+        "drag": -1,
+        "inflation": 4.8,
+        "unemployment": 6,
+        "wage": 1000,
+        "debtPct": 61,
+        "rate": 5.2,
+        "gdpPps": 78,
+        "ecb": 2,
+        "energy": 105,
+        "spreadBase": 1,
+        "emigration": 70,
+        "rating": {
+          "level": "BBB-",
+          "outlook": "negativ"
+        },
+        "tax": {
+          "vat": 21,
+          "income": 10,
+          "corp": 16
+        },
+        "revenue": {
+          "vat": 7.4,
+          "income": 3,
+          "corp": 2.4,
+          "social": 9.6,
+          "excise": 4.2,
+          "eu": 3,
+          "other": 3.6
+        },
+        "spend": {
+          "pensions": 8.4,
+          "social": 2.9,
+          "health": 4.6,
+          "education": 3.3,
+          "defense": 2.3,
+          "order": 2.2,
+          "infra": 3,
+          "agri": 1.2,
+          "admin": 4.4,
+          "other": 5
+        },
+        "metrics": {
+          "health": 55,
+          "education": 48,
+          "infra": 52,
+          "safety": 62,
+          "cpi": 46,
+          "arope": 27.9,
+          "lifeExp": 76.4,
+          "earlyLeavers": 16.8,
+          "motorwayKm": 1250,
+          "area": 238.4
+        }
       }
     },
     {
       "id": "2017",
       "name": "2017 · Guvernul Grindeanu",
       "year": 2017,
-      "blurb": "4 ianuarie 2017. PSD a câștigat alegerile din decembrie cu 45%, Liviu Dragnea nu poate fi premier din cauza unei condamnări, iar Sorin Grindeanu conduce o coaliție PSD–ALDE. Economia crește, deficitul e mic, iar Ordonanța 13 se apropie.",
+      "blurb": "4 ianuarie 2017. PSD a câștigat alegerile din decembrie cu 45%, Liviu Dragnea nu poate fi premier din cauza unei condamnări, iar Sorin Grindeanu conduce o coaliție PSD–ALDE. Economia crește, deficitul e mic, iar Ordonanța 13 se apropie. Formațiunile mici care au candidat în 2016 (PRU, PRM, PER) au rămas în afara Parlamentului.",
       "startDate": "2017-01-04",
       "electionDate": "2020-12-06",
-      "parties": ["psd", "pnl", "usr", "udmr", "alde", "pmp"],
-      "leaders": { "psd": "dragnea", "pnl": "turcan", "usr": "nicusor", "udmr": "kelemen", "alde": "tariceanu", "pmp": "basescu" },
-      "startPoll": { "psd": 0.4547, "pnl": 0.2004, "usr": 0.0887, "udmr": 0.0618, "alde": 0.0562, "pmp": 0.0534 },
-      "parliament": { "psd": 154, "pnl": 69, "usr": 30, "udmr": 21, "alde": 20, "pmp": 18 },
+      "parties": [
+        "psd",
+        "pnl",
+        "usr",
+        "udmr",
+        "alde",
+        "pmp",
+        "pru",
+        "prm",
+        "per"
+      ],
+      "leaders": {
+        "psd": "dragnea",
+        "pnl": "turcan",
+        "usr": "nicusor",
+        "udmr": "kelemen",
+        "alde": "tariceanu",
+        "pmp": "basescu",
+        "pru": "diaconu",
+        "prm": null,
+        "per": null
+      },
+      "startPoll": {
+        "psd": 0.4547,
+        "pnl": 0.2004,
+        "usr": 0.0887,
+        "udmr": 0.0618,
+        "alde": 0.0562,
+        "pmp": 0.0534,
+        "pru": 0.0279,
+        "prm": 0.0104,
+        "per": 0.0089
+      },
+      "parliament": {
+        "psd": 154,
+        "pnl": 69,
+        "usr": 30,
+        "udmr": 21,
+        "alde": 20,
+        "pmp": 18
+      },
       "minoritySeats": 17,
       "government": {
         "pm": "grindeanu",
         "pmParty": "psd",
-        "coalition": ["psd", "alde"],
-        "support": ["udmr"],
+        "coalition": [
+          "psd",
+          "alde"
+        ],
+        "support": [
+          "udmr"
+        ],
         "confidence": 68,
         "ministries": {
-          "premier": { "party": "psd", "minister": "grindeanu" },
-          "finante": { "party": "psd", "minister": "vstefan" },
-          "economie": { "party": "psd", "minister": "petrescu" },
-          "sanatate": { "party": "psd", "minister": "bodog" },
-          "educatie": { "party": "psd", "minister": "nastase" },
-          "transport": { "party": "psd", "minister": "cuc" },
-          "aparare": { "party": "psd", "minister": "les" },
-          "interne": { "party": "psd", "minister": "cdan" },
-          "justitie": { "party": "psd", "minister": "iordache" },
-          "externe": { "party": "alde", "minister": "meleschanu" },
-          "agricultura": { "party": "psd", "minister": "daea" },
-          "munca": { "party": "psd", "minister": "vasilescu" },
-          "energie": { "party": "alde", "minister": "petcu" },
-          "fonduri": { "party": "psd", "minister": "mtoader" }
+          "premier": {
+            "party": "psd",
+            "minister": "grindeanu"
+          },
+          "finante": {
+            "party": "psd",
+            "minister": "vstefan"
+          },
+          "economie": {
+            "party": "psd",
+            "minister": "petrescu"
+          },
+          "sanatate": {
+            "party": "psd",
+            "minister": "bodog"
+          },
+          "educatie": {
+            "party": "psd",
+            "minister": "nastase"
+          },
+          "transport": {
+            "party": "psd",
+            "minister": "cuc"
+          },
+          "aparare": {
+            "party": "psd",
+            "minister": "les"
+          },
+          "interne": {
+            "party": "psd",
+            "minister": "cdan"
+          },
+          "justitie": {
+            "party": "psd",
+            "minister": "iordache"
+          },
+          "externe": {
+            "party": "alde",
+            "minister": "meleschanu"
+          },
+          "agricultura": {
+            "party": "psd",
+            "minister": "daea"
+          },
+          "munca": {
+            "party": "psd",
+            "minister": "vasilescu"
+          },
+          "energie": {
+            "party": "alde",
+            "minister": "petcu"
+          },
+          "fonduri": {
+            "party": "psd",
+            "minister": "mtoader"
+          }
         }
       },
       "economy": {
-        "gdp": 172000, "pop": 19.6, "growth": 5.0, "potential": 3.6, "drag": 0,
-        "inflation": 0.8, "unemployment": 5.4, "wage": 465, "debtPct": 37.5, "rate": 3.7,
-        "gdpPps": 62, "ecb": -0.4, "energy": 100, "spreadBase": 3.9, "emigration": 110,
-        "rating": { "level": "BBB-", "outlook": "stabil" },
-        "tax": { "vat": 19, "income": 16, "corp": 16 },
-        "revenue": { "vat": 7.0, "income": 3.2, "corp": 2.2, "social": 9.0, "excise": 3.9, "eu": 1.8, "other": 3.4 },
-        "spend": { "pensions": 7.0, "social": 2.4, "health": 4.3, "education": 3.1, "defense": 1.8, "order": 2.0, "infra": 1.9, "agri": 1.1, "admin": 3.9, "other": 4.5 },
-        "metrics": { "health": 52, "education": 45, "infra": 36, "safety": 60, "cpi": 48, "arope": 38.8, "lifeExp": 75.3, "earlyLeavers": 18.1, "motorwayKm": 760, "area": 238.4 }
+        "gdp": 172000,
+        "pop": 19.6,
+        "growth": 5,
+        "potential": 3.6,
+        "drag": 0,
+        "inflation": 0.8,
+        "unemployment": 5.4,
+        "wage": 465,
+        "debtPct": 37.5,
+        "rate": 3.7,
+        "gdpPps": 62,
+        "ecb": -0.4,
+        "energy": 100,
+        "spreadBase": 3.9,
+        "emigration": 110,
+        "rating": {
+          "level": "BBB-",
+          "outlook": "stabil"
+        },
+        "tax": {
+          "vat": 19,
+          "income": 16,
+          "corp": 16
+        },
+        "revenue": {
+          "vat": 7,
+          "income": 3.2,
+          "corp": 2.2,
+          "social": 9,
+          "excise": 3.9,
+          "eu": 1.8,
+          "other": 3.4
+        },
+        "spend": {
+          "pensions": 7,
+          "social": 2.4,
+          "health": 4.3,
+          "education": 3.1,
+          "defense": 1.8,
+          "order": 2,
+          "infra": 1.9,
+          "agri": 1.1,
+          "admin": 3.9,
+          "other": 4.5
+        },
+        "metrics": {
+          "health": 52,
+          "education": 45,
+          "infra": 36,
+          "safety": 60,
+          "cpi": 48,
+          "arope": 38.8,
+          "lifeExp": 75.3,
+          "earlyLeavers": 18.1,
+          "motorwayKm": 760,
+          "area": 238.4
+        }
       }
     }
   ]
