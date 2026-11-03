@@ -20,6 +20,7 @@ import {
   segmentShares,
 } from "../shared/engine.mjs";
 import { dayOf } from "../shared/util.mjs";
+import { describeEffects } from "../shared/fx-text.mjs";
 import { createCtl } from "../shared/ctl.mjs";
 import { DATA_FILES } from "../shared/data-files.mjs";
 
@@ -97,7 +98,7 @@ test("the starting cabinet matches the real one", () => {
 /* --------------------------------------------------------------- content */
 
 function checkEffects(effects, where) {
-  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget"];
+  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget", "buff"];
   for (const key of Object.keys(effects ?? {})) assert.ok(known.includes(key), `${where}: unknown effect ${key}`);
   const party = (id) => assert.ok(["self", "gov", "opp"].includes(id) || partyIds.has(id), `${where}: party ${id}`);
   const segments = (obj) => Object.keys(obj ?? {}).forEach((s) => assert.ok(segmentIds.has(s), `${where}: segment ${s}`));
@@ -124,6 +125,13 @@ function checkEffects(effects, where) {
   }
   for (const k of Object.keys(effects?.budget ?? {})) assert.ok(spendLines.includes(k) || k === "other", `${where}: budget ${k}`);
   if (effects?.politician) assert.ok(politicianIds.has(effects.politician.id), `${where}: politician`);
+  if (effects?.buff) {
+    assert.ok(effects.buff.days > 0 && effects.buff.label, `${where}: buff needs days and a label`);
+    for (const [k, f] of Object.entries(effects.buff.mood ?? {})) {
+      party(k);
+      assert.ok(f > 0.9 && f < 1.1 && f !== 1, `${where}: buff factor ${f} must be a modest change`);
+    }
+  }
 }
 
 test("every event, choice and policy only points at things that exist", () => {
@@ -1059,6 +1067,57 @@ test("instruments: a big spend from capital, with a cooldown and a real effect",
   state.parties.usr.capital = 40;
   assert.equal(applyParl(state, data, "usr", { type: "instrument", id: "reform" }).ok, true);
   assert.equal(state.parties.usr.cohesion, 62, "reform adds 12 cohesion");
+});
+
+test("effects are described in plain words, with the right arrows", () => {
+  const lines = describeEffects(data, {
+    sol: { pensionari_rural: 2 },
+    macro: { inflation: 0.15, growth: 0.1 },
+    party: { self: -0.01 },
+    buff: { days: 30, label: "Test", mood: { self: 1.01 } },
+  });
+  assert.ok(lines.includes("▲ Pensionari rurali: nivel de trai +2"), lines.join("|"));
+  assert.ok(lines.some((l) => l.startsWith("▼ inflația +0,15 pp")), "more inflation is bad news: down arrow");
+  assert.ok(lines.some((l) => l.startsWith("▲ creșterea economică +0,1 pp")));
+  assert.ok(lines.some((l) => l.startsWith("▼ popularitatea ta −1%")));
+  assert.ok(lines.some((l) => l.includes("30 de zile") && l.includes("+1%")), "a buff names its duration");
+  assert.deepEqual(describeEffects(data, null), []);
+});
+
+test("a buff from an event choice lifts the party for a while and then fades on its own", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.funds = 5;
+  fireEvent(state, data, "d2-inundatii");
+  const d = state.decisions.find((x) => x.party === "usr");
+  assert.ok(d, "the event hands usr a decision");
+  const snapChoice = snapshot(state, data).decisions.find((x) => x.id === d.id).choices[0];
+  assert.ok(snapChoice.fx.some((l) => l.includes("15 de zile")), "the choice states its buff");
+  const before = computePoll(state, data).national.usr;
+  assert.equal(decide(state, data, "usr", d.id, 0).ok, true);
+  assert.equal(state.buffs.length, 1);
+  assert.equal(snapshot(state, data).buffs[0].left, 15);
+  assert.ok(computePoll(state, data).national.usr > before, "the buff and the campaign lift the poll");
+  tick(state, data, 16);
+  assert.equal(state.buffs.length, 0, "the buff expired");
+  assert.ok(state.log.some((l) => l.title.startsWith("S-a încheiat")), "the end is logged");
+});
+
+test("events with a role go only to the government or the opposition; a choice can cost capital", () => {
+  const state = newGame("2026", ["psd", "usr"]);
+  state.gov.coalition = ["psd"];
+  fireEvent(state, data, "d2-blackout");
+  assert.deepEqual(state.decisions.map((d) => d.party), ["psd"], "a government event reaches only the coalition");
+  const d = state.decisions[0];
+  state.parties.psd.capital = 2;
+  const poor = decide(state, data, "psd", d.id, 0);
+  assert.equal(poor.ok, false);
+  assert.match(poor.error, /Capital/);
+  state.parties.psd.capital = 10;
+  assert.equal(decide(state, data, "psd", d.id, 0).ok, true);
+  assert.equal(state.parties.psd.capital, 6, "the choice cost 4 capital");
+  state.decisions = [];
+  fireEvent(state, data, "d2-tva-propunere");
+  assert.deepEqual(state.decisions.map((d2) => d2.party), ["usr"], "an opposition event reaches only the opposition");
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {

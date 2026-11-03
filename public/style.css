@@ -3160,3 +3160,43 @@ input.sel[type="text"] {
     display: none;
   }
 }
+
+/* ---------- events: explicit effects, active buffs ---------- */
+.dec-fx {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 1.35;
+  margin-top: 4px;
+  color: #9fdcf2;
+}
+.dec-ignore {
+  display: block;
+  font-size: 11px;
+  margin-top: 4px;
+  color: #ffb3c1;
+}
+.t-fx {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ffd166;
+}
+.buffs {
+  margin-bottom: 12px;
+}
+.buff-row {
+  padding: 3px 0;
+  font-size: 12.5px;
+}
+.buff-up {
+  color: #2fbf8a;
+  font-weight: 700;
+}
+.buff-down {
+  color: #ff4d6d;
+  font-weight: 700;
+}
+.decision .dec-ignore {
+  color: #9d0208;
+  font-weight: 600;
+}

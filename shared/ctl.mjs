@@ -71,7 +71,8 @@ export const HELP = `turul-doi ctl
   offer <nr> yes|no          acceptă sau refuză o ofertă
   amend <nr> <id>           adoptă un amendament la o lege deschisă (3 capital, o dată); fără id, le listează
   ccr <nr>                  sesizează Curtea Constituțională pentru o lege la Cotroceni
-  events                    ultimele evenimente
+  events                    ultimele evenimente, cu efectele lor
+  buffs                     efectele temporare active (avantaje și dezavantaje)
   help                      acest text`;
 
 const f0 = (n) => Math.round(n).toLocaleString("ro-RO");
@@ -342,7 +343,8 @@ export function createCtl(data, opts = {}) {
           .map(
             (d) =>
               `#${d.id} (până în ziua ${d.expires}) ${d.title}\n` +
-              d.choices.map((c, i) => `  ${i}: ${c.label}${c.cost ? ` [${c.cost} M€]` : ""} - ${c.hint}`).join("\n"),
+              d.choices.map((c, i) => `  ${i}: ${c.label}${c.cost ? ` [${c.cost} M€]` : ""} - ${c.hint}${c.capital ? ` [${c.capital} cap.]` : ""}${c.fx?.length ? `\n     efecte: ${c.fx.join("; ")}` : ""}`).join("\n") +
+              (d.ignoreFx?.length ? `\n  dacă nu răspunzi: ${d.ignoreFx.join("; ")}` : ""),
           )
           .join("\n");
       }
@@ -527,11 +529,16 @@ export function createCtl(data, opts = {}) {
         return res.ok ? res.message : `error: ${res.error}`;
       }
 
+      case "buffs": {
+        const b = snapshot(state, data).buffs;
+        return b.length ? b.map((x) => `${x.label}: ${x.parties.join("+").toUpperCase()} ${x.factor > 1 ? "+" : "−"}${Math.abs(Math.round((x.factor - 1) * 1000) / 10)}% · încă ${x.left} zile`).join("\n") : "niciun efect activ";
+      }
+
       case "events":
         return state.log
           .filter((l) => ["event", "election", "rating", "world"].includes(l.kind))
           .slice(-12)
-          .map((l) => `d${l.day} ${l.title}`)
+          .map((l) => `d${l.day} ${l.title}${l.fx?.length ? ` — ${l.fx.join("; ")}` : ""}`)
           .join("\n");
 
       default:

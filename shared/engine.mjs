@@ -5,6 +5,7 @@
 // gov.mjs = budget, metrics, standard of living, cabinet. world.mjs = EU + countries.
 import { clamp, rand, log, round, dateAt, dayOf, partyDef } from "./util.mjs";
 import { initParl, parlDaily, parlMonthly, parlSnapshot, distance, splitParty } from "./parl.mjs";
+import { describeEffects } from "./fx-text.mjs";
 import { initPresidency, presidencyDaily, decidePresidential, presPseudoEvent, presSnapshot } from "./presidency.mjs";
 import { initWorld, worldMonthly, worldView } from "./world.mjs";
 import {
@@ -181,6 +182,8 @@ export function createGame(data, opts = {}) {
     recentEvents: [],
     fired: {},
     decisions: [],
+    buffs: [],
+    nextBuff: 1,
     nextDecision: 1,
     log: [],
   };
@@ -262,7 +265,7 @@ export function computePoll(state, data) {
       s *=
         (state.strength[p.id] ?? 1) *
         (p.bias?.[c.id] ?? 1) *
-        (state.mood[p.id] ?? 1) *
+        moodOf(state, p.id) *
         (1 + (c.boost[p.id] ?? 0));
       scores[p.id] = Math.max(0.0001, s);
       total += scores[p.id];
@@ -317,6 +320,13 @@ function allocateSeats(state, data, national, counties) {
     seats[l.parties[0]] = won[k];
   });
   return seats;
+}
+
+// A party's mood with the temporary buffs and debuffs of events on top.
+function moodOf(state, id) {
+  let m = state.mood[id] ?? 1;
+  for (const b of state.buffs ?? []) if (b.until > state.day && b.parties.includes(id)) m *= b.factor;
+  return m;
 }
 
 function addCountyBoost(state, countyId, partyId, amount) {
@@ -415,6 +425,19 @@ export function applyEffects(state, data, effects, ctx = {}) {
     }
   }
 
+  // A buff or debuff that lasts a while and then fades by itself: { days, label, mood: { self|gov|opp|id: factor } }.
+  if (effects.buff) {
+    const b = effects.buff;
+    state.buffs ??= [];
+    state.nextBuff ??= 1;
+    for (const [key, factor] of Object.entries(b.mood ?? {})) {
+      const parties = who(key).filter((p) => p in state.mood);
+      if (!parties.length) continue;
+      state.buffs.push({ id: state.nextBuff, label: b.label ?? ctx.title ?? "Efect temporar", parties, factor, from: state.day, until: state.day + (b.days ?? 30) });
+      state.nextBuff += 1;
+    }
+  }
+
   if (effects.countyBoostAll && ctx.partyId) {
     for (const cid of Object.keys(state.counties)) addCountyBoost(state, cid, ctx.partyId, effects.countyBoostAll);
   }
@@ -466,13 +489,16 @@ export function fireEvent(state, data, eventId) {
   state.recentEvents.push(ev.id);
   if (state.recentEvents.length > 14) state.recentEvents.shift();
   state.fired[ev.id] = state.day;
-  state.active = { ...ev, day: state.day };
-  log(state, "event", ev.title, ev.text);
+  state.active = { ...ev, day: state.day, fx: describeEffects(data, ev.effects) };
+  log(state, "event", ev.title, ev.text, describeEffects(data, ev.effects));
 
   // Events with `choices` hand every human player a decision to answer.
   if (ev.choices?.length) {
     for (const partyId of state.humans) {
       if (!state.parties[partyId]) continue;
+      // `role` limits an event to the government ("gov") or the opposition ("opp").
+      if (ev.role === "gov" && !inCoalition(state, partyId)) continue;
+      if (ev.role === "opp" && inCoalition(state, partyId)) continue;
       state.decisions.push({
         id: state.nextDecision,
         party: partyId,
@@ -496,11 +522,14 @@ export function decide(state, data, partyId, decisionId, choiceIndex) {
   if (!choice) return { ok: false, error: "Alegere invalidă." };
   const party = state.parties[partyId];
   const cost = choice.cost ?? 0;
+  const capital = choice.capital ?? 0;
+  if (party.capital < capital) return { ok: false, error: `Capital politic insuficient (${capital} necesar).` };
   if (party.funds < cost) return { ok: false, error: `Fonduri insuficiente (${cost} M€ necesari).` };
   party.funds = money(party.funds - cost);
+  party.capital = round(party.capital - capital, 1);
   applyEffects(state, data, choice.effects, { partyId, title: ev.title });
   state.decisions = state.decisions.filter((x) => x !== d);
-  log(state, "decision", `${partyId.toUpperCase()}: ${choice.label}`, choice.text ?? ev.title);
+  log(state, "decision", `${partyId.toUpperCase()}: ${choice.label}`, choice.text ?? ev.title, describeEffects(data, choice.effects));
   return { ok: true, message: choice.text ?? `Ai ales „${choice.label}”.` };
 }
 
@@ -851,6 +880,14 @@ function aiCoalitionOffers(state, data) {
   }
 }
 
+// Temporary buffs and debuffs from events end on their own day.
+function buffsDaily(state) {
+  const gone = (state.buffs ?? []).filter((b) => b.until <= state.day);
+  if (!gone.length) return;
+  state.buffs = state.buffs.filter((b) => b.until > state.day);
+  for (const b of gone) log(state, "buff", `S-a încheiat: ${b.label}`, "Efectul temporar a trecut.");
+}
+
 export function runElection(state, data) {
   const poll = computePoll(state, data);
   const parties = plist(state, data);
@@ -922,6 +959,7 @@ export function tick(state, data, days = 1) {
     }
     parlDaily(state, data);
     presidencyDaily(state, data);
+    buffsDaily(state);
 
     // The AI campaigns hard before an election and only lightly in between.
     const toElection = state.electionDay - state.day;
@@ -1029,11 +1067,13 @@ export function snapshot(state, data, opts = {}) {
         title: ev.title,
         text: ev.text,
         expires: d.expires,
-        choices: ev.choices.map((c) => ({ label: c.label, hint: c.hint ?? "", cost: c.cost ?? 0 })),
+        ignoreFx: describeEffects(data, ev.ignore),
+        choices: ev.choices.map((c) => ({ label: c.label, hint: c.hint ?? "", cost: c.cost ?? 0, capital: c.capital ?? 0, fx: describeEffects(data, c.effects) })),
       };
     }),
     lastResult: state.lastResult,
     causes: (state.causes ?? []).slice(-160),
+    buffs: (state.buffs ?? []).map((b) => ({ id: b.id, label: b.label, parties: b.parties, factor: b.factor, left: Math.max(0, b.until - state.day) })),
     pres: presSnapshot(state, data),
     segShares: segmentShares(state, data),
     segPrev: state.segPrev ?? null,
@@ -1088,7 +1128,7 @@ export function segmentShares(state, data) {
         const sb = state.parties[p.id].segBoost[seg.id] ?? 1;
         const s = Math.max(0.0001,
           size * (p.affinity[seg.id] ?? 0.3) * sb * (gm?.[seg.id] ?? 1) *
-          (state.strength[p.id] ?? 1) * (p.bias?.[c.id] ?? 1) * (state.mood[p.id] ?? 1) * (1 + (c.boost[p.id] ?? 0)));
+          (state.strength[p.id] ?? 1) * (p.bias?.[c.id] ?? 1) * moodOf(state, p.id) * (1 + (c.boost[p.id] ?? 0)));
         scores[p.id] = s;
         sum += s;
       }

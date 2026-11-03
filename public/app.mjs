@@ -723,6 +723,19 @@ function panelActions() {
   `;
 }
 
+// Temporary buffs and debuffs from events, with what they do and how long they last.
+function buffsView() {
+  const list = S.snap.buffs ?? [];
+  if (!list.length) return "";
+  const rows = list
+    .map(
+      (b) =>
+        `<div class="row between buff-row"><span>${esc(b.label)} <small class="muted">${b.parties.map((p) => esc(pname(p))).join(", ")}</small></span><span class="${b.factor >= 1 ? "buff-up" : "buff-down"}">${b.factor >= 1 ? "▲ +" : "▼ −"}${(Math.abs(b.factor - 1) * 100).toFixed(1).replace(".", ",")}% · ${b.left} zile</span></div>`,
+    )
+    .join("");
+  return `<h3>Efecte active</h3><div class="buffs">${rows}</div>`;
+}
+
 function panelPoll() {
   const s = S.snap;
   const rows = Object.entries(s.poll.national).sort((a, b) => b[1] - a[1]);
@@ -747,6 +760,7 @@ function panelPoll() {
 
   return `
     ${roadCard()}
+    ${buffsView()}
     ${presView(S)}
     <h3>Sondaj național</h3>
     ${rows
@@ -1152,7 +1166,7 @@ function renderToast() {
   const box = $("#toast");
   box.innerHTML = `<div class="t-kicker">Breaking news · ziua ${s.active.day}</div>
     <div class="t-title">${esc(s.active.title)}</div>
-    <div class="t-text">${esc(s.active.text)}</div>`;
+    <div class="t-text">${esc(s.active.text)}</div>${s.active.fx?.length ? `<div class="t-fx">${s.active.fx.map(esc).join(" · ")}</div>` : ""}`;
   box.classList.remove("hidden");
   clearTimeout(renderToast.timer);
   renderToast.timer = setTimeout(() => box.classList.add("hidden"), 7000);
@@ -1211,19 +1225,20 @@ function renderDecision() {
   }
   const left = Math.max(0, d.expires - S.snap.day);
   const funds = S.snap.parties[S.party].funds;
-  const key = `${d.id}|${left}|${Math.floor(funds * 10)}|${mine.length}`;
+  const capital = S.snap.parties[S.party].capital;
+  const key = `${d.id}|${left}|${Math.floor(funds * 10)}|${Math.floor(capital)}|${mine.length}`;
   if (key === S.keys.decision) return;
   S.keys.decision = key;
   box.innerHTML = `
     <div class="dec-tag">DECIZIE${mine.length > 1 ? `<small>+${mine.length - 1} în așteptare</small>` : ""}</div>
     <div class="dec-body">
       <b>${esc(d.title)}</b>
-      <span>${esc(d.text)}</span>
+      <span>${esc(d.text)}</span>${d.ignoreFx?.length ? `<small class="dec-ignore">Dacă nu răspunzi la timp: ${d.ignoreFx.map(esc).join(" · ")}</small>` : ""}
       <div class="dec-choices">
         ${d.choices
           .map(
-            (c, i) => `<button class="dec-btn" data-decision="${d.id}" data-decide="${i}" ${c.cost > funds ? "disabled" : ""}>
-              <b>${esc(c.label)}</b><small>${esc(c.hint)}</small></button>`,
+            (c, i) => `<button class="dec-btn" data-decision="${d.id}" data-decide="${i}" ${c.cost > funds || (c.capital ?? 0) > capital ? "disabled" : ""}>
+              <b>${esc(c.label)}</b><small>${esc(c.hint)}</small>${c.fx?.length ? `<em class="dec-fx">${c.fx.map(esc).join("<br>")}</em>` : ""}</button>`,
           )
           .join("")}
       </div>

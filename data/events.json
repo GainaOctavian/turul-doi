@@ -6821,6 +6821,1498 @@
         "2017",
         "2026"
       ]
+    },
+    {
+      "id": "d2-inundatii",
+      "title": "Inundații în Moldova",
+      "text": "Apa a intrat în sute de gospodării. Prefectul spune că situația e „sub control”, iar oamenii spun că și el e sub apă.",
+      "weight": 5,
+      "minDay": 10,
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "effects": {
+        "segments": {
+          "agricultori": -0.03,
+          "pensionari_rural": -0.02
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.008
+        }
+      },
+      "choices": [
+        {
+          "label": "Mergi la fața locului",
+          "hint": "Costă 0,4 M€",
+          "cost": 0.4,
+          "text": "Ai ajuns cu cizme de cauciuc și un fotograf.",
+          "effects": {
+            "segBoost": {
+              "agricultori": 1.05,
+              "pensionari_rural": 1.04
+            },
+            "buff": {
+              "days": 15,
+              "label": "Vizita la sinistrați",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Ceri fonduri de urgență în Parlament",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Ai cerut un fond de urgență. Parlamentul l-a pus pe ordinea de zi, la sfârșit.",
+          "effects": {
+            "party": {
+              "self": 0.006
+            },
+            "sol": {
+              "agricultori": 1
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai comentat doar că „gândurile tale sunt alături de familii”.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-blackout",
+      "title": "Pană de curent în jumătate de țară",
+      "text": "Sistemul energetic a căzut o seară întreagă. Compania promite un raport „în cel mai scurt timp”, iar întunericul nu așteaptă raportul.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {
+        "confidence": -2
+      },
+      "ignore": {
+        "party": {
+          "self": -0.012
+        }
+      },
+      "choices": [
+        {
+          "label": "Demiți conducerea companiei",
+          "hint": "Costă 4 capital politic",
+          "capital": 4,
+          "text": "Conducerea a fost schimbată în aceeași seară, la lumânare.",
+          "effects": {
+            "party": {
+              "self": 0.01
+            },
+            "confidence": 1
+          }
+        },
+        {
+          "label": "Plătești compensații",
+          "hint": "Costă 2 M€",
+          "cost": 2,
+          "text": "Fiecare gospodărie afectată primește o compensație simbolică.",
+          "effects": {
+            "sol": {
+              "muncitori": 1,
+              "pensionari_urban": 1
+            },
+            "buff": {
+              "days": 30,
+              "label": "Compensații după pană",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Dai vina pe vreme",
+          "hint": "Gratuit",
+          "text": "Ai explicat că vremea nu e în competența ministerului. Nici electricitatea.",
+          "effects": {
+            "party": {
+              "self": -0.01
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-tva-propunere",
+      "title": "Guvernul vrea să majoreze TVA",
+      "text": "Guvernul propune o majorare a TVA pentru a acoperi deficitul. Ministrul finanțelor spune că e „o măsură temporară”, cum sunt toate.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "opp",
+      "effects": {
+        "macro": {
+          "inflation": 0.05
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri retragerea în plen",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Ai cerut retragerea proiectului. Plenul a ascultat cu atenție, apoi a trecut la următorul punct.",
+          "effects": {
+            "party": {
+              "self": 0.008,
+              "gov": -0.006
+            }
+          }
+        },
+        {
+          "label": "Strângi semnături împotriva majorării",
+          "hint": "Costă 0,6 M€",
+          "cost": 0.6,
+          "text": "Peste 100.000 de semnături au ajuns la registratură, în cutii cu eticheta „TVA”.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.05,
+              "bugetari": 1.03,
+              "pensionari_urban": 1.03
+            }
+          }
+        },
+        {
+          "label": "Propui o alternativă fiscală",
+          "hint": "Costă 0,8 M€",
+          "cost": 0.8,
+          "text": "Ai prezentat o alternativă cu tăieri de cheltuieli. Specialiștii au aplaudat, alegătorii au dat mai departe.",
+          "effects": {
+            "buff": {
+              "days": 45,
+              "label": "Alternativa fiscală",
+              "mood": {
+                "self": 1.012
+              }
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-protest-fermieri",
+      "title": "Fermierii blochează drumurile",
+      "text": "Zeci de tractoare au blocat drumuri naționale, cerând plata subvențiilor. Poliția rutieră a închis traficul cu o bandă de plastic.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "agricultori": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.005
+        }
+      },
+      "choices": [
+        {
+          "label": "Susții fermierii",
+          "hint": "Gratuit · agricultorii te apreciază",
+          "text": "Ai declarat că fermierii au dreptate. Șoferii blocați au mai puțin.",
+          "effects": {
+            "segBoost": {
+              "agricultori": 1.08,
+              "pensionari_rural": 1.03
+            },
+            "party": {
+              "self": -0.003
+            }
+          }
+        },
+        {
+          "label": "Propui subvenții mai repede",
+          "hint": "Costă 1,2 M€",
+          "cost": 1.2,
+          "text": "Ai propus plata subvențiilor în termen de 30 de zile. Deocamdată e doar o propunere.",
+          "effects": {
+            "sol": {
+              "agricultori": 1.5
+            },
+            "budget": {
+              "agri": 0.02
+            }
+          }
+        },
+        {
+          "label": "Ceri calm și dialog",
+          "hint": "Gratuit",
+          "text": "Ai cerut calm. Tractoarele au rămas pe loc, calme.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.02
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-atac-cibernetic",
+      "title": "Atac cibernetic asupra instituțiilor",
+      "text": "Serverele mai multor instituții publice au fost blocate câteva zile. Specialiștii cer investiții, iar instituțiile cer răbdare.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {
+        "confidence": -1
+      },
+      "ignore": {
+        "party": {
+          "self": -0.006
+        }
+      },
+      "choices": [
+        {
+          "label": "Investești în securitate cibernetică",
+          "hint": "Costă 1,5 M€",
+          "cost": 1.5,
+          "text": "Un program de securitate a fost anunțat și, spre deosebire de alte programe, a primit și un buget.",
+          "effects": {
+            "metric": {
+              "infra": 0.2
+            },
+            "buff": {
+              "days": 30,
+              "label": "Program de securitate cibernetică",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Dai vina pe opoziție",
+          "hint": "Gratuit",
+          "text": "Ai spus că opoziția a întârziat legile de securitate. Opoziția a spus că ai întârziat tu aplicarea.",
+          "effects": {
+            "party": {
+              "self": -0.004,
+              "opp": -0.004
+            }
+          }
+        },
+        {
+          "label": "Ceri ajutor NATO",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Experți străini au venit să ajute. Cursul de securitate a fost prea scurt pentru toți.",
+          "effects": {
+            "confidence": 1,
+            "metric": {
+              "infra": 0.1
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-refugiati",
+      "title": "Val de refugiați la graniță",
+      "text": "Mii de oameni trec granița, fugind de război. Centrele de primire sunt pline, iar voluntarii fac pauze doar când adorm.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "tineri_urbani": 0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.006
+        }
+      },
+      "choices": [
+        {
+          "label": "Deschizi centre de primire",
+          "hint": "Costă 1 M€",
+          "cost": 1,
+          "text": "Centrele sunt deschise, iar voluntarii sunt mulțumiți. Oamenii nesiguri sunt mai puțin.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.04,
+              "studenti": 1.03
+            },
+            "party": {
+              "self": 0.004
+            },
+            "sol": {
+              "muncitori": -0.5
+            }
+          }
+        },
+        {
+          "label": "Ceri ajutor european",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Bruxelles-ul a promis fonduri. Plata ajunge după formularul 7.",
+          "effects": {
+            "macro": {
+              "growth": 0.03
+            },
+            "party": {
+              "self": 0.004
+            }
+          }
+        },
+        {
+          "label": "Ceri măsuri stricte la graniță",
+          "hint": "Gratuit",
+          "text": "Ai cerut mai multe controale. Cozile s-au lungit.",
+          "effects": {
+            "segBoost": {
+              "muncitori": 1.05,
+              "pensionari_rural": 1.04,
+              "tineri_urbani": 0.97
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-pnrr-jaloane",
+      "title": "Jaloane din PNRR pe cale să fie ratate",
+      "text": "Comisia Europeană avertizează că mai multe reforme din PNRR nu au termene respectate. Ministerul spune că proiectele sunt „în pregătire”.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {
+        "macro": {
+          "growth": -0.02
+        }
+      },
+      "ignore": {
+        "confidence": -2
+      },
+      "choices": [
+        {
+          "label": "Ceri prelungire la Bruxelles",
+          "hint": "Costă 4 capital politic",
+          "capital": 4,
+          "text": "Bruxelles-ul a acordat o prelungire, cu un grafic de zece pagini.",
+          "effects": {
+            "macro": {
+              "growth": 0.03
+            }
+          }
+        },
+        {
+          "label": "Reevaluezi proiectele",
+          "hint": "Costă 0,8 M€",
+          "cost": 0.8,
+          "text": "Proiectele neviabile au fost scoase și banii mutați spre altele.",
+          "effects": {
+            "metric": {
+              "infra": 0.3
+            },
+            "confidence": 1
+          }
+        },
+        {
+          "label": "Aștepți",
+          "hint": "Gratuit",
+          "text": "Ai preferat să nu faci nimic. Termenul a trecut, ca toate termenele.",
+          "effects": {
+            "confidence": -2
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-primar-prins",
+      "title": "Un primar din partidul tău e anchetat",
+      "text": "Un primar apropiat de partid e reținut într-un dosar de achiziții. Partidul anunță că „așteaptă concluziile justiției”, în afara cazului în care nu le așteaptă.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.008
+        }
+      },
+      "choices": [
+        {
+          "label": "Îl excluzi din partid",
+          "hint": "Gratuit · pierzi organizația locală",
+          "text": "Primarul a fost exclus. Organizația locală a primit vestea la fel.",
+          "effects": {
+            "party": {
+              "self": 0.008
+            },
+            "segBoost": {
+              "tineri_urbani": 1.03
+            },
+            "buff": {
+              "days": 20,
+              "label": "Pierderea organizației locale",
+              "mood": {
+                "self": 0.985
+              }
+            }
+          }
+        },
+        {
+          "label": "Îl aperi public",
+          "hint": "Gratuit · riști imaginea",
+          "text": "Ai spus că e nevinovat până la proba contrarie. Presa a găsit proba.",
+          "effects": {
+            "party": {
+              "self": -0.012
+            },
+            "segBoost": {
+              "bugetari": 1.02
+            }
+          }
+        },
+        {
+          "label": "Aștepți instanța",
+          "hint": "Gratuit",
+          "text": "Ai așteptat decizia instanței, apoi decizia în apel.",
+          "effects": {
+            "buff": {
+              "days": 30,
+              "label": "Dosar în așteptare",
+              "mood": {
+                "self": 0.99
+              }
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-sondaj-contestat",
+      "title": "Un sondaj te dă sub așteptări",
+      "text": "Un institut publică un sondaj nefavorabil partidului tău. Institutul spune că metodologia e solidă. Alții spun că metodologia e a lui.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Publici un contra-sondaj",
+          "hint": "Costă 0,8 M€",
+          "cost": 0.8,
+          "text": "Ai comandat un sondaj care arată altceva. Nimeni nu știe care e mai corect.",
+          "effects": {
+            "party": {
+              "self": 0.006
+            }
+          }
+        },
+        {
+          "label": "Răspunzi cu umor",
+          "hint": "Gratuit · tinerii apreciază",
+          "text": "Ai postat un clip în care compari sondajul cu prognoza meteo.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.03,
+              "studenti": 1.03
+            }
+          }
+        },
+        {
+          "label": "Ignori",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai ignorat sondajul. El nu te-a ignorat pe tine.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-greva-transport",
+      "title": "Greva transportului public",
+      "text": "Șoferii și mecanicii intră în grevă, cerând salarii mai mari. Orașele au rămas cu străzile libere și stațiile aglomerate.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {
+        "segments": {
+          "muncitori": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Negociezi cu sindicatele",
+          "hint": "Costă 1 M€",
+          "cost": 1,
+          "text": "Sindicatele au câștigat o majorare, orașele au câștigat transportul.",
+          "effects": {
+            "sol": {
+              "muncitori": 1
+            },
+            "buff": {
+              "days": 30,
+              "label": "Pace socială",
+              "mood": {
+                "self": 1.008
+              }
+            }
+          }
+        },
+        {
+          "label": "Impui serviciu minim",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Serviciul minim a funcționat, dar sindicatele nu uită.",
+          "effects": {
+            "confidence": -1,
+            "segBoost": {
+              "antreprenori": 1.03,
+              "muncitori": 0.97
+            }
+          }
+        },
+        {
+          "label": "Aștepți",
+          "hint": "Gratuit",
+          "text": "Greva a continuat. Ai așteptat odată cu ea.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-incendii",
+      "title": "Incendii de pădure",
+      "text": "Incendii de vegetație mistuie sute de hectare. Pompierii cer mai multe elicoptere, iar ministerul cere mai multă răbdare.",
+      "weight": 5,
+      "minDay": 10,
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "effects": {
+        "segments": {
+          "agricultori": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Trimiți ajutor",
+          "hint": "Costă 0,6 M€",
+          "cost": 0.6,
+          "text": "Echipaje de ajutor au plecat spre zonele afectate, cu vehicule și voluntari.",
+          "effects": {
+            "buff": {
+              "days": 20,
+              "label": "Ajutor la incendii",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Propui lege împotriva defrișărilor",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Ai depus o inițiativă pentru un registru al pădurilor. Pădurile n-au comentat.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.04,
+              "studenti": 1.04
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai urmărit situația de la distanță.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-chirii",
+      "title": "Chiriile cresc cu 20%",
+      "text": "Un raport arată că chiriile din marile orașe au crescut cu un sfert într-un an. Tinerii spun că salariul n-a ținut pasul. Proprietarii spun că nici ei.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "tineri_urbani": -0.01,
+          "studenti": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Propui plafonarea chiriilor",
+          "hint": "Gratuit · antreprenorii se supără",
+          "text": "Ai propus plafonarea. Proprietarii au anunțat că se mută în alt domeniu.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.07,
+              "studenti": 1.06,
+              "antreprenori": 0.97
+            }
+          }
+        },
+        {
+          "label": "Propui locuințe noi",
+          "hint": "Costă 1,2 M€",
+          "cost": 1.2,
+          "text": "Un program de locuințe cu chirie accesibilă a fost anunțat în patru orașe.",
+          "effects": {
+            "sol": {
+              "tineri_urbani": 1,
+              "studenti": 1
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai lăsat piața să decidă. A decis.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-alimente",
+      "title": "Alimentele de bază se scumpesc",
+      "text": "Prețurile la alimente cresc pentru a treia lună. Oamenii calculează cât costă coșul, comercianții calculează cât costă lumea.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "macro": {
+          "inflation": 0.08
+        },
+        "segments": {
+          "pensionari_urban": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.006
+        }
+      },
+      "choices": [
+        {
+          "label": "Propui plafonarea adaosului",
+          "hint": "Gratuit · oamenii apreciază",
+          "text": "Ai propus plafonarea adaosului. Comercianții au făcut calcule.",
+          "effects": {
+            "segBoost": {
+              "pensionari_urban": 1.05,
+              "muncitori": 1.04
+            },
+            "macro": {
+              "inflation": -0.05
+            }
+          }
+        },
+        {
+          "label": "Propui ajutor pentru alimente",
+          "hint": "Costă 1,5 M€",
+          "cost": 1.5,
+          "text": "Un voucher alimentar pentru familiile cu venituri mici a fost anunțat.",
+          "effects": {
+            "sol": {
+              "pensionari_rural": 1,
+              "pensionari_urban": 1
+            },
+            "budget": {
+              "social": 0.02
+            }
+          }
+        },
+        {
+          "label": "Lași piața liberă",
+          "hint": "Gratuit · economiștii apreciază",
+          "text": "Ai spus că piața se corectează. Coșul nu a citit comunicatul.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.03
+            },
+            "party": {
+              "self": -0.004
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-medici-pleaca",
+      "title": "Medicii pleacă în străinătate",
+      "text": "Încă o serie de medici tineri pleacă spre spitale din Occident. Spitalele de provincie au rămas cu liste de gardă mai lungi decât cele de pacienți.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "metric": {
+          "health": -0.2
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.005
+        }
+      },
+      "choices": [
+        {
+          "label": "Propui majorări salariale",
+          "hint": "Costă 1,4 M€",
+          "cost": 1.4,
+          "text": "Ai propus majorări pentru medicii rezidenți. Ministerul a cerut un calcul.",
+          "effects": {
+            "sol": {
+              "bugetari": 1.5
+            },
+            "budget": {
+              "health": 0.02
+            }
+          }
+        },
+        {
+          "label": "Propui burse de rezidențiat",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Burse pentru medicii care rămân în țară, cu obligația de a rămâne.",
+          "effects": {
+            "metric": {
+              "health": 0.2
+            },
+            "segBoost": {
+              "bugetari": 1.03
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai spus că libertatea de mișcare e un drept european.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-alegeri-partiale",
+      "title": "Alegeri locale parțiale",
+      "text": "Într-un oraș se organizează alegeri parțiale după demisia unui primar. Toate partidele spun că „nu e un test național”. Toate îl tratează ca atare.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Mobilizezi toate forțele",
+          "hint": "Costă 1,5 M€",
+          "cost": 1.5,
+          "text": "Ai trimis voluntari și afișe. Orașul a primit și o conferință.",
+          "effects": {
+            "countyBoostAll": 0.02,
+            "buff": {
+              "days": 20,
+              "label": "Mobilizare după alegeri",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Pui un candidat simbolic",
+          "hint": "Costă 0,3 M€",
+          "cost": 0.3,
+          "text": "Un candidat a fost pus pe liste, mai mult din principiu.",
+          "effects": {
+            "party": {
+              "self": 0.002
+            }
+          }
+        },
+        {
+          "label": "Nu participi",
+          "hint": "Gratuit",
+          "text": "Ai decis să nu participi. Alegătorii au observat.",
+          "effects": {
+            "party": {
+              "self": -0.004
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-vizita-ue",
+      "title": "Un comisar european vizitează țara",
+      "text": "Un comisar european e în vizită. Guvernul vrea să arate reformele, opoziția vrea să arate lipsa lor, iar comisarul vrea să ajungă la aeroport.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {},
+      "ignore": {
+        "confidence": -1
+      },
+      "choices": [
+        {
+          "label": "Prezinți planul de reforme",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Ai prezentat un plan cu termene. Comisarul a notat termenele.",
+          "effects": {
+            "metric": {
+              "cpi": 0.3
+            },
+            "confidence": 2
+          }
+        },
+        {
+          "label": "Ceri flexibilitate la deficit",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Ai cerut mai mult timp pentru reducerea deficitului. Răspunsul a venit politicos și fără număr.",
+          "effects": {
+            "macro": {
+              "growth": 0.02
+            },
+            "confidence": 1
+          }
+        },
+        {
+          "label": "Eviți subiectele grele",
+          "hint": "Gratuit",
+          "text": "Vizita a decurs fără surprize, ceea ce, în sine, a fost o surpriză.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-diaspora-cozi",
+      "title": "Cozi la secțiile de vot din diaspora",
+      "text": "Românii din străinătate așteaptă ore la secțiile de vot, unele s-au închis înainte de a vota toți. Consulatele spun că au făcut tot ce se putea.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "diaspora": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri anchetă",
+          "hint": "Gratuit · diaspora apreciază",
+          "text": "Ai cerut o anchetă. Consulatele au promis un raport, probabil la sfârșitul legislaturii.",
+          "effects": {
+            "segBoost": {
+              "diaspora": 1.08,
+              "tineri_urbani": 1.02
+            }
+          }
+        },
+        {
+          "label": "Propui votul prin corespondență",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Ai depus o propunere pentru vot prin corespondență. Propunerea a ajuns în comisie.",
+          "effects": {
+            "sol": {
+              "diaspora": 1.5
+            },
+            "party": {
+              "self": 0.004
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai lăsat consulatele să explice.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-accident-feroviar",
+      "title": "Accident feroviar",
+      "text": "Un tren a deraiat, fără victime, dar cu întârzieri de câteva ore. Infrastructura feroviară e din nou în discuție, cum e din 1990.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "gov",
+      "effects": {
+        "metric": {
+          "infra": -0.1
+        }
+      },
+      "ignore": {
+        "confidence": -1
+      },
+      "choices": [
+        {
+          "label": "Demiți conducerea CFR",
+          "hint": "Costă 3 capital politic",
+          "capital": 3,
+          "text": "Conducerea a fost schimbată, iar trenurile au rămas la fel de punctuale.",
+          "effects": {
+            "party": {
+              "self": 0.006
+            },
+            "confidence": 1
+          }
+        },
+        {
+          "label": "Anunți investiții în căi ferate",
+          "hint": "Costă 2 M€",
+          "cost": 2,
+          "text": "Un program de modernizare a fost anunțat pe patru tronsoane.",
+          "effects": {
+            "metric": {
+              "infra": 0.3
+            },
+            "buff": {
+              "days": 30,
+              "label": "Program feroviar",
+              "mood": {
+                "self": 1.008
+              }
+            }
+          }
+        },
+        {
+          "label": "Aștepți raportul",
+          "hint": "Gratuit",
+          "text": "Raportul va fi gata în șase luni. Trenul, cu întârziere.",
+          "effects": {
+            "confidence": -1
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-tren-opozitie",
+      "title": "Accident feroviar, văzut din opoziție",
+      "text": "Un tren a deraiat. Guvernul promite investigații. Opoziția promite că ea ar fi făcut altfel, fără să arate cum.",
+      "weight": 5,
+      "minDay": 10,
+      "role": "opp",
+      "effects": {
+        "metric": {
+          "infra": -0.1
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri demisii",
+          "hint": "Gratuit",
+          "text": "Ai cerut demisia ministrului. Ministrul a cerut un raport.",
+          "effects": {
+            "party": {
+              "self": 0.005,
+              "gov": -0.008
+            },
+            "segBoost": {
+              "tineri_urbani": 1.04
+            }
+          }
+        },
+        {
+          "label": "Propui un plan feroviar",
+          "hint": "Costă 1 M€",
+          "cost": 1,
+          "text": "Ai prezentat un plan de modernizare cu grafic. Graficul e frumos.",
+          "effects": {
+            "buff": {
+              "days": 30,
+              "label": "Planul feroviar al opoziției",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai lăsat accidentul să vorbească.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-scandal-presa",
+      "title": "Un ziar publică un material despre partidul tău",
+      "text": "Un material de presă susține că partidul tău a contractat servicii de la firme apropiate. Ai o săptămână până când subiectul trece. Sau nu trece.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.01
+        }
+      },
+      "choices": [
+        {
+          "label": "Publici contractele",
+          "hint": "Costă 1 capital politic",
+          "capital": 1,
+          "text": "Ai publicat contractele. Au fost citite, apoi comentate, apoi uitate.",
+          "effects": {
+            "party": {
+              "self": 0.004
+            },
+            "segBoost": {
+              "tineri_urbani": 1.02
+            }
+          }
+        },
+        {
+          "label": "Dai în judecată ziarul",
+          "hint": "Costă 1,2 M€",
+          "cost": 1.2,
+          "text": "Un proces a fost deschis. Ziarul a publicat și despre proces.",
+          "effects": {
+            "party": {
+              "self": -0.004
+            },
+            "buff": {
+              "days": 30,
+              "label": "Proces cu presa",
+              "mood": {
+                "self": 0.99
+              }
+            }
+          }
+        },
+        {
+          "label": "Ignori",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai ignorat materialul. Materialul nu te-a ignorat.",
+          "effects": {
+            "party": {
+              "self": -0.006
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-reforma-educatie",
+      "title": "Reforma educației a încurcat începutul de an",
+      "text": "Noua reformă schimbă programele chiar înaintea începutului de an. Profesorii cer clarificări, elevii cer vacanță, iar ministerul cere „un pic de răbdare”.",
+      "weight": 5,
+      "minDay": 10,
+      "months": [
+        8,
+        9
+      ],
+      "effects": {
+        "segments": {
+          "studenti": -0.01,
+          "bugetari": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri amânarea reformei",
+          "hint": "Gratuit · profesorii apreciază",
+          "text": "Ai cerut amânarea. Ministerul a anunțat că reforma e deja în drum.",
+          "effects": {
+            "segBoost": {
+              "bugetari": 1.05,
+              "studenti": 1.04
+            }
+          }
+        },
+        {
+          "label": "Propui un pachet de sprijin pentru școli",
+          "hint": "Costă 1,2 M€",
+          "cost": 1.2,
+          "text": "Ai propus un fond pentru școlile din mediul rural. Pe hârtie arată bine.",
+          "effects": {
+            "metric": {
+              "education": 0.2
+            },
+            "sol": {
+              "bugetari": 1
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai spus că ai încredere în profesori.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-iarna-gaze",
+      "title": "Prețul gazelor sare în plină iarnă",
+      "text": "Furnizorii anunță facturi mai mari cu 30%. Guvernul promite plafonare. Furnizorii promit facturi corecte, în ordine alfabetică.",
+      "weight": 5,
+      "minDay": 10,
+      "months": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "effects": {
+        "macro": {
+          "inflation": 0.1
+        },
+        "segments": {
+          "pensionari_urban": -0.01,
+          "pensionari_rural": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.008
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri plafonare",
+          "hint": "Gratuit · pensionarii apreciază",
+          "text": "Ai cerut plafonarea. Bugetul a luat notă.",
+          "effects": {
+            "segBoost": {
+              "pensionari_urban": 1.05,
+              "pensionari_rural": 1.05
+            },
+            "macro": {
+              "inflation": -0.05
+            }
+          }
+        },
+        {
+          "label": "Ajutor pentru încălzire",
+          "hint": "Costă 1,8 M€",
+          "cost": 1.8,
+          "text": "Un ajutor pentru încălzire a fost anunțat pentru familiile cu venituri mici.",
+          "effects": {
+            "sol": {
+              "pensionari_rural": 1.5,
+              "pensionari_urban": 1
+            },
+            "budget": {
+              "social": 0.02
+            }
+          }
+        },
+        {
+          "label": "Propui eficientizare energetică",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Un program de izolare a blocurilor a fost propus. Rezultatele vin în zece ani.",
+          "effects": {
+            "segBoost": {
+              "tineri_urbani": 1.03,
+              "antreprenori": 1.03
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-pensii-protest",
+      "title": "Pensionarii protestează în fața Guvernului",
+      "text": "Câteva mii de pensionari cer indexarea pensiilor. Ministerul muncii spune că „se calculează”, deși nu spune ce.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "segments": {
+          "pensionari_urban": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.005
+        }
+      },
+      "choices": [
+        {
+          "label": "Susții protestul",
+          "hint": "Gratuit · pensionarii apreciază",
+          "text": "Ai ieșit la protest și ai purtat o pancartă. Pe pancartă scria cât trebuie.",
+          "effects": {
+            "segBoost": {
+              "pensionari_urban": 1.06,
+              "pensionari_rural": 1.04
+            }
+          }
+        },
+        {
+          "label": "Propui indexare",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Ai depus un proiect de indexare. Cifrele sunt în anexă.",
+          "effects": {
+            "sol": {
+              "pensionari_urban": 1,
+              "pensionari_rural": 1
+            },
+            "budget": {
+              "pensions": 0.02
+            }
+          }
+        },
+        {
+          "label": "Explici limitele bugetului",
+          "hint": "Gratuit · economiștii apreciază",
+          "text": "Ai explicat că bugetul nu permite. Pensionarii au înțeles, dar n-au votat.",
+          "effects": {
+            "segBoost": {
+              "antreprenori": 1.03
+            },
+            "party": {
+              "self": -0.004
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-cutremur",
+      "title": "Un cutremur de 5,4 grade în Vrancea",
+      "text": "Un cutremur a zguduit jumătate de țară. Pagube mici, panică mare, iar toți vorbesc despre clădirile cu risc seismic.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {},
+      "ignore": {
+        "party": {
+          "self": -0.004
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri un program de consolidare",
+          "hint": "Costă 2 capital politic",
+          "capital": 2,
+          "text": "Ai cerut un program național de consolidare. Programul va avea și cutremure.",
+          "effects": {
+            "sol": {
+              "pensionari_urban": 0.5
+            },
+            "party": {
+              "self": 0.005
+            }
+          }
+        },
+        {
+          "label": "Mergi în zonele afectate",
+          "hint": "Costă 0,4 M€",
+          "cost": 0.4,
+          "text": "Ai vizitat zonele afectate, fără declarații grele.",
+          "effects": {
+            "buff": {
+              "days": 15,
+              "label": "Prezență în zonele afectate",
+              "mood": {
+                "self": 1.01
+              }
+            }
+          }
+        },
+        {
+          "label": "Nu comentezi",
+          "hint": "Nimic nu se întâmplă",
+          "text": "Ai lăsat specialiștii să vorbească.",
+          "effects": {}
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
+    },
+    {
+      "id": "d2-criza-banci",
+      "title": "Dobânzile sunt la cote înalte",
+      "text": "Băncile majorează dobânzile, iar ratele cresc pentru mulți oameni. Asociațiile de consumatori cer intervenții.",
+      "weight": 5,
+      "minDay": 10,
+      "effects": {
+        "macro": {
+          "growth": -0.02
+        },
+        "segments": {
+          "antreprenori": -0.01
+        }
+      },
+      "ignore": {
+        "party": {
+          "self": -0.005
+        }
+      },
+      "choices": [
+        {
+          "label": "Ceri limitarea dobânzilor",
+          "hint": "Gratuit · debitorii apreciază",
+          "text": "Ai cerut limitarea dobânzilor. Băncile au cerut o scrisoare.",
+          "effects": {
+            "segBoost": {
+              "muncitori": 1.04,
+              "someri": 1.04,
+              "antreprenori": 1.02
+            },
+            "macro": {
+              "growth": -0.02
+            }
+          }
+        },
+        {
+          "label": "Propui scutiri pentru firmele mici",
+          "hint": "Costă 1 M€",
+          "cost": 1,
+          "text": "Ai propus scutiri pentru firmele afectate. Firmele au așteptat formularul.",
+          "effects": {
+            "sol": {
+              "antreprenori": 1
+            },
+            "macro": {
+              "growth": 0.02
+            }
+          }
+        },
+        {
+          "label": "Lași piața să decidă",
+          "hint": "Gratuit",
+          "text": "Ai spus că dobânzile nu sunt politică. Debitorii au altă părere.",
+          "effects": {
+            "party": {
+              "self": -0.004
+            }
+          }
+        }
+      ],
+      "scenarios": [
+        "2017",
+        "2026"
+      ]
     }
   ]
 }

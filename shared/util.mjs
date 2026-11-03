@@ -22,8 +22,8 @@ export function gauss(state) {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
 
-export function log(state, kind, title, text = "") {
-  state.log.push({ day: state.day, kind, title, text });
+export function log(state, kind, title, text = "", fx = null) {
+  state.log.push({ day: state.day, kind, title, text, ...(fx?.length ? { fx } : {}) });
   const max = state.config.maxLog ?? 120;
   if (state.log.length > max) state.log.splice(0, state.log.length - max);
 }
