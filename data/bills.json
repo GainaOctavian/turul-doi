@@ -1306,6 +1306,216 @@
         "slug": "codul-muncii",
         "note": "Codul muncii"
       }
+    },
+    {
+      "id": "telemedicina-rural",
+      "title": "Telemedicina decontată în comunele fără medic",
+      "text": "Consultațiile la distanță intră în pachetul de bază, iar cabinetele din comunele fără medic primesc echipament și conexiune (Legea 95/2006, art. 30^1).",
+      "lean": 0.3,
+      "interest": {
+        "pensionari_rural": 0.8,
+        "agricultori": 0.4,
+        "bugetari": 0.2,
+        "tineri_urbani": 0.1
+      },
+      "effects": {
+        "metric": {
+          "health": 0.6,
+          "lifeExp": 0.05
+        },
+        "sol": {
+          "pensionari_rural": 1,
+          "agricultori": 0.5
+        },
+        "budget": {
+          "health": 0.04
+        }
+      },
+      "source": {
+        "slug": "legea-95-2006",
+        "note": "telemedicina (art. 30^1)"
+      }
+    },
+    {
+      "id": "medic-familie-doua-comune",
+      "title": "Un medic de familie pentru două comune",
+      "text": "Medicul de familie poate fi titularul a două cabinete în comune vecine, cu o indemnizație de transport (Legea 95/2006, art. 75 limitează la un cabinet).",
+      "lean": 0.2,
+      "interest": {
+        "pensionari_rural": 0.7,
+        "agricultori": 0.5,
+        "bugetari": 0.3,
+        "tineri_urbani": -0.1
+      },
+      "effects": {
+        "metric": {
+          "health": 0.4
+        },
+        "sol": {
+          "pensionari_rural": 1.2,
+          "agricultori": 0.6
+        },
+        "budget": {
+          "health": 0.03
+        }
+      },
+      "source": {
+        "slug": "legea-95-2006",
+        "note": "un singur cabinet (art. 75)"
+      }
+    },
+    {
+      "id": "prosumator-prag-1mw",
+      "title": "Prosumatorii: pragul urcă la 1 MW",
+      "text": "Furnizorii nu mai facturează dezechilibrele pentru prosumatorii cu instalații până la 1 MW, față de 400 kW cât prevede legea (Legea 123/2012, art. 21).",
+      "lean": -0.2,
+      "interest": {
+        "antreprenori": 0.7,
+        "tineri_urbani": 0.5,
+        "agricultori": 0.4,
+        "muncitori": -0.1
+      },
+      "effects": {
+        "macro": {
+          "growth": 0.04,
+          "inflation": -0.02
+        },
+        "sol": {
+          "antreprenori": 1,
+          "tineri_urbani": 0.5,
+          "agricultori": 0.5
+        }
+      },
+      "source": {
+        "slug": "legea-123-2012",
+        "note": "prosumatori, pragul de 400 kW (art. 21)"
+      }
+    },
+    {
+      "id": "audit-energetic-imm",
+      "title": "Audit energetic obligatoriu pentru IMM-uri",
+      "text": "Firmele mici și mijlocii cu consum mare intră sub obligația auditului energetic la fiecare patru ani, de care legea le scutea (Legea 121/2014, art. 9).",
+      "lean": 0.1,
+      "interest": {
+        "antreprenori": -0.6,
+        "tineri_urbani": 0.2,
+        "muncitori": 0.1
+      },
+      "effects": {
+        "macro": {
+          "growth": -0.02,
+          "inflation": 0.02
+        },
+        "budget": {
+          "admin": 0.01
+        }
+      },
+      "source": {
+        "slug": "legea-121-2014",
+        "note": "audit la 4 ani, IMM-urile exceptate (art. 9)"
+      }
+    },
+    {
+      "id": "terenuri-aviz-extins",
+      "title": "Aviz pentru orice vânzare de teren agricol",
+      "text": "Toate vânzările de terenuri agricole din extravilan cer avizul direcției agricole, nu doar cele de lângă graniță sau obiective speciale (Legea 17/2014, art. 3).",
+      "lean": 0.4,
+      "interest": {
+        "agricultori": 0.8,
+        "pensionari_rural": 0.4,
+        "antreprenori": -0.5,
+        "tineri_urbani": -0.1
+      },
+      "effects": {
+        "sol": {
+          "agricultori": 1.5,
+          "pensionari_rural": 0.5
+        },
+        "macro": {
+          "growth": -0.03
+        }
+      },
+      "source": {
+        "slug": "legea-17-2014",
+        "note": "aviz pentru terenurile de lângă graniță (art. 3)"
+      }
+    },
+    {
+      "id": "irigatii-tarif-redus",
+      "title": "Apă ieftină pentru irigații",
+      "text": "Tariful pentru apa de irigații scade pentru fermele sub 50 de hectare, iar diferența se acoperă de la buget (Legea 138/2004, art. 9).",
+      "lean": 0.4,
+      "interest": {
+        "agricultori": 1,
+        "pensionari_rural": 0.4,
+        "antreprenori": -0.1
+      },
+      "effects": {
+        "sol": {
+          "agricultori": 2
+        },
+        "macro": {
+          "inflation": -0.03
+        },
+        "budget": {
+          "agri": 0.05
+        }
+      },
+      "source": {
+        "slug": "legea-138-2004",
+        "note": "tarife pentru serviciile de irigații (art. 9)"
+      }
+    },
+    {
+      "id": "rezervisti-indemnizatie",
+      "title": "Indemnizația rezerviștilor voluntari",
+      "text": "Rezerviștii voluntari primesc o indemnizație lunară mai mare și echipament pentru instruire (Legea 270/2015, art. 6).",
+      "lean": 0.1,
+      "interest": {
+        "bugetari": 0.3,
+        "muncitori": 0.2,
+        "pensionari_urban": 0.2,
+        "tineri_urbani": -0.1
+      },
+      "effects": {
+        "metric": {
+          "safety": 0.3
+        },
+        "sol": {
+          "bugetari": 0.5
+        },
+        "budget": {
+          "defense": 0.04
+        }
+      },
+      "source": {
+        "slug": "legea-270-2015",
+        "note": "indemnizația lunară (art. 6)"
+      }
+    },
+    {
+      "id": "carta-alba-dezbatere",
+      "title": "Carta albă a apărării, dezbătută public",
+      "text": "Carta albă a apărării se publică în consultare publică cu 30 de zile înainte de a fi trimisă Parlamentului (Legea 203/2015, art. 6).",
+      "lean": -0.1,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "bugetari": 0.2,
+        "pensionari_urban": 0.2,
+        "muncitori": -0.1
+      },
+      "effects": {
+        "metric": {
+          "safety": 0.2
+        },
+        "macro": {
+          "growth": -0.01
+        }
+      },
+      "source": {
+        "slug": "legea-203-2015",
+        "note": "Carta albă, supusă Parlamentului (art. 6)"
+      }
     }
   ]
 }

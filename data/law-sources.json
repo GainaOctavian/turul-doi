@@ -356,6 +356,33 @@
       "latest": "2018-03-31",
       "portal": "https://legislatie.just.ro/Public/DetaliiDocument/170048",
       "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-121-2014",
+      "path": "lege/2014/121",
+      "ref": "Legea nr. 121/2014",
+      "topic": "Eficiența energetică; auditul energetic al consumatorilor (art. 9: la fiecare 4 ani peste 1.000 tep, cu excepția IMM-urilor)",
+      "latest": "2024-07-12",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/160331",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-138-2004",
+      "path": "lege/2004/138",
+      "ref": "Legea nr. 138/2004",
+      "topic": "Îmbunătățiri funciare: irigații, desecare, apărarea împotriva inundațiilor; tarifele pentru serviciile de irigații (art. 9)",
+      "latest": "2025-04-18",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/51504",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-270-2015",
+      "path": "lege/2015/270",
+      "ref": "Legea nr. 270/2015",
+      "topic": "Rezerviștii voluntari: contract, instruire, indemnizație lunară și drepturi sociale (art. 5-6)",
+      "latest": "2024-03-25",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/172947",
+      "verified": "2026-11-03"
     }
   ],
   "retired": [

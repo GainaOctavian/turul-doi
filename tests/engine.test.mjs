@@ -946,6 +946,14 @@ test("rating: a long deficit moves the rating; below the reference each notch ta
   }
 });
 
+test("health, energy, agriculture and security each have laws grounded in an act in force", () => {
+  const by = (slug) => data.bills.bills.filter((b) => b.source?.slug === slug).length;
+  assert.ok(by("legea-95-2006") >= 3, "health: screening, hospital pay and telemedicine");
+  assert.ok(by("legea-123-2012") + by("legea-121-2014") >= 2, "energy: prosumers and audits");
+  assert.ok(by("legea-17-2014") + by("legea-138-2004") >= 2, "agriculture: land sales and irrigation");
+  assert.ok(by("legea-203-2015") + by("legea-270-2015") >= 2, "security: defence planning and reservists");
+});
+
 test("amendments: a party pays once to move a bill toward its own position, before the vote only", () => {
   const state = newGame("2026", ["usr"]);
   state.parties.usr.capital = 20;
