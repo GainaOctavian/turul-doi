@@ -3059,3 +3059,33 @@ input.sel[type="text"] {
 .action-card .ac-name { grid-column: 1; }
 .action-card button { grid-column: 2; grid-row: 1 / span 4; align-self: center; min-width: 64px; }
 
+
+/* ---------- fit every screen to the viewport: columns scroll inside, the page does not ---------- */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto !important;
+  overflow: hidden;
+}
+#view-politics {
+  min-height: 0;
+  overflow: hidden;
+  align-items: stretch;
+}
+#view-politics > * {
+  min-height: 0;
+}
+.map-panel {
+  min-height: 0;
+  overflow-y: auto;
+}
+#panel {
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+}
+#view-dash {
+  min-height: 0;
+  overflow-y: auto;
+}
+
