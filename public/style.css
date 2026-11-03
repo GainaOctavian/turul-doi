@@ -3214,3 +3214,27 @@ input.sel[type="text"] {
   font-size: 12px;
   gap: 10px;
 }
+
+/* ---------- card contrast: each card reads as its own surface ---------- */
+.card,
+.map-panel,
+.side,
+.vote-card,
+.action-card,
+.poll-mini,
+#dash-body article,
+#dash-body section > div {
+  border-color: #4f66d6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+.card,
+#dash-body article {
+  background: linear-gradient(180deg, #1b2770, #131c5a);
+}
+.side,
+.map-panel {
+  background: linear-gradient(180deg, #121c5c, #0c1446);
+}
+.poll-mini {
+  background: #1a2470;
+}
