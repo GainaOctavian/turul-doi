@@ -16,6 +16,7 @@ import {
   consumeRenamed,
   lobbyPrice,
   lists,
+  applyEffects,
   previewAction,
   segmentShares,
 } from "../shared/engine.mjs";
@@ -98,7 +99,7 @@ test("the starting cabinet matches the real one", () => {
 /* --------------------------------------------------------------- content */
 
 function checkEffects(effects, where) {
-  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget", "buff"];
+  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget", "buff", "lasting"];
   for (const key of Object.keys(effects ?? {})) assert.ok(known.includes(key), `${where}: unknown effect ${key}`);
   const party = (id) => assert.ok(["self", "gov", "opp"].includes(id) || partyIds.has(id), `${where}: party ${id}`);
   const segments = (obj) => Object.keys(obj ?? {}).forEach((s) => assert.ok(segmentIds.has(s), `${where}: segment ${s}`));
@@ -1118,6 +1119,19 @@ test("events with a role go only to the government or the opposition; a choice c
   state.decisions = [];
   fireEvent(state, data, "d2-tva-propunere");
   assert.deepEqual(state.decisions.map((d2) => d2.party), ["usr"], "an opposition event reaches only the opposition");
+});
+
+test("a buff leaves a lasting residue when it fades, and a later debuff can take it back", () => {
+  const state = newGame("2026", ["usr"]);
+  state.buffs = [{ id: 1, label: "Test", parties: ["usr"], factor: 1.02, from: state.day, until: state.day + 3 }];
+  state.nextBuff = 2;
+  tick(state, data, 4);
+  assert.ok(Math.abs((state.lasting.usr ?? 0) - 0.01) < 1e-9, "half of a +2% buff stays behind");
+  applyEffects(state, data, { lasting: { self: -0.03 } }, { partyId: "usr" });
+  assert.ok(Math.abs(state.lasting.usr - -0.02) < 1e-9, "a debuff takes the residue back and past zero");
+  for (let i = 0; i < 20; i += 1) applyEffects(state, data, { lasting: { self: -0.05 } }, { partyId: "usr" });
+  assert.equal(state.lasting.usr, -0.15, "the lasting change is bounded");
+  assert.ok(snapshot(state, data).lasting.usr === -0.15, "the snapshot shows it");
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {

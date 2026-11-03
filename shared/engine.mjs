@@ -184,6 +184,7 @@ export function createGame(data, opts = {}) {
     decisions: [],
     buffs: [],
     nextBuff: 1,
+    lasting: {},
     nextDecision: 1,
     log: [],
   };
@@ -326,6 +327,8 @@ function allocateSeats(state, data, national, counties) {
 function moodOf(state, id) {
   let m = state.mood[id] ?? 1;
   for (const b of state.buffs ?? []) if (b.until > state.day && b.parties.includes(id)) m *= b.factor;
+  // What a fading buff left behind, or what a scandal took back.
+  m *= 1 + (state.lasting?.[id] ?? 0);
   return m;
 }
 
@@ -435,6 +438,14 @@ export function applyEffects(state, data, effects, ctx = {}) {
       if (!parties.length) continue;
       state.buffs.push({ id: state.nextBuff, label: b.label ?? ctx.title ?? "Efect temporar", parties, factor, from: state.day, until: state.day + (b.days ?? 30) });
       state.nextBuff += 1;
+    }
+  }
+
+  // A permanent change to a party's standing, from events and from fading buffs. It can be lost again:
+  // any later effect with a negative value takes it back. Bounded so no party is untouchable.
+  if (effects.lasting) {
+    for (const [key, delta] of Object.entries(effects.lasting)) {
+      for (const pid of who(key)) addLasting(state, pid, delta);
     }
   }
 
@@ -880,12 +891,25 @@ function aiCoalitionOffers(state, data) {
   }
 }
 
+const BUFF_RESIDUE = 0.5;
+const LASTING_LIMIT = 0.15;
+
+export function addLasting(state, id, delta) {
+  if (!(id in state.mood)) return;
+  state.lasting ??= {};
+  state.lasting[id] = Number(clamp((state.lasting[id] ?? 0) + delta, -LASTING_LIMIT, LASTING_LIMIT).toFixed(4));
+}
+
 // Temporary buffs and debuffs from events end on their own day.
 function buffsDaily(state) {
   const gone = (state.buffs ?? []).filter((b) => b.until <= state.day);
   if (!gone.length) return;
   state.buffs = state.buffs.filter((b) => b.until > state.day);
-  for (const b of gone) log(state, "buff", `S-a încheiat: ${b.label}`, "Efectul temporar a trecut.");
+  for (const b of gone) {
+    // Half of the buff stays behind as a lasting change.
+    for (const p of b.parties) addLasting(state, p, (b.factor - 1) * BUFF_RESIDUE);
+    log(state, "buff", `S-a încheiat: ${b.label}`, "Ce a rămas din efect: " + b.parties.map((p) => p.toUpperCase() + " " + ((b.factor - 1) * BUFF_RESIDUE * 100).toFixed(1).replace(".", ",") + "%").join(", ") + ".");
+  }
 }
 
 export function runElection(state, data) {
@@ -1074,6 +1098,7 @@ export function snapshot(state, data, opts = {}) {
     lastResult: state.lastResult,
     causes: (state.causes ?? []).slice(-160),
     buffs: (state.buffs ?? []).map((b) => ({ id: b.id, label: b.label, parties: b.parties, factor: b.factor, left: Math.max(0, b.until - state.day) })),
+    lasting: state.lasting ?? {},
     pres: presSnapshot(state, data),
     segShares: segmentShares(state, data),
     segPrev: state.segPrev ?? null,

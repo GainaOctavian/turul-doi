@@ -6917,7 +6917,10 @@
             "party": {
               "self": 0.01
             },
-            "confidence": 1
+            "confidence": 1,
+            "lasting": {
+              "self": 0.005
+            }
           }
         },
         {
@@ -7301,6 +7304,9 @@
             },
             "segBoost": {
               "bugetari": 1.02
+            },
+            "lasting": {
+              "self": -0.008
             }
           }
         },
@@ -7909,6 +7915,9 @@
             },
             "segBoost": {
               "tineri_urbani": 1.04
+            },
+            "lasting": {
+              "self": 0.003
             }
           }
         },
@@ -7963,6 +7972,9 @@
             },
             "segBoost": {
               "tineri_urbani": 1.02
+            },
+            "lasting": {
+              "self": 0.004
             }
           }
         },
@@ -7990,6 +8002,9 @@
           "text": "Ai ignorat materialul. Materialul nu te-a ignorat.",
           "effects": {
             "party": {
+              "self": -0.006
+            },
+            "lasting": {
               "self": -0.006
             }
           }

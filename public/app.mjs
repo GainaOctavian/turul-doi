@@ -726,14 +726,21 @@ function panelActions() {
 // Temporary buffs and debuffs from events, with what they do and how long they last.
 function buffsView() {
   const list = S.snap.buffs ?? [];
-  if (!list.length) return "";
+  const lasting = Object.entries(S.snap.lasting ?? {}).filter(([, v]) => Math.abs(v) >= 0.0005);
+  if (!list.length && !lasting.length) return "";
   const rows = list
     .map(
       (b) =>
         `<div class="row between buff-row"><span>${esc(b.label)} <small class="muted">${b.parties.map((p) => esc(pname(p))).join(", ")}</small></span><span class="${b.factor >= 1 ? "buff-up" : "buff-down"}">${b.factor >= 1 ? "▲ +" : "▼ −"}${(Math.abs(b.factor - 1) * 100).toFixed(1).replace(".", ",")}% · ${b.left} zile</span></div>`,
     )
     .join("");
-  return `<h3>Efecte active</h3><div class="buffs">${rows}</div>`;
+  const perm = lasting
+    .map(
+      ([p, v]) =>
+        `<div class="row between buff-row"><span>Pentru totdeauna <small class="muted">${esc(pname(p))}</small></span><span class="${v >= 0 ? "buff-up" : "buff-down"}">${v >= 0 ? "▲ +" : "▼ −"}${(Math.abs(v) * 100).toFixed(1).replace(".", ",")}%</span></div>`,
+    )
+    .join("");
+  return `<h3>Efecte active</h3><div class="buffs">${rows}${perm}</div>`;
 }
 
 function panelPoll() {

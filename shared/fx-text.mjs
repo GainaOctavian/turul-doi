@@ -33,6 +33,7 @@ export function describeEffects(data, fx) {
   for (const [k, v] of Object.entries(fx.metric ?? {})) out.push(`${arrow(v, BAD_UP.has(k))} ${METRIC[k] ?? k} ${sgn(v)}`);
   for (const [k, v] of Object.entries(fx.budget ?? {})) out.push(`${v > 0 ? "▲" : "▼"} bugetul pentru ${BUDGET[k] ?? k} ${sgn(v * 100, 0)}%`);
   for (const [key, v] of Object.entries(fx.funds ?? {})) out.push(`${arrow(v)} fonduri ${key === "self" ? "tale" : who(key)} ${sgn(v)} M€`);
+  for (const [key, v] of Object.entries(fx.lasting ?? {})) out.push(`${arrow(v)} pentru totdeauna: popularitatea ${who(key)} ${sgn(v * 100)}% (până o pierzi)`);
   if (fx.confidence) out.push(`${arrow(fx.confidence)} încrederea în guvern ${sgn(fx.confidence, 0)} puncte`);
   if (fx.countyBoostAll) out.push(`${arrow(fx.countyBoostAll)} influența ta în toate județele ${sgn(fx.countyBoostAll * 100, 0)}%`);
   const nCounty = Object.keys(fx.county ?? {}).length + Object.keys(fx.countyParty ?? {}).length;
