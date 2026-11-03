@@ -1091,7 +1091,7 @@ function setupDash() {
     ccr: (el) => parlDo({ type: "ccr", id: Number(el.dataset.id) }),
     "parl-motion": () => parlDo({ type: "motion" }),
     "parl-vote": (el) => parlDo({ type: "vote", id: Number(el.dataset.id), vote: el.dataset.vote }),
-    "parl-amend": (el) => parlDo({ type: "amend", id: Number(el.dataset.id) }),
+    "parl-amend": (el) => parlDo({ type: "amend", id: Number(el.dataset.id), option: el.dataset.option }),
     "parl-lobby": (el) => parlDo({ type: "lobby", id: Number(el.dataset.id), target: $(`#lt-${el.dataset.id}`)?.value, how: $(`#lh-${el.dataset.id}`)?.value, against: $(`#lg-${el.dataset.id}`)?.value === "against" }),
     "parl-bill": (el) => parlDo({ type: "bill", bill: el.dataset.id }),
     courtesy: (el) => parlDo({ type: "courtesy", target: el.dataset.target }),

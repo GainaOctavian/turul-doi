@@ -81,11 +81,34 @@ function voteCard(S, b) {
         ? `<div class="row" style="gap:8px;align-items:center"><span class="muted">Votul tău:</span>
       ${[["yes", "Pentru"], ["no", "Contra"], ["abstain", "Abținere"]].map(([v, l]) => `<button class="btn2 ${mine === v ? "primary2" : ""}" data-do="parl-vote" data-id="${b.id}" data-vote="${v}">${l}</button>`).join("")}
       ${mine ? "" : `<small class="muted">Dacă nu votezi, partidul urmează linia lui.</small>`}</div>
-      ${b.kind === "law" ? `<div class="row" style="gap:8px;margin-top:6px"><button class="btn2" data-do="parl-amend" data-id="${b.id}" ${b.amended?.[S.party] ? "disabled" : ""}>${b.amended?.[S.party] ? "Ai amendat legea" : "Amendează spre electoratul tău (3 cap.)"}</button></div>` : ""}`
+      ${b.kind === "law" ? amendBox(S, b) : ""}`
         : `<p class="hint">Partidul tău nu are mandate: urmărești votul din tribune.</p>`
     }
     ${lobbyBox}
   </div>`;
+}
+
+// What an amendment changes, in words: segments that gain (+) or lose (-) and other effects.
+function amendEffects(S, fx) {
+  const parts = Object.entries(fx.sol ?? {}).map(([id, v]) => `${v > 0 ? "▲" : "▼"} ${esc(segName(S, id))}`);
+  const label = { growth: "creștere", inflation: "inflație", unemployment: "șomaj" };
+  for (const [k, v] of Object.entries(fx.macro ?? {})) parts.push(`${v > 0 ? "▲" : "▼"} ${label[k] ?? k}`);
+  for (const [k, v] of Object.entries(fx.budget ?? {})) parts.push(`${v > 0 ? "▲" : "▼"} cheltuieli ${esc(k)}`);
+  for (const [k, v] of Object.entries(fx.metric ?? {})) parts.push(`${v > 0 ? "▲" : "▼"} ${esc(k)}`);
+  return parts.join(" · ");
+}
+
+// Concrete amendments to an open law: pick one (3 capital) before the vote.
+function amendBox(S, b) {
+  const mine = b.amended?.[S.party];
+  const taken = Object.values(b.amended ?? {});
+  const rows = (b.options ?? [])
+    .map((o) => {
+      const done = taken.includes(o.id);
+      return `<div class="row between" style="gap:8px;padding:4px 0"><div style="min-width:0"><b>${esc(o.label)}</b>${done ? ` ${badge("adoptat", "#2fbf8a")}` : ""}<div class="muted" style="font-size:12px">${esc(o.text)}</div><div style="font-size:12px">${amendEffects(S, o.effects)}</div></div><button class="btn2" data-do="parl-amend" data-id="${b.id}" data-option="${o.id}" ${mine || done ? "disabled" : ""}>3 cap.</button></div>`;
+    })
+    .join("");
+  return `<details style="margin-top:6px"><summary class="muted" style="cursor:pointer">Amendamente${mine ? " (ai depus unul)" : ""}</summary>${rows}</details>`;
 }
 
 // Cotroceni: who is president, the candidacies, partners' backing and laws waiting for a decision.

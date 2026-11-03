@@ -13,6 +13,7 @@ export const DATA_FILES = {
   countries: "countries.json",
   bills: "bills.json",
   lawSources: "law-sources.json",
+  amendments: "amendments.json",
   splinters: "splinters.json",
 };
 

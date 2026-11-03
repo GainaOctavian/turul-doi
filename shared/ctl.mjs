@@ -66,7 +66,7 @@ export const HELP = `turul-doi ctl
   president                 președintele, candidaturile, sprijinul și legile la Cotroceni
   pres-run                  depune candidatura (ultimele 150 de zile)
   pres-back <partid>        susține o candidatură propusă
-  amend <nr>                amendează o lege deschisă spre electoratul tău (3 capital, o dată)
+  amend <nr> <id>           adoptă un amendament la o lege deschisă (3 capital, o dată); fără id, le listează
   ccr <nr>                  sesizează Curtea Constituțională pentru o lege la Cotroceni
   events                    ultimele evenimente
   help                      acest text`;
@@ -389,7 +389,12 @@ export function createCtl(data, opts = {}) {
 
       case "amend": {
         if (need()) return need();
-        const res = applyParl(state, data, me(), { type: "amend", id: Number(args[0]) });
+        if (!args[1]) {
+          const b = snapshot(state, data).parl.bills.find((x) => x.id === Number(args[0]));
+          if (!b?.options?.length) return "error: nu există o lege cu acest număr.";
+          return b.options.map((o) => `${o.id}: ${o.label} — ${o.text}`).join("\n");
+        }
+        const res = applyParl(state, data, me(), { type: "amend", id: Number(args[0]), option: args[1] });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 

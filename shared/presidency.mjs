@@ -3,7 +3,7 @@
 // promulgates, sends the law back to Parliament, or refers it to the Constitutional Court.
 import { clamp, rand, log, round, partyDef, dayOf } from "./util.mjs";
 import { computePoll, applyEffects } from "./engine.mjs";
-import { distance, relation, addRel, reopenLaw } from "./parl.mjs";
+import { distance, relation, addRel, reopenLaw, lawEffects } from "./parl.mjs";
 
 const TERM_DAYS = 1826;
 const NOMINATION_WINDOW = 150; // days before the vote when candidacies open
@@ -168,6 +168,7 @@ export function queueLaw(state, data, entry, def) {
     deadline: state.day + 7,
     humanUntil: state.day + 7 + HUMAN_WAIT,
     ccrAsked: false,
+    amended: { ...(entry.amended ?? {}) },
   });
   state.pres.nextPending += 1;
   log(state, "law", `La Cotroceni: ${def.title}`, "Președintele are șapte zile să se hotărască.");
@@ -208,7 +209,7 @@ export function decideLaw(state, data, pending, choice, forced = false) {
     return "returned";
   }
   if (bill) {
-    const fx = structuredClone(bill.effects);
+    const fx = lawEffects(data, bill.id, pending.amended);
     if (fx.party?.self) fx.party.self *= 0.5;
     applyEffects(state, data, fx, { partyId: pending.from, title: bill.title });
     log(state, "law", `Promulgată: ${bill.title}`, "Legea intră în vigoare.");

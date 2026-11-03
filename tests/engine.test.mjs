@@ -825,7 +825,7 @@ test("a human party with a shaky group gets a decision; leaving splits the party
 /* --------------------------------------------------------------- presidency */
 
 import { decideLaw, runPresidentialElection, presSnapshot } from "../shared/presidency.mjs";
-import { stanceOf } from "../shared/parl.mjs";
+import { stanceOf, lawEffects, amendOptions } from "../shared/parl.mjs";
 
 test("the presidency starts with the scenario's president and a dated election", () => {
   const s17 = newGame("2017", ["usr"]);
@@ -937,17 +937,37 @@ test("amendments: a party pays once to move a bill toward its own position, befo
   const state = newGame("2026", ["usr"]);
   state.parties.usr.capital = 20;
   const id = state.parl.next;
-  const bill = data.bills.bills[0];
+  const bill = data.bills.bills.find((b) => b.id === "panouri-solare");
   state.parl.bills.push({ id, status: "open", kind: "law", bill: bill.id, from: "pnl", title: bill.title, day: state.day, vote: state.day + 5, deals: {}, pledged: [], votes: {} });
   const entry = state.parl.bills.find((b) => b.id === id);
   const before = stanceOf(state, data, "usr", entry);
-  const first = applyParl(state, data, "usr", { type: "amend", id });
+  assert.equal(applyParl(state, data, "usr", { type: "amend", id, option: "nu-exista" }).ok, false, "unknown amendment");
+  const first = applyParl(state, data, "usr", { type: "amend", id, option: "tineri-prioritate" });
   assert.equal(first.ok, true, first.error);
   assert.equal(state.parties.usr.capital, 17);
-  assert.equal(applyParl(state, data, "usr", { type: "amend", id }).ok, false, "only once per party");
-  assert.ok(stanceOf(state, data, "usr", entry) >= before - 1e-9, "the amended bill is never worse for the amender");
+  assert.equal(applyParl(state, data, "usr", { type: "amend", id, option: "sate-fara-retea" }).ok, false, "only once per party");
+  assert.equal(applyParl(state, data, "udmr", { type: "amend", id, option: "tineri-prioritate" }).ok, false, "an amendment is adopted once per bill");
+  assert.ok(stanceOf(state, data, "usr", entry) > before, "a young-voter amendment makes the bill better for USR");
+  const fx = lawEffects(data, bill.id, entry.amended);
+  assert.equal(fx.sol.tineri_urbani, 1.5, "its effects add to the law's on promulgation");
+  assert.equal(fx.macro.growth, bill.effects.macro.growth, "the law's own effects stay");
+  const snapBills = snapshot(state, data).parl.bills;
+  assert.equal(snapBills.find((b) => b.id === id).options.length, 3, "three concrete options per law");
   entry.status = "closed";
-  assert.equal(applyParl(state, data, "udmr", { type: "amend", id }).ok, false, "no amendments after the vote");
+  assert.equal(applyParl(state, data, "udmr", { type: "amend", id, option: "componente-ue" }).ok, false, "no amendments after the vote");
+});
+
+test("every law offers at least two amendments, with real segments and unique ids", () => {
+  const segs = new Set(data.segments.segments.map((s) => s.id));
+  for (const bill of data.bills.bills) {
+    const opts = amendOptions(data, bill);
+    assert.ok(opts.length >= 2, `${bill.id} has ${opts.length} amendments`);
+    assert.equal(new Set(opts.map((o) => o.id)).size, opts.length, `${bill.id}: duplicate amendment ids`);
+    for (const o of opts) {
+      assert.ok(o.label && o.text, `${bill.id}/${o.id}: needs a label and text`);
+      for (const seg of Object.keys(o.effects.sol ?? {})) assert.ok(segs.has(seg), `${bill.id}/${o.id}: unknown segment ${seg}`);
+    }
+  }
 });
 
 /* --------------------------------------------------------------- the ctl */

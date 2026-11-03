@@ -73,9 +73,12 @@ function lawScore(state, data, party, entry) {
   const aff = def.affinity ?? {};
   let interest = 0;
   for (const [seg, v] of Object.entries(bill.interest ?? {})) interest += v * (aff[seg] ?? 0.3);
-  // An amended bill sits 35% closer to the amending party's own position.
-  const lean = entry.amended?.[party] ? bill.lean + 0.35 * ((def.lean ?? 0) - bill.lean) : bill.lean;
-  let s = interest * 1.2 - Math.abs(lean - (def.lean ?? 0)) * 1.1 + 0.3;
+  // Adopted amendments change who gains and who loses from the bill.
+  for (const o of amendOptions(data, bill)) {
+    if (!amendedBy(entry).includes(o.id)) continue;
+    for (const [seg, v] of Object.entries(o.interest ?? {})) interest += v * (aff[seg] ?? 0.3);
+  }
+  let s = interest * 1.2 - Math.abs(bill.lean - (def.lean ?? 0)) * 1.1 + 0.3;
   s += ((relation(state, data, party, entry.from) - 50) / 50) * 0.6;
   if (hasPact(state, party, entry.from)) s += 0.6;
   if (inGov(state, party) && inGov(state, entry.from)) s += 0.35;
@@ -208,18 +211,65 @@ export function lobby(state, data, partyId, entryId, target, how, against = fals
   return { ok: false, error: "Tip de negociere necunoscut: favor, money sau swap." };
 }
 
-// Before the plenary vote a party can amend a bill toward its own electorate (3 capital, once per bill).
-export function amendBill(state, data, partyId, entryId) {
+// The concrete amendments a bill offers: written ones, or one per segment it favors plus one that
+// softens the blow for its biggest loser. Each carries effects that add to the law's on promulgation.
+export function amendOptions(data, bill) {
+  const own = data.amendments?.bills?.[bill.id];
+  if (own) return own;
+  const tpl = data.amendments?.templates ?? {};
+  const byInterest = Object.entries(bill.interest ?? {}).sort((x, y) => y[1] - x[1]);
+  const picks = byInterest.filter(([, v]) => v > 0).slice(0, 2).map(([seg]) => seg);
+  const loser = byInterest.at(-1);
+  if (loser && loser[1] <= -0.3) picks.push(loser[0]);
+  else if (byInterest[2]) picks.push(byInterest[2][0]);
+  // A bill with no declared interests still offers a few amendments.
+  picks.push("tineri_urbani", "antreprenori", "bugetari");
+  return [...new Set(picks)].slice(0, 3).filter((seg) => tpl[seg]).map((seg) => {
+    const t = tpl[seg];
+    return {
+      id: seg, label: t.label, text: t.text,
+      effects: { sol: { [seg]: 1.2, [t.hurt]: -0.3 } },
+      interest: { [seg]: 0.4, [t.hurt]: -0.2 },
+    };
+  });
+}
+
+const amendedBy = (entry) => Object.values(entry.amended ?? {});
+
+// A law's effects with the adopted amendments added on top.
+export function lawEffects(data, billId, amended = {}) {
+  const bill = billDef(data, billId);
+  const fx = structuredClone(bill.effects);
+  const add = (into, from) => {
+    for (const [k, v] of Object.entries(from)) {
+      if (typeof v === "number") into[k] = (into[k] ?? 0) + v;
+      else add((into[k] ??= {}), v);
+    }
+  };
+  const opts = amendOptions(data, bill);
+  for (const id of Object.values(amended)) {
+    const o = opts.find((x) => x.id === id);
+    if (o) add(fx, o.effects);
+  }
+  return fx;
+}
+
+// Before the plenary vote a party can attach one concrete amendment to a law (3 capital).
+// One per party, and each amendment can be adopted only once per bill.
+export function amendBill(state, data, partyId, entryId, optionId) {
   const party = state.parties[partyId];
   const entry = state.parl.bills.find((b) => b.id === Number(entryId));
   if (!party || !entry || entry.kind !== "law") return { ok: false, error: "Nu există o lege de amendat." };
   if (entry.status !== "open") return { ok: false, error: "Votul s-a încheiat." };
   if (entry.amended?.[partyId]) return { ok: false, error: "Ai amendat deja legea." };
+  const option = amendOptions(data, billDef(data, entry.bill)).find((o) => o.id === optionId);
+  if (!option) return { ok: false, error: "Amendament necunoscut." };
+  if (amendedBy(entry).includes(optionId)) return { ok: false, error: "Amendamentul a fost deja adoptat." };
   if (party.capital < COST.amend) return { ok: false, error: `Amendamentul costă ${COST.amend} capital politic.` };
   party.capital = round(party.capital - COST.amend, 1);
-  (entry.amended ??= {})[partyId] = true;
-  log(state, "parl", `Amendament: ${entry.title}`, `${upper(partyId)} își adaptează legea la electoratul său.`);
-  return { ok: true, message: `Amendament depus la „${entry.title}”.` };
+  (entry.amended ??= {})[partyId] = optionId;
+  log(state, "parl", `Amendament: ${entry.title}`, `${upper(partyId)}: ${option.label}.`);
+  return { ok: true, message: `Amendament adoptat: ${option.label}.` };
 }
 
 export function voteBill(state, data, partyId, entryId, vote) {
@@ -731,6 +781,7 @@ export function parlSnapshot(state, data) {
   const open = state.parl.bills.map((b) => ({
     id: b.id, kind: b.kind, bill: b.bill ?? null, title: b.title, text: b.bill ? billDef(data, b.bill).text : "Votul trebuie să strângă 166 de voturi pentru ca guvernul să cadă.",
     from: b.from, day: b.day, vote: b.vote, deals: b.deals, pledged: b.pledged, votes: b.votes, amended: b.amended ?? {},
+    options: b.kind === "law" ? amendOptions(data, billDef(data, b.bill)).map((o) => ({ id: o.id, label: o.label, text: o.text, effects: o.effects })) : [],
     stance: Object.fromEntries(state.partyIds.filter((p) => seatsOf(state, p) > 0).map((p) => [p, round(stanceOf(state, data, p, b), 2)])),
   }));
   const rel = {};
@@ -765,7 +816,7 @@ export function applyParl(state, data, partyId, a = {}) {
     case "bill": return proposeBill(state, data, partyId, a.bill);
     case "motion": return fileMotion(state, data, partyId);
     case "vote": return voteBill(state, data, partyId, a.id, a.vote);
-    case "amend": return amendBill(state, data, partyId, a.id);
+    case "amend": return amendBill(state, data, partyId, a.id, a.option);
     case "lobby": return lobby(state, data, partyId, a.id, a.target, a.how, a.against === true);
     case "merge": return offerMerge(state, data, partyId, a.target, a.mode, a.name);
     case "courtesy": return courtesy(state, data, partyId, a.target);

@@ -1,0 +1,57 @@
+{
+  "_note": "Amendamentele unei legi. `bills` are amendamente scrise pentru legi anume; pentru restul, se generează din `templates` pe segmente: segmentul favorizat primește +1,2 și un segment opus -0,3. `effects` se adună peste efectele legii la promulgare; `interest` schimbă cât le place legea partidelor.",
+  "templates": {
+    "tineri_urbani": { "label": "Prioritate pentru tinerii sub 35 de ani", "text": "Beneficiile merg întâi la tinerii sub 35 de ani, iar ceilalți intră pe lista a doua.", "hurt": "pensionari_urban" },
+    "studenti": { "label": "Clauză pentru studenți și ucenici", "text": "Studenții și ucenicii intră în prima categorie de beneficiari, cu formalități reduse.", "hurt": "bugetari" },
+    "pensionari_rural": { "label": "Cereri depuse la primărie", "text": "Cererile se pot depune și la primăria din comună, iar pensionarii de la sat primesc termen dublu.", "hurt": "tineri_urbani" },
+    "pensionari_urban": { "label": "Compensări pentru pensionarii cu venit mic", "text": "Pensionarii din orașe cu venituri mici primesc compensări și scutiri la plată.", "hurt": "antreprenori" },
+    "agricultori": { "label": "Regim simplificat pentru fermele mici", "text": "Fermele sub 50 de hectare intră într-un regim simplificat, cu termene mai lungi.", "hurt": "tineri_urbani" },
+    "antreprenori": { "label": "Tranziție de 12 luni pentru firme", "text": "Firmele mici au 12 luni să se conformeze, iar amenda vine doar după un avertisment.", "hurt": "bugetari" },
+    "muncitori": { "label": "Garanții pentru salariații din industrie", "text": "Salariații din industrie sunt protejați de concedieri în primul an de aplicare.", "hurt": "antreprenori" },
+    "bugetari": { "label": "Salariile publice rămân neatinse", "text": "Legea nu poate fi folosită pentru înghețarea sau tăierea salariilor din sectorul public.", "hurt": "antreprenori" },
+    "someri": { "label": "Prioritate pentru șomerii de lungă durată", "text": "Cine e șomer de peste un an primește primul accesul la program.", "hurt": "muncitori" },
+    "diaspora": { "label": "Procedură online pentru românii din străinătate", "text": "Diaspora poate depune cererile online sau la consulate, cu un an de termen.", "hurt": "pensionari_rural" }
+  },
+  "bills": {
+    "panouri-solare": [
+      { "id": "tineri-prioritate", "label": "Tinerii primesc prioritate", "text": "Gospodăriile conduse de persoane sub 35 de ani primesc primele vouchere; ceilalți așteaptă a doua rundă.", "effects": { "sol": { "tineri_urbani": 1.5, "pensionari_rural": -0.4 } }, "interest": { "tineri_urbani": 0.5, "pensionari_rural": -0.2 } },
+      { "id": "sate-fara-retea", "label": "Prioritate pentru satele cu rețea slabă", "text": "Gospodăriile din sate cu cădere frecventă de curent primesc panouri înaintea celor din oraș.", "effects": { "sol": { "agricultori": 1.5, "pensionari_rural": 1 }, "macro": { "growth": -0.01 } }, "interest": { "agricultori": 0.5, "pensionari_rural": 0.4 } },
+      { "id": "componente-ue", "label": "Panouri cu componente produse în UE", "text": "Voucherul se acordă doar pentru panouri asamblate cu componente din UE: mai scump, dar mai multe locuri de muncă.", "effects": { "macro": { "growth": 0.02, "inflation": 0.03 }, "sol": { "muncitori": 0.8, "antreprenori": -0.5 } }, "interest": { "muncitori": 0.4, "antreprenori": -0.2 } }
+    ],
+    "salariu-minim": [
+      { "id": "compensare-firme", "label": "Compensare pentru firmele mici", "text": "Firmele cu sub 10 angajați primesc o scutire parțială de contribuții în primul an.", "effects": { "sol": { "antreprenori": 1.2, "muncitori": -0.3 }, "macro": { "unemployment": -0.02 } }, "interest": { "antreprenori": 0.5, "muncitori": -0.1 } },
+      { "id": "indexare-anuala", "label": "Indexare automată în fiecare ianuarie", "text": "Salariul minim crește automat cu inflația, fără negocieri anuale.", "effects": { "sol": { "muncitori": 1.5, "antreprenori": -0.4 }, "macro": { "inflation": 0.05 } }, "interest": { "muncitori": 0.5, "antreprenori": -0.2 } },
+      { "id": "majorare-etapizata", "label": "Majorare etapizată pe 12 luni", "text": "Creșterea se aplică în patru tranșe trimestriale, ca firmele să se adapteze.", "effects": { "macro": { "inflation": -0.05 }, "sol": { "muncitori": -0.5, "antreprenori": 0.5 } }, "interest": { "muncitori": -0.2, "antreprenori": 0.3 } }
+    ],
+    "plafon-energie": [
+      { "id": "doar-consum-mic", "label": "Plafon doar pentru consumul casnic mic", "text": "Plafonul se aplică până la un consum lunar, ca să nu fie subvenționat luxul.", "effects": { "budget": { "social": -0.02 }, "sol": { "pensionari_urban": -0.3 } }, "interest": { "pensionari_urban": -0.1, "antreprenori": 0.2 } },
+      { "id": "scutire-pensionari", "label": "Scutire pentru pensionarii cu venit mic", "text": "Pensionarii cu pensie sub media națională primesc o compensare separată pe factură.", "effects": { "sol": { "pensionari_rural": 1, "pensionari_urban": 1 }, "budget": { "social": 0.03 } }, "interest": { "pensionari_rural": 0.4, "pensionari_urban": 0.4 } },
+      { "id": "compensare-industrie", "label": "Compensare pentru industria mică", "text": "Atelierele și fabricile mici primesc o compensare, ca să nu mute producția peste graniță.", "effects": { "sol": { "antreprenori": 1.2, "muncitori": 0.6 }, "budget": { "social": 0.02 } }, "interest": { "antreprenori": 0.5, "muncitori": 0.3 } }
+    ],
+    "recalculare-pensii": [
+      { "id": "pe-trei-ani", "label": "Recalculare etapizată pe 3 ani", "text": "Diferența se plătește în trei tranșe anuale, ca bugetul să nu cedeze dintr-odată.", "effects": { "budget": { "pensions": -0.04 }, "sol": { "pensionari_rural": -0.8, "pensionari_urban": -0.8 } }, "interest": { "pensionari_rural": -0.3, "pensionari_urban": -0.3, "tineri_urbani": 0.2 } },
+      { "id": "sub-medie", "label": "Prioritate pentru pensiile sub medie", "text": "Primele recalculate sunt pensiile mai mici decât media națională.", "effects": { "sol": { "pensionari_rural": 1 }, "budget": { "pensions": -0.02 } }, "interest": { "pensionari_rural": 0.4 } },
+      { "id": "bonus-vechime", "label": "Bonus pentru peste 35 de ani de vechime", "text": "Cine a contribuit peste 35 de ani primește un bonus la pensia recalculată.", "effects": { "sol": { "pensionari_urban": 1.2 }, "budget": { "pensions": 0.02 } }, "interest": { "pensionari_urban": 0.5 } }
+    ],
+    "prima-chirie": [
+      { "id": "orase-mari", "label": "Prioritate în orașele cu chirii mari", "text": "Programul pornește în Cluj, București, Timișoara și Iași, unde chiria costă cel mai mult.", "effects": { "sol": { "tineri_urbani": 1 } }, "interest": { "tineri_urbani": 0.4 } },
+      { "id": "chirie-studenti", "label": "Chirie subvenționată pentru studenți", "text": "O cotă din locuințe se rezervă studenților, cu chirie plafonată.", "effects": { "sol": { "studenti": 1.5 }, "budget": { "social": 0.01 } }, "interest": { "studenti": 0.5 } },
+      { "id": "intoarcere-diaspora", "label": "Garanție pentru tinerii reîntorși din străinătate", "text": "Tinerii care se întorc în țară primesc garanția de stat la primul contract de chirie.", "effects": { "sol": { "diaspora": 1.5, "tineri_urbani": -0.3 } }, "interest": { "diaspora": 0.5, "tineri_urbani": -0.1 } }
+    ],
+    "subventii-agricultura": [
+      { "id": "plafon-50-ha", "label": "Plafon de 50 de hectare", "text": "Subvenția se oprește la 50 de hectare; marii fermieri nu mai primesc.", "effects": { "sol": { "agricultori": 1, "pensionari_rural": 0.8 }, "budget": { "agri": -0.01 } }, "interest": { "agricultori": 0.3, "pensionari_rural": 0.4 } },
+      { "id": "irigatii", "label": "Subvenție pentru irigații", "text": "O parte din bani merge pe sisteme de irigații comune ale fermelor mici.", "effects": { "metric": { "infra": 0.2 }, "budget": { "agri": 0.02 }, "sol": { "agricultori": 1.2 } }, "interest": { "agricultori": 0.5 } },
+      { "id": "cooperative", "label": "Prioritate pentru cooperative locale", "text": "Fermele care se asociază în cooperative primesc subvenția dublă.", "effects": { "macro": { "growth": 0.02 }, "sol": { "agricultori": 0.8, "antreprenori": 0.5 } }, "interest": { "agricultori": 0.3, "antreprenori": 0.3 } }
+    ],
+    "spitale-performanta": [
+      { "id": "indicatori-publici", "label": "Indicatori de calitate publicați", "text": "Fiecare spital își publică ratele de infecții și timpii de așteptare.", "effects": { "metric": { "health": 0.3, "cpi": 0.2 } }, "interest": { "pensionari_urban": 0.3, "tineri_urbani": 0.3 } },
+      { "id": "sporuri-spitale-mici", "label": "Sporuri pentru medicii din spitalele mici", "text": "Medicii din spitalele de oraș mic primesc un spor, ca să nu plece la București.", "effects": { "metric": { "health": 0.4 }, "sol": { "bugetari": 1.2 }, "budget": { "health": 0.02 } }, "interest": { "bugetari": 0.5 } },
+      { "id": "plafon-pacient", "label": "Plafon de cheltuieli pe pacient", "text": "Plata la performanță are un plafon pe pacient, ca să nu crească cheltuielile peste buget.", "effects": { "budget": { "health": -0.02 }, "sol": { "bugetari": -0.8 }, "metric": { "health": -0.1 } }, "interest": { "bugetari": -0.3, "antreprenori": 0.2 } }
+    ],
+    "autostrazi-ppp": [
+      { "id": "pret-taxa", "label": "Plafon pentru taxa de drum", "text": "Taxa pe autostradă nu poate depăși un preț fixat în contract.", "effects": { "sol": { "muncitori": 1, "antreprenori": -0.5 } }, "interest": { "muncitori": 0.4, "antreprenori": -0.2 } },
+      { "id": "constructori-romani", "label": "Cotă pentru constructori români", "text": "O parte din lucrări merge la firme românești, cu risc de întârzieri.", "effects": { "sol": { "antreprenori": 1 }, "metric": { "cpi": -0.2 } }, "interest": { "antreprenori": 0.4 } },
+      { "id": "acces-agricol", "label": "Drumuri de acces pentru fermieri", "text": "Autostrada primește drumuri de acces pentru utilaje agricole și camioane mici.", "effects": { "sol": { "agricultori": 1.2 } }, "interest": { "agricultori": 0.5 } }
+    ]
+  }
+}
