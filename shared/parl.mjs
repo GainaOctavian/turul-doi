@@ -96,6 +96,7 @@ function motionScore(state, data, party, entry) {
   let s = (50 - g.confidence) / 55 + ((relation(state, data, party, entry.from) - 50) / 50) * 0.5;
   s -= ((relation(state, data, party, g.pmParty) - 50) / 50) * 0.5;
   if (g.support[party]) s -= 0.6;
+  if (entry.pledgedNo?.includes(party)) s -= 1.5;
   s += entry.deals[party] ?? 0;
   if (entry.pledged?.includes(party)) s += 1.5;
   return s;
@@ -144,6 +145,7 @@ function openEntry(state, data, e) {
     log(state, "parl", `Proiect de lege: ${e.title}`, `${upper(e.from)} depune proiectul. Votul în plen e în ziua ${entry.vote}.`);
     return { ok: true, message: `Ai depus „${e.title}”. Votul e în ${e.days} zile.`, id: entry.id };
   }
+  makeSupportOffers(state, data, entry);
   log(state, "parl", "Moțiune de cenzură depusă", `${upper(e.from)} a strâns semnăturile. Votul în plen e în ziua ${entry.vote}.`);
   return { ok: true, message: `Moțiunea e depusă. Votul e în ${e.days} zile.`, id: entry.id };
 }
@@ -281,6 +283,7 @@ export function voteBill(state, data, partyId, entryId, vote) {
   if (!["yes", "no", "abstain"].includes(vote)) return { ok: false, error: "Votează: yes, no sau abstain." };
   if (seatsOf(state, partyId) === 0 && !state.config.minoritySeats) return { ok: false, error: "Fără mandate nu poți vota." };
   if (entry.pledged.includes(partyId) && vote !== "yes") return { ok: false, error: "Ai promis voturile tale pentru această lege." };
+  if (entry.pledgedNo?.includes(partyId) && vote !== "no") return { ok: false, error: "Ai promis că votezi împotrivă." };
   entry.votes[partyId] = vote;
   return { ok: true, message: vote === "yes" ? "Ai votat pentru." : vote === "no" ? "Ai votat împotrivă." : "Te abții." };
 }
@@ -745,19 +748,32 @@ export function recruitMps(state, data, partyId, opts = {}) {
   return { ok: true, message: `${n} parlamentari neafiliați s-au alăturat grupului tău.` };
 }
 
-// An AI party that files a law courts the human parties that would not vote yes on their own.
+// Parties court a human party for a vote. A law's AI proposer asks for a yes from those who would not
+// back it. For a censure motion the proposer does the same, and the prime minister's party (if AI)
+// offers money to opposition parties to vote it down. Human courters make their own offers by lobbying.
 function makeSupportOffers(state, data, entry) {
-  const from = state.parties[entry.from];
+  const motion = entry.kind === "motion";
+  const courters = [{ id: entry.from, want: "yes" }];
+  if (motion && state.gov.pmParty) courters.push({ id: state.gov.pmParty, want: "no" });
   for (const to of state.humans) {
-    if (to === entry.from || seatsOf(state, to) === 0) continue;
-    const score = lawScore(state, data, to, entry);
-    if (score >= 0.4) continue;
-    const gap = 0.4 - score;
-    const money = round(clamp(0.3 + gap * 0.6, 0.3, 2), 1);
-    const capital = Math.round(clamp(1 + gap * 2, 1, 6));
-    if (!from || from.funds < money + 0.5) continue;
-    state.parl.supportOffers.push({ id: state.parl.nextOffer, entry: entry.id, from: entry.from, to, money, capital, day: state.day });
-    state.parl.nextOffer += 1;
+    if (seatsOf(state, to) === 0) continue;
+    // Government partners vote with the government; they are not courted over a motion.
+    if (motion && inGov(state, to)) continue;
+    for (const c of courters) {
+      if (to === c.id || state.humans.includes(c.id)) continue;
+      const courter = state.parties[c.id];
+      if (!courter) continue;
+      const score = stanceOf(state, data, to, entry);
+      if (c.want === "yes" && score >= 0.4) continue;
+      if (c.want === "no" && score <= -0.4) continue;
+      const gap = c.want === "yes" ? 0.4 - score : score + 0.4;
+      const money = round(clamp(0.3 + gap * 0.6, 0.3, 2), 1);
+      const capital = Math.round(clamp(1 + gap * 2, 1, 6));
+      if (courter.funds < money + 0.5) continue;
+      if (state.parl.supportOffers.some((o) => o.entry === entry.id && o.to === to && o.from === c.id)) continue;
+      state.parl.supportOffers.push({ id: state.parl.nextOffer, entry: entry.id, from: c.id, to, money, capital, want: c.want, day: state.day });
+      state.parl.nextOffer += 1;
+    }
   }
 }
 
@@ -776,11 +792,16 @@ export function answerOffer(state, data, partyId, offerId, accept) {
   giver.capital = round(Math.max(0, giver.capital - offer.capital), 1);
   me.funds = round(me.funds + offer.money, 2);
   me.capital = round(me.capital + offer.capital, 1);
-  if (!entry.pledged.includes(partyId)) entry.pledged.push(partyId);
-  entry.votes[partyId] = "yes";
+  if (offer.want === "no") {
+    (entry.pledgedNo ??= []).push(partyId);
+    entry.votes[partyId] = "no";
+  } else {
+    if (!entry.pledged.includes(partyId)) entry.pledged.push(partyId);
+    entry.votes[partyId] = "yes";
+  }
   addRel(state, data, partyId, offer.from, 4);
-  log(state, "parl", "Sprijin cumpărat", `${upper(partyId)} votează „${entry.title}” în schimbul a ${offer.money} M€ și ${offer.capital} capital politic de la ${upper(offer.from)}.`);
-  return { ok: true, message: `Ai primit ${offer.money} M€ și ${offer.capital} capital politic. Votezi pentru.` };
+  log(state, "parl", "Sprijin cumpărat", `${upper(partyId)} votează ${offer.want === "no" ? "împotriva" : "pentru"} „${entry.title}” în schimbul a ${offer.money} M€ și ${offer.capital} capital politic de la ${upper(offer.from)}.`);
+  return { ok: true, message: `Ai primit ${offer.money} M€ și ${offer.capital} capital politic. Votezi ${offer.want === "no" ? "împotrivă" : "pentru"}.` };
 }
 
 // Big instruments: a party with a lot of political capital can spend it on something large.

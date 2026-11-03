@@ -803,7 +803,7 @@ function panelPoll() {
       (o) =>
         `<div class="row between" style="margin-bottom:6px">
           <span>${pname(o.from)} → ${pname(o.to)}</span>
-          ${o.to === S.party ? `<button class="btn gold" data-accept="${o.from}">Acceptă</button>` : ""}
+          ${o.to === S.party ? `${o.money || o.capital ? `<small class="muted">+${(o.money ?? 0).toFixed(1).replace(".", ",")} M€, +${o.capital ?? 0} cap.</small> ` : ""}<button class="btn gold" data-accept="${o.from}">Acceptă</button>` : ""}
         </div>`,
     )
     .join("");

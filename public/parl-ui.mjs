@@ -159,7 +159,7 @@ function courtView(S) {
   const offers = p.supportOffers
     .filter((o) => o.to === S.party)
     .map(
-      (o) => `<div class="row between" style="gap:8px;padding:5px 0"><div style="min-width:0"><b>${esc(o.title)}</b> ${pbadge(S, o.from)}<div class="muted" style="font-size:12px">Îți oferă ${fmt(o.money)} M€ și ${o.capital} capital politic pentru votul tău. Dacă accepți, votezi pentru și nu mai poți da înapoi.</div></div><div class="row" style="gap:6px"><button class="btn2 primary2" data-do="offer" data-id="${o.id}" data-accept="1">Acceptă</button><button class="btn2" data-do="offer" data-id="${o.id}" data-accept="0">Refuză</button></div></div>`,
+      (o) => `<div class="row between" style="gap:8px;padding:5px 0"><div style="min-width:0"><b>${esc(o.title)}</b> ${pbadge(S, o.from)}<div class="muted" style="font-size:12px">Îți oferă ${fmt(o.money)} M€ și ${o.capital} capital politic ${o.want === "no" ? "ca să votezi împotrivă" : "pentru votul tău"}. Dacă accepți, votezi ${o.want === "no" ? "împotrivă" : "pentru"} și nu mai poți da înapoi.</div></div><div class="row" style="gap:6px"><button class="btn2 primary2" data-do="offer" data-id="${o.id}" data-accept="1">Acceptă</button><button class="btn2" data-do="offer" data-id="${o.id}" data-accept="0">Refuză</button></div></div>`,
     )
     .join("");
   const poach = p.recruit.poach;

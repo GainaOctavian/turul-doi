@@ -775,14 +775,14 @@ function flushPending(state, data) {
 
 /* ------------------------------------------------------------ coalitions */
 
-export function offerCoalition(state, data, from, to) {
+export function offerCoalition(state, data, from, to, sweet = null) {
   if (!state.parties[from] || !state.parties[to] || from === to) {
     return { ok: false, error: "Partid invalid." };
   }
   if (state.offers.some((o) => o.from === from && o.to === to)) {
     return { ok: false, error: "Oferta există deja." };
   }
-  state.offers.push({ from, to, day: state.day });
+  state.offers.push({ from, to, day: state.day, ...(sweet ?? {}) });
   log(state, "coalition", "Ofertă de coaliție", `${from.toUpperCase()} a invitat ${to.toUpperCase()} la guvernare.`);
   return { ok: true, message: "Oferta a fost trimisă." };
 }
@@ -791,6 +791,17 @@ export function acceptCoalition(state, data, to, from) {
   const offer = state.offers.find((o) => o.from === from && o.to === to);
   if (!offer) return { ok: false, error: "Nu există ofertă." };
   state.offers = state.offers.filter((o) => o !== offer);
+  // An offer can come with money and political capital from the party that wants you in.
+  if (offer.money || offer.capital) {
+    const giver = state.parties[from];
+    const me = state.parties[to];
+    const paid = Math.min(offer.money ?? 0, giver.funds);
+    giver.funds = money(giver.funds - paid);
+    me.funds = money(me.funds + paid);
+    const cap = Math.min(offer.capital ?? 0, giver.capital);
+    giver.capital = round(giver.capital - cap, 1);
+    me.capital = round(me.capital + cap, 1);
+  }
 
   // Signing with a party that already has a protocol merges the blocs, so a
   // three-party majority can be built one signature at a time.
@@ -888,7 +899,15 @@ function aiCoalitionOffers(state, data) {
       )
       .sort((a, b) => distance(state, data, p.id, a.id) - distance(state, data, p.id, b.id))[0];
     if (!partner) continue;
-    if (rand(state) < 0.6) offerCoalition(state, data, p.id, partner.id);
+    if (rand(state) < 0.6) {
+      // Courting a human party: the offer comes with money and political capital.
+      let sweet = null;
+      if (state.humans.includes(partner.id)) {
+        const m = Math.min(state.parties[p.id].funds * 0.3, 0.5 + rand(state) * 1.5);
+        sweet = { money: Number(m.toFixed(1)), capital: Math.round(3 + rand(state) * 5) };
+      }
+      offerCoalition(state, data, p.id, partner.id, sweet);
+    }
   }
 }
 

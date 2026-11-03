@@ -17,6 +17,8 @@ import {
   lobbyPrice,
   lists,
   applyEffects,
+  offerCoalition,
+  acceptCoalition,
   previewAction,
   segmentShares,
 } from "../shared/engine.mjs";
@@ -1158,6 +1160,39 @@ test("the Senate has 136 seats split like the Chamber; the Chamber has 331 with 
     const chamber = Object.fromEntries(state.partyIds.map((id) => [id, state.parties[id].seats]));
     assert.equal(top(sm), top(chamber), scenario + ": the biggest party in the Chamber leads the Senate");
   }
+});
+
+test("a censure motion draws offers from both sides, and accepting binds the vote the way it was paid for", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.aur.capital = 80;
+  state.parties.aur.funds = 30;
+  state.parties[state.gov.pmParty].funds = 30;
+  const filed = applyParl(state, data, "aur", { type: "motion" });
+  assert.equal(filed.ok, true, filed.error);
+  const offers = state.parl.supportOffers.filter((o) => o.to === "usr");
+  assert.ok(offers.length >= 1, "the opposition party is courted over the motion");
+  assert.ok(offers.every((o) => o.want === "yes" || o.want === "no"));
+  const offer = offers[0];
+  const res = applyParl(state, data, "usr", { type: "offer", id: offer.id, accept: true });
+  assert.equal(res.ok, true, res.error);
+  const entry = state.parl.bills.find((b) => b.id === offer.entry);
+  const wrong = offer.want === "no" ? "yes" : "no";
+  assert.equal(applyParl(state, data, "usr", { type: "vote", id: entry.id, vote: wrong }).ok, false, "the paid-for vote cannot be broken");
+  assert.equal(entry.votes.usr, offer.want);
+});
+
+test("a coalition offer can carry money and political capital, paid when you accept", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.psd.funds = 20;
+  state.parties.psd.capital = 50;
+  const funds = state.parties.usr.funds;
+  const cap = state.parties.usr.capital;
+  assert.equal(offerCoalition(state, data, "psd", "usr", { money: 1.5, capital: 4 }).ok, true);
+  assert.equal(snapshot(state, data).offers.find((o) => o.from === "psd").money, 1.5, "the snapshot shows the sweetener");
+  assert.equal(acceptCoalition(state, data, "usr", "psd").ok, true);
+  assert.equal(Math.round((state.parties.usr.funds - funds) * 10) / 10, 1.5);
+  assert.equal(state.parties.usr.capital - cap, 4);
+  assert.equal(state.parties.psd.funds, 18.5);
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {
