@@ -66,6 +66,7 @@ export const HELP = `turul-doi ctl
   president                 președintele, candidaturile, sprijinul și legile la Cotroceni
   pres-run                  depune candidatura (ultimele 150 de zile)
   pres-back <partid>        susține o candidatură propusă
+  amend <nr>                amendează o lege deschisă spre electoratul tău (3 capital, o dată)
   ccr <nr>                  sesizează Curtea Constituțională pentru o lege la Cotroceni
   events                    ultimele evenimente
   help                      acest text`;
@@ -383,6 +384,12 @@ export function createCtl(data, opts = {}) {
       case "bill": {
         if (need()) return need();
         const res = applyParl(state, data, me(), { type: "bill", bill: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "amend": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "amend", id: Number(args[0]) });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 

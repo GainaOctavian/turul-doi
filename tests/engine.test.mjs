@@ -825,6 +825,7 @@ test("a human party with a shaky group gets a decision; leaving splits the party
 /* --------------------------------------------------------------- presidency */
 
 import { decideLaw, runPresidentialElection, presSnapshot } from "../shared/presidency.mjs";
+import { stanceOf } from "../shared/parl.mjs";
 
 test("the presidency starts with the scenario's president and a dated election", () => {
   const s17 = newGame("2017", ["usr"]);
@@ -930,6 +931,23 @@ test("rating: a long deficit moves the rating; below the reference each notch ta
     const gaps = below.slice(1).map((s, i) => s.month - below[i].month);
     assert.ok(gaps.every((g) => g >= 4), `notches below the reference come slower: ${gaps}`);
   }
+});
+
+test("amendments: a party pays once to move a bill toward its own position, before the vote only", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 20;
+  const id = state.parl.next;
+  const bill = data.bills.bills[0];
+  state.parl.bills.push({ id, status: "open", kind: "law", bill: bill.id, from: "pnl", title: bill.title, day: state.day, vote: state.day + 5, deals: {}, pledged: [], votes: {} });
+  const entry = state.parl.bills.find((b) => b.id === id);
+  const before = stanceOf(state, data, "usr", entry);
+  const first = applyParl(state, data, "usr", { type: "amend", id });
+  assert.equal(first.ok, true, first.error);
+  assert.equal(state.parties.usr.capital, 17);
+  assert.equal(applyParl(state, data, "usr", { type: "amend", id }).ok, false, "only once per party");
+  assert.ok(stanceOf(state, data, "usr", entry) >= before - 1e-9, "the amended bill is never worse for the amender");
+  entry.status = "closed";
+  assert.equal(applyParl(state, data, "udmr", { type: "amend", id }).ok, false, "no amendments after the vote");
 });
 
 /* --------------------------------------------------------------- the ctl */

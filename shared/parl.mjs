@@ -10,7 +10,7 @@ import { queueLaw, challengeCCR, nominate, backCandidate } from "./presidency.mj
 const MAJORITY = 166;
 const LAW_DAYS = 12;
 const MOTION_DAYS = 7;
-const COST = { bill: 8, motion: 25, merge: 15, shift: 12, pact: 10 };
+const COST = { bill: 8, motion: 25, merge: 15, shift: 12, pact: 10, amend: 3 };
 const SEGMENTS = ["pensionari_rural", "pensionari_urban", "tineri_urbani", "studenti", "muncitori", "agricultori", "antreprenori", "bugetari", "someri", "diaspora"];
 
 const find = (arr, id) => arr.find((x) => x.id === id);
@@ -73,7 +73,9 @@ function lawScore(state, data, party, entry) {
   const aff = def.affinity ?? {};
   let interest = 0;
   for (const [seg, v] of Object.entries(bill.interest ?? {})) interest += v * (aff[seg] ?? 0.3);
-  let s = interest * 1.2 - Math.abs(bill.lean - (def.lean ?? 0)) * 1.1 + 0.3;
+  // An amended bill sits 35% closer to the amending party's own position.
+  const lean = entry.amended?.[party] ? bill.lean + 0.35 * ((def.lean ?? 0) - bill.lean) : bill.lean;
+  let s = interest * 1.2 - Math.abs(lean - (def.lean ?? 0)) * 1.1 + 0.3;
   s += ((relation(state, data, party, entry.from) - 50) / 50) * 0.6;
   if (hasPact(state, party, entry.from)) s += 0.6;
   if (inGov(state, party) && inGov(state, entry.from)) s += 0.35;
@@ -204,6 +206,20 @@ export function lobby(state, data, partyId, entryId, target, how, against = fals
     return { ok: true, message: `Schimb de voturi: votezi „${theirs.title}”, ${upper(target)} votează legea ta.` };
   }
   return { ok: false, error: "Tip de negociere necunoscut: favor, money sau swap." };
+}
+
+// Before the plenary vote a party can amend a bill toward its own electorate (3 capital, once per bill).
+export function amendBill(state, data, partyId, entryId) {
+  const party = state.parties[partyId];
+  const entry = state.parl.bills.find((b) => b.id === Number(entryId));
+  if (!party || !entry || entry.kind !== "law") return { ok: false, error: "Nu există o lege de amendat." };
+  if (entry.status !== "open") return { ok: false, error: "Votul s-a încheiat." };
+  if (entry.amended?.[partyId]) return { ok: false, error: "Ai amendat deja legea." };
+  if (party.capital < COST.amend) return { ok: false, error: `Amendamentul costă ${COST.amend} capital politic.` };
+  party.capital = round(party.capital - COST.amend, 1);
+  (entry.amended ??= {})[partyId] = true;
+  log(state, "parl", `Amendament: ${entry.title}`, `${upper(partyId)} își adaptează legea la electoratul său.`);
+  return { ok: true, message: `Amendament depus la „${entry.title}”.` };
 }
 
 export function voteBill(state, data, partyId, entryId, vote) {
@@ -714,7 +730,7 @@ export function consumeRenamed(state) {
 export function parlSnapshot(state, data) {
   const open = state.parl.bills.map((b) => ({
     id: b.id, kind: b.kind, bill: b.bill ?? null, title: b.title, text: b.bill ? billDef(data, b.bill).text : "Votul trebuie să strângă 166 de voturi pentru ca guvernul să cadă.",
-    from: b.from, day: b.day, vote: b.vote, deals: b.deals, pledged: b.pledged, votes: b.votes,
+    from: b.from, day: b.day, vote: b.vote, deals: b.deals, pledged: b.pledged, votes: b.votes, amended: b.amended ?? {},
     stance: Object.fromEntries(state.partyIds.filter((p) => seatsOf(state, p) > 0).map((p) => [p, round(stanceOf(state, data, p, b), 2)])),
   }));
   const rel = {};
@@ -749,6 +765,7 @@ export function applyParl(state, data, partyId, a = {}) {
     case "bill": return proposeBill(state, data, partyId, a.bill);
     case "motion": return fileMotion(state, data, partyId);
     case "vote": return voteBill(state, data, partyId, a.id, a.vote);
+    case "amend": return amendBill(state, data, partyId, a.id);
     case "lobby": return lobby(state, data, partyId, a.id, a.target, a.how, a.against === true);
     case "merge": return offerMerge(state, data, partyId, a.target, a.mode, a.name);
     case "courtesy": return courtesy(state, data, partyId, a.target);

@@ -80,7 +80,8 @@ function voteCard(S, b) {
       seats(S, S.party) > 0
         ? `<div class="row" style="gap:8px;align-items:center"><span class="muted">Votul tău:</span>
       ${[["yes", "Pentru"], ["no", "Contra"], ["abstain", "Abținere"]].map(([v, l]) => `<button class="btn2 ${mine === v ? "primary2" : ""}" data-do="parl-vote" data-id="${b.id}" data-vote="${v}">${l}</button>`).join("")}
-      ${mine ? "" : `<small class="muted">Dacă nu votezi, partidul urmează linia lui.</small>`}</div>`
+      ${mine ? "" : `<small class="muted">Dacă nu votezi, partidul urmează linia lui.</small>`}</div>
+      ${b.kind === "law" ? `<div class="row" style="gap:8px;margin-top:6px"><button class="btn2" data-do="parl-amend" data-id="${b.id}" ${b.amended?.[S.party] ? "disabled" : ""}>${b.amended?.[S.party] ? "Ai amendat legea" : "Amendează spre electoratul tău (3 cap.)"}</button></div>` : ""}`
         : `<p class="hint">Partidul tău nu are mandate: urmărești votul din tribune.</p>`
     }
     ${lobbyBox}
