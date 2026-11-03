@@ -3238,3 +3238,57 @@ input.sel[type="text"] {
 .poll-mini {
   background: #1a2470;
 }
+.law-fx {
+  margin: 3px 0 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #9fdcf2;
+}
+
+/* ---------- phone: the top bar wraps instead of widening the whole page ---------- */
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    padding: 8px 10px;
+  }
+  .topbar > * {
+    min-width: 0;
+  }
+  .topbar .spacer {
+    display: none;
+  }
+  .tb-brand {
+    font-size: 13px;
+  }
+  .tb-date b {
+    font-size: 13px;
+  }
+  .tb-date span {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .speeds button {
+    padding: 5px 7px;
+    font-size: 11px;
+  }
+  .topbar .chip {
+    font-size: 11px;
+    padding: 4px 7px;
+  }
+}
+
+/* section headers: the right-hand note drops to its own line when it does not fit */
+.blk-h {
+  flex-wrap: wrap;
+}
+.blk-h > div {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.blk-h > :not(div) {
+  flex: 0 0 auto;
+  margin-left: auto;
+}

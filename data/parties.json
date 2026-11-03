@@ -41,7 +41,7 @@
     {
       "id": "pnl",
       "name": "PNL",
-      "fullName": "Partidul NaÈ›ional Liberal",
+      "fullName": "Partidul Național Liberal",
       "color": "#f2c200",
       "leader": "bolojan",
       "affinity": {
@@ -74,7 +74,7 @@
     {
       "id": "usr",
       "name": "USR",
-      "fullName": "Uniunea SalvaÈ›i RomÃ¢nia",
+      "fullName": "Uniunea Salvați România",
       "color": "#1f6feb",
       "leader": "fritz",
       "affinity": {
@@ -105,7 +105,7 @@
     {
       "id": "aur",
       "name": "AUR",
-      "fullName": "AlianÈ›a pentru Unirea RomÃ¢nilor",
+      "fullName": "Alianța pentru Unirea Românilor",
       "color": "#c9a227",
       "leader": "simion",
       "affinity": {
@@ -138,7 +138,7 @@
     {
       "id": "udmr",
       "name": "UDMR",
-      "fullName": "Uniunea DemocratÄƒ MaghiarÄƒ din RomÃ¢nia",
+      "fullName": "Uniunea Democrată Maghiară din România",
       "color": "#00843d",
       "leader": "kelemen",
       "affinity": {
@@ -168,7 +168,7 @@
     {
       "id": "sos",
       "name": "SOS",
-      "fullName": "S.O.S. RomÃ¢nia",
+      "fullName": "S.O.S. România",
       "color": "#1b2a6b",
       "leader": "soosaca",
       "affinity": {

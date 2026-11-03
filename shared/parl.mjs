@@ -6,6 +6,7 @@ import { clamp, rand, log, round, partyDef, senateMapFrom, SENATE_MAJORITY } fro
 import { computePoll, applyEffects } from "./engine.mjs";
 import { fallGovernment } from "./gov.mjs";
 import { queueLaw, challengeCCR, nominate, backCandidate, presCampaign } from "./presidency.mjs";
+import { describeEffects } from "./fx-text.mjs";
 
 const MAJORITY = 166;
 const LAW_DAYS = 12;
@@ -947,6 +948,7 @@ export function parlSnapshot(state, data) {
     id: b.id, kind: b.kind, bill: b.bill ?? null, title: b.title, text: b.bill ? billDef(data, b.bill).text : "Votul trebuie să strângă 166 de voturi pentru ca guvernul să cadă.",
     from: b.from, day: b.day, vote: b.vote, deals: b.deals, pledged: b.pledged, votes: b.votes, amended: b.amended ?? {},
     options: b.kind === "law" ? amendOptions(data, billDef(data, b.bill)).map((o) => ({ id: o.id, label: o.label, text: o.text, effects: o.effects })) : [],
+    fx: b.kind === "law" ? describeEffects(data, lawEffects(data, b.bill, b.amended ?? {})) : [],
     stance: Object.fromEntries(state.partyIds.filter((p) => seatsOf(state, p) > 0).map((p) => [p, round(stanceOf(state, data, p, b), 2)])),
   }));
   const rel = {};
@@ -964,7 +966,7 @@ export function parlSnapshot(state, data) {
     courtesy: COURTESY,
     pactMin: PACT_MIN,
     cool: state.parl.cool,
-    catalog: data.bills.bills.map((b) => ({ source: sourceOf(data, b), id: b.id, title: b.title, text: b.text, lean: b.lean, interest: b.interest, openNow: state.parl.bills.some((x) => x.bill === b.id), passedDay: state.parl.passed[b.id] ?? null })),
+    catalog: data.bills.bills.map((b) => ({ source: sourceOf(data, b), id: b.id, title: b.title, text: b.text, lean: b.lean, interest: b.interest, fx: describeEffects(data, b.effects), openNow: state.parl.bills.some((x) => x.bill === b.id), passedDay: state.parl.passed[b.id] ?? null })),
     splinters: Object.fromEntries(state.partyIds.map((p) => [p, splinterOptions(state, data, p).map((t) => ({ id: t.id, name: t.name, fullName: t.fullName }))])),
     costs: COST,
     instruments: INSTRUMENTS,

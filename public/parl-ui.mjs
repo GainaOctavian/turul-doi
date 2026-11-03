@@ -72,7 +72,7 @@ function voteCard(S, b) {
   return `<div class="vote-card ${b.kind}">
     <div class="row between"><b>${esc(b.title)}</b><span class="muted">votul în ziua ${b.vote} (${Math.max(0, b.vote - s.day)} zile)</span></div>
     <div class="row" style="gap:6px;margin:4px 0">${b.kind === "motion" ? badge("Moțiune", "#ff4d6d") : badge("Lege", "#4cc9f0")} inițiator ${pbadge(S, b.from)}</div>
-    <p class="muted" style="margin:2px 0 8px">${esc(b.text)}</p>
+    <p class="muted" style="margin:2px 0 8px">${esc(b.text)}</p>${b.fx?.length ? `<div class="law-fx">${b.fx.map(esc).join(" · ")}</div>` : ""}
     <div class="row between" style="margin-bottom:6px"><span>Estimare: <b style="color:#2fbf8a">${f.yes} pentru</b> · <b style="color:#ff4d6d">${f.no} contra</b></span><span class="muted">${need}</span></div>
     ${bar(f.yes, f.yes + f.no || 1, "#2fbf8a")}
     <div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0">${chips}</div>
@@ -135,7 +135,7 @@ export function presView(S) {
   const pending = p.pending
     .map((x) => {
       const canCcr = x.from !== S.party && (party.seats ?? 0) >= 15 && party.capital >= 5;
-      return `<div class="row between" style="padding:5px 0;gap:8px"><span>${esc(x.title)} ${pbadge(S, x.from)}</span>${canCcr ? `<button class="btn2" data-do="ccr" data-id="${x.id}">Sesizează CCR (5 cap.)</button>` : badge(`până în ziua ${x.deadline}`, "#8d99ae")}</div>`;
+      return `<div style="padding:5px 0;gap:8px"><div class="row between"><span>${esc(x.title)} ${pbadge(S, x.from)}</span>${canCcr ? `<button class="btn2" data-do="ccr" data-id="${x.id}">Sesizeaza CCR (5 cap.)</button>` : badge(`până în ziua ${x.deadline}`, "#8d99ae")}</div>${x.fx?.length ? `<div class="law-fx">${x.fx.map(esc).join(" · ")}</div>` : ""}</div>`;
     })
     .join("");
   const coolOf = (k) => (P(S).cool[`pc:${S.party}:${k}`] ?? -1) > S.snap.day;
@@ -238,7 +238,7 @@ export function lawsView(S) {
         .slice(0, 4)
         .map(([seg, v]) => badge(`${v > 0 ? "+" : "−"} ${segName(S, seg)}`, v > 0 ? "#2fbf8a" : "#ff4d6d"))
         .join(" ");
-      return `<div class="prop"><div><b>${esc(l.title)}</b><small>${esc(l.text)}</small>${l.source ? `<small class="muted">Sursă: <a href="${esc(l.source.portal)}" target="_blank" rel="noopener">${esc(l.source.ref)}</a>${l.source.note ? ` · ${esc(l.source.note)}` : ""} · ultima modificare ${esc(l.source.latest)}</small>` : ""}<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:5px">${badge(leanLabel(l.lean), "#8d99ae")} ${interest}</div></div>
+      return `<div class="prop"><div><b>${esc(l.title)}</b><small>${esc(l.text)}</small>${l.fx?.length ? `<div class="law-fx">${l.fx.map(esc).join(" · ")}</div>` : ""}${l.source ? `<small class="muted">Sursă: <a href="${esc(l.source.portal)}" target="_blank" rel="noopener">${esc(l.source.ref)}</a>${l.source.note ? ` · ${esc(l.source.note)}` : ""} · ultima modificare ${esc(l.source.latest)}</small>` : ""}<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:5px">${badge(leanLabel(l.lean), "#8d99ae")} ${interest}</div></div>
         <div class="prop-act"><button class="btn2 primary2" data-do="parl-bill" data-id="${l.id}" ${why ? "disabled" : ""} title="${esc(why)}">${why || `Depune (${p.costs.bill} cap.)`}</button></div></div>`;
     })
     .join("");

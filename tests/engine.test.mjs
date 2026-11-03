@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import {
   createGame,
   computePoll,
@@ -727,6 +727,16 @@ test("every scandal fact in the game points at a registered decision and a real 
   assert.equal(names.size, data.politicians.politicians.length, "politician ids are unique");
 });
 
+test("no data file carries mojibake from a bad encoding round-trip", () => {
+  const dir = new URL("../data/", import.meta.url);
+  const bad = /[ÃÂ][\u0080-\u00ff]|È›|È™|È˜|Äƒ|Ä‚|Å£|Å¢/;
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".json")) continue;
+    const text = readFileSync(new URL(f, dir), "utf8");
+    assert.ok(!bad.test(text), `${f} has mojibake`);
+  }
+});
+
 test("a courtesy warms a relation, a pact needs 55 and helps the partner's laws", () => {
   const state = newGame("2026", ["usr"]);
   state.parties.usr.capital = 60;
@@ -952,6 +962,26 @@ test("health, energy, agriculture and security each have laws grounded in an act
   assert.ok(by("legea-123-2012") + by("legea-121-2014") >= 2, "energy: prosumers and audits");
   assert.ok(by("legea-17-2014") + by("legea-138-2004") >= 2, "agriculture: land sales and irrigation");
   assert.ok(by("legea-203-2015") + by("legea-270-2015") >= 2, "security: defence planning and reservists");
+});
+
+test("a law states its effects in the same words as events, and an amendment changes the text", () => {
+  const state = newGame("2026", ["usr"]);
+  const cat = snapshot(state, data).parl.catalog.find((b) => b.id === "irigatii-tarif-redus");
+  assert.ok(cat.fx.length >= 2, "the catalogue states the law's effects");
+  assert.ok(cat.fx.some((l) => l.includes("Agricultori") && l.includes("nivel de trai")), cat.fx.join(" | "));
+  assert.ok(cat.fx.some((l) => l.includes("bugetul pentru agricultură")), cat.fx.join(" | "));
+
+  state.parties.usr.capital = 20;
+  state.parties.usr.funds = 20;
+  const id = state.parl.next;
+  const bill = data.bills.bills.find((b) => b.id === "irigatii-tarif-redus");
+  state.parl.bills.push({ id, status: "open", kind: "law", bill: bill.id, from: "pnl", title: bill.title, day: state.day, vote: state.day + 5, deals: {}, pledged: [], votes: {} });
+  const before = snapshot(state, data).parl.bills.find((b) => b.id === id).fx;
+  const option = snapshot(state, data).parl.bills.find((b) => b.id === id).options[0];
+  const res = applyParl(state, data, "usr", { type: "amend", id, option: option.id });
+  assert.equal(res.ok, true, res.error);
+  const after = snapshot(state, data).parl.bills.find((b) => b.id === id).fx;
+  assert.notDeepEqual(after, before, "the adopted amendment changes the stated effects");
 });
 
 test("amendments: a party pays once to move a bill toward its own position, before the vote only", () => {

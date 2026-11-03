@@ -4,6 +4,7 @@
 import { clamp, rand, log, round, partyDef, dayOf } from "./util.mjs";
 import { computePoll, applyEffects } from "./engine.mjs";
 import { distance, relation, addRel, reopenLaw, lawEffects } from "./parl.mjs";
+import { describeEffects } from "./fx-text.mjs";
 
 const TERM_DAYS = 1826;
 const NOMINATION_WINDOW = 150; // days before the vote when candidacies open
@@ -359,7 +360,7 @@ export function presSnapshot(state, data) {
     candidates: state.partyIds
       .filter((id) => candidateOf(state, id))
       .map((id) => ({ party: id, name: state.politicians[candidateOf(state, id)].name, nominated: !!p.nominated[id], share: round(poll[id] ?? 0, 4) })),
-    pending: p.pending.map((x) => ({ id: x.id, title: x.title, from: x.from, deadline: x.deadline, forHuman: humanPresident(state) })),
+    pending: p.pending.map((x) => ({ id: x.id, title: x.title, from: x.from, deadline: x.deadline, forHuman: humanPresident(state), fx: describeEffects(data, lawEffects(data, x.bill, x.amended ?? {})) })),
     lastResult: p.lastResult,
     presLean: presLean(state, data),
   };
