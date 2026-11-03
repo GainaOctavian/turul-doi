@@ -2886,6 +2886,239 @@
         "suit": "#2c3a55",
         "tie": "#2d5f8a"
       }
+    },
+    {
+      "id": "iacob-ridzi",
+      "name": "Monica Iacob-Ridzi",
+      "party": null,
+      "role": "Fostă ministră a Tineretului și Sportului",
+      "scenarios": {
+        "2017": {
+          "role": "Fostă ministră a Tineretului și Sportului, condamnată definitiv"
+        },
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 62,
+        "patience": 38,
+        "malleability": 45,
+        "gaffes": 35,
+        "visibility": 55,
+        "corruption": 68,
+        "traseism": 50
+      },
+      "ability": null,
+      "facts": [
+        "A demisionat din funcția de ministră a Tineretului și Sportului la 14 iulie 2009, după scandalul manifestărilor de Ziua Tineretului (630.000 de euro atribuiți fără licitație).",
+        "Condamnată definitiv la 5 ani de închisoare cu executare pentru abuz în serviciu (Înalta Curte de Casație și Justiție, 16 februarie 2015), în dosarul manifestărilor de Ziua Tineretului din 2009."
+      ],
+      "look": {
+        "hair": "long",
+        "hairColor": "#6b4a2b",
+        "skin": "#f0c7a3",
+        "glasses": false,
+        "facial": "none",
+        "suit": "#2f4a6b",
+        "tie": null
+      }
+    },
+    {
+      "id": "fenechiu",
+      "name": "Relu Fenechiu",
+      "party": null,
+      "role": "Fost ministru al Transporturilor",
+      "scenarios": {
+        "2017": {
+          "role": "Fost ministru al Transporturilor, condamnat definitiv"
+        },
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 46,
+        "patience": 52,
+        "malleability": 40,
+        "gaffes": 30,
+        "visibility": 40,
+        "corruption": 66,
+        "traseism": 35
+      },
+      "ability": null,
+      "facts": [
+        "A demisionat din funcția de ministru al Transporturilor la 12 iulie 2013, după condamnarea în primă instanță în dosarul „Transformatorul”.",
+        "Condamnat definitiv la 5 ani de închisoare cu executare pentru complicitate la abuz în serviciu în formă calificată (Înalta Curte de Casație și Justiție, 30 ianuarie 2014).",
+        "Acuzația din dosar: vânzarea, în 2002–2004, a unor transformatoare vechi către Electrica Moldova, în loc de unele noi."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#7a7a7a",
+        "skin": "#e8b896",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#27354a",
+        "tie": "#7d1f2b"
+      }
+    },
+    {
+      "id": "voicu",
+      "name": "Cătălin Voicu",
+      "party": null,
+      "role": "Fost deputat, condamnat definitiv",
+      "scenarios": {
+        "2017": {},
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 40,
+        "patience": 45,
+        "malleability": 38,
+        "gaffes": 30,
+        "visibility": 35,
+        "corruption": 74,
+        "traseism": 40
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat definitiv la 7 ani de închisoare cu executare pentru fapte de corupție (Înalta Curte de Casație și Justiție, 22 aprilie 2013), după ce la 1 iunie 2012 primise 5 ani."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#2a2a2a",
+        "skin": "#e2ab86",
+        "glasses": false,
+        "facial": "mustache",
+        "suit": "#2a2f3a",
+        "tie": "#3d4f7a"
+      }
+    },
+    {
+      "id": "chereches",
+      "name": "Cătălin Cherecheș",
+      "party": null,
+      "role": "Fost primar al municipiului Baia Mare",
+      "scenarios": {
+        "2026": {
+          "role": "Fost primar al municipiului Baia Mare, condamnat definitiv"
+        }
+      },
+      "stats": {
+        "charisma": 58,
+        "patience": 40,
+        "malleability": 36,
+        "gaffes": 40,
+        "visibility": 52,
+        "corruption": 72,
+        "traseism": 55
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat definitiv la 5 ani de închisoare cu executare pentru luare de mită, la 24 noiembrie 2023; fusese primar al Baia Mare din 8 mai 2011."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#3a2a1f",
+        "skin": "#e8b896",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#1f2d44",
+        "tie": "#2a6f97"
+      }
+    },
+    {
+      "id": "nichita",
+      "name": "Gheorghe Nichita",
+      "party": null,
+      "role": "Fost primar al Iașului, condamnat definitiv",
+      "scenarios": {
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 50,
+        "patience": 55,
+        "malleability": 42,
+        "gaffes": 45,
+        "visibility": 55,
+        "corruption": 70,
+        "traseism": 45
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat definitiv la 5 ani de închisoare cu executare pentru luare de mită (Curtea de Apel București, 5 august 2020); DNA îl trimisese în judecată la 18 decembrie 2015.",
+        "Condamnat definitiv la 5 ani de închisoare cu executare într-un dosar de abuz în serviciu (Curtea de Apel Iași, 30 august 2022); DNA îl trimisese în judecată la 27 noiembrie 2015."
+      ],
+      "look": {
+        "hair": "bald",
+        "hairColor": "#9a9a9a",
+        "skin": "#e8b896",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#2b3a55",
+        "tie": "#8d2b2b"
+      }
+    },
+    {
+      "id": "oprisan",
+      "name": "Marian Oprișan",
+      "party": null,
+      "role": "Fost președinte al Consiliului Județean Vrancea",
+      "scenarios": {
+        "2017": {
+          "role": "Președinte al Consiliului Județean Vrancea"
+        },
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 54,
+        "patience": 48,
+        "malleability": 36,
+        "gaffes": 30,
+        "visibility": 48,
+        "corruption": 40,
+        "traseism": 25
+      },
+      "ability": null,
+      "facts": [
+        "Achitat definitiv de Curtea de Apel Cluj la 18 decembrie 2015 într-un dosar DNA de abuz în serviciu și fals, cu un prejudiciu invocat de peste 2 milioane de euro; a condus Consiliul Județean Vrancea între 2000 și 2020."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#4a3a2a",
+        "skin": "#eac09e",
+        "glasses": false,
+        "facial": "none",
+        "suit": "#26354d",
+        "tie": "#c8a415"
+      }
+    },
+    {
+      "id": "alexe",
+      "name": "Costel Alexe",
+      "party": null,
+      "role": "Președinte al Consiliului Județean Iași",
+      "scenarios": {
+        "2026": {}
+      },
+      "stats": {
+        "charisma": 50,
+        "patience": 50,
+        "malleability": 45,
+        "gaffes": 30,
+        "visibility": 45,
+        "corruption": 35,
+        "traseism": 30
+      },
+      "ability": null,
+      "facts": [
+        "DNA l-a trimis în judecată la 20 iunie 2022 pentru luare de mită și instigare la delapidare, iar la 12 iulie 2022 pentru două infracțiuni de abuz în serviciu; în sursele consultate nu există o hotărâre definitivă."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#2a1f1a",
+        "skin": "#eac09e",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#2a3a4f",
+        "tie": "#3d4f7a"
+      }
     }
   ]
 }

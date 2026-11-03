@@ -305,6 +305,94 @@
       "date": "2010-09-27",
       "authority": "Guvernul României",
       "source": "ro.wikipedia.org/wiki/Vasile_Blaga (România Liberă, 27 septembrie 2010)"
+    },
+    {
+      "politician": "iacob-ridzi",
+      "fact": "A demisionat din funcția de ministră a Tineretului și Sportului la 14 iulie 2009",
+      "decision": "demisie",
+      "date": "2009-07-14",
+      "authority": "Guvernul României",
+      "source": "ro.wikipedia.org/wiki/Monica_Iacob-Ridzi (articolul indică 14 iulie 2009, dar și „câteva zile” după 23 iunie; de verificat data exactă)"
+    },
+    {
+      "politician": "iacob-ridzi",
+      "fact": "Condamnată definitiv la 5 ani de închisoare cu executare pentru abuz în serviciu",
+      "decision": "hotărâre definitivă",
+      "date": "2015-02-16",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Monica_Iacob-Ridzi („Sentința este definitivă”)"
+    },
+    {
+      "politician": "fenechiu",
+      "fact": "A demisionat din funcția de ministru al Transporturilor la 12 iulie 2013",
+      "decision": "demisie",
+      "date": "2013-07-12",
+      "authority": "Guvernul României",
+      "source": "ro.wikipedia.org/wiki/Relu_Fenechiu"
+    },
+    {
+      "politician": "fenechiu",
+      "fact": "Condamnat definitiv la 5 ani de închisoare cu executare pentru complicitate la abuz în serviciu",
+      "decision": "hotărâre definitivă",
+      "date": "2014-01-30",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Relu_Fenechiu"
+    },
+    {
+      "politician": "fenechiu",
+      "fact": "Acuzația din dosar: vânzarea, în 2002–2004",
+      "decision": "acuzație care a stat la baza hotărârii definitive",
+      "date": "2002–2004",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Relu_Fenechiu"
+    },
+    {
+      "politician": "voicu",
+      "fact": "Condamnat definitiv la 7 ani de închisoare cu executare pentru fapte de corupție",
+      "decision": "hotărâre definitivă",
+      "date": "2013-04-22",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/C%C4%83t%C4%83lin_Voicu (pedeapsa din 2012, de 5 ani, a fost mărită de Înalta Curte)"
+    },
+    {
+      "politician": "chereches",
+      "fact": "Condamnat definitiv la 5 ani de închisoare cu executare pentru luare de mită, la 24 noiembrie 2023",
+      "decision": "hotărâre definitivă",
+      "date": "2023-11-24",
+      "authority": "instanța de judecată",
+      "source": "ro.wikipedia.org/wiki/C%C4%83t%C4%83lin_Chereche%C8%99 (articolul nu numește instanța; de verificat pe portal.just.ro)"
+    },
+    {
+      "politician": "nichita",
+      "fact": "Condamnat definitiv la 5 ani de închisoare cu executare pentru luare de mită (Curtea de Apel București",
+      "decision": "hotărâre definitivă",
+      "date": "2020-08-05",
+      "authority": "Curtea de Apel București",
+      "source": "ro.wikipedia.org/wiki/Gheorghe_Nichita (două hotărâri definitive diferite, din 2020 și 2022; de verificat pe portal.just.ro)"
+    },
+    {
+      "politician": "nichita",
+      "fact": "Condamnat definitiv la 5 ani de închisoare cu executare într-un dosar de abuz în serviciu",
+      "decision": "hotărâre definitivă",
+      "date": "2022-08-30",
+      "authority": "Curtea de Apel Iași",
+      "source": "ro.wikipedia.org/wiki/Gheorghe_Nichita (de verificat pe portal.just.ro)"
+    },
+    {
+      "politician": "oprisan",
+      "fact": "Achitat definitiv de Curtea de Apel Cluj la 18 decembrie 2015",
+      "decision": "achitare definitivă",
+      "date": "2015-12-18",
+      "authority": "Curtea de Apel Cluj",
+      "source": "ro.wikipedia.org/wiki/Marian_Opri%C8%99an (respinge apelul DNA; „sentința fiind definitivă”)"
+    },
+    {
+      "politician": "alexe",
+      "fact": "DNA l-a trimis în judecată la 20 iunie 2022 pentru luare de mită",
+      "decision": "trimitere în judecată (acuzație, nu condamnare)",
+      "date": "2022-06-20",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Costel_Alexe (fost ministru al Mediului 2019–2020; fără hotărâre definitivă în sursa consultată)"
     }
   ]
 }
