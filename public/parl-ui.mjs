@@ -126,7 +126,7 @@ export function presView(S) {
   const iBacking = Object.values(p.backing).some((l) => l.includes(S.party));
   const canBack = p.toVote > 0 && p.toVote <= 120 && !iNominated && !iBacking && party.capital >= 5;
   const cands = p.candidates
-    .map((c) => `<div class="row between" style="padding:4px 0"><span>${pbadge(S, c.party)} ${esc(c.name)} ${c.nominated ? badge("candidat", "#2fbf8a") : ""}</span><span class="muted">${pct(c.share)} în sondaj</span></div>`)
+    .map((c) => `<div class="row between" style="padding:4px 0"><span>${pbadge(S, c.party)} ${esc(c.name)} ${c.nominated ? badge("candidat", "#2fbf8a") : ""}</span><span class="muted">${pct(c.share)} în sondaj${p.projected?.[c.party] != null && c.nominated ? ` · ${pct(p.projected[c.party])} estimare la alegeri` : ""}</span></div>`)
     .join("");
   const backBtns = p.nominated
     .filter((c) => c !== S.party)
@@ -138,6 +138,14 @@ export function presView(S) {
       return `<div class="row between" style="padding:5px 0;gap:8px"><span>${esc(x.title)} ${pbadge(S, x.from)}</span>${canCcr ? `<button class="btn2" data-do="ccr" data-id="${x.id}">Sesizează CCR (5 cap.)</button>` : badge(`până în ziua ${x.deadline}`, "#8d99ae")}</div>`;
     })
     .join("");
+  const coolOf = (k) => (P(S).cool[`pc:${S.party}:${k}`] ?? -1) > S.snap.day;
+  const campaign =
+    iNominated && p.toVote > 0
+      ? `<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px"><span class="muted">Campanie prezidențială:</span>
+          ${[["rally", "Miting", 1], ["debate", "Dezbatere", 0.6]].map(([k, l, c]) => `<button class="btn2" data-do="pres-camp" data-kind="${k}" ${coolOf(k) || party.funds < c ? "disabled" : ""}>${l} (${fmt(c, 1)} M€)</button>`).join("")}
+          ${p.nominated.filter((c) => c !== S.party).map((c) => `<button class="btn2" data-do="pres-camp" data-kind="attack" data-target="${c}" ${coolOf("attack") || party.funds < 0.8 ? "disabled" : ""}>Atac ${esc(pname(S, c))} (0,8 M€)</button>`).join("")}
+        </div>`
+      : "";
   const last = p.lastResult ? `Ultimele alegeri: ${pname(S, p.lastResult.winner)} (${p.lastResult.round === 1 ? "turul întâi" : "turul doi"}).` : "";
   return `${section("La Cotroceni", `
     <div class="row between" style="margin-bottom:8px"><span><b>${esc(presName)}</b> ${presParty}</span><span class="muted">${p.toVote > 0 ? `alegeri în ${num(p.toVote)} zile` : "alegerile sunt acum"}</span></div>
@@ -148,6 +156,7 @@ export function presView(S) {
       ${backBtns}
     </div>
     ${backing.length ? `<p class="muted" style="font-size:12px;margin:8px 0 0">Sprijin: ${backing.map(esc).join(" · ")}</p>` : ""}
+    ${campaign}
     ${pending ? `<div style="margin-top:10px">${pending}</div>` : ""}
   `, { sub: "Președintele promulgă legile, le poate retrimite în Parlament sau poate sesiza Curtea Constituțională. La o candidatură trebuie 2% în sondaje; partenerii pot da sprijin doar dacă relația e bună și programele apropiate." })}`;
 }
@@ -159,7 +168,7 @@ function courtView(S) {
   const offers = p.supportOffers
     .filter((o) => o.to === S.party)
     .map(
-      (o) => `<div class="row between" style="gap:8px;padding:5px 0"><div style="min-width:0"><b>${esc(o.title)}</b> ${pbadge(S, o.from)}<div class="muted" style="font-size:12px">Îți oferă ${fmt(o.money)} M€ și ${o.capital} capital politic ${o.want === "no" ? "ca să votezi împotrivă" : "pentru votul tău"}. Dacă accepți, votezi ${o.want === "no" ? "împotrivă" : "pentru"} și nu mai poți da înapoi.</div></div><div class="row" style="gap:6px"><button class="btn2 primary2" data-do="offer" data-id="${o.id}" data-accept="1">Acceptă</button><button class="btn2" data-do="offer" data-id="${o.id}" data-accept="0">Refuză</button></div></div>`,
+      (o) => `<div class="row between" style="gap:8px;padding:5px 0"><div style="min-width:0"><b>${esc(o.title)}</b> ${pbadge(S, o.from)}<div class="muted" style="font-size:12px">Îți oferă ${fmt(o.money, 1)} M€ și ${o.capital} capital politic ${o.want === "no" ? "ca să votezi împotrivă" : "pentru votul tău"}. Dacă accepți, votezi ${o.want === "no" ? "împotrivă" : "pentru"} și nu mai poți da înapoi.</div></div><div class="row" style="gap:6px"><button class="btn2 primary2" data-do="offer" data-id="${o.id}" data-accept="1">Acceptă</button><button class="btn2" data-do="offer" data-id="${o.id}" data-accept="0">Refuză</button></div></div>`,
     )
     .join("");
   const poach = p.recruit.poach;
@@ -167,8 +176,8 @@ function courtView(S) {
   const cooling = (p.cool[`recruit:${S.party}`] ?? -1) > S.snap.day;
   const targets = S.snap.partyIds.filter((id) => id !== S.party && (S.snap.parties[id].seats ?? 0) >= poach.minSeats && (p.cohesion[id] ?? 72) < poach.cohesionBelow);
   const buttons = [
-    `<button class="btn2 primary2" data-do="recruit" data-count="1" ${p.free > 0 && !cooling ? "" : "disabled"}>Recrutează un neafiliat (${pool.capital} cap., ${fmt(pool.money)} M€)</button>`,
-    ...targets.map((id) => `<button class="btn2" data-do="recruit" data-from="${id}" data-count="1" ${cooling ? "disabled" : ""}>Atrage un parlamentar ${esc(pname(S, id))} (${poach.capital} cap., ${fmt(poach.money)} M€)</button>`),
+    `<button class="btn2 primary2" data-do="recruit" data-count="1" ${p.free > 0 && !cooling ? "" : "disabled"}>Recrutează un neafiliat (${pool.capital} cap., ${fmt(pool.money, 1)} M€)</button>`,
+    ...targets.map((id) => `<button class="btn2" data-do="recruit" data-from="${id}" data-count="1" ${cooling ? "disabled" : ""}>Atrage un parlamentar ${esc(pname(S, id))} (${poach.capital} cap., ${fmt(poach.money, 1)} M€)</button>`),
   ].join(" ");
   return `${section("Oferte și recrutare", `
     ${offers ? `<div style="margin-bottom:10px">${offers}</div>` : `<p class="muted" style="margin:0 0 8px;font-size:12px">Nicio ofertă de sprijin acum. Partidele care depun legi pe care nu le-ai vota singur îți pot oferi bani și capital.</p>`}
@@ -187,7 +196,7 @@ function instrumentsView(S) {
       const cooling = until > S.snap.day;
       const ok = !cooling && party.capital >= i.cost && party.funds >= i.funds;
       const why = cooling ? `din ziua ${until}` : party.capital < i.cost ? `lipsesc ${Math.round((i.cost - party.capital) * 10) / 10} capital` : "";
-      return `<div class="row between" style="gap:8px;padding:6px 0"><div style="min-width:0"><b>${esc(i.name)}</b><div class="muted" style="font-size:12px">${esc(i.text)}</div><div style="font-size:12px">${i.cost} cap. · ${fmt(i.funds)} M€ · pauză ${i.cooldown} zile${why ? ` · ${why}` : ""}</div></div><button class="btn2" data-do="instrument" data-id="${i.id}" ${ok ? "" : "disabled"}>Folosește</button></div>`;
+      return `<div class="row between" style="gap:8px;padding:6px 0"><div style="min-width:0"><b>${esc(i.name)}</b><div class="muted" style="font-size:12px">${esc(i.text)}</div><div style="font-size:12px">${i.cost} cap. · ${fmt(i.funds, 1)} M€ · pauză ${i.cooldown} zile${why ? ` · ${why}` : ""}</div></div><button class="btn2" data-do="instrument" data-id="${i.id}" ${ok ? "" : "disabled"}>Folosește</button></div>`;
     })
     .join("");
   return section("Instrumente mari", `<div>${cards}</div>`, { sub: "Capitalul politic acumulat se cheltuiește aici: efecte mai mari decât o campanie, dar mai rare." });

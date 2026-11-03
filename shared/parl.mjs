@@ -5,7 +5,7 @@
 import { clamp, rand, log, round, partyDef, senateMapFrom, SENATE_MAJORITY } from "./util.mjs";
 import { computePoll, applyEffects } from "./engine.mjs";
 import { fallGovernment } from "./gov.mjs";
-import { queueLaw, challengeCCR, nominate, backCandidate } from "./presidency.mjs";
+import { queueLaw, challengeCCR, nominate, backCandidate, presCampaign } from "./presidency.mjs";
 
 const MAJORITY = 166;
 const LAW_DAYS = 12;
@@ -994,6 +994,7 @@ export function applyParl(state, data, partyId, a = {}) {
     case "courtesy": return courtesy(state, data, partyId, a.target);
     case "pres-run": return nominate(state, data, partyId);
     case "pres-back": return backCandidate(state, data, partyId, a.target);
+    case "pres-camp": return presCampaign(state, data, partyId, a.kind, a.target);
     case "ccr": return challengeCCR(state, data, partyId, a.id);
     case "merge-answer": return acceptMerge(state, data, partyId, a.from, a.accept !== false);
     case "shift": return shiftParty(state, data, partyId, { segment: a.segment, lean: a.lean });

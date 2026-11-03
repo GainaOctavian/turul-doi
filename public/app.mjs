@@ -1015,6 +1015,7 @@ function setupEvents() {
     if (d === "pres-run") parlDo({ type: "pres-run" });
     if (d === "pres-back") parlDo({ type: "pres-back", target: el.dataset.target });
     if (d === "ccr") parlDo({ type: "ccr", id: Number(el.dataset.id) });
+    if (d === "pres-camp") parlDo({ type: "pres-camp", kind: el.dataset.kind, target: el.dataset.target });
   });
   onPress(panel, "[data-quick]", (el) => {
     const type = el.dataset.quick;
@@ -1157,6 +1158,7 @@ function setupDash() {
     "pres-run": () => parlDo({ type: "pres-run" }),
     "pres-back": (el) => parlDo({ type: "pres-back", target: el.dataset.target }),
     ccr: (el) => parlDo({ type: "ccr", id: Number(el.dataset.id) }),
+    "pres-camp": (el) => parlDo({ type: "pres-camp", kind: el.dataset.kind, target: el.dataset.target }),
     "parl-motion": () => parlDo({ type: "motion" }),
     "parl-vote": (el) => parlDo({ type: "vote", id: Number(el.dataset.id), vote: el.dataset.vote }),
     instrument: (el) => parlDo({ type: "instrument", id: el.dataset.id }),

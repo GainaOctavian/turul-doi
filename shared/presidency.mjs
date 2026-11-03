@@ -22,6 +22,7 @@ export function initPresidency(state, data, sc) {
     nextPending: 1,
     lastResult: null,
     returned: {},
+    boost: {},
   };
 }
 
@@ -40,14 +41,16 @@ export function candidateOf(state, partyId) {
 
 /* ------------------------------------------------------------ the election */
 
-export function runPresidentialElection(state, data) {
+// First-round shares of every runner: poll share, the candidate's charisma, the campaign boost,
+// and the 80% of their vote that backing partners hand over.
+export function presShares(state, data) {
   const poll = computePoll(state, data).national;
   const runners = state.partyIds.filter((p) => (poll[p] ?? 0) >= MIN_SHARE_TO_RUN || state.pres.nominated[p]);
   const score = {};
   for (const p of runners) {
     const id = candidateOf(state, p);
     if (!id) continue;
-    score[p] = (poll[p] ?? 0) * (0.85 + state.politicians[id].stats.charisma / 250);
+    score[p] = (poll[p] ?? 0) * (0.85 + state.politicians[id].stats.charisma / 250) * (1 + (state.pres.boost?.[p] ?? 0));
   }
   // Partners that back a candidate hand 80% of their vote over to it.
   for (const [cand, partners] of Object.entries(state.pres.backing)) {
@@ -60,7 +63,11 @@ export function runPresidentialElection(state, data) {
     }
   }
   const total = Object.values(score).reduce((a, b) => a + Math.max(0, b), 0) || 1;
-  const share = Object.fromEntries(Object.entries(score).map(([p, v]) => [p, Math.max(0, v) / total]));
+  return Object.fromEntries(Object.entries(score).map(([p, v]) => [p, Math.max(0, v) / total]));
+}
+
+export function runPresidentialElection(state, data) {
+  const share = presShares(state, data);
   const ranked = Object.entries(share).sort((a, b) => b[1] - a[1]);
   let winner = ranked[0]?.[0] ?? state.pres.president.party;
   let round1 = true;
@@ -83,6 +90,7 @@ export function runPresidentialElection(state, data) {
   state.pres.lastResult = { day: state.day, winner, round: round1 ? 1 : 2, shares: ranked.slice(0, 5).map(([p, v]) => [p, round(v, 3)]) };
   state.pres.nominated = {};
   state.pres.backing = {};
+  state.pres.boost = {};
   state.pres.electionDay += TERM_DAYS;
   log(state, "election", "Alegeri prezidențiale", `${(winner ?? "").toUpperCase()} a câștigat ${round1 ? "din primul tur" : "în turul al doilea"}. Președinte: ${state.politicians[id]?.name ?? "fără nume"}.`);
 }
@@ -129,11 +137,72 @@ export function backCandidate(state, data, partnerId, candidateParty) {
   return { ok: true, message: `Ai sprijinit candidatura ${candidateParty.toUpperCase()}.` };
 }
 
+/* ------------------------------------------------------------ the campaign */
+
+// Actions of a presidential campaign for a party that filed a candidacy. They shift the candidate's
+// score in the election (a boost between -30% and +50% of their share), and cost money.
+const CAMPAIGN = {
+  rally: { name: "Miting național", cost: 1.0, cooldown: 7 },
+  debate: { name: "Dezbatere televizată", cost: 0.6, cooldown: 10 },
+  attack: { name: "Atac la contracandidat", cost: 0.8, cooldown: 8 },
+};
+
+function addBoost(p, id, delta) {
+  p.boost ??= {};
+  p.boost[id] = round(clamp((p.boost[id] ?? 0) + delta, -0.3, 0.5), 3);
+}
+
+export function presCampaign(state, data, partyId, kind, target) {
+  const p = state.pres;
+  const def = CAMPAIGN[kind];
+  const party = state.parties[partyId];
+  if (!def || !party) return { ok: false, error: "Acțiune necunoscută." };
+  if (!p.nominated[partyId]) return { ok: false, error: "Campania cere o candidatură depusă." };
+  if (p.electionDay - state.day <= 0) return { ok: false, error: "Alegerile au avut loc." };
+  const key = `pc:${partyId}:${kind}`;
+  const until = state.parl.cool[key] ?? -1;
+  if (until > state.day) return { ok: false, error: `Din nou în ziua ${until}.` };
+  if (party.funds < def.cost) return { ok: false, error: `${def.name} costă ${def.cost} M€.` };
+  if (kind === "attack" && (!target || target === partyId || !p.nominated[target])) return { ok: false, error: "Alege un alt candidat." };
+  party.funds = round(party.funds - def.cost, 2);
+  state.parl.cool[key] = state.day + def.cooldown;
+  const cand = state.politicians[candidateOf(state, partyId)];
+  const name = cand?.name ?? partyId.toUpperCase();
+  if (kind === "rally") {
+    addBoost(p, partyId, 0.04);
+    log(state, "election", "Miting prezidențial", `${name} a strâns o sală plină. Ce a spus, nu mai contează; sala a contat.`);
+    return { ok: true, message: "Miting: scorul candidatului crește cu 4%." };
+  }
+  if (kind === "debate") {
+    const gain = 0.015 + (cand?.stats.charisma ?? 50) / 4000;
+    addBoost(p, partyId, gain);
+    log(state, "election", "Dezbatere televizată", `${name} a ieșit bine din dezbatere, după părerea propriului partid.`);
+    return { ok: true, message: `Dezbatere: scorul crește cu ${(gain * 100).toFixed(1).replace(".", ",")}% (după carisma candidatului).` };
+  }
+  // An attack on a rival: 30% of the time it backfires.
+  if (rand(state) < 0.3) {
+    addBoost(p, partyId, -0.02);
+    log(state, "scandal", "Atacul s-a întors", `Atacul lui ${name} la adresa lui ${target.toUpperCase()} a fost primit prost, mai ales de cei care nu-l văzuseră.`);
+    return { ok: true, message: "Atacul s-a întors: scorul tău scade cu 2%." };
+  }
+  addBoost(p, target, -0.04);
+  addRel(state, data, partyId, target, -6);
+  log(state, "election", "Atac în campanie", `${name} îl atacă pe candidatul ${target.toUpperCase()}; sondajele iau notă.`);
+  return { ok: true, message: `Atac reușit: scorul lui ${target.toUpperCase()} scade cu 4%.` };
+}
+
 // Parties without a human at the keyboard decide their own candidacies and partners.
 function aiCampaignMoves(state, data) {
   const p = state.pres;
   const toVote = p.electionDay - state.day;
   const poll = computePoll(state, data).national;
+  // Nominated AI parties campaign now and then, on their own.
+  if (toVote > 0 && toVote <= NOMINATION_WINDOW) {
+    for (const id of Object.keys(p.nominated)) {
+      if (state.humans.includes(id) || rand(state) > 0.05) continue;
+      addBoost(p, id, 0.03);
+    }
+  }
   if (toVote <= NOMINATION_WINDOW && toVote > NOMINATION_WINDOW - 1) {
     for (const id of state.partyIds) {
       if (state.humans.includes(id) || p.nominated[id]) continue;
@@ -285,6 +354,8 @@ export function presSnapshot(state, data) {
     toVote: Math.max(0, p.electionDay - state.day),
     nominated: Object.keys(p.nominated),
     backing: p.backing,
+    boost: p.boost ?? {},
+    projected: Object.fromEntries(Object.entries(presShares(state, data)).map(([k, v]) => [k, round(v, 3)])),
     candidates: state.partyIds
       .filter((id) => candidateOf(state, id))
       .map((id) => ({ party: id, name: state.politicians[candidateOf(state, id)].name, nominated: !!p.nominated[id], share: round(poll[id] ?? 0, 4) })),

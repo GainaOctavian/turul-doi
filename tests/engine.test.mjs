@@ -656,7 +656,9 @@ test("AI parliaments pass laws over four years and stay consistent", () => {
   const laws = state.log.filter((l) => l.title.startsWith("Lege adoptată"));
   assert.ok(laws.length >= 8, `laws ${laws.length}`);
   const titles = laws.map((l) => l.title);
-  assert.equal(new Set(titles).size >= titles.length - 2, true, "few repeats");
+  // A law the president sends back is voted, and logged as adopted, a second time: that is not a repeat.
+  const returned = state.log.filter((l) => l.title.startsWith("Retrimisă")).length;
+  assert.equal(new Set(titles).size >= titles.length - 2 - returned, true, `few repeats (${titles.length} adopted, ${new Set(titles).size} unique, ${returned} returned)`);
   for (const id of state.partyIds) assert.ok(state.parties[id] && state.leaders[id] !== undefined, id);
   const seats = state.partyIds.reduce((s, id) => s + state.parties[id].seats, 0);
   assert.equal(seats + state.parl.free + state.config.minoritySeats, state.config.totalSeats);
@@ -1193,6 +1195,44 @@ test("a coalition offer can carry money and political capital, paid when you acc
   assert.equal(Math.round((state.parties.usr.funds - funds) * 10) / 10, 1.5);
   assert.equal(state.parties.usr.capital - cap, 4);
   assert.equal(state.parties.psd.funds, 18.5);
+});
+
+test("a presidential campaign: rally, debate and attack shift the projected result; boosts reset after the vote", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.funds = 20;
+  state.parties.usr.capital = 60;
+  assert.equal(applyParl(state, data, "usr", { type: "pres-camp", kind: "rally" }).ok, false, "no campaign without a candidacy");
+  state.day = state.pres.electionDay - 100;
+  assert.equal(applyParl(state, data, "usr", { type: "pres-run" }).ok, true);
+  state.pres.nominated.pnl = true;
+  const before = snapshot(state, data).pres.projected.usr;
+  assert.ok(before > 0, "the projection exists");
+  const rally = applyParl(state, data, "usr", { type: "pres-camp", kind: "rally" });
+  assert.equal(rally.ok, true, rally.error);
+  assert.equal(state.pres.boost.usr, 0.04);
+  assert.equal(state.parties.usr.funds, 17.5, "20 M€ minus the candidacy's 1.5 and the rally's 1");
+  assert.ok(snapshot(state, data).pres.projected.usr > before, "the rally lifts the projected share");
+  assert.equal(applyParl(state, data, "usr", { type: "pres-camp", kind: "rally" }).ok, false, "cooldown");
+  const debate = applyParl(state, data, "usr", { type: "pres-camp", kind: "debate" });
+  assert.equal(debate.ok, true, debate.error);
+  assert.ok(state.pres.boost.usr > 0.04 + 0.015, "the debate adds more for a charismatic candidate");
+  assert.equal(applyParl(state, data, "usr", { type: "pres-camp", kind: "attack", target: "usr" }).ok, false, "not against yourself");
+  let hit = false;
+  let backfire = false;
+  for (let i = 0; i < 30 && !(hit && backfire); i += 1) {
+    state.parl.cool["pc:usr:attack"] = 0;
+    state.parties.usr.funds = 20;
+    const own = state.pres.boost.usr;
+    const res = applyParl(state, data, "usr", { type: "pres-camp", kind: "attack", target: "pnl" });
+    assert.equal(res.ok, true, res.error);
+    if (state.pres.boost.usr < own) backfire = true;
+    else hit = true;
+  }
+  assert.ok(hit && backfire, "an attack mostly lands, sometimes backfires");
+  assert.ok(state.pres.boost.pnl >= -0.3 && state.pres.boost.pnl < 0, "the target's boost is negative and bounded");
+  state.day = state.pres.electionDay;
+  runPresidentialElection(state, data);
+  assert.deepEqual(state.pres.boost, {}, "campaign boosts reset after the vote");
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {

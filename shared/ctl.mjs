@@ -65,6 +65,7 @@ export const HELP = `turul-doi ctl
   shift <categorie|left|right>  mută direcția partidului
   president                 președintele, candidaturile, sprijinul și legile la Cotroceni
   pres-run                  depune candidatura (ultimele 150 de zile)
+  pres-camp <tip> [partid]  campanie prezidențială: rally (miting), debate (dezbatere), attack <partid> (atac)
   pres-back <partid>        susține o candidatură propusă
   recruit [partid|-] [nr]    recrutează parlamentari (neafiliați cu -, sau de la un rival cu grup șubred)
   offers                    ofertele de sprijin primite
@@ -504,6 +505,12 @@ export function createCtl(data, opts = {}) {
       case "pres-run": {
         if (need()) return need();
         const res = applyParl(state, data, me(), { type: "pres-run" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "pres-camp": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "pres-camp", kind: args[0], target: args[1] });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
