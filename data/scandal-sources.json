@@ -1,0 +1,310 @@
+{
+  "note": "Each entry ties a politicians.json fact to the decision it reports. Sources are Wikipedia (ro) citing press (Adevărul, HotNews, Digi24, Agerpres, G4Media) and court or DNA communiqués. Primary decisions are NOT yet checked on portal.just.ro / scj.ro; verify before a release. Conflicting dates are flagged in the source text.",
+  "checked": "2026-11-03",
+  "entries": [
+    {
+      "politician": "firea",
+      "fact": "În 2017 a înființat 22 de companii municipale",
+      "decision": "hotărâre definitivă",
+      "date": "2019",
+      "authority": "instanța de judecată",
+      "source": "Europa Liberă România, „Decizie definitivă: companiile municipale ale Gabrielei Firea sunt ilegale” (citat în ro.wikipedia.org/wiki/Gabriela_Firea)"
+    },
+    {
+      "politician": "firea",
+      "fact": "A pierdut definitiv 5 procese",
+      "decision": "hotărâri definitive",
+      "date": "2017–2020",
+      "authority": "instanțele de judecată",
+      "source": "ro.wikipedia.org/wiki/Gabriela_Firea (procese cu presa; Nicușor Dan a renunțat la restul)"
+    },
+    {
+      "politician": "tariceanu",
+      "fact": "Achitat definitiv de Înalta Curte în trei dosare",
+      "decision": "achitări definitive",
+      "date": "2019–2025",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Călin_Popescu-Tăriceanu (secțiunea Acuzații de corupție)"
+    },
+    {
+      "politician": "oprescu",
+      "fact": "Condamnat la 10 ani și 8 luni",
+      "decision": "hotărâre definitivă",
+      "date": "2022–2025",
+      "authority": "Curtea de Apel București; Înalta Curte",
+      "source": "ro.wikipedia.org/wiki/Sorin_Oprescu (Digi24, Agerpres, Adevărul; pedeapsa a fost redusă cu un an în apel, iar ÎCCJ a confirmat în decembrie 2025: de verificat pe portal)"
+    },
+    {
+      "politician": "becali",
+      "fact": "Condamnat definitiv la 3 ani de închisoare cu executare, în dosarul schimbului de terenuri",
+      "decision": "hotărâre definitivă",
+      "date": "2013-05-20",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Gigi_Becali (realitatea.net, „Verdict final în dosarul terenurilor”)"
+    },
+    {
+      "politician": "becali",
+      "fact": "Condamnat definitiv pentru dare de mită și fals",
+      "decision": "hotărâre definitivă",
+      "date": "2013-06-04",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Gigi_Becali (dosarul „Valiza”, stiri.tvr.ro)"
+    },
+    {
+      "politician": "becali",
+      "fact": "Condamnat cu suspendare pentru lipsire ilegală",
+      "decision": "hotărâre definitivă",
+      "date": "2013-02-11",
+      "authority": "instanța de judecată",
+      "source": "ro.wikipedia.org/wiki/Gigi_Becali (Ziarul Financiar)"
+    },
+    {
+      "politician": "udrea",
+      "fact": "Condamnată definitiv la 6 ani",
+      "decision": "hotărâre definitivă",
+      "date": "2018-06-05",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Elena_Udrea (Adevărul, 5 iunie 2018). De verificat: aceeași pagină datează și o condamnare definitivă în 2022, în alt context"
+    },
+    {
+      "politician": "udrea",
+      "fact": "Arestată în Bulgaria în 2022",
+      "decision": "extrădare",
+      "date": "2022-06-16",
+      "authority": "instanțele din Bulgaria",
+      "source": "ro.wikipedia.org/wiki/Elena_Udrea (eliberarea condiționată, iulie 2025)"
+    },
+    {
+      "politician": "mazare",
+      "fact": "Condamnat definitiv la 9 ani",
+      "decision": "hotărâre definitivă",
+      "date": "2019-02-08",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Radu_Mazăre (Adevărul, „Verdict definitiv al ÎCCJ”)"
+    },
+    {
+      "politician": "mazare",
+      "fact": "În 2006, Tribunalul Constanța a anulat",
+      "decision": "hotărâre",
+      "date": "2006-01-20",
+      "authority": "Tribunalul Constanța",
+      "source": "ro.wikipedia.org/wiki/Radu_Mazăre (administratie Constanța, 20 ianuarie 2006)"
+    },
+    {
+      "politician": "sova",
+      "fact": "Achitat definitiv de Înalta Curte în dosarul contractelor",
+      "decision": "achitare definitivă",
+      "date": "2023-12-29",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Dan_Șova (secțiunea Procesele de corupție)"
+    },
+    {
+      "politician": "sova",
+      "fact": "Înalta Curte a anulat condamnarea",
+      "decision": "hotărâre (prescripție)",
+      "date": "2026-02-17",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Dan_Șova (Radio România, HotNews)"
+    },
+    {
+      "politician": "gabriel-oprea",
+      "fact": "Trimis în judecată de DNA în 2016",
+      "decision": "trimitere în judecată",
+      "date": "2016-05-11",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Gabriel_Oprea (Adevărul, HotNews)"
+    },
+    {
+      "politician": "gabriel-oprea",
+      "fact": "În septembrie 2016, Senatul a votat",
+      "decision": "vot în Senat",
+      "date": "2016-09-19",
+      "authority": "Senatul României",
+      "source": "ro.wikipedia.org/wiki/Gabriel_Oprea (Adevărul, Deutsche Welle)"
+    },
+    {
+      "politician": "gabriel-oprea",
+      "fact": "În 2016, CNATDCU a stabilit",
+      "decision": "verdict de plagiat",
+      "date": "2016",
+      "authority": "CNATDCU",
+      "source": "ro.wikipedia.org/wiki/Gabriel_Oprea (Mediafax, Republica)"
+    },
+    {
+      "politician": "gabriel-oprea",
+      "fact": "Achitat definitiv în 2023",
+      "decision": "achitare definitivă",
+      "date": "2023-07-26",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Gabriel_Oprea (G4Media)"
+    },
+    {
+      "politician": "ponta",
+      "fact": "Trimis în judecată în 2015 împreună cu Dan Șova",
+      "decision": "achitare definitivă",
+      "date": "2023-12-28",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Victor_Ponta (secțiunea Procesul de corupție; Agerpres)"
+    },
+    {
+      "politician": "cuc",
+      "fact": "Trimis în judecată de DNA în februarie 2026",
+      "decision": "trimitere în judecată (acuzație, fără hotărâre)",
+      "date": "2026-02-05",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Alexandru-Răzvan_Cuc (Digi24)"
+    },
+    {
+      "politician": "sebastian-ghita",
+      "fact": "Trimis în judecată în 2002 în dosarul",
+      "decision": "prescripție constatată definitiv",
+      "date": "2016-03-03",
+      "authority": "Curtea de Apel București",
+      "source": "ro.wikipedia.org/wiki/Sebastian_Ghiță (Evenimentul zilei, 14 noiembrie 2011 pentru trimiterea în judecată)"
+    },
+    {
+      "politician": "sebastian-ghita",
+      "fact": "Trimis în judecată de DNA în 2016",
+      "decision": "achitare definitivă",
+      "date": "2019-06-28",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Sebastian_Ghiță (secțiunea Controverse)"
+    },
+    {
+      "politician": "sebastian-ghita",
+      "fact": "În septembrie 2016 s-a autodenunțat",
+      "decision": "declarație publică (autodenunț)",
+      "date": "2016-09-27",
+      "authority": "Parchet (sesizare)",
+      "source": "ro.wikipedia.org/wiki/Sebastian_Ghiță (Mediafax, 27 septembrie 2016)"
+    },
+    {
+      "politician": "sebastian-ghita",
+      "fact": "Reținut în Belgrad în aprilie 2017",
+      "decision": "reținere (arest preventiv, apoi arest la domiciliu)",
+      "date": "2017-04-14",
+      "authority": "autoritățile sârbe și române",
+      "source": "ro.wikipedia.org/wiki/Sebastian_Ghiță (PRO TV, 29 mai 2017)"
+    },
+    {
+      "politician": "sebastian-ghita",
+      "fact": "Trimis în judecată de DNA în 2022",
+      "decision": "trimitere în judecată (acuzație, fără hotărâre)",
+      "date": "2022-10-17",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Sebastian_Ghiță (Libertatea, 19 octombrie 2022)"
+    },
+    {
+      "politician": "basescu",
+      "fact": "În aprilie 2007 Parlamentul l-a suspendat",
+      "decision": "vot în Parlament, apoi referendum",
+      "date": "2007-04-19",
+      "authority": "Parlamentul României",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (Stiri Kappa, 19 aprilie 2007; referendumul din 19 mai 2007 e menționat pe ro.wikipedia.org/wiki/Victor_Ponta)"
+    },
+    {
+      "politician": "voiculescu",
+      "fact": "Condamnat la 10 ani de închisoare",
+      "decision": "hotărâre definitivă",
+      "date": "2014-08-08",
+      "authority": "Curtea de Apel București",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (Mediafax, 8 august 2014; eliberare condiționată: Ziare.com, 18 iulie 2017)"
+    },
+    {
+      "politician": "voiculescu",
+      "fact": "Instanțele au confirmat decizia CNSAS",
+      "decision": "hotărâri definitive",
+      "date": "2011-03",
+      "authority": "Curtea de Apel București; Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (România Liberă, 10 martie 2011; Evenimentul Zilei, 9 iunie 2010)"
+    },
+    {
+      "politician": "voiculescu",
+      "fact": "Condamnat în primă instanță în 2016",
+      "decision": "hotărâre de primă instanță, apoi achitare la apel",
+      "date": "2016-05-12",
+      "authority": "Curtea de Apel București; Înalta Curte",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (Mediafax, 12 mai 2016; Digi24)"
+    },
+    {
+      "politician": "voiculescu",
+      "fact": "În septembrie 2025, Înalta Curte a stabilit definitiv",
+      "decision": "hotărâre definitivă",
+      "date": "2025-09-11",
+      "authority": "Înalta Curte de Casație și Justiție",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (Juridice.ro, 13 septembrie 2025)"
+    },
+    {
+      "politician": "voiculescu",
+      "fact": "În aprilie 2007, comisia condusă de el",
+      "decision": "vot în Parlament",
+      "date": "2007-04-19",
+      "authority": "Parlamentul României",
+      "source": "ro.wikipedia.org/wiki/Dan_Voiculescu_(politician) (Stiri Kappa, DCNews)"
+    },
+    {
+      "politician": "diaconescu",
+      "fact": "Condamnat definitiv la 5 ani și 6 luni",
+      "decision": "hotărâre definitivă",
+      "date": "2015-03-04",
+      "authority": "Curtea de Apel București",
+      "source": "ro.wikipedia.org/wiki/Dan_Diaconescu (note 7 și 8, 4 martie 2015)"
+    },
+    {
+      "politician": "diaconescu",
+      "fact": "În 2012 a câștigat licitația pentru Oltchim",
+      "decision": "decizie a Guvernului",
+      "date": "2012-10-01",
+      "authority": "Guvernul României",
+      "source": "ro.wikipedia.org/wiki/Dan_Diaconescu (Gândul, 28 septembrie 2012)"
+    },
+    {
+      "politician": "diaconescu",
+      "fact": "Consiliul Național al Audiovizualului a retras",
+      "decision": "decizie CNA și hotărâre de instanță",
+      "date": "2013-04-03",
+      "authority": "CNA; Curtea de Apel București",
+      "source": "ro.wikipedia.org/wiki/Dan_Diaconescu (secțiunea OTV)"
+    },
+    {
+      "politician": "hrebenciuc",
+      "fact": "Achitat definitiv în 2017",
+      "decision": "achitare definitivă",
+      "date": "2017-07-05",
+      "authority": "instanța de judecată",
+      "source": "ro.wikipedia.org/wiki/Viorel_Hrebenciuc (Antena 3, 5 iulie 2017; Gândul, 12 ianuarie 2012)"
+    },
+    {
+      "politician": "hrebenciuc",
+      "fact": "Condamnat definitiv la 3 ani",
+      "decision": "hotărâre definitivă",
+      "date": "2021-09-14",
+      "authority": "instanța de judecată",
+      "source": "ro.wikipedia.org/wiki/Viorel_Hrebenciuc (RFI România, 14 septembrie 2021). De verificat: aceeași pagină datează și o condamnare definitivă la 2 ani în noiembrie 2023, posibil în același dosar"
+    },
+    {
+      "politician": "hrebenciuc",
+      "fact": "Trimis în judecată de DNA în 2015",
+      "decision": "trimitere în judecată (acuzație)",
+      "date": "2015-01-22",
+      "authority": "DNA",
+      "source": "ro.wikipedia.org/wiki/Viorel_Hrebenciuc"
+    },
+    {
+      "politician": "blaga",
+      "fact": "Trimis în judecată de DNA în noiembrie 2016",
+      "decision": "trimitere în judecată, apoi achitare",
+      "date": "2016-11-28",
+      "authority": "DNA; instanța de judecată",
+      "source": "ro.wikipedia.org/wiki/Vasile_Blaga (Digi24 și Ebihoreanul.ro, iulie 2019). De verificat dacă achitarea e definitivă"
+    },
+    {
+      "politician": "blaga",
+      "fact": "A demisionat din funcția de ministru de interne",
+      "decision": "demisie",
+      "date": "2010-09-27",
+      "authority": "Guvernul României",
+      "source": "ro.wikipedia.org/wiki/Vasile_Blaga (România Liberă, 27 septembrie 2010)"
+    }
+  ]
+}

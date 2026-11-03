@@ -46,6 +46,32 @@ node tools/sim.mjs 2026 4   # simulare AI de reglaj pentru economie
 - Partidele pot fi create, fuzionate sau modificate în timpul jocului (`state.defs`, `partyDef()` din `shared/util.mjs`): nu citi partidul direct din `data.parties`.
 - Editează fișierele cu scripturi node sau cu tool-urile de editare, nu cu `Get-Content`/`Set-Content` (PowerShell 5.1 strică diacriticele).
 
+## Legislație (surse pentru legi)
+
+Legile din joc (`data/bills.json`) se sprijină pe acte reale, citite din corpusul
+`github.com/lexifina/romania-law` (actualizat zilnic). Unealta e `tools/law.mjs`:
+
+```bash
+node tools/law.mjs sync && node tools/law.mjs clone   # index + clone superficial în .cache/ (gitignored)
+node tools/law.mjs find --kind lege --text "cod"      # căutare în index (titlurile sunt doar numere)
+node tools/law.mjs get 176/2010 --articles 3          # rândul din index + primele articole
+node tools/law.mjs brief lege/2016/184 oug/2011/109   # subiectul, dintr-o privire
+node tools/law.mjs grep "conflict de interese"        # full-text în articolele în vigoare
+node tools/law.mjs repeals 571/2004                   # abrogări implicite (indexul le ratează)
+node tools/law.mjs check                              # verifică data/law-sources.json
+node tools/bills-law.mjs                              # reconstruiește surse + legi din lot
+```
+
+- Nu te baza pe `status` din index: lipsesc abrogările implicite (Legea 571/2004 apare „in force”,
+  dar art. 37 din Legea 361/2022 o abrogă) și „amending act” e o euristică. Rulează `repeals`.
+- `data/law-sources.json`: actele verificate (`sources`) și capcanele (`retired`). O lege din
+  joc primește `source: {slug, note}`; testele refuză surse necunoscute sau retrase.
+- Previzualizările (`previewAction`) rulează o acțiune pe o copie a stării și raportează diferența în pp; nu cheltuiesc nimic. Folosește-le în loc să duplici logica de efect în UI.
+- Echilibrul (erodarea guvernării, estomparea creditului) e în `balanceMonthly`; folosește `data.config.balance = false` în teste care compară două jocuri.
+- Tonul legilor e profesionist, fără glume; doar știrile pot fi amuzante.
+- Scandalurile din `politicians.json` au fiecare o intrare în `data/scandal-sources.json` (decizia, data, autoritatea, sursa).
+  Testul verifică că faptul există în joc. Sursele sunt Wikipedia citând presa și comunicatele; decizia primară (portal.just.ro, scj.ro) trebuie verificată înainte de lansare.
+
 ## Personal conventions
 
 - Claude doesn't commit by default (side sessions and worktrees included) and doesn't offer to. When work is ready, give the user the commit message; the user commits, and Claude may check the result with read-only git (`git log`, `git show`, `git status`). Only when the user explicitly asks Claude to commit does Claude make that commit. Never push or merge. No `Co-Authored-By` or any Claude attribution in messages.

@@ -1,0 +1,413 @@
+{
+  "note": "Curated acts the game cites. Rebuild with tools/bills-law.mjs; verify with tools/law.mjs check.",
+  "sources": [
+    {
+      "slug": "codul-penal",
+      "path": "lege/2009/286",
+      "ref": "Legea nr. 286/2009",
+      "topic": "Codul penal: infracțiuni de corupție (art. 289 luarea de mită 3-10 ani, 291 traficul de influență 2-7, 295 delapidarea 2-7, 297 abuzul în serviciu, 301 conflictul de interese 1-5)",
+      "latest": "2026-04-26",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/109855",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "codul-procedura-penala",
+      "path": "lege/2010/135",
+      "ref": "Legea nr. 135/2010",
+      "topic": "Codul de procedură penală",
+      "latest": "2026-06-13",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/120611",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-78-2000",
+      "path": "lege/2000/78",
+      "ref": "Legea nr. 78/2000",
+      "topic": "Prevenirea, descoperirea și sancționarea faptelor de corupție",
+      "latest": "2022-07-23",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/22361",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-176-2010",
+      "path": "lege/2010/176",
+      "ref": "Legea nr. 176/2010",
+      "topic": "Integritatea în exercitarea funcțiilor și demnităților publice: declarații de avere și interese, ANI (indexul îl marchează ca act modificator, dar conține regimul de bază)",
+      "latest": "2025-11-22",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/303284",
+      "verified": "2026-11-03",
+      "statusNote": "indexul îl etichetează «amending act» (euristică); textul de bază a fost citit și e în vigoare"
+    },
+    {
+      "slug": "legea-361-2022",
+      "path": "lege/2022/361",
+      "ref": "Legea nr. 361/2022",
+      "topic": "Protecția avertizorilor în interes public; abrogă Legea 571/2004 (art. 37)",
+      "latest": "2023-03-31",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/262872",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-544-2001",
+      "path": "lege/2001/544",
+      "ref": "Legea nr. 544/2001",
+      "topic": "Accesul la informațiile de interes public",
+      "latest": "2016-07-17",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/31413",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-52-2003",
+      "path": "lege/2003/52",
+      "ref": "Legea nr. 52/2003",
+      "topic": "Transparența decizională în administrația publică",
+      "latest": "2022-03-02",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/41571",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-98-2016",
+      "path": "lege/2016/98",
+      "ref": "Legea nr. 98/2016",
+      "topic": "Achiziții publice",
+      "latest": "2026-01-01",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/178667",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-99-2016",
+      "path": "lege/2016/99",
+      "ref": "Legea nr. 99/2016",
+      "topic": "Achiziții sectoriale",
+      "latest": "2024-05-24",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/178661",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-100-2016",
+      "path": "lege/2016/100",
+      "ref": "Legea nr. 100/2016",
+      "topic": "Concesiuni de lucrări și de servicii",
+      "latest": "2024-11-17",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/178689",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-184-2016",
+      "path": "lege/2016/184",
+      "ref": "Legea nr. 184/2016",
+      "topic": "Prevenirea conflictului de interese în achiziții publice (verificare ex ante)",
+      "latest": "2017-06-20",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/182744",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "oug-109-2011",
+      "path": "oug/2011/109",
+      "ref": "OUG nr. 109/2011",
+      "topic": "Guvernanța corporativă a întreprinderilor publice",
+      "latest": "2025-12-09",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/304455",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-318-2015",
+      "path": "lege/2015/318",
+      "ref": "Legea nr. 318/2015",
+      "topic": "Agenția Națională de Administrare a Bunurilor Indisponibilizate",
+      "latest": "2023-07-14",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/174284",
+      "verified": "2026-11-03",
+      "statusNote": "indexul îl etichetează «amending act» (euristică); textul de bază a fost citit și e în vigoare"
+    },
+    {
+      "slug": "legea-129-2019",
+      "path": "lege/2019/129",
+      "ref": "Legea nr. 129/2019",
+      "topic": "Prevenirea și combaterea spălării banilor și a finanțării terorismului",
+      "latest": "2025-10-26",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/216157",
+      "verified": "2026-11-03",
+      "statusNote": "indexul îl etichetează «amending act» (euristică); textul de bază a fost citit și e în vigoare"
+    },
+    {
+      "slug": "legea-70-2015",
+      "path": "lege/2015/70",
+      "ref": "Legea nr. 70/2015",
+      "topic": "Încasări și plăți în numerar: limite pentru persoane juridice și PFA",
+      "latest": "2026-01-01",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/167088",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-334-2006",
+      "path": "lege/2006/334",
+      "ref": "Legea nr. 334/2006",
+      "topic": "Finanțarea partidelor politice și a campaniilor electorale",
+      "latest": "2020-09-19",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/73672",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-14-2003",
+      "path": "lege/2003/14",
+      "ref": "Legea nr. 14/2003",
+      "topic": "Partidele politice",
+      "latest": "2015-06-10",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/41241",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-208-2015",
+      "path": "lege/2015/208",
+      "ref": "Legea nr. 208/2015",
+      "topic": "Alegerea Senatului și a Camerei Deputaților; Autoritatea Electorală Permanentă",
+      "latest": "2024-10-08",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/170037",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-115-2015",
+      "path": "lege/2015/115",
+      "ref": "Legea nr. 115/2015",
+      "topic": "Alegeri locale",
+      "latest": "2023-07-27",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/168136",
+      "verified": "2026-11-03",
+      "statusNote": "indexul îl etichetează «amending act» (euristică); textul de bază a fost citit și e în vigoare"
+    },
+    {
+      "slug": "legea-370-2004",
+      "path": "lege/2004/370",
+      "ref": "Legea nr. 370/2004",
+      "topic": "Alegerea Președintelui României",
+      "latest": "2024-05-10",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/55481",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-47-1992",
+      "path": "lege/1992/47",
+      "ref": "Legea nr. 47/1992",
+      "topic": "Organizarea și funcționarea Curții Constituționale",
+      "latest": "2023-12-08",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/124149",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-303-2022",
+      "path": "lege/2022/303",
+      "ref": "Legea nr. 303/2022",
+      "topic": "Statutul judecătorilor și procurorilor (înlocuiește Legea 303/2004)",
+      "latest": "2026-03-02",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/261399",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-304-2022",
+      "path": "lege/2022/304",
+      "ref": "Legea nr. 304/2022",
+      "topic": "Organizarea judiciară (înlocuiește Legea 304/2004)",
+      "latest": "2025-12-31",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/261410",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-305-2022",
+      "path": "lege/2022/305",
+      "ref": "Legea nr. 305/2022",
+      "topic": "Consiliul Superior al Magistraturii (înlocuiește Legea 317/2004)",
+      "latest": "2023-10-31",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/261415",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "codul-administrativ",
+      "path": "oug/2019/57",
+      "ref": "OUG nr. 57/2019",
+      "topic": "Codul administrativ (înlocuiește Legea 188/1999 și Legea 7/2004)",
+      "latest": "2026-03-30",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/215925",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "codul-fiscal",
+      "path": "lege/2015/227",
+      "ref": "Legea nr. 227/2015",
+      "topic": "Codul fiscal",
+      "latest": "2026-08-08",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/171282",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-207-2015",
+      "path": "lege/2015/207",
+      "ref": "Legea nr. 207/2015",
+      "topic": "Codul de procedură fiscală",
+      "latest": "2026-02-25",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/170007",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "codul-muncii",
+      "path": "lege/2003/53",
+      "ref": "Legea nr. 53/2003",
+      "topic": "Codul muncii",
+      "latest": "2025-12-18",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/41627",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-360-2023",
+      "path": "lege/2023/360",
+      "ref": "Legea nr. 360/2023",
+      "topic": "Sistemul public de pensii (în vigoare din 1 septembrie 2024; înlocuiește Legea 263/2010)",
+      "latest": "2024-09-01",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/276927",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-198-2023",
+      "path": "lege/2023/198",
+      "ref": "Legea nr. 198/2023",
+      "topic": "Învățământul preuniversitar",
+      "latest": "2026-04-20",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/271896",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-199-2023",
+      "path": "lege/2023/199",
+      "ref": "Legea nr. 199/2023",
+      "topic": "Învățământul superior",
+      "latest": "2026-01-30",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/271898",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-95-2006",
+      "path": "lege/2006/95",
+      "ref": "Legea nr. 95/2006",
+      "topic": "Reforma în domeniul sănătății",
+      "latest": "2026-02-02",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/306816",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-123-2012",
+      "path": "lege/2012/123",
+      "ref": "Legea nr. 123/2012",
+      "topic": "Energia electrică și gazele naturale",
+      "latest": "2025-12-19",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/139677",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-273-2006",
+      "path": "lege/2006/273",
+      "ref": "Legea nr. 273/2006",
+      "topic": "Finanțele publice locale",
+      "latest": "2026-02-25",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/73527",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-500-2002",
+      "path": "lege/2002/500",
+      "ref": "Legea nr. 500/2002",
+      "topic": "Finanțele publice",
+      "latest": "2023-10-05",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/37954",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-69-2010",
+      "path": "lege/2010/69",
+      "ref": "Legea nr. 69/2010",
+      "topic": "Responsabilitatea fiscal-bugetară",
+      "latest": "2025-07-28",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/118059",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-416-2001",
+      "path": "lege/2001/416",
+      "ref": "Legea nr. 416/2001",
+      "topic": "Venitul minim garantat",
+      "latest": "2021-09-16",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/29731",
+      "verified": "2026-11-03"
+    },
+    {
+      "slug": "legea-17-2014",
+      "path": "lege/2014/17",
+      "ref": "Legea nr. 17/2014",
+      "topic": "Vânzarea terenurilor agricole din extravilan (indexul îl marchează ca act modificator)",
+      "latest": "2024-05-03",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/156290",
+      "verified": "2026-11-03",
+      "statusNote": "indexul îl etichetează «amending act» (euristică); textul de bază a fost citit și e în vigoare"
+    },
+    {
+      "slug": "legea-203-2015",
+      "path": "lege/2015/203",
+      "ref": "Legea nr. 203/2015",
+      "topic": "Planificarea apărării",
+      "latest": "2018-03-31",
+      "portal": "https://legislatie.just.ro/Public/DetaliiDocument/170048",
+      "verified": "2026-11-03"
+    }
+  ],
+  "retired": [
+    {
+      "ref": "571/2004",
+      "supersededBy": "361/2022",
+      "why": "abrogată prin art. 37 din Legea 361/2022"
+    },
+    {
+      "ref": "304/2004",
+      "supersededBy": "304/2022",
+      "why": "legile justiției din 2022 au înlocuit legile din 2004"
+    },
+    {
+      "ref": "317/2004",
+      "supersededBy": "305/2022",
+      "why": "CSM: lege nouă din 2022"
+    },
+    {
+      "ref": "303/2004",
+      "supersededBy": "303/2022",
+      "why": "statutul magistraților: lege nouă din 2022"
+    },
+    {
+      "ref": "188/1999",
+      "supersededBy": "57/2019 (oug)",
+      "why": "Codul administrativ"
+    },
+    {
+      "ref": "7/2004",
+      "supersededBy": "57/2019 (oug)",
+      "why": "Codul de conduită: preluat de Codul administrativ"
+    },
+    {
+      "ref": "263/2010",
+      "supersededBy": "360/2023",
+      "why": "pensii: lege nouă"
+    },
+    {
+      "ref": "115/1996",
+      "supersededBy": "176/2010",
+      "why": "declararea averii: articolul 1 e abrogat"
+    },
+    {
+      "ref": "144/2007",
+      "supersededBy": "176/2010",
+      "why": "ANI: articolul 1 e abrogat; regimul e în Legea 176/2010"
+    },
+    {
+      "ref": "161/2003",
+      "supersededBy": "78/2000, 176/2010",
+      "why": "lege-umbrelă golită prin abrogări; nu folosi titlurile ei"
+    }
+  ]
+}

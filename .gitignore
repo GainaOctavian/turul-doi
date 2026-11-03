@@ -5,3 +5,4 @@ docs/claude-plans/
 .openchamber/
 *.log
 .DS_Store
+.cache/

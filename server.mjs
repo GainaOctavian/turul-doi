@@ -15,6 +15,7 @@ import {
   acceptCoalition,
   applyParl,
   consumeRenamed,
+  previewAction,
   decide,
 } from "./shared/engine.mjs";
 import { createCtl } from "./shared/ctl.mjs";
@@ -224,6 +225,15 @@ const server = http.createServer(async (req, res) => {
         room.clients.delete(client);
       });
       return;
+    }
+
+    const preview = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/preview$/);
+    if (preview && req.method === "POST") {
+      const room = rooms.get(preview[1]);
+      if (!room) return json(res, 404, { error: "Cod inexistent." });
+      const payload = await body(req);
+      if (!room.state.humans.includes(payload.party)) return json(res, 403, { error: "Nu joci acest partid." });
+      return json(res, 200, previewAction(room.state, data, payload.party, payload.action || {}));
     }
 
     const action = path.match(/^\/api\/rooms\/([A-Z0-9]+)\/(action|gov|parl|coalition|accept|speed|decide)$/);

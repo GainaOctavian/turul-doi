@@ -4,7 +4,7 @@
 // Layers: this file = parties, polls, elections, events, campaign actions.
 // gov.mjs = budget, metrics, standard of living, cabinet. world.mjs = EU + countries.
 import { clamp, rand, log, round, dateAt, dayOf, partyDef } from "./util.mjs";
-import { initParl, parlDaily, parlMonthly, parlSnapshot, distance } from "./parl.mjs";
+import { initParl, parlDaily, parlMonthly, parlSnapshot, distance, splitParty } from "./parl.mjs";
 import { initWorld, worldMonthly, worldView } from "./world.mjs";
 import {
   initGov,
@@ -25,6 +25,16 @@ export const ACTIONS = [
   { id: "attack", name: "Atac la adversar", desc: "Scoate din influența unui rival într-un județ.", cost: 1.0, cooldown: 5, target: "county-party" },
   { id: "promise", name: "Promisiune electorală", desc: "Promite tot, nu costă nimic acum.", cost: 1.4, cooldown: 7, target: "none" },
 ];
+
+// Opposition and outside-parliament actions. `need`: "opp" = not in government,
+// "outside" = no seats, "any" = everyone. "party" targets need a rival.
+ACTIONS.push(
+  { id: "inquiry", name: "Anchetă parlamentară", desc: "Cere explicații în comisii. Guvernul pierde din imagine, opoziția câștigă din vizibilitate.", cost: 1.1, cooldown: 10, target: "none", need: "opp" },
+  { id: "protest", name: "Protest în stradă", desc: "Oameni în piață, afișe, lanțuri umane. Mai mult efect când oamenii sunt deja nemulțumiți.", cost: 0.5, cooldown: 5, target: "county", need: "any" },
+  { id: "signatures", name: "Strângere de semnături", desc: "Petiție pentru un referendum. Fără mandate, e singura cale să te vadă lumea.", cost: 0.3, cooldown: 20, target: "none", need: "outside" },
+  { id: "foundation", name: "Fundație în județ", desc: "Ajutoare, burse și caravane medicale. Lent, dar durabil.", cost: 1.6, cooldown: 30, target: "county", need: "any" },
+  { id: "exposure", name: "Dezvăluire", desc: "Documente despre un rival, publicate într-o zi. 30% din cazuri se întorc împotriva ta.", cost: 0.7, cooldown: 12, target: "party", need: "opp" },
+);
 
 export const ACTION_BY_ID = Object.fromEntries(ACTIONS.map((a) => [a.id, a]));
 
@@ -355,6 +365,7 @@ export function applyEffects(state, data, effects, ctx = {}) {
   };
 
   for (const c of Object.values(state.counties)) shiftSegments(c, effects);
+  noteCauses(state, ctx, effects);
 
   for (const [cid, spec] of Object.entries(effects.county ?? {})) {
     const c = state.counties[cid];
@@ -441,7 +452,7 @@ function pickEvent(state, data) {
 export function fireEvent(state, data, eventId) {
   const ev = eventId ? data.events.events.find((e) => e.id === eventId) : pickEvent(state, data);
   if (!ev) return null;
-  applyEffects(state, data, ev.effects, {});
+  applyEffects(state, data, ev.effects, { title: ev.title });
   state.recentEvents.push(ev.id);
   if (state.recentEvents.length > 14) state.recentEvents.shift();
   state.fired[ev.id] = state.day;
@@ -468,6 +479,7 @@ export function fireEvent(state, data, eventId) {
 export function decide(state, data, partyId, decisionId, choiceIndex) {
   const d = state.decisions.find((x) => x.id === Number(decisionId) && x.party === partyId);
   if (!d) return { ok: false, error: "Decizia nu mai există." };
+  if (d.defection) return decideDefection(state, data, d, Number(choiceIndex));
   const ev = data.events.events.find((e) => e.id === d.eventId);
   const choice = ev?.choices?.[Number(choiceIndex)];
   if (!choice) return { ok: false, error: "Alegere invalidă." };
@@ -475,7 +487,7 @@ export function decide(state, data, partyId, decisionId, choiceIndex) {
   const cost = choice.cost ?? 0;
   if (party.funds < cost) return { ok: false, error: `Fonduri insuficiente (${cost} M€ necesari).` };
   party.funds = money(party.funds - cost);
-  applyEffects(state, data, choice.effects, { partyId });
+  applyEffects(state, data, choice.effects, { partyId, title: ev.title });
   state.decisions = state.decisions.filter((x) => x !== d);
   log(state, "decision", `${partyId.toUpperCase()}: ${choice.label}`, choice.text ?? ev.title);
   return { ok: true, message: choice.text ?? `Ai ales „${choice.label}”.` };
@@ -539,6 +551,15 @@ export function applyAction(state, data, partyId, action) {
     }
   }
 
+  if (def.need === "opp" && inCoalition(state, partyId)) {
+    return { ok: false, error: "Doar partidele din opoziție pot face asta." };
+  }
+  if (def.need === "outside" && (party.seats ?? 0) > 0) {
+    return { ok: false, error: "Doar partidele fără mandate pot strânge semnături." };
+  }
+  if (def.target === "party") {
+    if (!state.parties[action.targetParty] || action.targetParty === partyId) return { ok: false, error: "Alege un partid rival." };
+  }
   party.funds = money(party.funds - def.cost);
   party.cooldown[def.id] = state.day + def.cooldown;
   const leader = leaderId(state, partyId);
@@ -597,6 +618,54 @@ export function applyAction(state, data, partyId, action) {
     boostSegs({ antreprenori: 1.03, pensionari_rural: 1.02, tineri_urbani: 1.02, agricultori: 1.02 });
     log(state, "action", "Promisiune electorală", "S-a promis o autostradă, un spital și o grădiniță. Toate în același loc.");
     return { ok: true, message: "Promisiunea a fost făcută." };
+  }
+
+  if (def.id === "inquiry") {
+    for (const p of state.partyIds) if (inCoalition(state, p)) state.mood[p] = clamp((state.mood[p] ?? 1) * 0.99, 0.55, 1.6);
+    boostSegs({ bugetari: 1.03, tineri_urbani: 1.03, pensionari_urban: 1.02 });
+    noteCauses(state, { partyId, title: "Anchetă parlamentară" }, { segments: { bugetari: 0.01, tineri_urbani: 0.01 } });
+    log(state, "action", "Anchetă parlamentară", "Comisia a cerut documentele, ministerul le-a trimis în ultimul moment.");
+    return { ok: true, message: "Ancheta a fost depusă." };
+  }
+
+  if (def.id === "protest") {
+    // Protests work best when people are already unhappy: the average satisfaction scales the crowd.
+    const mood = Object.values(state.sat ?? {});
+    const avgSat = mood.length ? mood.reduce((a, b) => a + b, 0) / mood.length : 0;
+    const crowd = avgSat < 0 ? 1.5 : avgSat < 0.2 ? 1 : 0.7;
+    addCountyBoost(state, action.county, partyId, 0.1 * crowd);
+    boostSegs({ muncitori: 1.04, tineri_urbani: 1.05 });
+    for (const p of state.partyIds) if (inCoalition(state, p)) state.mood[p] = clamp((state.mood[p] ?? 1) * 0.995, 0.55, 1.6);
+    noteCauses(state, { partyId, title: "Protest în stradă" }, { segments: { muncitori: 0.01, tineri_urbani: 0.01 } });
+    log(state, "action", `Protest la ${countyName}`, "Câteva sute de oameni, un megafon și o piață care s-a golit devreme.");
+    return { ok: true, message: `Protest organizat la ${countyName}.` };
+  }
+
+  if (def.id === "signatures") {
+    for (const cid of Object.keys(state.counties)) addCountyBoost(state, cid, partyId, 0.02);
+    state.mood[partyId] = clamp((state.mood[partyId] ?? 1) * 1.02, 0.55, 1.6);
+    boostSegs({ tineri_urbani: 1.03, studenti: 1.03 });
+    log(state, "action", "Strângere de semnături", "Petiția a trecut pragul. Ce urmează să fie cu ea, rămâne de văzut.");
+    return { ok: true, message: "Semnăturile au fost depuse." };
+  }
+
+  if (def.id === "foundation") {
+    addCountyBoost(state, action.county, partyId, 0.18);
+    boostSegs({ pensionari_rural: 1.04, pensionari_urban: 1.02, agricultori: 1.02 });
+    log(state, "action", `Fundație la ${countyName}`, "Ajutoarele au ajuns la oamenii care le așteptau de luni de zile.");
+    return { ok: true, message: `Fundația a deschis un birou la ${countyName}.` };
+  }
+
+  if (def.id === "exposure") {
+    const target = action.targetParty;
+    state.mood[target] = clamp((state.mood[target] ?? 1) * 0.975, 0.55, 1.6);
+    if (rand(state) < 0.3) {
+      state.mood[partyId] = clamp((state.mood[partyId] ?? 1) * 0.985, 0.55, 1.6);
+      log(state, "scandal", "Dezvăluirea s-a întors", `Documentele despre ${target.toUpperCase()} s-au dovedit a fi, în parte, ale tale.`);
+      return { ok: true, message: "Dezvăluirea s-a întors împotriva ta." };
+    }
+    log(state, "action", `Dezvăluire despre ${target.toUpperCase()}`, "Documentele au apărut într-o singură zi, cu un titlu care a rămas toată săptămâna.");
+    return { ok: true, message: `Ai publicat documentele despre ${target.toUpperCase()}.` };
   }
 
   return { ok: false, error: "Acțiune necunoscută." };
@@ -797,6 +866,7 @@ export function tick(state, data, days = 1) {
     income(state, data);
 
     if (state.day % 30 === 0) {
+      state.segPrev = segmentShares(state, data);
       worldMonthly(state, data);
       govMonthly(state, data);
       flushPending(state, data);
@@ -840,6 +910,11 @@ export function tick(state, data, days = 1) {
     for (const d of [...state.decisions]) {
       if (state.day <= d.expires) continue;
       state.decisions = state.decisions.filter((x) => x !== d);
+      if (d.defection) {
+        splitParty(state, data, d.party, { frac: 0.1 });
+        log(state, "decision", `${d.party.toUpperCase()}: nimeni nu a mai fost întrebat`, "Oamenii au plecat fără să mai aștepte un răspuns.");
+        continue;
+      }
       const ev = data.events.events.find((e) => e.id === d.eventId);
       applyEffects(state, data, ev?.ignore, { partyId: d.party });
       log(state, "decision", `${d.party.toUpperCase()} a ignorat decizia`, ev?.title ?? "");
@@ -897,7 +972,7 @@ export function snapshot(state, data, opts = {}) {
     humans: state.humans,
     active: state.active,
     decisions: state.decisions.map((d) => {
-      const ev = data.events.events.find((e) => e.id === d.eventId);
+      const ev = d.defection ? pseudoEvent(d) : data.events.events.find((e) => e.id === d.eventId);
       return {
         id: d.id,
         party: d.party,
@@ -908,6 +983,9 @@ export function snapshot(state, data, opts = {}) {
       };
     }),
     lastResult: state.lastResult,
+    causes: (state.causes ?? []).slice(-160),
+    segShares: segmentShares(state, data),
+    segPrev: state.segPrev ?? null,
     poll: {
       national: poll.national,
       counties: poll.counties,
@@ -920,4 +998,115 @@ export function snapshot(state, data, opts = {}) {
 }
 
 export { fallGovernment };
+
+/* ------------------------------------------------------- causes, previews, defections */
+
+const inCoalition = (state, id) => state.gov.coalition.includes(id);
+
+// Each event or law that moves a voter segment leaves a short note, so the UI can say why.
+function noteCauses(state, ctx, effects) {
+  const segs = effects?.segments ?? {};
+  const sol = effects?.sol ?? {};
+  const entries = [
+    ...Object.entries(segs).map(([seg, v]) => ({ seg, v, kind: "votanți" })),
+    ...Object.entries(sol).map(([seg, v]) => ({ seg, v, kind: "standard de viață" })),
+  ];
+  if (!entries.length) return;
+  state.causes ??= [];
+  for (const e of entries) {
+    state.causes.push({ day: state.day, party: ctx.partyId ?? null, seg: e.seg, v: round(e.v, 3), kind: e.kind, text: ctx.title ?? "Eveniment" });
+  }
+  if (state.causes.length > 400) state.causes.splice(0, state.causes.length - 400);
+}
+
+// Estimated share of each voter segment for each party, the same arithmetic as computePoll.
+export function segmentShares(state, data) {
+  const parties = plist(state, data);
+  const out = {};
+  for (const seg of data.segments.segments) {
+    const num = Object.fromEntries(parties.map((p) => [p.id, 0]));
+    let total = 0;
+    for (const c of Object.values(state.counties)) {
+      const size = c.segments[seg.id] ?? 0;
+      if (size <= 0) continue;
+      total += size;
+      const scores = {};
+      let sum = 0;
+      for (const p of parties) {
+        const gm = state.govMult?.[p.id];
+        const sb = state.parties[p.id].segBoost[seg.id] ?? 1;
+        const s = Math.max(0.0001,
+          size * (p.affinity[seg.id] ?? 0.3) * sb * (gm?.[seg.id] ?? 1) *
+          (state.strength[p.id] ?? 1) * (p.bias?.[c.id] ?? 1) * (state.mood[p.id] ?? 1) * (1 + (c.boost[p.id] ?? 0)));
+        scores[p.id] = s;
+        sum += s;
+      }
+      for (const p of parties) num[p.id] += size * (scores[p.id] / sum);
+    }
+    out[seg.id] = Object.fromEntries(parties.map((p) => [p.id, total ? round(num[p.id] / total, 4) : 0]));
+  }
+  return out;
+}
+
+// What an action would do, without doing it: runs it on a copy and reports the change.
+export function previewAction(state, data, partyId, action) {
+  const slim = { ...state, hist: undefined, log: [], causes: [], world: undefined };
+  const clone = structuredClone(slim);
+  const before = segmentShares(state, data);
+  const nationalBefore = computePoll(state, data).national;
+  const res = applyAction(clone, data, partyId, action);
+  if (!res.ok) return { ok: false, error: res.error };
+  const after = segmentShares(clone, data);
+  const nationalAfter = computePoll(clone, data).national;
+  const segs = Object.keys(before).map((seg) => ({
+    seg,
+    own: round(((after[seg][partyId] ?? 0) - (before[seg][partyId] ?? 0)) * 100, 2),
+    byParty: Object.fromEntries(Object.keys(before[seg]).map((p) => [p, round(((after[seg][p] ?? 0) - (before[seg][p] ?? 0)) * 100, 2)])),
+  }));
+  const national = Object.fromEntries(Object.keys(nationalBefore).map((p) => [p, round(((nationalAfter[p] ?? 0) - (nationalBefore[p] ?? 0)) * 100, 2)]));
+  return { ok: true, national, segs };
+}
+
+/* defections: the cohesion of a human party can fall until a group wants to leave */
+
+function pseudoEvent(d) {
+  return {
+    title: "Un grup de parlamentari vrea să plece",
+    text: `${d.defection.seats} oameni din ${d.party.toUpperCase()} au semnat o cerere de demisie din grup.`,
+    choices: defectionChoices(),
+  };
+}
+
+function defectionChoices() {
+  return [
+    { label: "Îi convingi să rămână", hint: "Costă 0,5 M€ · coeziune +10", cost: 0.5 },
+    { label: "Îi lași să plece", hint: "Pleacă ~10% din mandate, cu o grupare nouă", cost: 0 },
+    { label: "Îi dai o funcție", hint: "Costă 1,5 M€ · coeziune +5 și un pic de scandal", cost: 1.5 },
+  ];
+}
+
+function decideDefection(state, data, d, choice) {
+  const choices = defectionChoices();
+  const c = choices[choice];
+  if (!c) return { ok: false, error: "Alegere invalidă." };
+  const party = state.parties[d.party];
+  if (party.funds < c.cost) return { ok: false, error: `Fonduri insuficiente (${c.cost} M€ necesari).` };
+  party.funds = money(party.funds - c.cost);
+  state.decisions = state.decisions.filter((x) => x !== d);
+  if (choice === 0) {
+    party.cohesion = round(clamp((party.cohesion ?? 72) + 10, 0, 100), 1);
+    log(state, "decision", `${d.party.toUpperCase()}: a rămas în grup`, "Discuția a durat trei ore și o cafea.");
+    return { ok: true, message: "Au rămas în grup." };
+  }
+  if (choice === 1) {
+    const res = splitParty(state, data, d.party, { frac: 0.1 });
+    return { ok: res.ok, message: res.ok ? "Au plecat și formează o grupare nouă." : res.error };
+  }
+  party.cohesion = round(clamp((party.cohesion ?? 72) + 5, 0, 100), 1);
+  state.mood[d.party] = clamp((state.mood[d.party] ?? 1) * 0.99, 0.55, 1.6);
+  log(state, "decision", `${d.party.toUpperCase()}: o funcție pentru un deputat`, "Presa a aflat înainte de semnătura contractului.");
+  return { ok: true, message: "Ai găsit o funcție. A ieșit în presă." };
+}
+
+export { pseudoEvent, defectionChoices };
 

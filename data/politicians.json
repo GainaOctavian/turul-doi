@@ -157,7 +157,9 @@
       },
       "facts": [
         "Primar general al Bucureștiului între 2016 și 2020.",
-        "Vicepreședinte PSD pentru București-Ilfov."
+        "Vicepreședinte PSD pentru București-Ilfov.",
+        "În 2017 a înființat 22 de companii municipale; 20 au fost declarate ilegale în 2018, iar o sentință definitivă din 2019 a confirmat ilegalitatea.",
+        "A pierdut definitiv 5 procese deschise în numele Primăriei Capitalei împotriva unor ziare și jurnaliști."
       ],
       "look": {
         "hair": "long",
@@ -173,7 +175,8 @@
           "party": "psd",
           "role": "Primar general al Bucureștiului din 2016",
           "facts": [
-            "Primar general al Bucureștiului din 2016."
+            "Primar general al Bucureștiului din 2016.",
+            "A înființat companii municipale începând din 2017; instanța le va declara ulterior ilegale."
           ]
         },
         "2026": {}
@@ -1148,7 +1151,8 @@
       "facts": [
         "Premier al României între 2012 și 2015.",
         "A fondat partidul Pro România în 2018.",
-        "În 2012, CNATDCU a stabilit că teza lui de doctorat conține plagiat, iar titlul i-a fost retras în 2016."
+        "În 2012, CNATDCU a stabilit că teza lui de doctorat conține plagiat, iar titlul i-a fost retras în 2016.",
+        "Trimis în judecată în 2015 împreună cu Dan Șova; achitat definitiv de Înalta Curte în decembrie 2023, în dosarul Turceni-Rovinari."
       ],
       "look": {
         "hair": "side",
@@ -1475,7 +1479,8 @@
       "facts": [
         "Președinte ALDE.",
         "Președintele Senatului din decembrie 2016.",
-        "Premier al României între 2004 și 2008."
+        "Premier al României între 2004 și 2008.",
+        "Achitat definitiv de Înalta Curte în trei dosare penale: mărturie mincinoasă (2019), abuz în serviciu (2022) și luare de mită (2025)."
       ]
     },
     {
@@ -1518,7 +1523,8 @@
         "Președinte al României între 2004 și 2014.",
         "Fost primar general al Bucureștiului (2000–2004).",
         "Senator din decembrie 2016.",
-        "În 2012, Parlamentul l-a suspendat din funcție, dar referendumul pentru demitere a fost invalidat de prezența redusă la vot."
+        "În 2012, Parlamentul l-a suspendat din funcție, dar referendumul pentru demitere a fost invalidat de prezența redusă la vot.",
+        "În aprilie 2007 Parlamentul l-a suspendat din funcție (322 de voturi pentru); la referendumul din mai 2007 a fost reconfirmat."
       ]
     },
     {
@@ -1714,7 +1720,8 @@
         "2017": {}
       },
       "facts": [
-        "Ministrul transporturilor și infrastructurii din 4 ianuarie 2017."
+        "Ministrul transporturilor și infrastructurii din 4 ianuarie 2017.",
+        "Trimis în judecată de DNA în februarie 2026 pentru dare de mită (dosarul RAR). Este o acuzație; nu există hotărâre."
       ]
     },
     {
@@ -2448,6 +2455,436 @@
         "facial": "stubble",
         "suit": "#2a5a46",
         "tie": null
+      }
+    },
+    {
+      "id": "oprescu",
+      "name": "Sorin Oprescu",
+      "party": null,
+      "role": "Fost primar general al Bucureștiului",
+      "scenarios": {
+        "2017": {
+          "role": "Primar general al Bucureștiului (2008–2015)"
+        },
+        "2026": {
+          "role": "Fost primar general, condamnat, în Grecia"
+        }
+      },
+      "stats": {
+        "charisma": 61,
+        "patience": 48,
+        "malleability": 38,
+        "gaffes": 33,
+        "visibility": 58,
+        "corruption": 72,
+        "traseism": 40
+      },
+      "ability": null,
+      "facts": [
+        "Primar general al Bucureștiului între 2008 și 2015.",
+        "În 2015 a fost arestat preventiv într-un dosar de corupție; consilierul său Solomon Wigler fusese prins în flagrant cu 25.000 de euro, primiți drept „atenții”.",
+        "Condamnat la 10 ani și 8 luni de închisoare cu executare pentru luare de mită și constituire de grup infracțional; a plecat din țară înainte de sentință, iar Grecia a refuzat extrădarea."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#8a8a8a",
+        "skin": "#e8b896",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#3a3f4a",
+        "tie": "#7d1f2b"
+      }
+    },
+    {
+      "id": "becali",
+      "name": "Gigi Becali",
+      "party": null,
+      "role": "Deputat independent",
+      "scenarios": {
+        "2017": {
+          "role": "Fost europarlamentar, condamnat definitiv"
+        },
+        "2026": {
+          "role": "Deputat independent, fost membru AUR"
+        }
+      },
+      "stats": {
+        "charisma": 78,
+        "patience": 22,
+        "malleability": 15,
+        "gaffes": 88,
+        "visibility": 90,
+        "corruption": 66,
+        "traseism": 85
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat definitiv la 3 ani de închisoare cu executare, în dosarul schimbului de terenuri cu Ministerul Apărării (Înalta Curte, 20 mai 2013).",
+        "Condamnat definitiv pentru dare de mită și fals, în dosarul „Valiza” (Înalta Curte, 4 iunie 2013).",
+        "Condamnat cu suspendare pentru lipsire ilegală de libertate (2013)."
+      ],
+      "look": {
+        "hair": "bald",
+        "hairColor": "#5a4a3a",
+        "skin": "#e2ab86",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#2a2a2a",
+        "tie": null
+      }
+    },
+    {
+      "id": "udrea",
+      "name": "Elena Udrea",
+      "party": "pmp",
+      "role": "Fostă ministră a turismului",
+      "scenarios": {
+        "2017": {
+          "role": "Fostă ministră a turismului, cercetată penal"
+        },
+        "2026": {
+          "role": "Fostă ministră, condamnată, eliberată condiționat"
+        }
+      },
+      "stats": {
+        "charisma": 70,
+        "patience": 35,
+        "malleability": 30,
+        "gaffes": 52,
+        "visibility": 82,
+        "corruption": 74,
+        "traseism": 62
+      },
+      "ability": null,
+      "facts": [
+        "Trimisă în judecată în dosarul „Gala Bute”, alături de alți șapte inculpați, pentru luare de mită, abuz în serviciu și fals.",
+        "Condamnată definitiv la 6 ani de închisoare cu executare în dosarul „Gala Bute” (Înalta Curte, 2018).",
+        "Arestată în Bulgaria în 2022 și extrădată în România; eliberată condiționat în iulie 2025."
+      ],
+      "look": {
+        "hair": "long",
+        "hairColor": "#2b2623",
+        "skin": "#f0c7a3",
+        "glasses": false,
+        "facial": "none",
+        "suit": "#7a1f3d",
+        "tie": null
+      }
+    },
+    {
+      "id": "mazare",
+      "name": "Radu Mazăre",
+      "party": null,
+      "role": "Fost primar al Constanței",
+      "scenarios": {
+        "2017": {
+          "role": "Fost primar al Constanței, sub control judiciar"
+        },
+        "2026": {
+          "role": "Fost primar al Constanței, eliberat din închisoare"
+        }
+      },
+      "stats": {
+        "charisma": 64,
+        "patience": 40,
+        "malleability": 35,
+        "gaffes": 60,
+        "visibility": 66,
+        "corruption": 88,
+        "traseism": 72
+      },
+      "ability": null,
+      "facts": [
+        "Primar al Constanței între 2000 și 2015.",
+        "În 2006, Tribunalul Constanța a anulat taxele speciale instituite de primărie; „taxa de liniște” a fost reintrodusă în 2009.",
+        "Condamnat definitiv la 9 ani de închisoare cu executare, pentru retrocedarea ilegală de terenuri în Mamaia (Înalta Curte, 8 februarie 2019).",
+        "A fugit în Madagascar în 2017, unde a cerut azil; a fost extrădat în 2019 și eliberat în mai 2024."
+      ],
+      "look": {
+        "hair": "side",
+        "hairColor": "#3a3a3a",
+        "skin": "#d9a47a",
+        "glasses": false,
+        "facial": "mustache",
+        "suit": "#2c3e5a",
+        "tie": "#8d2b2b"
+      }
+    },
+    {
+      "id": "sova",
+      "name": "Dan Șova",
+      "party": "psd",
+      "role": "Senator PSD, avocat",
+      "scenarios": {
+        "2017": {
+          "role": "Fost ministru al transporturilor"
+        },
+        "2026": {
+          "party": null,
+          "role": "Avocat, fost senator PSD"
+        }
+      },
+      "stats": {
+        "charisma": 55,
+        "patience": 50,
+        "malleability": 42,
+        "gaffes": 65,
+        "visibility": 50,
+        "corruption": 46,
+        "traseism": 38
+      },
+      "ability": null,
+      "facts": [
+        "Urmărit penal în 2014 în dosarul contractelor cu CET Turceni și CET Rovinari.",
+        "Trimis în judecată în 2015 împreună cu Victor Ponta, într-un dosar de corupție legat de acte adiționale la contracte energetice.",
+        "Achitat definitiv de Înalta Curte în dosarul contractelor energetice (decembrie 2023).",
+        "Condamnat în 2018 în dosarul CET Govora; Înalta Curte a anulat condamnarea în februarie 2026, pentru prescripție."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#1f1f1f",
+        "skin": "#e8b896",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#2a2a3a",
+        "tie": "#3d4f7a"
+      }
+    },
+    {
+      "id": "gabriel-oprea",
+      "name": "Gabriel Oprea",
+      "party": null,
+      "role": "Lider UNPR, fost ministru de interne",
+      "scenarios": {
+        "2017": {
+          "role": "Lider UNPR, fost ministru de interne"
+        },
+        "2026": {
+          "role": "Președinte UNPR, fost senator"
+        }
+      },
+      "stats": {
+        "charisma": 52,
+        "patience": 62,
+        "malleability": 40,
+        "gaffes": 45,
+        "visibility": 60,
+        "corruption": 52,
+        "traseism": 58
+      },
+      "ability": null,
+      "facts": [
+        "Fost ministru al apărării (2009–2012) și al afacerilor interne (2008–2009 și 2014–2015).",
+        "Trimis în judecată de DNA în 2016 pentru abuz în serviciu, în legătură cu folosirea resurselor ministerului pentru deplasările sale.",
+        "În septembrie 2016, Senatul a votat păstrarea imunității sale în fața urmăririi penale; a demisionat din Senat.",
+        "În 2016, CNATDCU a stabilit că teza sa de doctorat conține plagiat, iar titlul i-a fost retras.",
+        "Achitat definitiv în 2023 în dosarul accidentului din 2015 în care a murit polițistul din coloana oficială."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#9a9a9a",
+        "skin": "#e2ab86",
+        "glasses": true,
+        "facial": "mustache",
+        "suit": "#2c3e5a",
+        "tie": "#2d5f8a"
+      }
+    },
+    {
+      "id": "sebastian-ghita",
+      "name": "Sebastian Ghiță",
+      "party": null,
+      "role": "Om de afaceri, fost deputat PSD",
+      "scenarios": {
+        "2017": {
+          "party": "pru",
+          "role": "Membru PRU, om de afaceri, fost deputat PSD"
+        },
+        "2026": {
+          "role": "Om de afaceri, fost deputat PSD, trimis în judecată"
+        }
+      },
+      "stats": {
+        "charisma": 58,
+        "patience": 44,
+        "malleability": 30,
+        "gaffes": 62,
+        "visibility": 74,
+        "corruption": 80,
+        "traseism": 90
+      },
+      "ability": null,
+      "facts": [
+        "Trimis în judecată în 2002 în dosarul „Tracia–Asesoft”; Curtea de Apel București a constatat în 2016 prescripția.",
+        "Trimis în judecată de DNA în 2016 pentru dare de mită, trafic de influență și spălare de bani; achitat definitiv de Înalta Curte în 2019 în acest dosar.",
+        "În septembrie 2016 s-a autodenunțat public, afirmând că a participat la măsluirea raportului de expertiză privind teza de doctorat a Codruței Kövesi; nu a fost dovedit în instanță.",
+        "Reținut în Belgrad în aprilie 2017, la cererea autorităților române; a fost pus în arest la domiciliu.",
+        "Trimis în judecată de DNA în 2022 pentru trafic de influență, în dosarul taxei pentru obținerea de contracte IT."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#3a2f28",
+        "skin": "#e8b896",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#2f2f3a",
+        "tie": "#8b1e3f"
+      }
+    },
+    {
+      "id": "voiculescu",
+      "name": "Dan Voiculescu",
+      "party": null,
+      "role": "Fondator Intact, fost senator",
+      "scenarios": {
+        "2017": {
+          "role": "Fondator al Partidului Conservator, liberat condiționat"
+        },
+        "2026": {
+          "role": "Fost senator, fondator al trustului Intact"
+        }
+      },
+      "stats": {
+        "charisma": 54,
+        "patience": 70,
+        "malleability": 28,
+        "gaffes": 20,
+        "visibility": 62,
+        "corruption": 78,
+        "traseism": 30
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat la 10 ani de închisoare cu executare în dosarul privatizării ICA (Curtea de Apel București, 8 august 2014); a fost liberat condiționat în iulie 2017, după 2 ani și 11 luni.",
+        "Instanțele au confirmat decizia CNSAS conform căreia a colaborat cu Securitatea ca poliție politică (Curtea de Apel București, 2010; Înalta Curte, martie 2011).",
+        "Condamnat în primă instanță în 2016 în dosarul Antena Group–RCS & RDS; achitat ulterior de Înalta Curte, la apel.",
+        "În septembrie 2025, Înalta Curte a stabilit definitiv că judecătoarea care l-a condamnat în dosarul ICA a săvârșit abuz în serviciu; cauza s-a clasat prin prescripție.",
+        "În aprilie 2007, comisia condusă de el a recomandat suspendarea președintelui Băsescu, votată de Parlament cu 322 de voturi."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#9a9a9a",
+        "skin": "#e2ab86",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#2b3550",
+        "tie": "#8b1e3f"
+      }
+    },
+    {
+      "id": "diaconescu",
+      "name": "Dan Diaconescu",
+      "party": null,
+      "role": "Fondator OTV, fost candidat prezidențial",
+      "scenarios": {
+        "2017": {
+          "role": "Fondator OTV, condamnat definitiv"
+        },
+        "2026": {
+          "role": "Fost candidat prezidențial (2014), fondator OTV"
+        }
+      },
+      "stats": {
+        "charisma": 72,
+        "patience": 24,
+        "malleability": 36,
+        "gaffes": 90,
+        "visibility": 70,
+        "corruption": 60,
+        "traseism": 70
+      },
+      "ability": null,
+      "facts": [
+        "Condamnat definitiv la 5 ani și 6 luni de închisoare cu executare pentru șantaj (Curtea de Apel București, 4 martie 2015); a ieșit din închisoare în noiembrie 2017.",
+        "În 2012 a câștigat licitația pentru Oltchim, dar Guvernul i-a anulat licența pentru că nu a dovedit că are 45 de milioane de euro.",
+        "Consiliul Național al Audiovizualului a retras licența OTV în 2013, iar Curtea de Apel București a respins contestația (3 aprilie 2013).",
+        "A fost candidat la alegerile prezidențiale din 2014 (4,03% în primul tur)."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#2b2623",
+        "skin": "#e8b896",
+        "glasses": false,
+        "facial": "stubble",
+        "suit": "#2a2a2a",
+        "tie": "#a02020"
+      }
+    },
+    {
+      "id": "hrebenciuc",
+      "name": "Viorel Hrebenciuc",
+      "party": "psd",
+      "role": "Fost deputat PSD",
+      "scenarios": {
+        "2017": {
+          "role": "Fost deputat PSD"
+        },
+        "2026": {
+          "role": "Fost deputat PSD, condamnat definitiv"
+        }
+      },
+      "stats": {
+        "charisma": 48,
+        "patience": 76,
+        "malleability": 44,
+        "gaffes": 18,
+        "visibility": 40,
+        "corruption": 74,
+        "traseism": 55
+      },
+      "ability": null,
+      "facts": [
+        "Deputat între 1996 și 2014 (cinci legislaturi).",
+        "Achitat definitiv în 2017 într-un dosar legat de finanțarea campaniei electorale a PSD din 2009.",
+        "Condamnat definitiv la 3 ani de închisoare cu executare în dosarul Giga TV (14 septembrie 2021).",
+        "Trimis în judecată de DNA în 2015 pentru constituire de grup infracțional, trafic de influență și spălare de bani."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#6e6e6e",
+        "skin": "#e2ab86",
+        "glasses": true,
+        "facial": "mustache",
+        "suit": "#2c3e5a",
+        "tie": "#4a4a4a"
+      }
+    },
+    {
+      "id": "blaga",
+      "name": "Vasile Blaga",
+      "party": "pnl",
+      "role": "Senator PNL",
+      "scenarios": {
+        "2017": {
+          "role": "Fost președinte al Senatului, trimis în judecată"
+        },
+        "2026": {
+          "role": "Senator PNL"
+        }
+      },
+      "stats": {
+        "charisma": 50,
+        "patience": 58,
+        "malleability": 45,
+        "gaffes": 38,
+        "visibility": 46,
+        "corruption": 42,
+        "traseism": 60
+      },
+      "ability": null,
+      "facts": [
+        "A fost președinte al Senatului (2011–2012) și al PDL (2012–2014).",
+        "A demisionat din funcția de ministru de interne în septembrie 2010, după protestul angajaților ministerului în fața Palatului Cotroceni.",
+        "Trimis în judecată de DNA în noiembrie 2016 pentru trafic de influență; a fost achitat, instanța arătând că rechizitoriul are lipsuri grave."
+      ],
+      "look": {
+        "hair": "short",
+        "hairColor": "#8a8a8a",
+        "skin": "#e8b896",
+        "glasses": true,
+        "facial": "none",
+        "suit": "#2c3a55",
+        "tie": "#2d5f8a"
       }
     }
   ]

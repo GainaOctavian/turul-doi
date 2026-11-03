@@ -133,7 +133,8 @@ Tot conținutul stă în `data/*.json` și se poate edita fără să atingi codu
 | `parties.json` | 17 partide, parlamentare și extraparlamentare: afinități, bias pe județe, `lean`, `oppGain` |
 | `politicians.json` | 65 de profiluri cu fapte verificabile (inclusiv cazuri publice cunoscute), pe scenarii, cu portret |
 | `events.json` | ~290 de evenimente: naționale, sezoniere, pe județe, lanțuri, decizii (`tools/news-pool.mjs` a generat mare parte) |
-| `bills.json` | 30 de legi care pot fi depuse și votate: poziție, categorii afectate, efecte |
+| `bills.json` | 57 de legi care pot fi depuse și votate (cele mai multe cu act-sursă verificat): poziție, categorii afectate, efecte |
+| `law-sources.json` | actele reale citate de legi (cu link la legislatie.just.ro) și actele abrogate care nu trebuie folosite |
 | `splinters.json` | modele istorice de grupări care se desprind (PDL, PLUS, UNPR, PRO, PC) |
 | `segments.json`, `counties.json`, `config.json` | segmente de votanți, județe, parametri |
 | `romania-map.json` | harta (generată de `tools/build-map.mjs`) |

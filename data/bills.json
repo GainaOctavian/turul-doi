@@ -1,34 +1,1311 @@
 {
   "bills": [
-    { "id": "pensii-speciale", "title": "Reforma pensiilor speciale", "text": "Pensiile din sistemele speciale se leagă de contribuții, iar diferența dintre ele și pensia medie se reduce în etape.", "lean": -0.4, "interest": { "bugetari": -1, "muncitori": 0.3, "antreprenori": 0.4, "tineri_urbani": 0.4 }, "effects": { "sol": { "bugetari": -2 }, "budget": { "pensions": -0.1 }, "party": { "self": 0.01 } } },
-    { "id": "salariu-minim", "title": "Majorarea salariului minim", "text": "Salariul minim brut crește cu 10% de la 1 ianuarie. Angajatorii cer o schemă de compensare, sindicatele cer încă 10%.", "lean": 0.5, "interest": { "muncitori": 1, "bugetari": 0.3, "antreprenori": -0.7 }, "effects": { "sol": { "muncitori": 2 }, "macro": { "inflation": 0.15, "unemployment": 0.05 }, "party": { "self": 0.01 } } },
-    { "id": "plafon-energie", "title": "Plafonarea prețurilor la energie", "text": "Prețul energiei pentru gospodării rămâne plafonat încă un an. Diferența o plătește bugetul, apoi, într-o formă sau alta, tot contribuabilul.", "lean": 0.5, "interest": { "pensionari_rural": 1, "pensionari_urban": 1, "muncitori": 0.5, "antreprenori": -0.3 }, "effects": { "sol": { "pensionari_rural": 1.5, "pensionari_urban": 1.5 }, "macro": { "inflation": -0.2 }, "budget": { "social": 0.05 } } },
-    { "id": "fonduri-ue", "title": "Legea absorbției fondurilor europene", "text": "Proiectele finanțate din fonduri europene primesc o procedură unică de avizare. Primarii promit că de data aceasta termenele se țin.", "lean": -0.1, "interest": { "antreprenori": 0.7, "agricultori": 0.6, "bugetari": 0.2 }, "effects": { "metric": { "infra": 1 }, "macro": { "growth": 0.1 }, "party": { "self": 0.008 } } },
-    { "id": "abandon-scolar", "title": "Legea împotriva abandonului școlar", "text": "Elevii din zone defavorizate primesc masă caldă, transport și un mentor. Școala rurală primește, în sfârșit, un autobuz.", "lean": 0.2, "interest": { "studenti": 0.6, "bugetari": 0.6, "muncitori": 0.3, "tineri_urbani": 0.3 }, "effects": { "metric": { "education": 1, "earlyLeavers": -0.4 }, "budget": { "education": 0.05 } } },
-    { "id": "spitale-performanta", "title": "Plata la performanță în spitale", "text": "O parte din finanțarea spitalelor depinde de rezultate măsurate: durata internării, infecțiile, timpul de așteptare.", "lean": -0.2, "interest": { "bugetari": -0.2, "pensionari_urban": 0.3, "antreprenori": 0.4 }, "effects": { "metric": { "health": 1 }, "party": { "self": 0.006 } } },
-    { "id": "avertizori", "title": "Protecția avertizorilor de integritate", "text": "Angajații care semnalează nereguli nu mai pot fi mutați disciplinar și primesc asistență juridică gratuită.", "lean": 0, "interest": { "tineri_urbani": 0.7, "antreprenori": 0.5, "studenti": 0.5, "bugetari": 0.1 }, "effects": { "metric": { "cpi": 1 }, "party": { "self": 0.007 } } },
-    { "id": "cas-antreprenori", "title": "Reducerea contribuțiilor pentru firmele mici", "text": "Contribuțiile angajatorului scad pentru firmele cu până la 20 de angajați. Statul pierde la încasări și speră să recupereze din angajări.", "lean": -0.5, "interest": { "antreprenori": 1, "muncitori": 0.2, "bugetari": -0.2 }, "effects": { "sol": { "antreprenori": 2 }, "macro": { "growth": 0.1 }, "budget": { "social": -0.03 } } },
-    { "id": "subventii-agricultura", "title": "Subvenții pentru fermele mici", "text": "Fermele sub 50 de hectare primesc o plată suplimentară pe hectar, plus sprijin pentru cooperative și procesare locală.", "lean": 0.4, "interest": { "agricultori": 1, "pensionari_rural": 0.4, "antreprenori": -0.1 }, "effects": { "sol": { "agricultori": 2 }, "budget": { "agri": 0.05 } } },
-    { "id": "vot-diaspora", "title": "Votul prin corespondență pentru diaspora", "text": "Românii din străinătate pot vota prin corespondență, cu înscriere online și număr nelimitat de secții în țările cu comunități mari.", "lean": -0.2, "interest": { "diaspora": 1, "tineri_urbani": 0.4, "pensionari_rural": -0.2 }, "effects": { "sol": { "diaspora": 2 }, "party": { "self": 0.006 } } },
-    { "id": "case-marcat", "title": "Casele de marcat conectate la ANAF", "text": "Toate casele de marcat se leagă în timp real la fisc. Încasările cresc, iar ușa din spate a restaurantului devine mai greu de ținut deschisă.", "lean": -0.1, "interest": { "antreprenori": -0.5, "bugetari": 0.2, "muncitori": 0.1 }, "effects": { "macro": { "growth": -0.02 }, "budget": { "admin": 0.02 } } },
-    { "id": "recalculare-pensii", "title": "Recalcularea pensiilor", "text": "Pensiile calculate înainte de ultima formulă se recalculează cu punctajul actual. Costul se plătește în trei ani.", "lean": 0.5, "interest": { "pensionari_rural": 1, "pensionari_urban": 1, "bugetari": 0.1, "tineri_urbani": -0.4 }, "effects": { "sol": { "pensionari_rural": 2.5, "pensionari_urban": 2.5 }, "budget": { "pensions": 0.1 }, "party": { "self": 0.012 } } },
-    { "id": "politie-locala", "title": "Extinderea poliției locale", "text": "Orașele mari pot angaja poliție locală cu atribuții în siguranța publică, finanțată din bugetul local și o cotă din amenzi.", "lean": 0.1, "interest": { "pensionari_urban": 0.6, "antreprenori": 0.3, "tineri_urbani": 0.1 }, "effects": { "metric": { "safety": 1 }, "budget": { "order": 0.04 } } },
-    { "id": "autostrazi-ppp", "title": "Autostrăzi prin parteneriat public-privat", "text": "Tronsoane de autostradă se construiesc și se întrețin de către firme private, plătite din taxe de utilizare și plăți de disponibilitate.", "lean": -0.3, "interest": { "antreprenori": 0.6, "muncitori": 0.3, "agricultori": -0.2 }, "effects": { "metric": { "infra": 1.5 }, "macro": { "growth": 0.08 } } },
-    { "id": "alocatie-copii", "title": "Majorarea alocației pentru copii", "text": "Alocația de stat crește cu o treime și se acordă automat până la 18 ani, fără hârtii suplimentare.", "lean": 0.5, "interest": { "muncitori": 0.6, "tineri_urbani": 0.3, "pensionari_rural": 0.3, "antreprenori": -0.1 }, "effects": { "sol": { "muncitori": 1.5, "tineri_urbani": 1 }, "budget": { "social": 0.05 }, "party": { "self": 0.008 } } },
-    { "id": "formare-someri", "title": "Formare profesională pentru șomeri", "text": "Șomerii de peste 6 luni primesc cursuri plătite și o primă de angajare pentru firma care îi preia.", "lean": 0.1, "interest": { "someri": 1, "muncitori": 0.4, "antreprenori": 0.3 }, "effects": { "sol": { "someri": 2 }, "macro": { "unemployment": -0.08 } } },
-    { "id": "prima-chirie", "title": "Programul „Prima chirie”", "text": "Tinerii sub 30 de ani primesc o subvenție la chirie în primul an de muncă, plătită direct proprietarului.", "lean": 0.2, "interest": { "tineri_urbani": 1, "studenti": 0.7, "antreprenori": 0.1 }, "effects": { "sol": { "tineri_urbani": 2, "studenti": 1.5 }, "budget": { "social": 0.03 } } },
-    { "id": "finantare-partide", "title": "Finanțarea partidelor politice", "text": "Subvenția anuală a partidelor se majorează și se împarte după rezultatul alegerilor. Toți au votat-o fără să o prezinte public.", "lean": 0, "interest": {}, "effects": { "funds": { "self": 0.6 }, "party": { "self": -0.004 } } },
-    { "id": "comasare-comune", "title": "Comasarea comunelor mici", "text": "Comunele cu sub 1.500 de locuitori se unesc cu vecinii. Se reduc posturile de conducere și se păstrează școala și poșta.", "lean": -0.2, "interest": { "bugetari": -0.6, "agricultori": -0.3, "pensionari_rural": -0.3, "antreprenori": 0.3 }, "effects": { "sol": { "bugetari": -1 }, "budget": { "admin": -0.05 } } },
-    { "id": "panouri-solare", "title": "Panouri solare pentru gospodării", "text": "Gospodăriile primesc un voucher pentru panouri solare și baterii, cu instalare de către firme autorizate.", "lean": -0.1, "interest": { "tineri_urbani": 0.6, "agricultori": 0.3, "antreprenori": 0.3, "pensionari_rural": 0.1 }, "effects": { "macro": { "growth": 0.05, "inflation": -0.05 }, "party": { "self": 0.006 } } },
-    { "id": "plafon-dobanzi", "title": "Plafonarea dobânzilor la credite", "text": "Dobânda la creditele de consum nu poate depăși un prag legal. Băncile protestează, dar în public sunt de acord în principiu.", "lean": 0.5, "interest": { "someri": 0.5, "muncitori": 0.4, "antreprenori": -0.4 }, "effects": { "sol": { "someri": 1, "muncitori": 1 }, "macro": { "growth": -0.05 } } },
-    { "id": "codul-muncii", "title": "Flexibilizarea Codului muncii", "text": "Contractele pe perioadă determinată și munca la cerere se simplifică, iar concedierea colectivă are reguli mai puține.", "lean": -0.5, "interest": { "antreprenori": 0.8, "muncitori": -0.7, "bugetari": -0.2, "tineri_urbani": 0.2 }, "effects": { "sol": { "muncitori": -1.5, "antreprenori": 1.5 }, "macro": { "growth": 0.1 } } },
-    { "id": "buget-aparare", "title": "Apărarea la 2,5% din PIB", "text": "Cheltuielile de apărare cresc către 2,5% din PIB, cu achiziții de echipamente și investiții în industria națională.", "lean": 0.1, "interest": { "muncitori": 0.3, "antreprenori": 0.3, "bugetari": 0.1 }, "effects": { "budget": { "defense": 0.3 }, "macro": { "growth": 0.05 } } },
-    { "id": "pilon-doi", "title": "Consolidarea pensiilor private (Pilonul II)", "text": "Contribuția la fondurile private crește treptat, iar regulile de investiție se extind spre piețele de capital locale.", "lean": -0.4, "interest": { "antreprenori": 0.5, "tineri_urbani": 0.3, "pensionari_urban": -0.2, "pensionari_rural": -0.2 }, "effects": { "budget": { "pensions": -0.04 }, "macro": { "growth": 0.05 } } },
-    { "id": "varsta-pensionare", "title": "Corelarea vârstei de pensionare cu speranța de viață", "text": "Vârsta standard de pensionare crește gradual, cu excepții pentru muncile grele. Calendarul se anunță pe zece ani.", "lean": -0.3, "interest": { "pensionari_urban": -0.5, "pensionari_rural": -0.7, "muncitori": -0.4, "antreprenori": 0.2 }, "effects": { "budget": { "pensions": -0.08 }, "sol": { "muncitori": -1 } } },
-    { "id": "screening-gratuit", "title": "Screeningul gratuit pentru boli grave", "text": "Examinările pentru cancer de col, sân și colon devin gratuite și se programează prin medicul de familie.", "lean": 0.2, "interest": { "pensionari_urban": 0.6, "pensionari_rural": 0.5, "bugetari": 0.3 }, "effects": { "metric": { "health": 1, "lifeExp": 0.1 }, "budget": { "health": 0.05 } } },
-    { "id": "autonomie-universitati", "title": "Autonomia universităților", "text": "Universitățile își stabilesc singure programele și taxele, în limitele unui plafon legal și cu burse garantate de stat.", "lean": -0.2, "interest": { "studenti": 0.4, "bugetari": 0.1, "tineri_urbani": 0.3 }, "effects": { "metric": { "education": 0.6 }, "party": { "self": 0.005 } } },
-    { "id": "defrisari", "title": "Interzicerea tăierilor ilegale de pădure", "text": "Transportul de lemn se urmărește cu sistem digital, iar amenzile se calculează pe volumul tăiat.", "lean": 0.1, "interest": { "tineri_urbani": 0.6, "studenti": 0.5, "agricultori": -0.3, "pensionari_rural": -0.1 }, "effects": { "metric": { "cpi": 0.3 }, "party": { "self": 0.005 } } },
-    { "id": "declaratii-avere", "title": "Declarațiile de avere online", "text": "Declarațiile de avere și de interese ale aleșilor apar într-un portal căutabil, nu în PDF-uri scanate.", "lean": 0, "interest": { "tineri_urbani": 0.5, "antreprenori": 0.3, "studenti": 0.4 }, "effects": { "metric": { "cpi": 1 }, "party": { "self": 0.006 } } },
-    { "id": "digitalizare", "title": "Digitalizarea administrației", "text": "Certificatele, autorizațiile și taxele locale pot fi obținute online, cu o singură autentificare pentru toate ghișeele.", "lean": -0.1, "interest": { "antreprenori": 0.5, "bugetari": -0.2, "tineri_urbani": 0.5, "diaspora": 0.4 }, "effects": { "metric": { "cpi": 0.5 }, "macro": { "growth": 0.05 } } }
+    {
+      "id": "pensii-speciale",
+      "title": "Reforma pensiilor speciale",
+      "text": "Pensiile din sistemele speciale se leagă de contribuții, iar diferența dintre ele și pensia medie se reduce în etape.",
+      "lean": -0.4,
+      "interest": {
+        "bugetari": -1,
+        "muncitori": 0.3,
+        "antreprenori": 0.4,
+        "tineri_urbani": 0.4
+      },
+      "effects": {
+        "sol": {
+          "bugetari": -2
+        },
+        "budget": {
+          "pensions": -0.1
+        },
+        "party": {
+          "self": 0.01
+        }
+      }
+    },
+    {
+      "id": "salariu-minim",
+      "title": "Majorarea salariului minim",
+      "text": "Salariul minim brut crește cu 10% de la 1 ianuarie. Angajatorii cer o schemă de compensare, sindicatele cer încă 10%.",
+      "lean": 0.5,
+      "interest": {
+        "muncitori": 1,
+        "bugetari": 0.3,
+        "antreprenori": -0.7
+      },
+      "effects": {
+        "sol": {
+          "muncitori": 2
+        },
+        "macro": {
+          "inflation": 0.15,
+          "unemployment": 0.05
+        },
+        "party": {
+          "self": 0.01
+        }
+      },
+      "source": {
+        "slug": "codul-muncii",
+        "note": "Codul muncii"
+      }
+    },
+    {
+      "id": "plafon-energie",
+      "title": "Plafonarea prețurilor la energie",
+      "text": "Prețul energiei pentru gospodării rămâne plafonat încă un an. Diferența o plătește bugetul, apoi, într-o formă sau alta, tot contribuabilul.",
+      "lean": 0.5,
+      "interest": {
+        "pensionari_rural": 1,
+        "pensionari_urban": 1,
+        "muncitori": 0.5,
+        "antreprenori": -0.3
+      },
+      "effects": {
+        "sol": {
+          "pensionari_rural": 1.5,
+          "pensionari_urban": 1.5
+        },
+        "macro": {
+          "inflation": -0.2
+        },
+        "budget": {
+          "social": 0.05
+        }
+      }
+    },
+    {
+      "id": "fonduri-ue",
+      "title": "Legea absorbției fondurilor europene",
+      "text": "Proiectele finanțate din fonduri europene primesc o procedură unică de avizare. Primarii promit că de data aceasta termenele se țin.",
+      "lean": -0.1,
+      "interest": {
+        "antreprenori": 0.7,
+        "agricultori": 0.6,
+        "bugetari": 0.2
+      },
+      "effects": {
+        "metric": {
+          "infra": 1
+        },
+        "macro": {
+          "growth": 0.1
+        },
+        "party": {
+          "self": 0.008
+        }
+      }
+    },
+    {
+      "id": "abandon-scolar",
+      "title": "Legea împotriva abandonului școlar",
+      "text": "Elevii din zone defavorizate primesc masă caldă, transport și un mentor. Școala rurală primește, în sfârșit, un autobuz.",
+      "lean": 0.2,
+      "interest": {
+        "studenti": 0.6,
+        "bugetari": 0.6,
+        "muncitori": 0.3,
+        "tineri_urbani": 0.3
+      },
+      "effects": {
+        "metric": {
+          "education": 1,
+          "earlyLeavers": -0.4
+        },
+        "budget": {
+          "education": 0.05
+        }
+      },
+      "source": {
+        "slug": "legea-198-2023",
+        "note": "educație"
+      }
+    },
+    {
+      "id": "spitale-performanta",
+      "title": "Plata la performanță în spitale",
+      "text": "O parte din finanțarea spitalelor depinde de rezultate măsurate: durata internării, infecțiile, timpul de așteptare.",
+      "lean": -0.2,
+      "interest": {
+        "bugetari": -0.2,
+        "pensionari_urban": 0.3,
+        "antreprenori": 0.4
+      },
+      "effects": {
+        "metric": {
+          "health": 1
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-95-2006",
+        "note": "sănătate"
+      }
+    },
+    {
+      "id": "avertizori",
+      "title": "Protecția avertizorilor de integritate",
+      "text": "Angajații care semnalează nereguli nu mai pot fi mutați disciplinar și primesc asistență juridică gratuită.",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.7,
+        "antreprenori": 0.5,
+        "studenti": 0.5,
+        "bugetari": 0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "party": {
+          "self": 0.007
+        }
+      },
+      "source": {
+        "slug": "legea-361-2022",
+        "note": "avertizori"
+      }
+    },
+    {
+      "id": "cas-antreprenori",
+      "title": "Reducerea contribuțiilor pentru firmele mici",
+      "text": "Contribuțiile angajatorului scad pentru firmele cu până la 20 de angajați. Statul pierde la încasări și speră să recupereze din angajări.",
+      "lean": -0.5,
+      "interest": {
+        "antreprenori": 1,
+        "muncitori": 0.2,
+        "bugetari": -0.2
+      },
+      "effects": {
+        "sol": {
+          "antreprenori": 2
+        },
+        "macro": {
+          "growth": 0.1
+        },
+        "budget": {
+          "social": -0.03
+        }
+      }
+    },
+    {
+      "id": "subventii-agricultura",
+      "title": "Subvenții pentru fermele mici",
+      "text": "Fermele sub 50 de hectare primesc o plată suplimentară pe hectar, plus sprijin pentru cooperative și procesare locală.",
+      "lean": 0.4,
+      "interest": {
+        "agricultori": 1,
+        "pensionari_rural": 0.4,
+        "antreprenori": -0.1
+      },
+      "effects": {
+        "sol": {
+          "agricultori": 2
+        },
+        "budget": {
+          "agri": 0.05
+        }
+      },
+      "source": {
+        "slug": "legea-17-2014",
+        "note": "terenuri agricole"
+      }
+    },
+    {
+      "id": "vot-diaspora",
+      "title": "Votul prin corespondență pentru diaspora",
+      "text": "Românii din străinătate pot vota prin corespondență, cu înscriere online și număr nelimitat de secții în țările cu comunități mari.",
+      "lean": -0.2,
+      "interest": {
+        "diaspora": 1,
+        "tineri_urbani": 0.4,
+        "pensionari_rural": -0.2
+      },
+      "effects": {
+        "sol": {
+          "diaspora": 2
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-208-2015",
+        "note": "alegeri"
+      }
+    },
+    {
+      "id": "case-marcat",
+      "title": "Casele de marcat conectate la ANAF",
+      "text": "Toate casele de marcat se leagă în timp real la fisc. Încasările cresc, iar ușa din spate a restaurantului devine mai greu de ținut deschisă.",
+      "lean": -0.1,
+      "interest": {
+        "antreprenori": -0.5,
+        "bugetari": 0.2,
+        "muncitori": 0.1
+      },
+      "effects": {
+        "macro": {
+          "growth": -0.02
+        },
+        "budget": {
+          "admin": 0.02
+        }
+      }
+    },
+    {
+      "id": "recalculare-pensii",
+      "title": "Recalcularea pensiilor",
+      "text": "Pensiile calculate înainte de ultima formulă se recalculează cu punctajul actual. Costul se plătește în trei ani.",
+      "lean": 0.5,
+      "interest": {
+        "pensionari_rural": 1,
+        "pensionari_urban": 1,
+        "bugetari": 0.1,
+        "tineri_urbani": -0.4
+      },
+      "effects": {
+        "sol": {
+          "pensionari_rural": 2.5,
+          "pensionari_urban": 2.5
+        },
+        "budget": {
+          "pensions": 0.1
+        },
+        "party": {
+          "self": 0.012
+        }
+      },
+      "source": {
+        "slug": "legea-360-2023",
+        "note": "pensii"
+      }
+    },
+    {
+      "id": "politie-locala",
+      "title": "Extinderea poliției locale",
+      "text": "Orașele mari pot angaja poliție locală cu atribuții în siguranța publică, finanțată din bugetul local și o cotă din amenzi.",
+      "lean": 0.1,
+      "interest": {
+        "pensionari_urban": 0.6,
+        "antreprenori": 0.3,
+        "tineri_urbani": 0.1
+      },
+      "effects": {
+        "metric": {
+          "safety": 1
+        },
+        "budget": {
+          "order": 0.04
+        }
+      }
+    },
+    {
+      "id": "autostrazi-ppp",
+      "title": "Autostrăzi prin parteneriat public-privat",
+      "text": "Tronsoane de autostradă se construiesc și se întrețin de către firme private, plătite din taxe de utilizare și plăți de disponibilitate.",
+      "lean": -0.3,
+      "interest": {
+        "antreprenori": 0.6,
+        "muncitori": 0.3,
+        "agricultori": -0.2
+      },
+      "effects": {
+        "metric": {
+          "infra": 1.5
+        },
+        "macro": {
+          "growth": 0.08
+        }
+      },
+      "source": {
+        "slug": "legea-100-2016",
+        "note": "concesiuni"
+      }
+    },
+    {
+      "id": "alocatie-copii",
+      "title": "Majorarea alocației pentru copii",
+      "text": "Alocația de stat crește cu o treime și se acordă automat până la 18 ani, fără hârtii suplimentare.",
+      "lean": 0.5,
+      "interest": {
+        "muncitori": 0.6,
+        "tineri_urbani": 0.3,
+        "pensionari_rural": 0.3,
+        "antreprenori": -0.1
+      },
+      "effects": {
+        "sol": {
+          "muncitori": 1.5,
+          "tineri_urbani": 1
+        },
+        "budget": {
+          "social": 0.05
+        },
+        "party": {
+          "self": 0.008
+        }
+      }
+    },
+    {
+      "id": "formare-someri",
+      "title": "Formare profesională pentru șomeri",
+      "text": "Șomerii de peste 6 luni primesc cursuri plătite și o primă de angajare pentru firma care îi preia.",
+      "lean": 0.1,
+      "interest": {
+        "someri": 1,
+        "muncitori": 0.4,
+        "antreprenori": 0.3
+      },
+      "effects": {
+        "sol": {
+          "someri": 2
+        },
+        "macro": {
+          "unemployment": -0.08
+        }
+      }
+    },
+    {
+      "id": "prima-chirie",
+      "title": "Programul „Prima chirie”",
+      "text": "Tinerii sub 30 de ani primesc o subvenție la chirie în primul an de muncă, plătită direct proprietarului.",
+      "lean": 0.2,
+      "interest": {
+        "tineri_urbani": 1,
+        "studenti": 0.7,
+        "antreprenori": 0.1
+      },
+      "effects": {
+        "sol": {
+          "tineri_urbani": 2,
+          "studenti": 1.5
+        },
+        "budget": {
+          "social": 0.03
+        }
+      }
+    },
+    {
+      "id": "finantare-partide",
+      "title": "Finanțarea partidelor politice",
+      "text": "Subvenția anuală a partidelor se majorează și se împarte după rezultatul alegerilor. Toți au votat-o fără să o prezinte public.",
+      "lean": 0,
+      "interest": {},
+      "effects": {
+        "funds": {
+          "self": 0.6
+        },
+        "party": {
+          "self": -0.004
+        }
+      },
+      "source": {
+        "slug": "legea-334-2006",
+        "note": "partide"
+      }
+    },
+    {
+      "id": "comasare-comune",
+      "title": "Comasarea comunelor mici",
+      "text": "Comunele cu sub 1.500 de locuitori se unesc cu vecinii. Se reduc posturile de conducere și se păstrează școala și poșta.",
+      "lean": -0.2,
+      "interest": {
+        "bugetari": -0.6,
+        "agricultori": -0.3,
+        "pensionari_rural": -0.3,
+        "antreprenori": 0.3
+      },
+      "effects": {
+        "sol": {
+          "bugetari": -1
+        },
+        "budget": {
+          "admin": -0.05
+        }
+      }
+    },
+    {
+      "id": "panouri-solare",
+      "title": "Panouri solare pentru gospodării",
+      "text": "Gospodăriile primesc un voucher pentru panouri solare și baterii, cu instalare de către firme autorizate.",
+      "lean": -0.1,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "agricultori": 0.3,
+        "antreprenori": 0.3,
+        "pensionari_rural": 0.1
+      },
+      "effects": {
+        "macro": {
+          "growth": 0.05,
+          "inflation": -0.05
+        },
+        "party": {
+          "self": 0.006
+        }
+      }
+    },
+    {
+      "id": "plafon-dobanzi",
+      "title": "Plafonarea dobânzilor la credite",
+      "text": "Dobânda la creditele de consum nu poate depăși un prag legal. Băncile protestează, dar în public sunt de acord în principiu.",
+      "lean": 0.5,
+      "interest": {
+        "someri": 0.5,
+        "muncitori": 0.4,
+        "antreprenori": -0.4
+      },
+      "effects": {
+        "sol": {
+          "someri": 1,
+          "muncitori": 1
+        },
+        "macro": {
+          "growth": -0.05
+        }
+      }
+    },
+    {
+      "id": "codul-muncii",
+      "title": "Flexibilizarea Codului muncii",
+      "text": "Contractele pe perioadă determinată și munca la cerere se simplifică, iar concedierea colectivă are reguli mai puține.",
+      "lean": -0.5,
+      "interest": {
+        "antreprenori": 0.8,
+        "muncitori": -0.7,
+        "bugetari": -0.2,
+        "tineri_urbani": 0.2
+      },
+      "effects": {
+        "sol": {
+          "muncitori": -1.5,
+          "antreprenori": 1.5
+        },
+        "macro": {
+          "growth": 0.1
+        }
+      }
+    },
+    {
+      "id": "buget-aparare",
+      "title": "Apărarea la 2,5% din PIB",
+      "text": "Cheltuielile de apărare cresc către 2,5% din PIB, cu achiziții de echipamente și investiții în industria națională.",
+      "lean": 0.1,
+      "interest": {
+        "muncitori": 0.3,
+        "antreprenori": 0.3,
+        "bugetari": 0.1
+      },
+      "effects": {
+        "budget": {
+          "defense": 0.3
+        },
+        "macro": {
+          "growth": 0.05
+        }
+      },
+      "source": {
+        "slug": "legea-203-2015",
+        "note": "apărare"
+      }
+    },
+    {
+      "id": "pilon-doi",
+      "title": "Consolidarea pensiilor private (Pilonul II)",
+      "text": "Contribuția la fondurile private crește treptat, iar regulile de investiție se extind spre piețele de capital locale.",
+      "lean": -0.4,
+      "interest": {
+        "antreprenori": 0.5,
+        "tineri_urbani": 0.3,
+        "pensionari_urban": -0.2,
+        "pensionari_rural": -0.2
+      },
+      "effects": {
+        "budget": {
+          "pensions": -0.04
+        },
+        "macro": {
+          "growth": 0.05
+        }
+      }
+    },
+    {
+      "id": "varsta-pensionare",
+      "title": "Corelarea vârstei de pensionare cu speranța de viață",
+      "text": "Vârsta standard de pensionare crește gradual, cu excepții pentru muncile grele. Calendarul se anunță pe zece ani.",
+      "lean": -0.3,
+      "interest": {
+        "pensionari_urban": -0.5,
+        "pensionari_rural": -0.7,
+        "muncitori": -0.4,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "budget": {
+          "pensions": -0.08
+        },
+        "sol": {
+          "muncitori": -1
+        }
+      }
+    },
+    {
+      "id": "screening-gratuit",
+      "title": "Screeningul gratuit pentru boli grave",
+      "text": "Examinările pentru cancer de col, sân și colon devin gratuite și se programează prin medicul de familie.",
+      "lean": 0.2,
+      "interest": {
+        "pensionari_urban": 0.6,
+        "pensionari_rural": 0.5,
+        "bugetari": 0.3
+      },
+      "effects": {
+        "metric": {
+          "health": 1,
+          "lifeExp": 0.1
+        },
+        "budget": {
+          "health": 0.05
+        }
+      }
+    },
+    {
+      "id": "autonomie-universitati",
+      "title": "Autonomia universităților",
+      "text": "Universitățile își stabilesc singure programele și taxele, în limitele unui plafon legal și cu burse garantate de stat.",
+      "lean": -0.2,
+      "interest": {
+        "studenti": 0.4,
+        "bugetari": 0.1,
+        "tineri_urbani": 0.3
+      },
+      "effects": {
+        "metric": {
+          "education": 0.6
+        },
+        "party": {
+          "self": 0.005
+        }
+      },
+      "source": {
+        "slug": "legea-199-2023",
+        "note": "învățământ superior"
+      }
+    },
+    {
+      "id": "defrisari",
+      "title": "Interzicerea tăierilor ilegale de pădure",
+      "text": "Transportul de lemn se urmărește cu sistem digital, iar amenzile se calculează pe volumul tăiat.",
+      "lean": 0.1,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "studenti": 0.5,
+        "agricultori": -0.3,
+        "pensionari_rural": -0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.3
+        },
+        "party": {
+          "self": 0.005
+        }
+      }
+    },
+    {
+      "id": "declaratii-avere",
+      "title": "Declarațiile de avere online",
+      "text": "Declarațiile de avere și de interese ale aleșilor apar într-un portal căutabil, nu în PDF-uri scanate.",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "antreprenori": 0.3,
+        "studenti": 0.4
+      },
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-176-2010",
+        "note": "declarații de avere"
+      }
+    },
+    {
+      "id": "digitalizare",
+      "title": "Digitalizarea administrației",
+      "text": "Certificatele, autorizațiile și taxele locale pot fi obținute online, cu o singură autentificare pentru toate ghișeele.",
+      "lean": -0.1,
+      "interest": {
+        "antreprenori": 0.5,
+        "bugetari": -0.2,
+        "tineri_urbani": 0.5,
+        "diaspora": 0.4
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.5
+        },
+        "macro": {
+          "growth": 0.05
+        }
+      }
+    },
+    {
+      "id": "abuz-prag-prejudiciu",
+      "title": "Abuzul în serviciu: prag minim de prejudiciu",
+      "text": "Proiectul condiționează răspunderea penală pentru abuz în serviciu (art. 297 Cod penal) de un prejudiciu peste un prag stabilit prin lege. Magistrații și societatea civilă avertizează că faptele sub prag rămân nesancționate penal.",
+      "lean": -0.3,
+      "interest": {
+        "bugetari": 0.7,
+        "antreprenori": 0.1,
+        "tineri_urbani": -0.6,
+        "studenti": -0.5,
+        "diaspora": -0.5
+      },
+      "effects": {
+        "metric": {
+          "cpi": -1.6
+        },
+        "sol": {
+          "tineri_urbani": -1,
+          "diaspora": -1.5
+        },
+        "confidence": -3,
+        "party": {
+          "self": -0.012
+        }
+      },
+      "source": {
+        "slug": "codul-penal",
+        "note": "art. 297"
+      }
+    },
+    {
+      "id": "trafic-influenta-pedepse",
+      "title": "Traficul de influență: majorarea pedepselor",
+      "text": "Limitele pedepsei pentru traficul de influență (art. 291 Cod penal, în prezent 2–7 ani) se majorează, iar confiscarea se extinde la bunurile dobândite în perioada faptei.",
+      "lean": 0.1,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "antreprenori": 0.4,
+        "studenti": 0.5,
+        "bugetari": -0.3
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.9
+        },
+        "party": {
+          "self": 0.008
+        }
+      },
+      "source": {
+        "slug": "codul-penal",
+        "note": "art. 291"
+      }
+    },
+    {
+      "id": "delapidare-confiscare",
+      "title": "Confiscarea extinsă pentru delapidare și luare de mită",
+      "text": "Instanțele pot confisca bunurile nejustificate ale condamnaților pentru luare de mită (art. 289) și delapidare (art. 295), cu inversarea sarcinii probei pentru valorile peste un prag.",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "studenti": 0.4,
+        "bugetari": -0.4,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 1.1
+        },
+        "party": {
+          "self": 0.008
+        }
+      },
+      "source": {
+        "slug": "codul-penal",
+        "note": "art. 289, 295"
+      }
+    },
+    {
+      "id": "conflict-interese-penal",
+      "title": "Conflictul de interese: eliminarea excepțiilor din art. 301",
+      "text": "Proiectul restrânge excepțiile din art. 301 alin. (2) Cod penal și extinde infracțiunea la rudele de gradul III ale funcționarului.",
+      "lean": 0.1,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "bugetari": -0.5,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.8
+        },
+        "sol": {
+          "bugetari": -0.5
+        }
+      },
+      "source": {
+        "slug": "codul-penal",
+        "note": "art. 301"
+      }
+    },
+    {
+      "id": "ani-verificare-automata",
+      "title": "Verificarea automată a declarațiilor de avere și de interese",
+      "text": "ANI primește acces automat la registrele de proprietate, conturi și societăți comerciale pentru corelarea declarațiilor cu datele reale (Legea 176/2010).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.7,
+        "antreprenori": 0.3,
+        "studenti": 0.5,
+        "bugetari": -0.3
+      },
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-176-2010",
+        "note": "declarații de avere"
+      }
+    },
+    {
+      "id": "ani-sanctiuni-incompatibilitate",
+      "title": "Incompatibilități: sancțiuni mai dure și termene mai scurte",
+      "text": "Persoana aflată în incompatibilitate pierde mandatul și funcția, iar procedura ANI se încheie în termene maximale stabilite prin lege (Legea 176/2010).",
+      "lean": 0.1,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "bugetari": -0.4,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.7
+        }
+      },
+      "source": {
+        "slug": "legea-176-2010",
+        "note": "incompatibilități"
+      }
+    },
+    {
+      "id": "prevent-extindere",
+      "title": "Extinderea sistemului de verificare ex ante a conflictelor de interese",
+      "text": "Mecanismul de verificare prealabilă a conflictului de interese în achizițiile publice (Legea 184/2016) se aplică și contractelor sub pragul actual.",
+      "lean": -0.1,
+      "interest": {
+        "antreprenori": 0.5,
+        "tineri_urbani": 0.4,
+        "bugetari": -0.3
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.8
+        },
+        "macro": {
+          "growth": -0.02
+        }
+      },
+      "source": {
+        "slug": "legea-184-2016",
+        "note": "conflict de interese în achiziții"
+      }
+    },
+    {
+      "id": "achizitie-directa-prag",
+      "title": "Majorarea pragului pentru achiziția directă",
+      "text": "Autoritățile pot atribui direct contracte până la un prag majorat (Legea 98/2016), cu obligația de a publica ulterior contractul. Autoritățile locale susțin că simplifică procedurile; criticii avertizează asupra fragmentării artificiale a contractelor.",
+      "lean": -0.2,
+      "interest": {
+        "antreprenori": 0.3,
+        "bugetari": 0.5,
+        "tineri_urbani": -0.5,
+        "agricultori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": -1,
+          "infra": 0.3
+        },
+        "macro": {
+          "growth": 0.04
+        },
+        "party": {
+          "self": -0.006
+        }
+      },
+      "source": {
+        "slug": "legea-98-2016",
+        "note": "achiziție directă"
+      }
+    },
+    {
+      "id": "achizitii-transparenta-contracte",
+      "title": "Publicarea integrală a contractelor de achiziție publică",
+      "text": "Toate contractele și actele adiționale se publică într-un registru deschis, cu motivarea modificărilor de preț (Legea 98/2016).",
+      "lean": 0,
+      "interest": {
+        "antreprenori": 0.5,
+        "tineri_urbani": 0.6,
+        "studenti": 0.4,
+        "bugetari": -0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 1
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-98-2016",
+        "note": "transparență contracte"
+      }
+    },
+    {
+      "id": "intreprinderi-publice-selectie",
+      "title": "Selecția administratorilor din întreprinderile publice",
+      "text": "Consiliile de administrație se constituie prin selecție independentă, cu mandate fixe și criterii de performanță (OUG 109/2011), nu prin numire politică directă.",
+      "lean": -0.3,
+      "interest": {
+        "antreprenori": 0.6,
+        "tineri_urbani": 0.5,
+        "bugetari": -0.6,
+        "muncitori": -0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.9
+        },
+        "macro": {
+          "growth": 0.05
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "oug-109-2011",
+        "note": "guvernanță corporativă"
+      }
+    },
+    {
+      "id": "finantare-partide-plafon",
+      "title": "Plafonarea donațiilor către partide",
+      "text": "Donațiile private către partide și campanii se plafonează, iar donatorii mari sunt publicați în timp real (Legea 334/2006).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "studenti": 0.4,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.7
+        },
+        "funds": {
+          "self": -0.3
+        },
+        "party": {
+          "self": 0.005
+        }
+      },
+      "source": {
+        "slug": "legea-334-2006",
+        "note": "finanțarea partidelor"
+      }
+    },
+    {
+      "id": "finantare-partide-subventie",
+      "title": "Majorarea subvenției de la bugetul de stat pentru partide",
+      "text": "Subvenția anuală a partidelor crește, iar criteriile de împărțire rămân cele după rezultatul la alegeri (Legea 334/2006).",
+      "lean": 0.1,
+      "interest": {
+        "tineri_urbani": -0.4,
+        "studenti": -0.3,
+        "bugetari": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": -0.2
+        },
+        "funds": {
+          "self": 1.2
+        },
+        "party": {
+          "self": -0.004
+        }
+      },
+      "source": {
+        "slug": "legea-334-2006",
+        "note": "subvenții"
+      }
+    },
+    {
+      "id": "aep-control-finantare",
+      "title": "Controlul finanțării campaniilor de către AEP",
+      "text": "Autoritatea Electorală Permanentă primește competențe sporite de verificare a veniturilor și cheltuielilor din campanie, cu sancțiuni pentru raportări false (Legea 334/2006, Legea 208/2015).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "studenti": 0.4,
+        "antreprenori": 0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.6
+        },
+        "party": {
+          "self": 0.004
+        }
+      },
+      "source": {
+        "slug": "legea-208-2015",
+        "note": "AEP"
+      }
+    },
+    {
+      "id": "csm-independenta",
+      "title": "Consolidarea independenței Consiliului Superior al Magistraturii",
+      "text": "Proiectul modifică procedura de alegere a membrilor CSM și limitează influența executivului asupra numirilor în funcții de conducere (Legea 305/2022).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "antreprenori": 0.3,
+        "bugetari": -0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.7
+        },
+        "party": {
+          "self": 0.004
+        }
+      },
+      "source": {
+        "slug": "legea-305-2022",
+        "note": "CSM"
+      }
+    },
+    {
+      "id": "justitie-termene-dosare",
+      "title": "Termene maxime pentru dosarele de corupție",
+      "text": "Dosarele de corupție de mare corupție se judecă în termene maxime stabilite prin lege, pentru a evita prescrierea (Codul de procedură penală).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "antreprenori": 0.3,
+        "studenti": 0.4
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.8
+        }
+      },
+      "source": {
+        "slug": "codul-procedura-penala",
+        "note": "termene și prescripție"
+      }
+    },
+    {
+      "id": "beneficiari-reali",
+      "title": "Registrul beneficiarilor reali ai societăților",
+      "text": "Registrul beneficiarilor reali devine public și verificabil online, cu amenzi pentru nedeclarare (Legea 129/2019).",
+      "lean": -0.1,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "antreprenori": -0.2,
+        "studenti": 0.3
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.8
+        },
+        "macro": {
+          "growth": -0.02
+        }
+      },
+      "source": {
+        "slug": "legea-129-2019",
+        "note": "spălare de bani"
+      }
+    },
+    {
+      "id": "numerar-plafon",
+      "title": "Reducerea plafonului pentru plățile în numerar",
+      "text": "Plafonul zilnic pentru plățile în numerar între firme se reduce, pentru a limita evaziunea (Legea 70/2015).",
+      "lean": -0.1,
+      "interest": {
+        "antreprenori": -0.5,
+        "agricultori": -0.3,
+        "tineri_urbani": 0.2,
+        "bugetari": 0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.4
+        },
+        "macro": {
+          "growth": -0.03
+        },
+        "sol": {
+          "antreprenori": -1
+        }
+      },
+      "source": {
+        "slug": "legea-70-2015",
+        "note": "numerar"
+      }
+    },
+    {
+      "id": "transparenta-decizionala-obligatorie",
+      "title": "Dezbaterea publică obligatorie pentru actele normative",
+      "text": "Proiectele de acte normative nu pot fi adoptate fără dezbatere publică de minimum 30 de zile, cu excepții limitate (Legea 52/2003).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "antreprenori": 0.4,
+        "studenti": 0.4,
+        "bugetari": -0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.5
+        },
+        "confidence": -1
+      },
+      "source": {
+        "slug": "legea-52-2003",
+        "note": "transparență"
+      }
+    },
+    {
+      "id": "informatii-publice-termene",
+      "title": "Termene mai scurte pentru informațiile de interes public",
+      "text": "Termenul de răspuns la cererile de informații publice se reduce, iar refuzul nemotivat se sancționează (Legea 544/2001).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.5,
+        "studenti": 0.4,
+        "antreprenori": 0.3,
+        "bugetari": -0.3
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.5
+        }
+      },
+      "source": {
+        "slug": "legea-544-2001",
+        "note": "acces la informații"
+      }
+    },
+    {
+      "id": "oug-limitare-penal",
+      "title": "Limitarea ordonanțelor de urgență în domeniul penal",
+      "text": "Guvernul nu mai poate modifica prin ordonanță de urgență normele de drept penal și procedură penală, ci doar prin lege adoptată de Parlament.",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "antreprenori": 0.3,
+        "studenti": 0.5,
+        "bugetari": -0.2
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.6
+        },
+        "confidence": -2
+      },
+      "source": {
+        "slug": "codul-penal",
+        "note": "Codul penal"
+      }
+    },
+    {
+      "id": "avertizori-protectie-361",
+      "title": "Protecția avertizorilor: sancțiuni pentru represalii",
+      "text": "Măsurile disciplinare luate în urma unei sesizări de integritate se anulează automat, iar angajatorul răspunde pentru represalii (Legea 361/2022).",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.7,
+        "antreprenori": 0.4,
+        "studenti": 0.5,
+        "bugetari": -0.1
+      },
+      "effects": {
+        "metric": {
+          "cpi": 0.9
+        },
+        "party": {
+          "self": 0.006
+        }
+      },
+      "source": {
+        "slug": "legea-361-2022",
+        "note": "avertizori"
+      }
+    },
+    {
+      "id": "pensii-indexare-360",
+      "title": "Indexarea punctului de pensie",
+      "text": "Punctul de pensie se indexează anual cu rata inflației și cu 50% din creșterea salariului mediu brut (Legea 360/2023).",
+      "lean": 0.5,
+      "interest": {
+        "pensionari_rural": 1,
+        "pensionari_urban": 1,
+        "muncitori": -0.1,
+        "tineri_urbani": -0.4
+      },
+      "effects": {
+        "sol": {
+          "pensionari_rural": 2,
+          "pensionari_urban": 2
+        },
+        "budget": {
+          "pensions": 0.1
+        },
+        "party": {
+          "self": 0.01
+        }
+      },
+      "source": {
+        "slug": "legea-360-2023",
+        "note": "pensii"
+      }
+    },
+    {
+      "id": "educatie-198-performanta",
+      "title": "Evaluarea unităților de învățământ după rezultatele elevilor",
+      "text": "Finanțarea suplimentară a școlilor se leagă de progresul elevilor, nu doar de numărul lor (Legea 198/2023).",
+      "lean": -0.1,
+      "interest": {
+        "bugetari": 0.2,
+        "tineri_urbani": 0.4,
+        "studenti": 0.3
+      },
+      "effects": {
+        "metric": {
+          "education": 0.6
+        },
+        "party": {
+          "self": 0.004
+        }
+      },
+      "source": {
+        "slug": "legea-198-2023",
+        "note": "educație"
+      }
+    },
+    {
+      "id": "universitati-199-finantare",
+      "title": "Finanțarea universităților pe baza performanței în cercetare",
+      "text": "O parte din finanțarea de bază se acordă pe baza publicațiilor și a brevetelor, nu doar a numărului de studenți (Legea 199/2023).",
+      "lean": -0.2,
+      "interest": {
+        "studenti": 0.5,
+        "tineri_urbani": 0.3,
+        "bugetari": 0.1
+      },
+      "effects": {
+        "metric": {
+          "education": 0.5
+        },
+        "sol": {
+          "studenti": 0.5
+        }
+      },
+      "source": {
+        "slug": "legea-199-2023",
+        "note": "învățământ superior"
+      }
+    },
+    {
+      "id": "finante-locale-cote",
+      "title": "Cote mai mari din impozitul pe venit pentru bugetele locale",
+      "text": "Administrațiile locale rețin o cotă mai mare din impozitul pe venit colectat pe teritoriul lor (Legea 273/2006).",
+      "lean": -0.1,
+      "interest": {
+        "bugetari": 0.5,
+        "antreprenori": 0.2,
+        "agricultori": 0.2
+      },
+      "effects": {
+        "budget": {
+          "admin": 0.05
+        },
+        "metric": {
+          "infra": 0.4
+        },
+        "confidence": -1
+      },
+      "source": {
+        "slug": "legea-273-2006",
+        "note": "finanțe locale"
+      }
+    },
+    {
+      "id": "responsabilitate-fiscala",
+      "title": "Reguli stricte de responsabilitate fiscal-bugetară",
+      "text": "Guvernul trebuie să respecte o regulă de deficit pe termen mediu și să publice impactul fiscal al fiecărui act normativ (Legea 69/2010).",
+      "lean": -0.3,
+      "interest": {
+        "antreprenori": 0.5,
+        "tineri_urbani": 0.2,
+        "bugetari": -0.3,
+        "pensionari_urban": -0.2
+      },
+      "effects": {
+        "macro": {
+          "growth": -0.04
+        },
+        "party": {
+          "self": 0.004
+        }
+      },
+      "source": {
+        "slug": "legea-69-2010",
+        "note": "disciplină fiscală"
+      }
+    },
+    {
+      "id": "codul-muncii-telemunca",
+      "title": "Codul muncii: reglementarea muncii la distanță",
+      "text": "Angajatorii trebuie să acopere costurile muncii la distanță și să garanteze dreptul la deconectare (Legea 53/2003).",
+      "lean": 0.2,
+      "interest": {
+        "tineri_urbani": 0.6,
+        "muncitori": 0.2,
+        "antreprenori": -0.4
+      },
+      "effects": {
+        "sol": {
+          "tineri_urbani": 1
+        },
+        "macro": {
+          "growth": -0.02
+        }
+      },
+      "source": {
+        "slug": "codul-muncii",
+        "note": "Codul muncii"
+      }
+    }
   ]
 }

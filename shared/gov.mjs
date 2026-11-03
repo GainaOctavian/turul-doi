@@ -412,7 +412,8 @@ export function govMonthly(state, data) {
   state.sol = computeSol(state, data);
   for (const seg of Object.keys(state.sol)) {
     state.sat[seg] = clamp((state.sol[seg] - state.solExpect[seg]) / 10, -1, 1);
-    state.solExpect[seg] += 0.05 * (state.sol[seg] - state.solExpect[seg]);
+    // Expectations catch up with life as it is, and keep rising: people always want a bit more.
+    state.solExpect[seg] += 0.07 * (state.sol[seg] - state.solExpect[seg]) + (data.config.balance === false ? 0 : 0.1);
   }
   updateGovMult(state, data);
   confidenceStep(state, data);

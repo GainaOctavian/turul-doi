@@ -6,7 +6,7 @@ const data = {
   config: read("config.json"), segments: read("segments.json"), parties: read("parties.json"),
   politicians: read("politicians.json"), counties: read("counties.json"), events: read("events.json"),
   scenarios: read("scenarios.json"), government: read("government.json"), policies: read("policies.json"),
-  countries: read("countries.json"), bills: read("bills.json"), splinters: read("splinters.json"),
+  countries: read("countries.json"), bills: read("bills.json"), lawSources: read("law-sources.json"), splinters: read("splinters.json"),
 };
 
 const years = Number(process.argv[3] ?? 4);

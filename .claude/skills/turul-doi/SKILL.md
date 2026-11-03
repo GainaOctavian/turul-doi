@@ -28,7 +28,8 @@ game is not running with the ctl. If port 4173 is busy, stop the old server firs
 | `parties` / `poll` / `counties [filter]` | party table, national poll, county winners |
 | `play <party>` | take control of a party of the scenario (2017 has alde/pmp and the small pru/prm/per; 2026 has aur/sos/pot and the small sens/fd/reper/psdu/drept) |
 | `speed <0\|1\|2\|4>`, `pause`, `resume` | clock speed (0 = paused) |
-| `actions`, `act <type> [county] [rival]` | campaign actions and their M€ cost |
+| `actions`, `act <type> [county] [rival]` | campaign actions and their M€ cost; types include the opposition ones (inquiry, exposure) and the outside ones (signatures, protest, foundation) |
+| `preview <type> [county] [rival]` | estimated effect of a campaign action in pp, without spending anything |
 | `budget` | revenue and spending lines in M€ and % of GDP, balance, taxes |
 | `spend <line> <M€/yr>` | set a spending line (pensions, social, health, education, defense, order, infra, agri, admin) |
 | `tax <vat\|income\|corp> <rate>` | set a tax rate |

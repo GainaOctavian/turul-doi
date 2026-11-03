@@ -60,6 +60,9 @@ Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi P
 - `bills.json`: legi cu `lean` (− piață, + intervenționism), `interest` (segment → −1..1) și
   `effects` (aceeași sintaxă ca evenimentele: `sol`, `metric`, `macro`, `budget`, `party`, `funds`).
   `party.self` e inițiatorul.
+- Fiecare lege poate avea `source: {slug, note}` către `law-sources.json`. Unelte: `tools/law.mjs`,
+  `tools/bills-law.mjs` (vezi `CLAUDE.md`, secțiunea Legislație).
+- Culisele merg și **împotriva** unei legi (`lobby ... against`): `deals` devine negativ pentru partidul țintă.
 - `state.parl`: `bills` (voturi deschise, `kind` `law` sau `motion`), `rel` (relații 0–100 pe
   perechi, `a|b` sortat), `passed`, `done`, `mergeOffers`, `cool`.
 - Înclinația unui partid față de o lege: interesele lui (afinitate × interes), distanța `lean`,
@@ -67,6 +70,14 @@ Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi P
   mută o parte din voturi în sens opus. Moțiunea trece cu 166 de voturi.
 - Culise: `favor` (capital politic), `money` (M€, 15% risc de scandal), `swap` (votezi legea lor).
   Prețul scade cu relația; sub 15 nu mai vorbesc.
+- Echilibru (`balanceMonthly` în `parl.mjs`, dezactivabil cu `data.config.balance = false` în teste): lunar,
+  mood-ul revine cu 4% spre 1 (creditul pentru legi și evenimente se estompează), partidele de la
+  guvernare pierd 0,8% (premier) sau 0,55% pe lună (partener), iar partidul jucătorului sub 5% își
+  crește `strength` cu până la 2% pe lună, plafonat la 1,8x. Creditul `party.self` al unei legi se
+  înjumătățește. În `gov.mjs`, așteptările de standard de viață cresc cu 0,1 puncte pe lună.
+- Relații: `courtesy` (4 capital, +8 relație, cooldown 20 de zile pe pereche) și pactul de
+  colaborare (`merge` cu `mode: "pact"`, 10 capital, relație 55+): partenerii își votează mai ușor
+  legile, relația crește lunar, iar fuziunea devine mai probabilă. Pactul se rupe dacă relația scade sub 45.
 - `state.defs`: definiții de partid modificate (fuziuni, plecări, schimbarea direcției); citește
   mereu prin `partyDef(state, data, id)`. `state.renamed` ({vechi: nou}) se consumă cu
   `consumeRenamed`, ca jucătorul să continue cu noul grup.

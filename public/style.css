@@ -3035,3 +3035,27 @@ select {
 input.sel[type="text"] {
   min-width: 160px;
 }
+
+.prop small a {
+  color: #4cc9f0;
+  text-decoration: underline;
+}
+
+
+/* ---------- action cards: estimates and clearer difference ---------- */
+.action-card { border-left: 3px solid var(--line, rgba(255,255,255,0.14)); }
+.action-card[data-need="opp"] { border-left-color: #4cc9f0; }
+.action-card[data-need="outside"] { border-left-color: #a77bff; }
+.action-card .ac-est { font-size: 12px; margin: 6px 0; color: var(--text); }
+.action-card .ac-est b { color: #fff; }
+.action-card .ac-est .muted { font-size: 11.5px; }
+.action-card[data-need="opp"] .ac-meta { color: #9fdcf2; }
+.action-card[data-need="outside"] .ac-meta { color: #d4c2ff; }
+
+
+.action-card .ac-desc { grid-column: 1; }
+.action-card .ac-est { grid-column: 1; }
+.action-card .ac-meta { grid-column: 1; }
+.action-card .ac-name { grid-column: 1; }
+.action-card button { grid-column: 2; grid-row: 1 / span 4; align-self: center; min-width: 64px; }
+

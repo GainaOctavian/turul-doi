@@ -15,6 +15,7 @@ import {
   runElection,
   decide,
   ACTIONS,
+  previewAction,
 } from "./engine.mjs";
 
 export const HELP = `turul-doi ctl
@@ -27,7 +28,8 @@ export const HELP = `turul-doi ctl
   play <partid>             joacă pentru un partid
   speed <0|1|2|4>           viteza ceasului (0 = pauză)
   pause / resume            oprește sau pornește ceasul
-  act <tip> [judet] [rival] campanie: rally tv online deal attack promise (vezi "actions")
+  act <tip> [judet] [rival] campanie: rally tv online deal attack promise inquiry protest signatures foundation exposure
+  preview <tip> [judet] [rival]  efectul estimat, fără să cheltuiască nimic (în pp)
   actions                   acțiunile de campanie și costul lor în M€
   budget                    venituri și cheltuieli în M€, deficit
   spend <linie> <M€>        setează o linie de cheltuieli (M€/an)
@@ -53,9 +55,10 @@ export const HELP = `turul-doi ctl
   laws                      catalogul de legi pe care le poți depune
   bill <lege>               depune o lege (și opoziția poate)
   vote <nr> <yes|no|abstain> votezi o lege sau o moțiune
-  lobby <nr> <partid> <favor|money|swap>  negociere de culise
+  lobby <nr> <partid> <favor|money|swap> [against]  negociere de culise (și împotriva unei legi)
   rel [partid]              relațiile tale cu celelalte partide
-  merge <partid> <fusion|absorb> [nume]   propune fuziune sau absorbție
+  courtesy <partid>         gest politic: +8 relație (4 capital)
+  merge <partid> <fusion|absorb|pact> [nume]   fuziune, absorbție sau pact de colaborare (relație 55+)
   merge-answer <partid> <yes|no>  răspunzi unei oferte
   split [frac] [model]      oamenii pleacă și formează o grupare nouă (ex: split 0.3 pdl)
   profile [partid]          profilul partidului: categorii, direcție, oameni
@@ -177,7 +180,8 @@ export function createCtl(data, opts = {}) {
         const type = args[0];
         if (!type) return "error: lipsește tipul acțiunii";
         const action = { type };
-        if (["rally", "deal"].includes(type)) action.county = args[1];
+        if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = args[1];
+        if (type === "exposure") action.targetParty = args[1];
         if (type === "attack") {
           action.county = args[1];
           action.targetParty = args[2];
@@ -185,6 +189,20 @@ export function createCtl(data, opts = {}) {
         if (need()) return need();
         const res = applyAction(state, data, me(), action);
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "preview": {
+        if (need()) return need();
+        const type = args[0];
+        const action = { type };
+        if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = args[1];
+        if (type === "attack" || type === "exposure") action.targetParty = type === "attack" ? args[2] : args[1];
+        if (type === "attack") action.county = args[1];
+        const p = previewAction(state, data, me(), action);
+        if (!p.ok) return `error: ${p.error}`;
+        const own = p.national[me()] ?? 0;
+        const segs = p.segs.filter((x) => Math.abs(x.own) >= 0.05).sort((x, y) => Math.abs(y.own) - Math.abs(x.own)).slice(0, 4).map((x) => `${x.seg} ${x.own > 0 ? "+" : ""}${x.own} pp`);
+        return `tu ${own > 0 ? "+" : ""}${own} pp în sondaj · ${segs.join(" · ") || "fără efect vizibil pe votanți"}`;
       }
 
       case "budget": {
@@ -372,7 +390,7 @@ export function createCtl(data, opts = {}) {
 
       case "lobby": {
         if (need()) return need();
-        const res = applyParl(state, data, me(), { type: "lobby", id: args[0], target: args[1], how: args[2] });
+        const res = applyParl(state, data, me(), { type: "lobby", id: args[0], target: args[1], how: args[2], against: args[3] === "against" });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
@@ -381,6 +399,12 @@ export function createCtl(data, opts = {}) {
         const rel = snapshot(state, data).parl.rel[who];
         if (!rel) return "error: alege un partid";
         return Object.entries(rel).sort((x, y) => y[1] - x[1]).map(([k, v]) => `${k.padEnd(12)} ${v}`).join("\n");
+      }
+
+      case "courtesy": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "courtesy", target: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
       case "merge": {

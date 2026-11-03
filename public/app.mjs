@@ -12,6 +12,7 @@ import {
   fireEvent,
   scenarioOf,
   ACTIONS,
+  previewAction,
 } from "/shared/engine.mjs";
 import { DATA_FILES } from "/shared/data-files.mjs";
 import { portrait } from "/portraits.mjs";
@@ -22,6 +23,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const S = {
+  previews: {},
   data: null,
   map: null,
   mode: "solo",
@@ -587,7 +589,7 @@ function panelCounty() {
     <h3>Segmente de votanți</h3>
     ${segs
       .map(
-        (seg) => `<div class="seg-row">
+        (seg) => `<div class="seg-row" title="${esc(segTip(seg.id))}">
           <div>
             <div class="seg-name"><span style="color:var(--text)">${esc(seg.name)}</span><span>${pct(seg.size / total)}</span></div>
             <div class="bar"><i style="--pc:${seg.color};width:${((seg.size / total) * 100).toFixed(1)}%"></i></div>
@@ -616,6 +618,72 @@ function panelCounty() {
   `;
 }
 
+// Who may use an action: opposition actions need an opposition party, outside ones need no seats.
+function needStatus(s, party, a) {
+  if (a.need === "opp" && s.gov.gov.coalition.includes(S.party)) return "doar opoziția";
+  if (a.need === "outside" && party.seats > 0) return "doar fără mandate";
+  return null;
+}
+
+// Estimated effect of an action: solo runs the engine locally, multiplayer asks the server.
+function estimateFor(a) {
+  const c = S.selected;
+  const rival = $("#rival")?.value ?? null;
+  const action = {
+    type: a.id,
+    county: a.target === "county" || a.target === "county-party" ? c : undefined,
+    targetParty: a.target === "party" ? rival : undefined,
+  };
+  if (S.mode === "solo" && S.game) return previewAction(S.game, S.data, S.party, action);
+  const key = `${S.party}|${a.id}|${action.county ?? ""}|${action.targetParty ?? ""}|${Math.floor(S.snap.day / 3)}`;
+  if (!S.previews[key]) {
+    S.previews[key] = { pending: true };
+    post(`/api/rooms/${S.room}/preview`, { party: S.party, action }).then((res) => {
+      S.previews[key] = res;
+      renderPanel();
+    });
+  }
+  return S.previews[key].pending ? null : S.previews[key];
+}
+
+function estimateHtml(est, a) {
+  if (!est) return `<span class="muted">Se calculează efectul…</span>`;
+  if (!est.ok) return `<span class="muted">${esc(est.error)}</span>`;
+  const own = est.national[S.party] ?? 0;
+  const segs = est.segs
+    .filter((x) => Math.abs(x.own) >= 0.05)
+    .sort((x, y) => Math.abs(y.own) - Math.abs(x.own))
+    .slice(0, 3)
+    .map((x) => `${esc(segName(x.seg))} ${signed(x.own, 1)} pp`);
+  const rivalId = a.target === "party" ? $("#rival")?.value : null;
+  const rival = rivalId ? `${esc(pname(rivalId))} ${signed(est.national[rivalId] ?? 0, 1)} pp în sondaj` : "";
+  return `<b>Tu ${signed(own, 1)} pp în sondaj</b>${segs.length ? ` · ${segs.join(" · ")}` : ""}${rival ? ` · ${rival}` : ""}`;
+}
+
+function segName(id) {
+  return S.data.segments.segments.find((x) => x.id === id)?.name ?? id;
+}
+
+// Hover on a voter group: who has it now, who gained or lost since last month, and recent causes.
+function segTip(segId) {
+  const s = S.snap;
+  const sh = s.segShares?.[segId] ?? {};
+  const prev = s.segPrev?.[segId] ?? {};
+  const rows = Object.entries(sh)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([p, v]) => {
+      const d = (v - (prev[p] ?? v)) * 100;
+      return `${pname(p)} ${(v * 100).toFixed(1)}% (${d >= 0 ? "+" : ""}${d.toFixed(1)} pp de la luna trecută)`;
+    });
+  const causes = (s.causes ?? [])
+    .filter((x) => x.seg === segId)
+    .slice(-3)
+    .reverse()
+    .map((x) => `${x.text} (${x.v > 0 ? "+" : ""}${(x.v * 100).toFixed(1)}%, ziua ${x.day})`);
+  return `${rows.join("\n")}\n${causes.length ? "De ce:\n" + causes.join("\n") : "Nicio schimbare recentă."}`;
+}
+
 // Why a campaign action can't be used right now, or "pregătit" when it can.
 function actionStatus(party, a) {
   const cd = party.cooldown[a.id] ?? -1;
@@ -632,13 +700,16 @@ function panelActions() {
   return `
     <h3>Campanie</h3>
     <p class="hint">Efectul campaniei se estompează în câteva săptămâni, deci contează cel mai mult în ultimele luni dinaintea alegerilor (${num(daysLeft)} de zile rămase). Banii vin din finanțarea partidului și donații.</p>
+    <p class="hint"><b>pp</b> = puncte procentuale din votanții categoriei (sau din sondajul național). „Efect estimat” e calculat din starea jocului, fără să cheltuiască nimic.</p>
     ${ACTIONS.map((a) => {
-      const status = actionStatus(party, a);
-      const target = a.target === "county" || a.target === "county-party" ? ` · ${esc(c?.name ?? "")}` : "";
-      return `<div class="action-card">
+      const status = needStatus(s, party, a) ?? actionStatus(party, a);
+      const target = a.target === "county" || a.target === "county-party" ? ` · ${esc(c?.name ?? "")}` : a.target === "party" ? ` · ${esc(pname($("#rival")?.value ?? ""))}` : "";
+      const est = estimateFor(a);
+      return `<div class="action-card" data-need="${a.need ?? "any"}">
         <div class="ac-name">${a.name}${target}</div>
         <div class="ac-desc">${a.desc}</div>
         <div class="ac-meta">${fmt(a.cost, 1)} M€ · ${status}</div>
+        <div class="ac-est">${estimateHtml(est, a)}</div>
         <button data-act="${a.id}" ${status === "pregătit" ? "" : "disabled"}>Fă</button>
       </div>`;
     }).join("")}
@@ -877,11 +948,12 @@ function setupEvents() {
   onPress(panel, "[data-act]", (el) => {
     const type = el.dataset.act;
     const action = { type };
-    if (type === "rally" || type === "deal") action.county = S.selected;
+    if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = S.selected;
     if (type === "attack") {
       action.county = S.selected;
       action.targetParty = $("#rival")?.value;
     }
+    if (type === "exposure") action.targetParty = $("#rival")?.value;
     doAction(action);
   });
   onPress(panel, "[data-accept]", async (el) => {
@@ -1007,8 +1079,10 @@ function setupDash() {
     motion: () => parlDo({ type: "motion" }),
     "parl-motion": () => parlDo({ type: "motion" }),
     "parl-vote": (el) => parlDo({ type: "vote", id: Number(el.dataset.id), vote: el.dataset.vote }),
-    "parl-lobby": (el) => parlDo({ type: "lobby", id: Number(el.dataset.id), target: $(`#lt-${el.dataset.id}`)?.value, how: $(`#lh-${el.dataset.id}`)?.value }),
+    "parl-lobby": (el) => parlDo({ type: "lobby", id: Number(el.dataset.id), target: $(`#lt-${el.dataset.id}`)?.value, how: $(`#lh-${el.dataset.id}`)?.value, against: $(`#lg-${el.dataset.id}`)?.value === "against" }),
     "parl-bill": (el) => parlDo({ type: "bill", bill: el.dataset.id }),
+    courtesy: (el) => parlDo({ type: "courtesy", target: el.dataset.target }),
+    pact: (el) => parlDo({ type: "merge", target: el.dataset.target, mode: "pact" }),
     "shift-seg": (el) => parlDo({ type: "shift", segment: el.dataset.seg }),
     "shift-lean": (el) => parlDo({ type: "shift", lean: Number(el.dataset.dir) }),
     "merge-offer": () => parlDo({ type: "merge", target: $("#merge-t")?.value, mode: $("#merge-m")?.value, name: $("#merge-n")?.value }),

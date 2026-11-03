@@ -56,6 +56,7 @@ function voteCard(S, b) {
       <div class="lobby-h">Negocieri de culise</div>
       <div class="row" style="gap:8px;flex-wrap:wrap">
         <select id="lt-${b.id}" class="sel">${targets.map((p) => `<option value="${p}">${esc(pname(S, p))} · relație ${Math.round(myRel[p] ?? 50)}</option>`).join("")}</select>
+        <select id="lg-${b.id}" class="sel"><option value="">Pentru legea asta</option><option value="against">Împotriva legii</option></select>
         <select id="lh-${b.id}" class="sel">
           <option value="favor">Serviciu (capital politic)</option>
           <option value="money">Sprijin logistic (M€, risc de scandal)</option>
@@ -117,7 +118,7 @@ export function lawsView(S) {
         .slice(0, 4)
         .map(([seg, v]) => badge(`${v > 0 ? "+" : "−"} ${segName(S, seg)}`, v > 0 ? "#2fbf8a" : "#ff4d6d"))
         .join(" ");
-      return `<div class="prop"><div><b>${esc(l.title)}</b><small>${esc(l.text)}</small><div class="row" style="gap:5px;flex-wrap:wrap;margin-top:5px">${badge(leanLabel(l.lean), "#8d99ae")} ${interest}</div></div>
+      return `<div class="prop"><div><b>${esc(l.title)}</b><small>${esc(l.text)}</small>${l.source ? `<small class="muted">Sursă: <a href="${esc(l.source.portal)}" target="_blank" rel="noopener">${esc(l.source.ref)}</a>${l.source.note ? ` · ${esc(l.source.note)}` : ""} · ultima modificare ${esc(l.source.latest)}</small>` : ""}<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:5px">${badge(leanLabel(l.lean), "#8d99ae")} ${interest}</div></div>
         <div class="prop-act"><button class="btn2 primary2" data-do="parl-bill" data-id="${l.id}" ${why ? "disabled" : ""} title="${esc(why)}">${why || `Depune (${p.costs.bill} cap.)`}</button></div></div>`;
     })
     .join("");
@@ -136,9 +137,17 @@ export function relationsView(S) {
     .map(([id, v]) => {
       const pr = price(v);
       const col = v >= 65 ? "#2fbf8a" : v >= 35 ? "#ffb02e" : "#ff4d6d";
-      return `<div class="rel-row"><div class="row between"><span>${pbadge(S, id)} <small class="muted">${seats(S, id)} mandate · coeziune ${Math.round(p.cohesion[id] ?? 72)}</small></span><b style="color:${col}">${Math.round(v)}</b></div>
+      const pact = p.pacts.some((x) => (x.a === S.party && x.b === id) || (x.b === S.party && x.a === id));
+      const cool = p.cool[`court:${[S.party, id].sort().join("|")}`] ?? -1;
+      const canCourt = cool <= S.snap.day && me(S).capital >= p.courtesy.capital;
+      const canPact = !pact && v >= p.pactMin && me(S).capital >= p.costs.pact;
+      return `<div class="rel-row"><div class="row between"><span>${pbadge(S, id)} ${pact ? badge("colaborare strânsă", "#2fbf8a") : ""} <small class="muted">${seats(S, id)} mandate · coeziune ${Math.round(p.cohesion[id] ?? 72)}</small></span><b style="color:${col}">${Math.round(v)}</b></div>
         ${bar(v, 100, col)}
-        <small class="muted">Un serviciu costă ${pr.capital} capital, sprijinul logistic ${fmt(pr.money, 1)} M€${v < 15 ? " · nu mai vorbește cu tine" : ""}</small></div>`;
+        <div class="row between" style="gap:8px;flex-wrap:wrap;margin-top:4px">
+          <small class="muted">Un serviciu costă ${pr.capital} capital, sprijinul logistic ${fmt(pr.money, 1)} M€${v < 15 ? " · nu mai vorbește cu tine" : ""}</small>
+          <span><button class="btn2" data-do="courtesy" data-target="${id}" ${canCourt ? "" : "disabled"} title="Vizită, declarație comună: +${p.courtesy.gain} relație">Gest (${p.courtesy.capital} cap.)</button>
+          ${pact ? "" : `<button class="btn2 primary2" data-do="pact" data-target="${id}" ${canPact ? "" : "disabled"} title="Pact de colaborare: cere relație ${p.pactMin}+">Pact (${p.costs.pact} cap.)</button>`}</span>
+        </div></div>`;
     })
     .join("");
   return `${section("Relațiile partidului tău", rows || `<p class="hint">Nicio relație încă.</p>`, { sub: "Relația crește când sunteți în aceeași coaliție, când sprijini guvernul, când votezi legea altora sau faci schimburi de voturi, și scade când votezi împotrivă sau când un partid refuză o ofertă." })}`;
@@ -187,7 +196,7 @@ export function mergersView(S) {
   const splinters = p.splinters[S.party] ?? [];
   const cohesion = p.cohesion[S.party] ?? 72;
   const offers = incoming
-    .map((o) => `<div class="row between" style="padding:5px 0"><span>${pbadge(S, o.from)} propune ${o.mode === "fusion" ? "o <b>fuziune</b>" : "să te <b>absoarbă</b>"}${o.name ? ` sub numele „${esc(o.name)}”` : ""}</span>
+    .map((o) => `<div class="row between" style="padding:5px 0"><span>${pbadge(S, o.from)} propune ${o.mode === "fusion" ? "o <b>fuziune</b>" : o.mode === "pact" ? "un <b>pact de colaborare</b>" : "să te <b>absoarbă</b>"}${o.name ? ` sub numele „${esc(o.name)}”` : ""}</span>
       <span><button class="btn2 primary2" data-do="merge-answer" data-from="${o.from}" data-accept="1">Acceptă</button> <button class="btn2" data-do="merge-answer" data-from="${o.from}" data-accept="0">Refuză</button></span></div>`)
     .join("");
   const form = `<div class="row" style="gap:8px;flex-wrap:wrap">

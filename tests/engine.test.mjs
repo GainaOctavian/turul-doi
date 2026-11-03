@@ -16,6 +16,8 @@ import {
   consumeRenamed,
   lobbyPrice,
   lists,
+  previewAction,
+  segmentShares,
 } from "../shared/engine.mjs";
 import { createCtl } from "../shared/ctl.mjs";
 import { DATA_FILES } from "../shared/data-files.mjs";
@@ -671,6 +673,152 @@ test("a multiplayer-style rename keeps humans pointing at the merged party", () 
   assert.deepEqual(state.humans, ["sens-drept"]);
   assert.deepEqual(consumeRenamed(state), { sens: "sens-drept", drept: "sens-drept" });
   assert.deepEqual(consumeRenamed(state), {}, "consumed once");
+});
+
+test("every law cites a verified act, and no retired act is used as a source", () => {
+  const slugs = new Set(data.lawSources.sources.map((s) => s.slug));
+  for (const s of data.lawSources.sources) assert.ok(s.portal.startsWith("https://legislatie.just.ro/") && s.latest && s.verified, s.slug);
+  const retired = data.lawSources.retired.map((r) => r.ref.replace("/", "-"));
+  for (const b of data.bills.bills) {
+    if (b.source) assert.ok(slugs.has(b.source.slug), `${b.id}: unknown source ${b.source.slug}`);
+    for (const r of retired) assert.ok(!b.source?.slug.endsWith(r), `${b.id}: retired source`);
+  }
+  assert.ok(data.bills.bills.filter((b) => b.source).length >= 35, "most bills are grounded in an act");
+  assert.ok(data.bills.bills.length >= 55);
+  for (const b of data.bills.bills) assert.ok(b.title && b.text && b.effects, b.id);
+});
+
+test("negotiating against a law lowers the target's support", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 80;
+  const res = applyParl(state, data, "usr", { type: "bill", bill: "ani-verificare-automata" });
+  const entry = state.parl.bills[0];
+  const before = snapshot(state, data).parl.bills[0].stance.pnl;
+  assert.equal(applyParl(state, data, "usr", { type: "lobby", id: res.id, target: "pnl", how: "favor", against: true }).ok, true);
+  assert.ok(snapshot(state, data).parl.bills[0].stance.pnl < before, "stance fell");
+  assert.ok(entry.deals.pnl < 0);
+  assert.match(applyParl(state, data, "usr", { type: "lobby", id: res.id, target: "pnl", how: "swap", against: true }).error, /doar în favoarea/);
+});
+
+test("every scandal fact in the game points at a registered decision and a real politician", () => {
+  const reg = JSON.parse(readFileSync(new URL("../data/scandal-sources.json", import.meta.url), "utf8")).entries;
+  const byId = Object.fromEntries(data.politicians.politicians.map((p) => [p.id, p]));
+  for (const e of reg) {
+    const p = byId[e.politician];
+    assert.ok(p, `${e.politician}: unknown politician`);
+    assert.ok(p.facts.some((f) => f.includes(e.fact)), `${e.politician}: fact "${e.fact}" is missing from the game`);
+    assert.ok(e.decision && e.authority && e.source && e.date, `${e.politician}: registry entry incomplete`);
+  }
+  const names = new Set(data.politicians.politicians.map((p) => p.id));
+  assert.equal(names.size, data.politicians.politicians.length, "politician ids are unique");
+});
+
+test("a courtesy warms a relation, a pact needs 55 and helps the partner's laws", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 60;
+  const before = state.parl.rel["pnl|usr"] ?? lobbyPrice(state, data, "usr", "pnl").rel;
+  assert.equal(applyParl(state, data, "usr", { type: "courtesy", target: "pnl" }).ok, true);
+  assert.match(applyParl(state, data, "usr", { type: "courtesy", target: "pnl" }).error, /din ziua/);
+  assert.ok(state.parl.rel["pnl|usr"] >= before + 7);
+  state.parl.rel["aur|usr"] = 30;
+  assert.match(applyParl(state, data, "usr", { type: "merge", target: "aur", mode: "pact" }).error, /relație de cel puțin 55/);
+  state.parl.rel["pnl|usr"] = 90;
+  let res;
+  for (let i = 0; i < 20 && !res?.pact; i += 1) {
+    state.parties.usr.capital = 60;
+    res = applyParl(state, data, "usr", { type: "merge", target: "pnl", mode: "pact" });
+  }
+  assert.ok(res.pact, "an AI partner with a good relation eventually agrees");
+  assert.equal(snapshot(state, data).parl.pacts.length, 1);
+  assert.match(applyParl(state, data, "usr", { type: "merge", target: "pnl", mode: "pact" }).error, /deja un pact/);
+});
+
+test("balance: credit for laws fades and governing wears the party down", () => {
+  const run = (balance) => {
+    data.config.balance = balance;
+    const state = createGame(data, { seed: 3, scenario: "2017", humans: [] });
+    const start = state.mood[state.gov.pmParty];
+    tick(state, data, 600);
+    return { start, end: state.mood[state.gov.pmParty], pm: state.gov.pmParty };
+  };
+  try {
+    const on = run(true);
+    assert.ok(on.end < 1.02, `the governing party does not keep climbing (mood ${on.end})`);
+  } finally {
+    delete data.config.balance;
+  }
+});
+
+test("a small party played by a human slowly gains ground; the cap is 1.8x", () => {
+  const state = newGame("2026", ["reper"]);
+  const s0 = state.strength.reper;
+  tick(state, data, 360);
+  assert.ok(state.strength.reper > s0, "grows");
+  tick(state, data, 3000);
+  assert.ok(state.strength.reper <= s0 * 1.8 + 1e-9, "capped");
+});
+
+/* ---------------------------------------- opposition, outside, previews, defections */
+
+test("opposition and outside actions respect who may use them", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.funds = 20;
+  assert.equal(applyAction(state, data, "usr", { type: "inquiry" }).ok, true, "opposition may open an inquiry");
+  assert.equal(applyAction(state, data, "psd", { type: "inquiry" }).ok, false, "the government may not");
+  assert.equal(applyAction(state, data, "usr", { type: "signatures" }).ok, false, "a party with seats cannot collect signatures");
+  const outside = newGame("2026", ["sens"]);
+  outside.parties.sens.funds = 20;
+  assert.equal(applyAction(outside, data, "sens", { type: "signatures" }).ok, true);
+  assert.equal(applyAction(outside, data, "sens", { type: "exposure", targetParty: "sens" }).ok, false, "not against yourself");
+  assert.equal(applyAction(outside, data, "sens", { type: "exposure", targetParty: "aur" }).ok, true);
+});
+
+test("a preview estimates an action and spends nothing", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.funds = 20;
+  const before = JSON.stringify({ f: state.parties.usr.funds, c: state.parties.usr.cooldown, m: state.mood });
+  const p = previewAction(state, data, "usr", { type: "protest", county: "bucuresti" });
+  assert.equal(p.ok, true);
+  assert.ok(p.national.usr > 0, "protest adds national support");
+  assert.ok(p.segs.find((x) => x.seg === "tineri_urbani").own > 0, "young urban voters move");
+  assert.equal(JSON.stringify({ f: state.parties.usr.funds, c: state.parties.usr.cooldown, m: state.mood }), before, "state untouched");
+  assert.equal(previewAction(state, data, "psd", { type: "inquiry" }).ok, false, "a preview reports refusals too");
+});
+
+test("segment shares add up to one across all parties", () => {
+  const state = newGame("2026", ["usr"]);
+  const shares = segmentShares(state, data);
+  for (const seg of data.segments.segments) {
+    const sum = Object.values(shares[seg.id]).reduce((a, b) => a + b, 0);
+    assert.ok(Math.abs(sum - 1) < 0.01, `${seg.id} sums to ${sum}`);
+  }
+});
+
+test("events leave causes for the voter groups they move", () => {
+  const state = newGame("2026", ["usr"]);
+  fireEvent(state, data, "medici-pleaca");
+  const snap = snapshot(state, data);
+  assert.ok(snap.causes.some((c) => c.seg === "bugetari" && c.text === "Medicii pleacă în Germania"));
+});
+
+test("a human party with a shaky group gets a decision; leaving splits the party", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.cohesion = 30;
+  state.parties.usr.seats = 40;
+  state.parties.usr.funds = 5;
+  state.decisions.push({ id: state.nextDecision, party: "usr", eventId: null, defection: { seats: 4 }, day: state.day, expires: state.day + 10 });
+  state.nextDecision += 1;
+  const d = snapshot(state, data).decisions.find((x) => x.party === "usr");
+  assert.match(d.title, /vrea să plece/);
+  const id = d.id;
+  assert.equal(decide(state, data, "usr", id, 0).ok, true, "keeping the group");
+  assert.ok(state.parties.usr.cohesion > 30);
+  state.decisions.push({ id: state.nextDecision, party: "usr", eventId: null, defection: { seats: 4 }, day: state.day, expires: state.day + 10 });
+  state.nextDecision += 1;
+  const before = state.partyIds.length;
+  const id2 = state.decisions[state.decisions.length - 1].id;
+  assert.equal(decide(state, data, "usr", id2, 1).ok, true, "letting them leave");
+  assert.equal(state.partyIds.length, before + 1);
 });
 
 /* --------------------------------------------------------------- the ctl */
