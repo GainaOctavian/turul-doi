@@ -67,7 +67,7 @@ const yearAgo = (arr) => (arr.length ? arr[Math.max(0, arr.length - 13)] : null)
 function seatBar(S) {
   const s = S.snap;
   const gv = G(S).gov;
-  const total = 330;
+  const total = s.totalSeats ?? 331;
   const seats = (p) => s.parties[p]?.seats ?? 0;
   const supporters = Object.entries(gv.support).filter(([, on]) => on).map(([p]) => p);
   const parts = [];
@@ -85,7 +85,7 @@ function seatBar(S) {
     ${gv.coalition.map((p) => `<span>${dot(pcolor(S, p))}${esc(pname(S, p))} ${seats(p)}</span>`).join("")}
     ${supporters.map((p) => `<span class="dim">${dot(pcolor(S, p))}${esc(pname(S, p))} (sprijin) ${seats(p)}</span>`).join("")}
     <span class="dim">${dot("#8d99ae")}Minorități ${s.minoritySeats}</span>
-    <strong>${mine} din 330 · majoritatea e 166</strong>
+    <strong>${mine} din ${total} · majoritatea e 166 · Senat ${[...gv.coalition, ...supporters].reduce((a, p) => a + (s.senate?.[p] ?? 0), 0)} din 136 (majoritatea 69)</strong>
   </div>`;
 }
 

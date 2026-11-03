@@ -20,7 +20,7 @@ import {
   previewAction,
   segmentShares,
 } from "../shared/engine.mjs";
-import { dayOf } from "../shared/util.mjs";
+import { dayOf, senateMapFrom, SENATE_SEATS, SENATE_MAJORITY } from "../shared/util.mjs";
 import { describeEffects } from "../shared/fx-text.mjs";
 import { createCtl } from "../shared/ctl.mjs";
 import { DATA_FILES } from "../shared/data-files.mjs";
@@ -1145,6 +1145,19 @@ test("the poll history grows monthly with each party's share and the causes behi
   for (const p of state.partyIds) assert.equal(h.s[p].length, 1, p + " has one value");
   assert.ok(h.months[0].causes.some((c) => c.text === "Inundații în Moldova"), "the flood is named as a cause");
   assert.ok(snapshot(state, data).pollHist.months.length === 1, "the snapshot carries it");
+});
+
+test("the Senate has 136 seats split like the Chamber; the Chamber has 331 with minorities", () => {
+  assert.equal(data.config.totalSeats, 331);
+  for (const scenario of ["2017", "2026"]) {
+    const state = newGame(scenario, ["usr"]);
+    const sm = senateMapFrom(state);
+    assert.equal(Object.values(sm).reduce((a, b) => a + b, 0), SENATE_SEATS, scenario + ": the Senate totals 136");
+    assert.equal(SENATE_MAJORITY, 69, "a Senate majority is 69 of 136");
+    const top = (m) => Object.entries(m).sort((a, b) => b[1] - a[1])[0][0];
+    const chamber = Object.fromEntries(state.partyIds.map((id) => [id, state.parties[id].seats]));
+    assert.equal(top(sm), top(chamber), scenario + ": the biggest party in the Chamber leads the Senate");
+  }
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {

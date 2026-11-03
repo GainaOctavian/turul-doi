@@ -2,7 +2,7 @@
 // between parties, party cohesion, mergers, splits and the party profile.
 // State lives in `state.parl`; party definitions that change (merges, splits,
 // a shifted direction) live in `state.defs`.
-import { clamp, rand, log, round, partyDef } from "./util.mjs";
+import { clamp, rand, log, round, partyDef, senateMapFrom, SENATE_MAJORITY } from "./util.mjs";
 import { computePoll, applyEffects } from "./engine.mjs";
 import { fallGovernment } from "./gov.mjs";
 import { queueLaw, challengeCCR, nominate, backCandidate } from "./presidency.mjs";
@@ -313,8 +313,18 @@ function resolve(state, data, entry) {
   }
   entry.tally = tally;
   entry.by = by;
-  const passed = entry.kind === "motion" ? tally.yes >= MAJORITY : tally.yes > tally.no;
+  // The Senate votes too, with its own seats: a law needs a majority there, and so does a censure motion.
+  const sm = senateMapFrom(state);
+  const senate = { yes: 0, no: 0, abstain: 0 };
+  for (const [p, v] of Object.entries(by)) senate[v] += sm[p] ?? 0;
+  entry.senateTally = senate;
+  const chamberPass = entry.kind === "motion" ? tally.yes >= MAJORITY : tally.yes > tally.no;
+  const senatePass = entry.kind === "motion" ? senate.yes >= SENATE_MAJORITY : senate.yes > senate.no;
+  const passed = chamberPass && senatePass;
   entry.status = passed ? "passed" : "failed";
+  if (chamberPass && !senatePass) {
+    log(state, "parl", "Senatul a oprit votul", `Camera a votat ${tally.yes} la ${tally.no}, dar în Senat sunt ${senate.yes} pentru și ${senate.no} împotrivă.`);
+  }
 
   if (entry.kind === "motion") {
     log(state, "parl", "Votul asupra moțiunii", `${tally.yes} pentru, ${tally.no} împotrivă, ${tally.abstain} abțineri. Pragul e ${MAJORITY}.`);

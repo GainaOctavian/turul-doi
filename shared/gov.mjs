@@ -1,7 +1,7 @@
 // Governing the country: budget (in million euro), taxes, public services,
 // standard of living per voter segment, the cabinet, and the people who run it.
 // Pure functions over the shared game state, like the engine.
-import { clamp, round, rand, log, partyDef } from "./util.mjs";
+import { clamp, round, rand, log, partyDef, senateOf, SENATE_MAJORITY } from "./util.mjs";
 import { fileMotion } from "./parl.mjs";
 
 export const LINES = ["pensions", "social", "health", "education", "defense", "order", "infra", "agri", "admin"];
@@ -495,7 +495,7 @@ function confidenceStep(state, data) {
   if (g.caretaker) return;
   const supporters = Object.entries(g.support).filter(([, on]) => on).map(([p]) => p);
   const bloc = seatsOf(state, [...g.coalition, ...supporters]) + g.minoritySeats;
-  const margin = bloc - (MAJORITY - 1);
+  const margin = Math.min(bloc - (MAJORITY - 1), senateOf(state, [...g.coalition, ...supporters]) - (SENATE_MAJORITY - 1));
   const target =
     55 +
     28 * nationalSat(state) +

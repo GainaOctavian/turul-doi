@@ -67,6 +67,7 @@ node tools/bills-law.mjs                              # reconstruiește surse + 
 - `data/law-sources.json`: actele verificate (`sources`) și capcanele (`retired`). O lege din
   joc primește `source: {slug, note}`; testele refuză surse necunoscute sau retrase.
 - Previzualizările (`previewAction`) rulează o acțiune pe o copie a stării și raportează diferența în pp; nu cheltuiesc nimic. Folosește-le în loc să duplici logica de efect în UI.
+- Două camere (`senateMapFrom`, `senateOf`, `SENATE_MAJORITY` în `shared/util.mjs`): Camera 331, Senatul 136, împărțit proporțional. Guvernul și legile trec de ambele camere.
 - Efecte explicite (`shared/fx-text.mjs`): orice eveniment sau alegere își arată efectele (▲/▼). Efectul `buff` e temporar (`state.buffs`, `moodOf` în `engine.mjs`). Evenimentele pot avea `role` gov/opp; alegerile pot costa capital.
 - Instrumente mari (`instrument` în `shared/parl.mjs`): cheltuirea capitalului politic acumulat, cu pauză per partid.
 - Recrutare și oferte (`recruitMps`, `answerOffer`, `driftToFree` în `shared/parl.mjs`): parlamentari neafiliați (`state.parl.free`), atragerea de la rivali cu grup șubred, oferte de bani/capital pentru votul tău.

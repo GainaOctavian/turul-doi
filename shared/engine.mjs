@@ -3,7 +3,7 @@
 //
 // Layers: this file = parties, polls, elections, events, campaign actions.
 // gov.mjs = budget, metrics, standard of living, cabinet. world.mjs = EU + countries.
-import { clamp, rand, log, round, dateAt, dayOf, partyDef } from "./util.mjs";
+import { clamp, rand, log, round, dateAt, dayOf, partyDef, senateOf, SENATE_MAJORITY, senateMapFrom } from "./util.mjs";
 import { initParl, parlDaily, parlMonthly, parlSnapshot, distance, splitParty } from "./parl.mjs";
 import { describeEffects } from "./fx-text.mjs";
 import { initPresidency, presidencyDaily, decidePresidential, presPseudoEvent, presSnapshot } from "./presidency.mjs";
@@ -816,7 +816,8 @@ function blocSeats(state, ids) {
 
 function majorityOk(state, ids) {
   const need = Math.floor(state.config.totalSeats / 2) + 1;
-  return blocSeats(state, ids) + state.config.minoritySeats >= need;
+  // A government needs a majority in the Chamber and in the Senate.
+  return blocSeats(state, ids) + state.config.minoritySeats >= need && senateOf(state, ids) >= SENATE_MAJORITY;
 }
 
 function canJoin(state, data, from, to) {
@@ -1132,6 +1133,8 @@ export function snapshot(state, data, opts = {}) {
     buffs: (state.buffs ?? []).map((b) => ({ id: b.id, label: b.label, parties: b.parties, factor: b.factor, left: Math.max(0, b.until - state.day) })),
     lasting: state.lasting ?? {},
     pollHist: state.pollHist ?? null,
+    totalSeats: state.config.totalSeats,
+    senate: senateMapFrom(state),
     pres: presSnapshot(state, data),
     segShares: segmentShares(state, data),
     segPrev: state.segPrev ?? null,

@@ -807,7 +807,7 @@ function panelPoll() {
         </div>`,
     )
     .join("");
-  const total = 330;
+  const total = S.snap.totalSeats ?? 331;
   const listOf = (id) => s.lists.find((l) => l.parties.includes(id));
 
   return `
@@ -1244,7 +1244,7 @@ function renderResult() {
     ${rows
       .map(
         ([pid, n]) => `<div class="seat-row"><span class="sr-name" style="color:${color(pid)}">${pname(pid)}</span>
-          <div class="bar"><i style="--pc:${color(pid)};width:${((n / 330) * 100).toFixed(1)}%"></i></div>
+          <div class="bar"><i style="--pc:${color(pid)};width:${((n / (S.snap.totalSeats ?? 331)) * 100).toFixed(1)}%"></i></div>
           <span class="sr-num">${n}</span></div>`,
       )
       .join("")}

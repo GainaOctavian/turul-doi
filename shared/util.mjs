@@ -45,3 +45,30 @@ export function dayOf(startDate, isoDate) {
 export function partyDef(state, data, id) {
   return state.defs?.[id] ?? data.parties.parties.find((p) => p.id === id);
 }
+
+// The Senate: 136 seats, split between the parties in proportion to their Chamber seats
+// (largest remainder). A majority is 69 of 136.
+export const SENATE_SEATS = 136;
+export const SENATE_MAJORITY = 69;
+
+export function senateMapFrom(state) {
+  const ids = state.partyIds;
+  const seats = ids.map((id) => Math.max(0, state.parties[id]?.seats ?? 0));
+  const total = seats.reduce((a, b) => a + b, 0);
+  if (total <= 0) return {};
+  const quota = seats.map((s) => (s / total) * SENATE_SEATS);
+  const base = quota.map((q) => Math.floor(q));
+  let left = SENATE_SEATS - base.reduce((a, b) => a + b, 0);
+  const order = quota.map((q, i) => [q - base[i], i]).sort((a, b) => b[0] - a[0]);
+  for (const [, i] of order) {
+    if (left <= 0) break;
+    base[i] += 1;
+    left -= 1;
+  }
+  return Object.fromEntries(ids.map((id, i) => [id, base[i]]));
+}
+
+export function senateOf(state, ids) {
+  const m = senateMapFrom(state);
+  return [...new Set(ids)].reduce((s, id) => s + (m[id] ?? 0), 0);
+}
