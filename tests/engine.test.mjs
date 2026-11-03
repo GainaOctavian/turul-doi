@@ -1134,6 +1134,19 @@ test("a buff leaves a lasting residue when it fades, and a later debuff can take
   assert.ok(snapshot(state, data).lasting.usr === -0.15, "the snapshot shows it");
 });
 
+test("the poll history grows monthly with each party's share and the causes behind the month", () => {
+  const state = newGame("2026", ["usr"]);
+  tick(state, data, 29);
+  fireEvent(state, data, "d2-inundatii");
+  tick(state, data, 2);
+  const h = state.pollHist;
+  assert.ok(h, "the history exists after a month");
+  assert.equal(h.months.length, 1, "one entry at the month's end");
+  for (const p of state.partyIds) assert.equal(h.s[p].length, 1, p + " has one value");
+  assert.ok(h.months[0].causes.some((c) => c.text === "Inundații în Moldova"), "the flood is named as a cause");
+  assert.ok(snapshot(state, data).pollHist.months.length === 1, "the snapshot carries it");
+});
+
 test("every law offers at least two amendments, with real segments and unique ids", () => {
   const segs = new Set(data.segments.segments.map((s) => s.id));
   for (const bill of data.bills.bills) {

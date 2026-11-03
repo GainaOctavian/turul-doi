@@ -724,6 +724,51 @@ function panelActions() {
 }
 
 // Temporary buffs and debuffs from events, with what they do and how long they last.
+// Poll history: the five largest parties month by month, and the biggest causes behind each month.
+function pollHistView() {
+  const h = S.snap.pollHist;
+  const head = "<h3>Istoric lunar și cauze</h3>";
+  if (!h || !h.months?.length) return `${head}<p class="muted" style="font-size:12px">Graficul apare după prima lună de joc.</p>`;
+  const top = Object.entries(S.snap.poll.national)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([p]) => p);
+  const n = h.months.length;
+  const W = 600;
+  const H = 170;
+  const pad = 26;
+  const all = top.flatMap((p) => h.s[p] ?? []);
+  const yMax = Math.max(0.05, ...all) * 1.1;
+  const x = (i) => pad + (n <= 1 ? 0.5 : i / (n - 1)) * (W - 2 * pad);
+  const y = (v) => H - pad - (v / yMax) * (H - 2 * pad);
+  const lines = top
+    .map((p) => {
+      const s = h.s[p] ?? [];
+      const off = n - s.length;
+      const pts = s.map((v, k) => `${x(off + k).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+      return `<polyline fill="none" stroke="${color(p)}" stroke-width="2.2" stroke-linejoin="round" points="${pts}"/>`;
+    })
+    .join("");
+  const axis = `<line x1="${pad}" y1="${H - pad}" x2="${W - pad}" y2="${H - pad}" stroke="#2a3a6b"/>`;
+  const legend = top
+    .map((p) => `<span style="color:${color(p)};margin-right:10px;font-size:12px">■ ${esc(pname(p))} ${pct(S.snap.poll.national[p])}</span>`)
+    .join("");
+  const rows = h.months
+    .slice(-6)
+    .reverse()
+    .map((m) => {
+      const causes = m.causes.length
+        ? m.causes.map((c) => `${c.net >= 0 ? "▲" : "▼"} ${esc(c.text)}${c.party ? ` (${esc(pname(c.party))})` : ""}`).join(" · ")
+        : "fără cauze notabile";
+      return `<div class="row between poll-cause"><span class="muted" style="white-space:nowrap">${esc(fmtDate(m.date))}</span><span style="text-align:right">${causes}</span></div>`;
+    })
+    .join("");
+  return `${head}
+    <svg class="poll-hist" viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Istoricul sondajelor">${axis}${lines}</svg>
+    <div>${legend}</div>
+    <div class="poll-causes">${rows}</div>`;
+}
+
 function buffsView() {
   const list = S.snap.buffs ?? [];
   const lasting = Object.entries(S.snap.lasting ?? {}).filter(([, v]) => Math.abs(v) >= 0.0005);
@@ -769,6 +814,7 @@ function panelPoll() {
     ${roadCard()}
     ${buffsView()}
     ${presView(S)}
+    ${pollHistView()}
     <h3>Sondaj național</h3>
     ${rows
       .map(([pid, v]) => {

@@ -3200,3 +3200,17 @@ input.sel[type="text"] {
   color: #9d0208;
   font-weight: 600;
 }
+
+/* ---------- poll history ---------- */
+.poll-hist {
+  display: block;
+  margin: 4px 0 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+.poll-cause {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  gap: 10px;
+}

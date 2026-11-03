@@ -967,6 +967,37 @@ export function runElection(state, data) {
   return poll;
 }
 
+// The poll history: one value per party per month, and the biggest causes behind that month.
+const POLL_MONTHS = 60;
+
+function topCauses(state) {
+  const since = state.day - 30;
+  const by = new Map();
+  for (const c of state.causes ?? []) {
+    if (c.day <= since) continue;
+    const cur = by.get(c.text) ?? { text: c.text, party: c.party, net: 0, mag: 0 };
+    cur.net += c.v;
+    cur.mag += Math.abs(c.v);
+    by.set(c.text, cur);
+  }
+  return [...by.values()]
+    .sort((a, b) => b.mag - a.mag)
+    .slice(0, 3)
+    .map((x) => ({ text: x.text, party: x.party, net: Number(x.net.toFixed(3)) }));
+}
+
+function recordPoll(state, data) {
+  const poll = computePoll(state, data).national;
+  const h = (state.pollHist ??= { months: [], s: {} });
+  h.months.push({ day: state.day, date: state.date, causes: topCauses(state) });
+  for (const p of state.partyIds) (h.s[p] ??= []).push(Number((poll[p] ?? 0).toFixed(4)));
+  // A party born later has a shorter series; the view aligns series to the months from the end.
+  if (h.months.length > POLL_MONTHS) {
+    h.months.splice(0, h.months.length - POLL_MONTHS);
+    for (const p of Object.keys(h.s)) h.s[p].splice(0, Math.max(0, h.s[p].length - POLL_MONTHS));
+  }
+}
+
 export function tick(state, data, days = 1) {
   for (let i = 0; i < days; i += 1) {
     state.day += 1;
@@ -976,6 +1007,7 @@ export function tick(state, data, days = 1) {
 
     if (state.day % 30 === 0) {
       state.segPrev = segmentShares(state, data);
+      recordPoll(state, data);
       worldMonthly(state, data);
       govMonthly(state, data);
       flushPending(state, data);
@@ -1099,6 +1131,7 @@ export function snapshot(state, data, opts = {}) {
     causes: (state.causes ?? []).slice(-160),
     buffs: (state.buffs ?? []).map((b) => ({ id: b.id, label: b.label, parties: b.parties, factor: b.factor, left: Math.max(0, b.until - state.day) })),
     lasting: state.lasting ?? {},
+    pollHist: state.pollHist ?? null,
     pres: presSnapshot(state, data),
     segShares: segmentShares(state, data),
     segPrev: state.segPrev ?? null,
