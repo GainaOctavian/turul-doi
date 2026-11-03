@@ -63,6 +63,10 @@ export const HELP = `turul-doi ctl
   split [frac] [model]      oamenii pleacă și formează o grupare nouă (ex: split 0.3 pdl)
   profile [partid]          profilul partidului: categorii, direcție, oameni
   shift <categorie|left|right>  mută direcția partidului
+  president                 președintele, candidaturile, sprijinul și legile la Cotroceni
+  pres-run                  depune candidatura (ultimele 150 de zile)
+  pres-back <partid>        susține o candidatură propusă
+  ccr <nr>                  sesizează Curtea Constituțională pentru o lege la Cotroceni
   events                    ultimele evenimente
   help                      acest text`;
 
@@ -443,6 +447,32 @@ export function createCtl(data, opts = {}) {
         const dir = args[0];
         const change = dir === "left" ? { lean: 1 } : dir === "right" ? { lean: -1 } : { segment: dir };
         const res = applyParl(state, data, me(), { type: "shift", ...change });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "president": {
+        const p = snapshot(state, data).pres;
+        const who = p.president.name ?? "fără nume";
+        const cands = p.candidates.map((c) => `${c.party} ${c.name} ${pct(c.share)}${c.nominated ? " (candidat)" : ""}`).join("\n");
+        const backing = Object.entries(p.backing).map(([c, l]) => `${l.join("+")} → ${c}`).join("; ");
+        return `președinte: ${who} (${p.president.party ?? "independent"}), alegeri în ${p.toVote} zile\n${cands}${backing ? `\nsprijin: ${backing}` : ""}\nla Cotroceni: ${p.pending.map((x) => `#${x.id} ${x.title}`).join("; ") || "nimic"}`;
+      }
+
+      case "pres-run": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "pres-run" });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "pres-back": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "pres-back", target: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "ccr": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "ccr", id: Number(args[0]) });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 

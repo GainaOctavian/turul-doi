@@ -18,6 +18,7 @@ import { DATA_FILES } from "/shared/data-files.mjs";
 import { portrait } from "/portraits.mjs";
 import { esc, fmt, share, meur, signed } from "/kit.mjs";
 import { SECTIONS, renderView, roleOf, ROLE_LABEL, badges } from "/dash.mjs";
+import { presView } from "/parl-ui.mjs";
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -745,6 +746,7 @@ function panelPoll() {
 
   return `
     ${roadCard()}
+    ${presView(S)}
     <h3>Sondaj național</h3>
     ${rows
       .map(([pid, v]) => {
@@ -939,6 +941,13 @@ function setupEvents() {
   });
 
   const panel = $("#panel");
+  // The Cotroceni card in Sondaj uses the same buttons as the Parlament screen.
+  onPress(panel, "[data-do]", (el) => {
+    const d = el.dataset.do;
+    if (d === "pres-run") parlDo({ type: "pres-run" });
+    if (d === "pres-back") parlDo({ type: "pres-back", target: el.dataset.target });
+    if (d === "ccr") parlDo({ type: "ccr", id: Number(el.dataset.id) });
+  });
   onPress(panel, "[data-quick]", (el) => {
     const type = el.dataset.quick;
     const action = { type, county: S.selected };
@@ -1077,6 +1086,9 @@ function setupDash() {
     appoint: (el) => govDo({ type: "appoint", ministry: el.dataset.m, politician: $(`#appoint-${el.dataset.m}`)?.value }),
     answer: (el) => govDo({ type: "answer", id: Number(el.dataset.id), accept: el.dataset.accept === "1" }),
     motion: () => parlDo({ type: "motion" }),
+    "pres-run": () => parlDo({ type: "pres-run" }),
+    "pres-back": (el) => parlDo({ type: "pres-back", target: el.dataset.target }),
+    ccr: (el) => parlDo({ type: "ccr", id: Number(el.dataset.id) }),
     "parl-motion": () => parlDo({ type: "motion" }),
     "parl-vote": (el) => parlDo({ type: "vote", id: Number(el.dataset.id), vote: el.dataset.vote }),
     "parl-lobby": (el) => parlDo({ type: "lobby", id: Number(el.dataset.id), target: $(`#lt-${el.dataset.id}`)?.value, how: $(`#lh-${el.dataset.id}`)?.value, against: $(`#lg-${el.dataset.id}`)?.value === "against" }),

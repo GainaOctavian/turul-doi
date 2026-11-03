@@ -5,6 +5,7 @@
 import { clamp, rand, log, round, partyDef } from "./util.mjs";
 import { computePoll, applyEffects } from "./engine.mjs";
 import { fallGovernment } from "./gov.mjs";
+import { queueLaw, challengeCCR, nominate, backCandidate } from "./presidency.mjs";
 
 const MAJORITY = 166;
 const LAW_DAYS = 12;
@@ -118,6 +119,11 @@ export function proposeBill(state, data, partyId, billId) {
   party.capital = round(party.capital - COST.bill, 1);
   state.parl.cool[`bill:${partyId}`] = state.day + 20;
   return openEntry(state, data, { kind: "law", bill: billId, from: partyId, days: LAW_DAYS, title: def.title });
+}
+
+// A law the president sent back: Parliament votes on it again, in a shorter window.
+export function reopenLaw(state, data, billId, from, title) {
+  return openEntry(state, data, { kind: "law", bill: billId, from, days: 10, title: title ?? billId });
 }
 
 function openEntry(state, data, e) {
@@ -261,10 +267,8 @@ function resolve(state, data, entry) {
     log(state, "parl", passed ? `Lege adoptată: ${def.title}` : `Lege respinsă: ${def.title}`, `${tally.yes} pentru, ${tally.no} împotrivă, ${tally.abstain} abțineri. Inițiator: ${upper(entry.from)}.`);
     if (passed) {
       state.parl.passed[entry.bill] = state.day;
-      // Credit for a law fades: voters credit the party that files it for half of what the law is worth.
-      const fx = structuredClone(def.effects);
-      if (fx.party?.self) fx.party.self *= 0.5;
-      applyEffects(state, data, fx, { partyId: entry.from });
+      // The law waits at Cotroceni: its effects apply only when the president promulgates it.
+      queueLaw(state, data, entry, def);
       state.parties[entry.from].capital = round(state.parties[entry.from].capital + 4, 1);
       const cohesionGain = inGov(state, entry.from) ? 1 : 2;
       state.parties[entry.from].cohesion = round(clamp((state.parties[entry.from].cohesion ?? 72) + cohesionGain, 0, 100), 1);
@@ -748,6 +752,9 @@ export function applyParl(state, data, partyId, a = {}) {
     case "lobby": return lobby(state, data, partyId, a.id, a.target, a.how, a.against === true);
     case "merge": return offerMerge(state, data, partyId, a.target, a.mode, a.name);
     case "courtesy": return courtesy(state, data, partyId, a.target);
+    case "pres-run": return nominate(state, data, partyId);
+    case "pres-back": return backCandidate(state, data, partyId, a.target);
+    case "ccr": return challengeCCR(state, data, partyId, a.id);
     case "merge-answer": return acceptMerge(state, data, partyId, a.from, a.accept !== false);
     case "shift": return shiftParty(state, data, partyId, { segment: a.segment, lean: a.lean });
     case "split": {

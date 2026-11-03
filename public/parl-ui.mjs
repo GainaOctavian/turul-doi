@@ -3,6 +3,8 @@
 import * as K from "/kit.mjs";
 
 const { esc, fmt, share, badge, section, bar } = K;
+const pct = (v) => `${((v ?? 0) * 100).toFixed(1)}%`;
+const num = (n) => fmt(n);
 
 const P = (S) => S.snap.parl;
 const pdef = (S, id) => S.partyById[id];
@@ -85,13 +87,55 @@ function voteCard(S, b) {
   </div>`;
 }
 
+// Cotroceni: who is president, the candidacies, partners' backing and laws waiting for a decision.
+export function presView(S) {
+  const p = S.snap.pres;
+  const party = me(S);
+  const pres = p.president;
+  const presName = pres.name ?? "fără nume";
+  const presParty = pres.party ? pbadge(S, pres.party) : badge("independent", "#8d99ae");
+  const inWindow = p.toVote > 0 && p.toVote <= 150;
+  const iNominated = p.nominated.includes(S.party);
+  const myShare = p.candidates.find((c) => c.party === S.party)?.share ?? 0;
+  const canRun = inWindow && !iNominated && myShare >= 0.02 && party.capital >= 15 && party.funds >= 1.5;
+  const backing = Object.entries(p.backing).map(([c, list]) => `${list.map((x) => pname(S, x)).join(", ")} → ${pname(S, c)}`);
+  const iBacking = Object.values(p.backing).some((l) => l.includes(S.party));
+  const canBack = p.toVote > 0 && p.toVote <= 120 && !iNominated && !iBacking && party.capital >= 5;
+  const cands = p.candidates
+    .map((c) => `<div class="row between" style="padding:4px 0"><span>${pbadge(S, c.party)} ${esc(c.name)} ${c.nominated ? badge("candidat", "#2fbf8a") : ""}</span><span class="muted">${pct(c.share)} în sondaj</span></div>`)
+    .join("");
+  const backBtns = p.nominated
+    .filter((c) => c !== S.party)
+    .map((c) => `<button class="btn2" data-do="pres-back" data-target="${c}" ${canBack ? "" : "disabled"}>Susține ${esc(pname(S, c))} (5 cap.)</button>`)
+    .join(" ");
+  const pending = p.pending
+    .map((x) => {
+      const canCcr = x.from !== S.party && (party.seats ?? 0) >= 15 && party.capital >= 5;
+      return `<div class="row between" style="padding:5px 0;gap:8px"><span>${esc(x.title)} ${pbadge(S, x.from)}</span>${canCcr ? `<button class="btn2" data-do="ccr" data-id="${x.id}">Sesizează CCR (5 cap.)</button>` : badge(`până în ziua ${x.deadline}`, "#8d99ae")}</div>`;
+    })
+    .join("");
+  const last = p.lastResult ? `Ultimele alegeri: ${pname(S, p.lastResult.winner)} (${p.lastResult.round === 1 ? "turul întâi" : "turul doi"}).` : "";
+  return `${section("La Cotroceni", `
+    <div class="row between" style="margin-bottom:8px"><span><b>${esc(presName)}</b> ${presParty}</span><span class="muted">${p.toVote > 0 ? `alegeri în ${num(p.toVote)} zile` : "alegerile sunt acum"}</span></div>
+    <p class="muted" style="font-size:12px;margin:0 0 10px">${esc(pres.role ?? "")} ${last}</p>
+    ${cands ? `<div style="margin-bottom:8px">${cands}</div>` : ""}
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <button class="btn2 primary2" data-do="pres-run" ${canRun ? "" : "disabled"}>Depune candidatura (15 cap., 1,5 M€)</button>
+      ${backBtns}
+    </div>
+    ${backing.length ? `<p class="muted" style="font-size:12px;margin:8px 0 0">Sprijin: ${backing.map(esc).join(" · ")}</p>` : ""}
+    ${pending ? `<div style="margin-top:10px">${pending}</div>` : ""}
+  `, { sub: "Președintele promulgă legile, le poate retrimite în Parlament sau poate sesiza Curtea Constituțională. La o candidatură trebuie 2% în sondaje; partenerii pot da sprijin doar dacă relația e bună și programele apropiate." })}`;
+}
+
 export function votesView(S) {
   const p = P(S);
   const open = p.bills.map((b) => voteCard(S, b)).join("");
   const done = p.done.length
     ? p.done.map((d) => `<div class="row between" style="padding:4px 0"><span>${d.kind === "motion" ? badge("Moțiune", "#ff4d6d") : badge("Lege", "#4cc9f0")} ${esc(d.title)} ${pbadge(S, d.from)}</span><span class="muted">${badge(d.status === "passed" ? "adoptat" : "respins", d.status === "passed" ? "#2fbf8a" : "#8d99ae")} ${d.tally.yes}–${d.tally.no} · ziua ${d.day}</span></div>`).join("")
     : `<p class="hint">Niciun vot încă.</p>`;
-  return `${section("În dezbatere", open || `<p class="hint">Niciun vot programat. Poți depune o lege din tabul „Legi”, iar partidele AI depun și ele în fiecare lună.</p>`, { sub: "Fiecare lege și fiecare moțiune se votează în plen. Partidele votează după programul lor, relația cu inițiatorul și înțelegerile din culise." })}
+  return `${presView(S)}
+    ${section("În dezbatere", open || `<p class="hint">Niciun vot programat. Poți depune o lege din tabul „Legi”, iar partidele AI depun și ele în fiecare lună.</p>`, { sub: "Fiecare lege și fiecare moțiune se votează în plen. Partidele votează după programul lor, relația cu inițiatorul și înțelegerile din culise." })}
     ${section("Voturi recente", done)}`;
 }
 

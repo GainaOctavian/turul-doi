@@ -19,6 +19,7 @@ import {
   previewAction,
   segmentShares,
 } from "../shared/engine.mjs";
+import { dayOf } from "../shared/util.mjs";
 import { createCtl } from "../shared/ctl.mjs";
 import { DATA_FILES } from "../shared/data-files.mjs";
 
@@ -819,6 +820,92 @@ test("a human party with a shaky group gets a decision; leaving splits the party
   const id2 = state.decisions[state.decisions.length - 1].id;
   assert.equal(decide(state, data, "usr", id2, 1).ok, true, "letting them leave");
   assert.equal(state.partyIds.length, before + 1);
+});
+
+/* --------------------------------------------------------------- presidency */
+
+import { decideLaw, runPresidentialElection, presSnapshot } from "../shared/presidency.mjs";
+
+test("the presidency starts with the scenario's president and a dated election", () => {
+  const s17 = newGame("2017", ["usr"]);
+  assert.equal(s17.pres.president.id, "iohannis");
+  assert.equal(s17.pres.electionDay, dayOf("2017-01-04", "2019-11-10"));
+  const s26 = newGame("2026", ["usr"]);
+  assert.equal(s26.pres.president.id, "nicusor");
+  assert.ok(s26.pres.electionDay > 0);
+});
+
+test("a presidential election names a winner and a second round when nobody has half", () => {
+  const state = newGame("2026", ["usr"]);
+  runPresidentialElection(state, data);
+  const r = state.pres.lastResult;
+  assert.ok(r.winner && state.partyIds.includes(r.winner));
+  assert.ok(r.round === 1 || r.round === 2);
+  assert.equal(state.pres.president.party, r.winner);
+  assert.equal(state.pres.nominated && Object.keys(state.pres.nominated).length, 0, "candidacies are reset");
+  assert.ok(state.pres.electionDay > state.day + 1000, "the next election is five years away");
+});
+
+test("candidacies open in the last months and cost capital; partners back a nominated party", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 60;
+  state.parties.usr.funds = 10;
+  const early = applyParl(state, data, "usr", { type: "pres-run" });
+  assert.equal(early.ok, false, "too early");
+  state.day = state.pres.electionDay - 100;
+  const ok = applyParl(state, data, "usr", { type: "pres-run" });
+  assert.equal(ok.ok, true, ok.error);
+  assert.equal(applyParl(state, data, "usr", { type: "pres-run" }).ok, false, "only once");
+  assert.equal(applyParl(state, data, "pnl", { type: "pres-back", target: "usr" }).ok, false, "not nominated: no backing for PNL's rival");
+  state.pres.nominated.pnl = true;
+  const back = applyParl(state, data, "udmr", { type: "pres-back", target: "pnl" });
+  assert.ok(back.ok || /programul/.test(back.error), back.error);
+  const snap = presSnapshot(state, data);
+  assert.ok(snap.candidates.some((c) => c.party === "usr" && c.nominated));
+});
+
+test("a passed law waits at Cotroceni; promulgation applies its effects", () => {
+  const state = newGame("2026", ["usr"]);
+  const before = state.metrics.cpi;
+  const entry = { id: 999, bill: "abuz-prag-prejudiciu", from: "usr", title: "Abuzul în serviciu: prag minim de prejudiciu" };
+  const bill = data.bills.bills.find((b) => b.id === entry.bill);
+  state.pres.pending.push({ id: 1, bill: entry.bill, from: "usr", title: bill.title, day: state.day, deadline: state.day, humanUntil: state.day + 7, ccrAsked: false });
+  decideLaw(state, data, state.pres.pending[0], "promulgate");
+  assert.equal(state.pres.pending.length, 0);
+  assert.ok(state.metrics.cpi < before, "the law's anti-corruption effect lands only now");
+});
+
+test("a human president's party decides; an ignored law falls to the AI after the window", () => {
+  const state = newGame("2026", ["usr"]);
+  state.pres.president.party = "usr";
+  state.pres.pending.push({ id: 7, bill: "avertizori-protectie-361", from: "pnl", title: "Protecția avertizorilor", day: state.day, deadline: state.day, humanUntil: state.day + 7, ccrAsked: false });
+  tick(state, data, 1);
+  const d = state.decisions.find((x) => x.presidential === 7);
+  assert.ok(d, "a decision is waiting");
+  assert.match(snapshot(state, data).decisions.find((x) => x.id === d.id).title, /Cotroceni/);
+  assert.equal(decide(state, data, "usr", d.id, 0).ok, true);
+  assert.equal(state.pres.pending.length, 0);
+  state.pres.pending.push({ id: 8, bill: "avertizori-protectie-361", from: "pnl", title: "x", day: state.day, deadline: state.day, humanUntil: state.day + 2, ccrAsked: false });
+  tick(state, data, 3);
+  assert.equal(state.pres.pending.length, 0, "the AI decided after the window");
+});
+
+test("the opposition can challenge a law at the CCR only with 15 MPs; returning a law reopens the vote", () => {
+  const state = newGame("2026", ["psd"]);
+  state.parties.psd.capital = 40;
+  state.gov.coalition = ["pnl"];
+  state.pres.pending.push({ id: 3, bill: "avertizori-protectie-361", from: "pnl", title: "Protecția avertizorilor", day: state.day, deadline: state.day + 99, humanUntil: state.day + 99, ccrAsked: false });
+  const small = applyParl(state, data, "sens", { type: "ccr", id: 3 });
+  assert.equal(small.ok, false, "a party without 15 MPs cannot refer");
+  const ok = applyParl(state, data, "psd", { type: "ccr", id: 3 });
+  assert.ok(ok.ok || /deja/.test(ok.error), ok.error);
+  const again = applyParl(state, data, "psd", { type: "ccr", id: 3 });
+  assert.equal(again.ok, false, "only once");
+  const pend = { id: 4, bill: "avertizori-protectie-361", from: "pnl", title: "Protecția avertizorilor", day: 0, deadline: 0, humanUntil: 0, ccrAsked: false };
+  state.pres.pending.push(pend);
+  const before = state.parl.bills.length;
+  decideLaw(state, data, pend, "return");
+  assert.equal(state.parl.bills.length, before + 1, "Parliament votes again");
 });
 
 /* --------------------------------------------------------------- the ctl */

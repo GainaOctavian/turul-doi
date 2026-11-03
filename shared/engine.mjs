@@ -5,6 +5,7 @@
 // gov.mjs = budget, metrics, standard of living, cabinet. world.mjs = EU + countries.
 import { clamp, rand, log, round, dateAt, dayOf, partyDef } from "./util.mjs";
 import { initParl, parlDaily, parlMonthly, parlSnapshot, distance, splitParty } from "./parl.mjs";
+import { initPresidency, presidencyDaily, decidePresidential, presPseudoEvent, presSnapshot } from "./presidency.mjs";
 import { initWorld, worldMonthly, worldView } from "./world.mjs";
 import {
   initGov,
@@ -180,6 +181,7 @@ export function createGame(data, opts = {}) {
   initWorld(state, data, sc);
   initGov(state, data, sc);
   initParl(state);
+  initPresidency(state, data, sc);
 
   log(state, "system", sc.name, sc.blurb);
   return state;
@@ -479,6 +481,7 @@ export function fireEvent(state, data, eventId) {
 export function decide(state, data, partyId, decisionId, choiceIndex) {
   const d = state.decisions.find((x) => x.id === Number(decisionId) && x.party === partyId);
   if (!d) return { ok: false, error: "Decizia nu mai există." };
+  if (d.presidential) return decidePresidential(state, data, d, Number(choiceIndex));
   if (d.defection) return decideDefection(state, data, d, Number(choiceIndex));
   const ev = data.events.events.find((e) => e.id === d.eventId);
   const choice = ev?.choices?.[Number(choiceIndex)];
@@ -873,6 +876,7 @@ export function tick(state, data, days = 1) {
       parlMonthly(state, data);
     }
     parlDaily(state, data);
+    presidencyDaily(state, data);
 
     // The AI campaigns hard before an election and only lightly in between.
     const toElection = state.electionDay - state.day;
@@ -910,6 +914,7 @@ export function tick(state, data, days = 1) {
     for (const d of [...state.decisions]) {
       if (state.day <= d.expires) continue;
       state.decisions = state.decisions.filter((x) => x !== d);
+      if (d.presidential) continue;
       if (d.defection) {
         splitParty(state, data, d.party, { frac: 0.1 });
         log(state, "decision", `${d.party.toUpperCase()}: nimeni nu a mai fost întrebat`, "Oamenii au plecat fără să mai aștepte un răspuns.");
@@ -972,7 +977,7 @@ export function snapshot(state, data, opts = {}) {
     humans: state.humans,
     active: state.active,
     decisions: state.decisions.map((d) => {
-      const ev = d.defection ? pseudoEvent(d) : data.events.events.find((e) => e.id === d.eventId);
+      const ev = d.defection ? pseudoEvent(d) : d.presidential ? presPseudoEvent(state, d) : data.events.events.find((e) => e.id === d.eventId);
       return {
         id: d.id,
         party: d.party,
@@ -984,6 +989,7 @@ export function snapshot(state, data, opts = {}) {
     }),
     lastResult: state.lastResult,
     causes: (state.causes ?? []).slice(-160),
+    pres: presSnapshot(state, data),
     segShares: segmentShares(state, data),
     segPrev: state.segPrev ?? null,
     poll: {

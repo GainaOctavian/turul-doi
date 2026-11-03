@@ -188,7 +188,9 @@
           "motorwayKm": 1250,
           "area": 238.4
         }
-      }
+      },
+      "president": "nicusor",
+      "presidentialDate": "2030-05-18"
     },
     {
       "id": "2017",
@@ -367,7 +369,9 @@
           "motorwayKm": 760,
           "area": 238.4
         }
-      }
+      },
+      "president": "iohannis",
+      "presidentialDate": "2019-11-10"
     }
   ]
 }
