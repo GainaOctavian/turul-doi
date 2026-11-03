@@ -28,7 +28,7 @@ export const HELP = `turul-doi ctl
   play <partid>             joacă pentru un partid
   speed <0|1|2|4>           viteza ceasului (0 = pauză)
   pause / resume            oprește sau pornește ceasul
-  act <tip> [judet] [rival] campanie: rally tv online deal attack promise inquiry protest signatures foundation exposure
+  act <tip> [judet] [rival] campanie: rally tv online deal attack promise inquiry protest signatures foundation exposure; la guvernare: inauguration relief govpr
   preview <tip> [judet] [rival]  efectul estimat, fără să cheltuiască nimic (în pp)
   actions                   acțiunile de campanie și costul lor în M€
   budget                    venituri și cheltuieli în M€, deficit
@@ -185,7 +185,7 @@ export function createCtl(data, opts = {}) {
         const type = args[0];
         if (!type) return "error: lipsește tipul acțiunii";
         const action = { type };
-        if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = args[1];
+        if (["rally", "deal", "protest", "foundation", "inauguration"].includes(type)) action.county = args[1];
         if (type === "exposure") action.targetParty = args[1];
         if (type === "attack") {
           action.county = args[1];
@@ -200,7 +200,7 @@ export function createCtl(data, opts = {}) {
         if (need()) return need();
         const type = args[0];
         const action = { type };
-        if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = args[1];
+        if (["rally", "deal", "protest", "foundation", "inauguration"].includes(type)) action.county = args[1];
         if (type === "attack" || type === "exposure") action.targetParty = type === "attack" ? args[2] : args[1];
         if (type === "attack") action.county = args[1];
         const p = previewAction(state, data, me(), action);

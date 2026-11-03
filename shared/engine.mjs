@@ -37,6 +37,14 @@ ACTIONS.push(
   { id: "exposure", name: "Dezvăluire", desc: "Documente despre un rival, publicate într-o zi. 30% din cazuri se întorc împotriva ta.", cost: 0.7, cooldown: 12, target: "party", need: "opp" },
 );
 
+// Government actions to hold on to power ("gov" = coalition parties only). They cost money, and the
+// relief package also costs the budget: pleasing voters is not free.
+ACTIONS.push(
+  { id: "inauguration", name: "Inaugurare de investiții", desc: "Panglică tăiată, un drum sau o școală date în folosință. Câștigi într-un județ, cu o mică îmbunătățire a infrastructurii.", cost: 1.4, cooldown: 14, target: "county", need: "gov" },
+  { id: "relief", name: "Pachet de ajutoare", desc: "Ajutoare pentru pensionari, bugetari și muncitori. Se simte repede, dar costă bugetul social.", cost: 2.5, cooldown: 45, target: "none", need: "gov" },
+  { id: "govpr", name: "Comunicare de guvern", desc: "Conferințe de presă și campanii „Se vede schimbarea”. Un sfert din ele sunt luate drept propagandă.", cost: 0.8, cooldown: 8, target: "none", need: "gov" },
+);
+
 export const ACTION_BY_ID = Object.fromEntries(ACTIONS.map((a) => [a.id, a]));
 
 const SEGMENT_SHARE = {
@@ -557,6 +565,9 @@ export function applyAction(state, data, partyId, action) {
   if (def.need === "opp" && inCoalition(state, partyId)) {
     return { ok: false, error: "Doar partidele din opoziție pot face asta." };
   }
+  if (def.need === "gov" && !inCoalition(state, partyId)) {
+    return { ok: false, error: "Doar partidele de la guvernare pot face asta." };
+  }
   if (def.need === "outside" && (party.seats ?? 0) > 0) {
     return { ok: false, error: "Doar partidele fără mandate pot strânge semnături." };
   }
@@ -657,6 +668,37 @@ export function applyAction(state, data, partyId, action) {
     boostSegs({ pensionari_rural: 1.04, pensionari_urban: 1.02, agricultori: 1.02 });
     log(state, "action", `Fundație la ${countyName}`, "Ajutoarele au ajuns la oamenii care le așteptau de luni de zile.");
     return { ok: true, message: `Fundația a deschis un birou la ${countyName}.` };
+  }
+
+  if (def.id === "inauguration") {
+    addCountyBoost(state, action.county, partyId, 0.2);
+    boostSegs({ muncitori: 1.03, agricultori: 1.03, bugetari: 1.02 });
+    applyEffects(state, data, { metric: { infra: 0.2 } }, { partyId, title: "Inaugurare de investiții" });
+    log(state, "action", `Inaugurare la ${countyName}`, "Panglica a fost tăiată de trei ori, pentru trei televiziuni. Drumul e în continuare în lucru.");
+    return { ok: true, message: `Ai inaugurat o investiție la ${countyName}.` };
+  }
+
+  if (def.id === "relief") {
+    applyEffects(
+      state,
+      data,
+      { sol: { pensionari_rural: 1, pensionari_urban: 1, bugetari: 1, muncitori: 0.8 }, budget: { social: 0.03 }, party: { self: 0.015 } },
+      { partyId, title: "Pachet de ajutoare" },
+    );
+    log(state, "action", "Pachet de ajutoare", "Vouchere, majorări și o conferință de presă despre ele. Factura vine după alegeri.");
+    return { ok: true, message: "Pachetul de ajutoare a fost aprobat." };
+  }
+
+  if (def.id === "govpr") {
+    if (rand(state) < 0.25) {
+      state.mood[partyId] = clamp((state.mood[partyId] ?? 1) * 0.985, 0.55, 1.6);
+      log(state, "scandal", "Propaganda a deranjat", "Spotul guvernamental a fost luat drept propagandă și a devenit meme.");
+      return { ok: true, message: "Comunicarea a fost luată drept propagandă." };
+    }
+    state.mood[partyId] = clamp((state.mood[partyId] ?? 1) * 1.01, 0.55, 1.6);
+    boostSegs({ pensionari_urban: 1.02, bugetari: 1.02 });
+    log(state, "action", "Comunicare de guvern", "Guvernul a prezentat cifre bune în prime time. Cifrele rele au apărut la ora trei dimineața.");
+    return { ok: true, message: "Comunicarea de guvern a prins." };
   }
 
   if (def.id === "exposure") {

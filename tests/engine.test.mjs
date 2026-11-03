@@ -957,6 +957,26 @@ test("amendments: a party pays once to move a bill toward its own position, befo
   assert.equal(applyParl(state, data, "udmr", { type: "amend", id, option: "componente-ue" }).ok, false, "no amendments after the vote");
 });
 
+test("hold-on actions: only the government may use them, and they have a price", () => {
+  const state = newGame("2026", ["psd", "usr"]);
+  state.gov.coalition = ["psd"];
+  state.parties.psd.funds = 20;
+  state.parties.usr.funds = 20;
+  for (const type of ["relief", "govpr", "inauguration"]) {
+    assert.equal(applyAction(state, data, "usr", { type, county: "cluj" }).ok, false, `${type}: the opposition may not`);
+  }
+  const moodBefore = state.mood.psd;
+  const solBefore = state.solMod.pensionari_rural ?? 0;
+  const res = applyAction(state, data, "psd", { type: "relief" });
+  assert.equal(res.ok, true, res.error);
+  assert.equal(state.parties.psd.funds, 17.5, "the relief package costs 2.5 M€");
+  assert.ok(state.mood.psd > moodBefore, "voters reward the government");
+  assert.ok((state.solMod.pensionari_rural ?? 0) > solBefore, "pensioners are happier");
+  assert.equal(applyAction(state, data, "psd", { type: "relief" }).ok, false, "cooldown");
+  assert.equal(applyAction(state, data, "psd", { type: "inauguration", county: "cluj" }).ok, true);
+  assert.equal(applyAction(state, data, "psd", { type: "inauguration" }).ok, false, "a county is required");
+});
+
 test("every law offers at least two amendments, with real segments and unique ids", () => {
   const segs = new Set(data.segments.segments.map((s) => s.id));
   for (const bill of data.bills.bills) {

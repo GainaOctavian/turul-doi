@@ -623,6 +623,7 @@ function panelCounty() {
 function needStatus(s, party, a) {
   if (a.need === "opp" && s.gov.gov.coalition.includes(S.party)) return "doar opoziția";
   if (a.need === "outside" && party.seats > 0) return "doar fără mandate";
+  if (a.need === "gov" && !s.gov.gov.coalition.includes(S.party)) return "doar la guvernare";
   return null;
 }
 
@@ -957,7 +958,7 @@ function setupEvents() {
   onPress(panel, "[data-act]", (el) => {
     const type = el.dataset.act;
     const action = { type };
-    if (["rally", "deal", "protest", "foundation"].includes(type)) action.county = S.selected;
+    if (["rally", "deal", "protest", "foundation", "inauguration"].includes(type)) action.county = S.selected;
     if (type === "attack") {
       action.county = S.selected;
       action.targetParty = $("#rival")?.value;

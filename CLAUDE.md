@@ -67,6 +67,7 @@ node tools/bills-law.mjs                              # reconstruiește surse + 
 - `data/law-sources.json`: actele verificate (`sources`) și capcanele (`retired`). O lege din
   joc primește `source: {slug, note}`; testele refuză surse necunoscute sau retrase.
 - Previzualizările (`previewAction`) rulează o acțiune pe o copie a stării și raportează diferența în pp; nu cheltuiesc nimic. Folosește-le în loc să duplici logica de efect în UI.
+- Acțiunile de guvernare (`need: "gov"` în `ACTIONS`, `shared/engine.mjs`): inaugurare, pachet de ajutoare, comunicare de guvern; doar partidele din coaliție le pot folosi.
 - Amendamentele (`amendOptions`, `lawEffects`, `amendBill` în `shared/parl.mjs`): fiecare lege oferă amendamente concrete (text + efecte) din `data/amendments.json`; cel adoptat își adaugă efectele la promulgare.
 - Prezidența (`shared/presidency.mjs`): legile adoptate în Parlament așteaptă la Cotroceni 7 zile; efectele lor se aplică doar la promulgare (`decideLaw`). Președintele e AI sau jucătorul (dacă partidul lui conduce Cotroceni), iar alegerile sunt la 5 ani, în două tururi.
 - Echilibrul (erodarea guvernării, estomparea creditului) e în `balanceMonthly`; folosește `data.config.balance = false` în teste care compară două jocuri.
