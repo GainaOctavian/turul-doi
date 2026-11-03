@@ -427,8 +427,13 @@ export function govMonthly(state, data) {
 
 function stepRating(state, data) {
   const r = state.rating;
-  const levels = data.government.rating.levels;
-  if (r.strain > 2.4) {
+  const cfg = data.government.rating;
+  const levels = cfg.levels;
+  const ref = Math.max(0, levels.indexOf(cfg.reference ?? levels[0]));
+  // Below the reference level every notch needs more pressure and a longer wait; nothing is excluded.
+  const notches = (idx) => Math.max(0, ref - idx);
+  const threshold = 2.4 + cfg.belowReference.strainPerNotch * notches(r.idx);
+  if (r.strain > threshold) {
     r.bad += 1;
     r.good = 0;
   } else if (r.strain < 0.4) {
@@ -439,11 +444,10 @@ function stepRating(state, data) {
     r.good = Math.max(0, r.good - 1);
   }
   const was = r.idx;
-  const floor = Math.max(0, levels.indexOf(data.government.rating.floor ?? levels[0]));
-  if (r.bad >= 4 && r.idx > floor) {
+  if (r.bad >= cfg.badMonths && r.idx > 0) {
     r.idx -= 1;
-    // Agencies wait before cutting again: ten months of grace after each downgrade.
-    r.bad = -10;
+    // Agencies wait before cutting again: a grace period that grows with each notch below the reference.
+    r.bad = -(cfg.graceMonths + cfg.belowReference.graceMonthsPerNotch * notches(r.idx));
   } else if (r.good >= 24 && r.idx < levels.length - 1) {
     r.idx += 1;
     r.good = 0;

@@ -639,7 +639,13 @@
       "A-"
     ],
     "investmentGrade": 6,
-    "floor": "BB-",
-    "_floorNote": "Ratingul nu coboară sub această treaptă: o țară UE cu fonduri europene nu ajunge la CCC."
+    "reference": "BB-",
+    "graceMonths": 10,
+    "badMonths": 4,
+    "belowReference": {
+      "strainPerNotch": 0.25,
+      "graceMonthsPerNotch": 4,
+      "note": "Sub treapta de referință, fiecare treaptă cere o presiune mai mare și un răgaz mai lung. Coborârea rămâne posibilă, dar devine mai greu și mai previzibil."
+    }
   }
 }

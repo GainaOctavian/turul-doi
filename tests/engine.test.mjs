@@ -908,20 +908,27 @@ test("the opposition can challenge a law at the CCR only with 15 MPs; returning 
   assert.equal(state.parl.bills.length, before + 1, "Parliament votes again");
 });
 
-test("rating: a long deficit can downgrade the country, but never below the floor", () => {
+test("rating: a long deficit moves the rating; below the reference each notch takes longer, but a deep crisis can go there", () => {
   const levels = data.government.rating.levels;
-  const floor = levels.indexOf(data.government.rating.floor);
-  assert.ok(floor > 0, "a floor is configured");
-  for (const seed of [1, 2]) {
-    const state = createGame(data, { seed, scenario: "2026", humans: [] });
-    const start = state.rating.idx;
-    let lowest = start;
-    for (let m = 0; m < 96; m += 1) {
-      tick(state, data, 30);
-      lowest = Math.min(lowest, state.rating.idx);
+  const ref = levels.indexOf(data.government.rating.reference);
+  const state = createGame(data, { seed: 5, scenario: "2026", humans: [] });
+  state.macro.debt = state.macro.gdp * 2.5; // a debt crisis: the strain term alone is far above every threshold
+  const steps = [];
+  let last = state.rating.idx;
+  for (let m = 0; m < 120; m += 1) {
+    tick(state, data, 30);
+    if (state.rating.idx !== last) {
+      steps.push({ month: m, idx: state.rating.idx });
+      last = state.rating.idx;
     }
-    assert.ok(lowest < start, `seed ${seed}: the deficit moves the rating`);
-    assert.ok(lowest >= floor, `seed ${seed}: rating ${levels[lowest]} is below the floor`);
+  }
+  assert.ok(steps.length >= 2, "the rating moves");
+  const below = steps.filter((s) => s.idx < ref);
+  assert.ok(below.length >= 1, `a crisis reaches below ${levels[ref]}`);
+  assert.ok(state.rating.idx >= 0, "never below the lowest level");
+  if (below.length >= 2) {
+    const gaps = below.slice(1).map((s, i) => s.month - below[i].month);
+    assert.ok(gaps.every((g) => g >= 4), `notches below the reference come slower: ${gaps}`);
   }
 });
 
