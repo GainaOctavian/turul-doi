@@ -648,7 +648,7 @@ test("AI parliaments pass laws over four years and stay consistent", () => {
   assert.equal(new Set(titles).size >= titles.length - 2, true, "few repeats");
   for (const id of state.partyIds) assert.ok(state.parties[id] && state.leaders[id] !== undefined, id);
   const seats = state.partyIds.reduce((s, id) => s + state.parties[id].seats, 0);
-  assert.equal(seats + state.config.minoritySeats, state.config.totalSeats);
+  assert.equal(seats + state.parl.free + state.config.minoritySeats, state.config.totalSeats);
 });
 
 test("news does not repeat while there are fresh events that fit the moment", () => {
@@ -975,6 +975,70 @@ test("hold-on actions: only the government may use them, and they have a price",
   assert.equal(applyAction(state, data, "psd", { type: "relief" }).ok, false, "cooldown");
   assert.equal(applyAction(state, data, "psd", { type: "inauguration", county: "cluj" }).ok, true);
   assert.equal(applyAction(state, data, "psd", { type: "inauguration" }).ok, false, "a county is required");
+});
+
+test("recruiting MPs: from the unaffiliated group, or poached from a shaky rival", () => {
+  const state = newGame("2026", ["usr"]);
+  const usr = state.parties.usr;
+  usr.capital = 60;
+  usr.funds = 20;
+  const seats = usr.seats;
+  assert.equal(applyParl(state, data, "usr", { type: "recruit" }).ok, false, "nobody is unaffiliated yet");
+  state.parl.free = 3;
+  const ok = applyParl(state, data, "usr", { type: "recruit", count: 2 });
+  assert.equal(ok.ok, true, ok.error);
+  assert.equal(usr.seats, seats + 2);
+  assert.equal(state.parl.free, 1);
+  assert.equal(usr.capital, 54, "3 capital per MP");
+  assert.equal(applyParl(state, data, "usr", { type: "recruit" }).ok, false, "cooldown");
+  state.parl.cool["recruit:usr"] = 0;
+  state.parties.aur.cohesion = 90;
+  assert.equal(applyParl(state, data, "usr", { type: "recruit", from: "aur" }).ok, false, "a united party keeps its MPs");
+  state.parties.pnl.cohesion = 40;
+  const pnlSeats = state.parties.pnl.seats;
+  const rel = state.parl.rel;
+  const poach = applyParl(state, data, "usr", { type: "recruit", from: "pnl", count: 2 });
+  assert.equal(poach.ok, true, poach.error);
+  assert.equal(state.parties.pnl.seats, pnlSeats - 2);
+  assert.equal(usr.seats, seats + 4);
+  assert.ok(state.parties.pnl.cohesion < 40, "the victim's group loses cohesion");
+  assert.ok(rel, "relations are tracked");
+});
+
+test("seats stay consistent: the unaffiliated group counts toward the total, and drifts in over time", () => {
+  const state = createGame(data, { seed: 3, scenario: "2026", humans: [] });
+  tick(state, data, 365 * 2);
+  const seats = state.partyIds.reduce((s, id) => s + state.parties[id].seats, 0);
+  assert.equal(seats + state.parl.free + state.config.minoritySeats, state.config.totalSeats);
+  assert.ok(state.parl.free >= 0 && state.parl.free <= 25);
+});
+
+test("an AI party courts a human party for a law it would not back on its own; accepting binds the vote", () => {
+  let found = null;
+  for (const bill of data.bills.bills) {
+    const state = newGame("2026", ["usr"]);
+    state.parties.pnl.capital = 50;
+    state.parties.pnl.funds = 20;
+    state.parl.cool["bill:pnl"] = -1;
+    const res = applyParl(state, data, "pnl", { type: "bill", bill: bill.id });
+    if (res.ok && state.parl.supportOffers.some((o) => o.to === "usr")) {
+      found = { state, bill };
+      break;
+    }
+  }
+  assert.ok(found, "some law draws an offer");
+  const { state } = found;
+  const offer = state.parl.supportOffers.find((o) => o.to === "usr");
+  const funds = state.parties.usr.funds;
+  const cap = state.parties.usr.capital;
+  const res = applyParl(state, data, "usr", { type: "offer", id: offer.id, accept: true });
+  assert.equal(res.ok, true, res.error);
+  assert.equal(state.parties.usr.funds, Math.round((funds + offer.money) * 100) / 100);
+  assert.equal(state.parties.usr.capital, Math.round((cap + offer.capital) * 10) / 10);
+  const entry = state.parl.bills.find((b) => b.id === offer.entry);
+  assert.ok(entry.pledged.includes("usr"));
+  assert.equal(applyParl(state, data, "usr", { type: "vote", id: entry.id, vote: "no" }).ok, false, "a pledge cannot be broken");
+  assert.equal(state.parl.supportOffers.some((o) => o.id === offer.id), false, "the offer is gone");
 });
 
 test("every law offers at least two amendments, with real segments and unique ids", () => {

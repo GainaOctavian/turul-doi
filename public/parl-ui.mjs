@@ -152,6 +152,31 @@ export function presView(S) {
   `, { sub: "Președintele promulgă legile, le poate retrimite în Parlament sau poate sesiza Curtea Constituțională. La o candidatură trebuie 2% în sondaje; partenerii pot da sprijin doar dacă relația e bună și programele apropiate." })}`;
 }
 
+// Offers from other parties for a vote, and the MPs you can recruit.
+function courtView(S) {
+  const p = P(S);
+  const party = me(S);
+  const offers = p.supportOffers
+    .filter((o) => o.to === S.party)
+    .map(
+      (o) => `<div class="row between" style="gap:8px;padding:5px 0"><div style="min-width:0"><b>${esc(o.title)}</b> ${pbadge(S, o.from)}<div class="muted" style="font-size:12px">Îți oferă ${fmt(o.money)} M€ și ${o.capital} capital politic pentru votul tău. Dacă accepți, votezi pentru și nu mai poți da înapoi.</div></div><div class="row" style="gap:6px"><button class="btn2 primary2" data-do="offer" data-id="${o.id}" data-accept="1">Acceptă</button><button class="btn2" data-do="offer" data-id="${o.id}" data-accept="0">Refuză</button></div></div>`,
+    )
+    .join("");
+  const poach = p.recruit.poach;
+  const pool = p.recruit.pool;
+  const cooling = (p.cool[`recruit:${S.party}`] ?? -1) > S.snap.day;
+  const targets = S.snap.partyIds.filter((id) => id !== S.party && (S.snap.parties[id].seats ?? 0) >= poach.minSeats && (p.cohesion[id] ?? 72) < poach.cohesionBelow);
+  const buttons = [
+    `<button class="btn2 primary2" data-do="recruit" data-count="1" ${p.free > 0 && !cooling ? "" : "disabled"}>Recrutează un neafiliat (${pool.capital} cap., ${fmt(pool.money)} M€)</button>`,
+    ...targets.map((id) => `<button class="btn2" data-do="recruit" data-from="${id}" data-count="1" ${cooling ? "disabled" : ""}>Atrage un parlamentar ${esc(pname(S, id))} (${poach.capital} cap., ${fmt(poach.money)} M€)</button>`),
+  ].join(" ");
+  return `${section("Oferte și recrutare", `
+    ${offers ? `<div style="margin-bottom:10px">${offers}</div>` : `<p class="muted" style="margin:0 0 8px;font-size:12px">Nicio ofertă de sprijin acum. Partidele care depun legi pe care nu le-ai vota singur îți pot oferi bani și capital.</p>`}
+    <p style="margin:0 0 8px"><b>${p.free}</b> parlamentari neafiliați · ${targets.length ? `${targets.length} partide cu grup șubred` : "niciun grup șubred de exploatat"}</p>
+    <div class="row" style="gap:8px;flex-wrap:wrap">${buttons}</div>
+  `, { sub: "Parlamentarii neafiliați apar când un partid cu grup divizat pierde oameni. Un transfer de la un rival strică relația cu el și îi scade coeziunea." })}`;
+}
+
 export function votesView(S) {
   const p = P(S);
   const open = p.bills.map((b) => voteCard(S, b)).join("");
@@ -159,6 +184,7 @@ export function votesView(S) {
     ? p.done.map((d) => `<div class="row between" style="padding:4px 0"><span>${d.kind === "motion" ? badge("Moțiune", "#ff4d6d") : badge("Lege", "#4cc9f0")} ${esc(d.title)} ${pbadge(S, d.from)}</span><span class="muted">${badge(d.status === "passed" ? "adoptat" : "respins", d.status === "passed" ? "#2fbf8a" : "#8d99ae")} ${d.tally.yes}–${d.tally.no} · ziua ${d.day}</span></div>`).join("")
     : `<p class="hint">Niciun vot încă.</p>`;
   return `${presView(S)}
+    ${courtView(S)}
     ${section("În dezbatere", open || `<p class="hint">Niciun vot programat. Poți depune o lege din tabul „Legi”, iar partidele AI depun și ele în fiecare lună.</p>`, { sub: "Fiecare lege și fiecare moțiune se votează în plen. Partidele votează după programul lor, relația cu inițiatorul și înțelegerile din culise." })}
     ${section("Voturi recente", done)}`;
 }

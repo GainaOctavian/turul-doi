@@ -66,6 +66,9 @@ export const HELP = `turul-doi ctl
   president                 președintele, candidaturile, sprijinul și legile la Cotroceni
   pres-run                  depune candidatura (ultimele 150 de zile)
   pres-back <partid>        susține o candidatură propusă
+  recruit [partid|-] [nr]    recrutează parlamentari (neafiliați cu -, sau de la un rival cu grup șubred)
+  offers                    ofertele de sprijin primite
+  offer <nr> yes|no          acceptă sau refuză o ofertă
   amend <nr> <id>           adoptă un amendament la o lege deschisă (3 capital, o dată); fără id, le listează
   ccr <nr>                  sesizează Curtea Constituțională pentru o lege la Cotroceni
   events                    ultimele evenimente
@@ -384,6 +387,25 @@ export function createCtl(data, opts = {}) {
       case "bill": {
         if (need()) return need();
         const res = applyParl(state, data, me(), { type: "bill", bill: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "recruit": {
+        if (need()) return need();
+        const p = snapshot(state, data).parl;
+        if (!args[0]) return `neafiliați: ${p.free}; la rivali: recruit <partid> [nr] (coeziune sub ${p.recruit.poach.cohesionBelow}); din grup: recruit - [nr]`;
+        const res = applyParl(state, data, me(), { type: "recruit", from: args[0] === "-" ? null : args[0], count: Number(args[1] ?? 1) });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
+      case "offers": {
+        const o = snapshot(state, data).parl.supportOffers.filter((x) => x.to === me());
+        return o.length ? o.map((x) => `#${x.id} ${x.from} oferă ${x.money} M€ + ${x.capital} cap. pentru „${x.title}”`).join("\n") : "nicio ofertă";
+      }
+
+      case "offer": {
+        if (need()) return need();
+        const res = applyParl(state, data, me(), { type: "offer", id: Number(args[0]), accept: args[1] === "yes" });
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 

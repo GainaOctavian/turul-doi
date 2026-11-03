@@ -858,6 +858,9 @@ export function runElection(state, data) {
     state.parties[p.id].seats = poll.seats[p.id] ?? 0;
     state.parties[p.id].share = poll.national[p.id] ?? 0;
   }
+  // A new Parliament: nobody is unaffiliated and old offers are void.
+  state.parl.free = 0;
+  state.parl.supportOffers = [];
 
   const valid = state.coalitions
     .filter((c) => majorityOk(state, c.parties))

@@ -11,6 +11,8 @@ const MAJORITY = 166;
 const LAW_DAYS = 12;
 const MOTION_DAYS = 7;
 const COST = { bill: 8, motion: 25, merge: 15, shift: 12, pact: 10, amend: 3 };
+// Recruiting MPs: per MP, from the unaffiliated group or poached from a shaky rival party.
+const RECRUIT = { pool: { capital: 3, money: 0.4, max: 5 }, poach: { capital: 5, money: 0.8, max: 3, cohesionBelow: 65, minSeats: 10 }, cooldown: 12, maxFree: 25 };
 const SEGMENTS = ["pensionari_rural", "pensionari_urban", "tineri_urbani", "studenti", "muncitori", "agricultori", "antreprenori", "bugetari", "someri", "diaspora"];
 
 const find = (arr, id) => arr.find((x) => x.id === id);
@@ -24,7 +26,7 @@ const upper = (id) => String(id).toUpperCase();
 export function initParl(state) {
   state.defs = {};
   state.renamed = {};
-  state.parl = { rel: {}, bills: [], next: 1, passed: {}, done: [], mergeOffers: [], pacts: [], cool: {} };
+  state.parl = { rel: {}, bills: [], next: 1, passed: {}, done: [], mergeOffers: [], pacts: [], cool: {}, free: 0, supportOffers: [], nextOffer: 1 };
   for (const p of Object.values(state.parties)) p.cohesion = 72;
 }
 
@@ -138,6 +140,7 @@ function openEntry(state, data, e) {
   if (e.kind === "law") {
     // Friends of the proposer get a head start.
     for (const p of state.partyIds) if (p !== e.from && relation(state, data, p, e.from) >= 65) entry.deals[p] = 0.25;
+    if (!state.humans.includes(e.from)) makeSupportOffers(state, data, entry);
     log(state, "parl", `Proiect de lege: ${e.title}`, `${upper(e.from)} depune proiectul. Votul în plen e în ziua ${entry.vote}.`);
     return { ok: true, message: `Ai depus „${e.title}”. Votul e în ${e.days} zile.`, id: entry.id };
   }
@@ -675,6 +678,101 @@ export function shiftParty(state, data, partyId, change) {
   return { ok: true, message: "Direcția partidului s-a schimbat. Unii dintre oameni nu sunt de acord." };
 }
 
+/* --------------------------------------------- unaffiliated MPs and support offers */
+
+// A shaky AI party sheds an MP now and then; unaffiliated MPs wait to be recruited.
+function driftToFree(state) {
+  const p = state.parl;
+  p.free ??= 0;
+  if (p.free >= RECRUIT.maxFree || rand(state) > 0.35) return;
+  const pool = state.partyIds.filter((id) => !state.humans.includes(id) && seatsOf(state, id) >= 10);
+  if (!pool.length) return;
+  const weights = pool.map((id) => 100 - (state.parties[id].cohesion ?? 72));
+  let r = rand(state) * weights.reduce((a, b) => a + b, 0);
+  const idx = weights.findIndex((w) => (r -= w) < 0);
+  const id = pool[idx < 0 ? 0 : idx];
+  state.parties[id].seats -= 1;
+  p.free += 1;
+  log(state, "parl", "Un parlamentar a plecat", `Un parlamentar ${upper(id)} a părăsit grupul și rămâne neafiliat. Alte partide îl curtează deja.`);
+}
+
+// Take MPs: from the unaffiliated group (no `from`) or poached from a rival with a shaky group.
+export function recruitMps(state, data, partyId, opts = {}) {
+  const party = state.parties[partyId];
+  if (!party) return { ok: false, error: "Partid necunoscut." };
+  const from = opts.from || null;
+  const tier = from ? RECRUIT.poach : RECRUIT.pool;
+  const until = state.parl.cool[`recruit:${partyId}`] ?? -1;
+  if (until > state.day) return { ok: false, error: `Un nou val de recrutări e posibil din ziua ${until}.` };
+  let available;
+  if (from) {
+    const v = state.parties[from];
+    if (!v || from === partyId) return { ok: false, error: "Alege un alt partid." };
+    if ((v.cohesion ?? 72) >= tier.cohesionBelow) return { ok: false, error: `${upper(from)} își ține oamenii: grupul lui e prea unit (sub ${tier.cohesionBelow} de coeziune).` };
+    if ((v.seats ?? 0) < tier.minSeats) return { ok: false, error: `${upper(from)} are prea puțini parlamentari de luat.` };
+    available = Math.min(tier.max, v.seats - tier.minSeats + 1);
+  } else {
+    available = Math.min(tier.max, state.parl.free ?? 0);
+    if (available <= 0) return { ok: false, error: "Nu sunt parlamentari neafiliați." };
+  }
+  const n = Math.max(1, Math.min(Number(opts.count) || 1, available));
+  const capital = tier.capital * n;
+  const money = round(tier.money * n, 1);
+  if (party.capital < capital || party.funds < money) return { ok: false, error: `${n} parlamentari costă ${capital} capital politic și ${money} M€.` };
+  party.capital = round(party.capital - capital, 1);
+  party.funds = round(party.funds - money, 2);
+  party.seats = (party.seats ?? 0) + n;
+  state.parl.cool[`recruit:${partyId}`] = state.day + RECRUIT.cooldown;
+  if (from) {
+    state.parties[from].seats -= n;
+    state.parties[from].cohesion = round(clamp((state.parties[from].cohesion ?? 72) - 4, 0, 100), 1);
+    addRel(state, data, partyId, from, -8);
+    log(state, "parl", "Parlamentari mutați", `${n} parlamentari ${upper(from)} trec la ${upper(partyId)}. Relația dintre cele două partide are de suferit.`);
+    return { ok: true, message: `${n} parlamentari au trecut de la ${upper(from)} la tine.` };
+  }
+  state.parl.free -= n;
+  log(state, "parl", "Parlamentari recrutați", `${upper(partyId)} aduce ${n} parlamentari neafiliați în grupul său.`);
+  return { ok: true, message: `${n} parlamentari neafiliați s-au alăturat grupului tău.` };
+}
+
+// An AI party that files a law courts the human parties that would not vote yes on their own.
+function makeSupportOffers(state, data, entry) {
+  const from = state.parties[entry.from];
+  for (const to of state.humans) {
+    if (to === entry.from || seatsOf(state, to) === 0) continue;
+    const score = lawScore(state, data, to, entry);
+    if (score >= 0.4) continue;
+    const gap = 0.4 - score;
+    const money = round(clamp(0.3 + gap * 0.6, 0.3, 2), 1);
+    const capital = Math.round(clamp(1 + gap * 2, 1, 6));
+    if (!from || from.funds < money + 0.5) continue;
+    state.parl.supportOffers.push({ id: state.parl.nextOffer, entry: entry.id, from: entry.from, to, money, capital, day: state.day });
+    state.parl.nextOffer += 1;
+  }
+}
+
+// Answer an offer: accepting pays you and binds your votes (the pledge cannot be broken).
+export function answerOffer(state, data, partyId, offerId, accept) {
+  const offer = state.parl.supportOffers.find((o) => o.id === Number(offerId) && o.to === partyId);
+  if (!offer) return { ok: false, error: "Oferta nu mai e valabilă." };
+  const entry = state.parl.bills.find((b) => b.id === offer.entry && b.status === "open");
+  state.parl.supportOffers = state.parl.supportOffers.filter((o) => o !== offer);
+  if (!accept) return { ok: true, message: "Ai refuzat oferta." };
+  if (!entry) return { ok: false, error: "Votul s-a încheiat." };
+  const giver = state.parties[offer.from];
+  if (giver.funds < offer.money) return { ok: false, error: "Partidul nu mai are banii promiși." };
+  const me = state.parties[partyId];
+  giver.funds = round(giver.funds - offer.money, 2);
+  giver.capital = round(Math.max(0, giver.capital - offer.capital), 1);
+  me.funds = round(me.funds + offer.money, 2);
+  me.capital = round(me.capital + offer.capital, 1);
+  if (!entry.pledged.includes(partyId)) entry.pledged.push(partyId);
+  entry.votes[partyId] = "yes";
+  addRel(state, data, partyId, offer.from, 4);
+  log(state, "parl", "Sprijin cumpărat", `${upper(partyId)} votează „${entry.title}” în schimbul a ${offer.money} M€ și ${offer.capital} capital politic de la ${upper(offer.from)}.`);
+  return { ok: true, message: `Ai primit ${offer.money} M€ și ${offer.capital} capital politic. Votezi pentru.` };
+}
+
 /* ------------------------------------------------------- courtesy and pacts */
 
 const COURTESY = { capital: 4, gain: 8, days: 20 };
@@ -726,6 +824,8 @@ function balanceMonthly(state, data) {
 
 export function parlDaily(state, data) {
   for (const b of [...state.parl.bills]) if (state.day >= b.vote) resolve(state, data, b);
+  // Offers lapse with their vote.
+  state.parl.supportOffers = (state.parl.supportOffers ?? []).filter((o) => state.parl.bills.some((b) => b.id === o.entry && b.status === "open"));
 }
 
 export function parlMonthly(state, data) {
@@ -753,6 +853,7 @@ export function parlMonthly(state, data) {
     if (c.seats === 0) co += 0.5;
     c.cohesion = round(clamp(co, 0, 100), 1);
   }
+  driftToFree(state);
   aiBills(state, data);
   aiMotion(state, data);
   aiShuffle(state, data);
@@ -802,6 +903,9 @@ export function parlSnapshot(state, data) {
     catalog: data.bills.bills.map((b) => ({ source: sourceOf(data, b), id: b.id, title: b.title, text: b.text, lean: b.lean, interest: b.interest, openNow: state.parl.bills.some((x) => x.bill === b.id), passedDay: state.parl.passed[b.id] ?? null })),
     splinters: Object.fromEntries(state.partyIds.map((p) => [p, splinterOptions(state, data, p).map((t) => ({ id: t.id, name: t.name, fullName: t.fullName }))])),
     costs: COST,
+    recruit: RECRUIT,
+    free: state.parl.free ?? 0,
+    supportOffers: (state.parl.supportOffers ?? []).map((o) => ({ ...o, title: state.parl.bills.find((b) => b.id === o.entry)?.title ?? "" })),
     needed: MAJORITY,
   };
 }
@@ -817,6 +921,8 @@ export function applyParl(state, data, partyId, a = {}) {
     case "motion": return fileMotion(state, data, partyId);
     case "vote": return voteBill(state, data, partyId, a.id, a.vote);
     case "amend": return amendBill(state, data, partyId, a.id, a.option);
+    case "recruit": return recruitMps(state, data, partyId, { from: a.from, count: a.count });
+    case "offer": return answerOffer(state, data, partyId, a.id, a.accept === true);
     case "lobby": return lobby(state, data, partyId, a.id, a.target, a.how, a.against === true);
     case "merge": return offerMerge(state, data, partyId, a.target, a.mode, a.name);
     case "courtesy": return courtesy(state, data, partyId, a.target);
