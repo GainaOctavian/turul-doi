@@ -908,6 +908,23 @@ test("the opposition can challenge a law at the CCR only with 15 MPs; returning 
   assert.equal(state.parl.bills.length, before + 1, "Parliament votes again");
 });
 
+test("rating: a long deficit can downgrade the country, but never below the floor", () => {
+  const levels = data.government.rating.levels;
+  const floor = levels.indexOf(data.government.rating.floor);
+  assert.ok(floor > 0, "a floor is configured");
+  for (const seed of [1, 2]) {
+    const state = createGame(data, { seed, scenario: "2026", humans: [] });
+    const start = state.rating.idx;
+    let lowest = start;
+    for (let m = 0; m < 96; m += 1) {
+      tick(state, data, 30);
+      lowest = Math.min(lowest, state.rating.idx);
+    }
+    assert.ok(lowest < start, `seed ${seed}: the deficit moves the rating`);
+    assert.ok(lowest >= floor, `seed ${seed}: rating ${levels[lowest]} is below the floor`);
+  }
+});
+
 /* --------------------------------------------------------------- the ctl */
 
 test("the ctl drives scenarios, the budget, policies and the world", () => {

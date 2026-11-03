@@ -78,6 +78,7 @@ Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi P
 - Relații: `courtesy` (4 capital, +8 relație, cooldown 20 de zile pe pereche) și pactul de
   colaborare (`merge` cu `mode: "pact"`, 10 capital, relație 55+): partenerii își votează mai ușor
   legile, relația crește lunar, iar fuziunea devine mai probabilă. Pactul se rupe dacă relația scade sub 45.
+- Economie: `government.json` `rating.floor` (BB-) e cea mai joasă treaptă la care coboară ratingul. Deficitul și datoria alimentează `strain` în `gov.mjs`; după fiecare coborâre urmează zece luni de răgaz.
 - Prezidența: `scenarios.json` are `president` (id politician) și `presidentialDate`. `state.pres`: `president`, `electionDay`, `nominated`, `backing` (partenerii care susțin candidatul), `pending` (legi la Cotroceni cu `deadline` și `humanUntil`), `returned` (legile deja retrimise, o singură dată). Candidaturile se depun în ultimele 150 de zile (2% în sondaje, 15 capital, 1,5 M€); sprijinul în ultimele 120 (5 capital, relație 45+, programe apropiate). În tur al doilea, voturile celorlalți merg spre cel mai apropiat candidat. Sesizarea CCR cere 15 parlamentari și 5 capital; reușește în 35% din cazuri.
 - `state.defs`: definiții de partid modificate (fuziuni, plecări, schimbarea direcției); citește
   mereu prin `partyDef(state, data, id)`. `state.renamed` ({vechi: nou}) se consumă cu

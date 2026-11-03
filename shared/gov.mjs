@@ -170,8 +170,8 @@ function strainOf(state) {
   const m = state.macro;
   const debtPct = (m.debt / m.gdp) * 100;
   return (
-    Math.max(0, m.deficitPct - 3) * 0.5 +
-    Math.max(0, debtPct - 55) * 0.04 +
+    Math.max(0, m.deficitPct - 3) * 0.7 +
+    Math.max(0, debtPct - 50) * 0.05 +
     Math.max(0, 2 - m.growth) * 0.15 +
     Math.max(0, m.inflation - 5) * 0.1 -
     (state.metrics.cpi - 45) * 0.01
@@ -342,7 +342,9 @@ export function govMonthly(state, data) {
     0.1 * (m.rateMarg - m.rate0) +
     0.45 * (eu.growth - w.euTrend0) +
     m.shock +
-    agg.growth;
+    agg.growth -
+    // Overheating fades: an economy well above its potential cools down, so a permanent spending push cannot keep growth high for ever.
+    0.5 * Math.max(0, m.growth - m.potential - 1);
   m.growth += 0.18 * (gTarget - m.growth);
   m.growth = clamp(m.growth, -8, 10);
 
@@ -426,7 +428,7 @@ export function govMonthly(state, data) {
 function stepRating(state, data) {
   const r = state.rating;
   const levels = data.government.rating.levels;
-  if (r.strain > 3.0) {
+  if (r.strain > 2.4) {
     r.bad += 1;
     r.good = 0;
   } else if (r.strain < 0.4) {
@@ -437,9 +439,11 @@ function stepRating(state, data) {
     r.good = Math.max(0, r.good - 1);
   }
   const was = r.idx;
-  if (r.bad >= 6 && r.idx > 0) {
+  const floor = Math.max(0, levels.indexOf(data.government.rating.floor ?? levels[0]));
+  if (r.bad >= 4 && r.idx > floor) {
     r.idx -= 1;
-    r.bad = 0;
+    // Agencies wait before cutting again: ten months of grace after each downgrade.
+    r.bad = -10;
   } else if (r.good >= 24 && r.idx < levels.length - 1) {
     r.idx += 1;
     r.good = 0;
