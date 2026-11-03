@@ -390,6 +390,13 @@ export function createCtl(data, opts = {}) {
         return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
       }
 
+      case "instrument": {
+        if (need()) return need();
+        if (!args[0]) return snapshot(state, data).parl.instruments.map((i) => `${i.id}: ${i.name} — ${i.cost} cap., ${i.funds} M€, pauză ${i.cooldown} zile`).join("\n");
+        const res = applyParl(state, data, me(), { type: "instrument", id: args[0] });
+        return res.ok ? `ok ${res.message}` : `error: ${res.error}`;
+      }
+
       case "recruit": {
         if (need()) return need();
         const p = snapshot(state, data).parl;

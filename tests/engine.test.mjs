@@ -1041,6 +1041,26 @@ test("an AI party courts a human party for a law it would not back on its own; a
   assert.equal(state.parl.supportOffers.some((o) => o.id === offer.id), false, "the offer is gone");
 });
 
+test("instruments: a big spend from capital, with a cooldown and a real effect", () => {
+  const state = newGame("2026", ["usr"]);
+  state.parties.usr.capital = 20;
+  state.parties.usr.funds = 10;
+  assert.equal(applyParl(state, data, "usr", { type: "instrument", id: "program" }).ok, false, "not enough capital");
+  state.parties.usr.capital = 50;
+  const mood = state.mood.usr;
+  const ok = applyParl(state, data, "usr", { type: "instrument", id: "program" });
+  assert.equal(ok.ok, true, ok.error);
+  assert.equal(state.parties.usr.capital, 20);
+  assert.equal(state.parties.usr.funds, 8);
+  assert.ok(state.mood.usr > mood, "the program lifts the party's mood");
+  assert.equal(applyParl(state, data, "usr", { type: "instrument", id: "program" }).ok, false, "cooldown");
+  state.parties.usr.cohesion = 50;
+  assert.equal(applyParl(state, data, "usr", { type: "instrument", id: "reform" }).ok, false, "reform needs 35 capital, 20 left");
+  state.parties.usr.capital = 40;
+  assert.equal(applyParl(state, data, "usr", { type: "instrument", id: "reform" }).ok, true);
+  assert.equal(state.parties.usr.cohesion, 62, "reform adds 12 cohesion");
+});
+
 test("every law offers at least two amendments, with real segments and unique ids", () => {
   const segs = new Set(data.segments.segments.map((s) => s.id));
   for (const bill of data.bills.bills) {

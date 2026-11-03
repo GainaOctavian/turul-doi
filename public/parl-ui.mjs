@@ -177,6 +177,22 @@ function courtView(S) {
   `, { sub: "Parlamentarii neafiliați apar când un partid cu grup divizat pierde oameni. Un transfer de la un rival strică relația cu el și îi scade coeziunea." })}`;
 }
 
+// Big instruments: paid from political capital, each with a cooldown per party.
+function instrumentsView(S) {
+  const p = P(S);
+  const party = me(S);
+  const cards = p.instruments
+    .map((i) => {
+      const until = p.cool[`inst:${S.party}:${i.id}`] ?? -1;
+      const cooling = until > S.snap.day;
+      const ok = !cooling && party.capital >= i.cost && party.funds >= i.funds;
+      const why = cooling ? `din ziua ${until}` : party.capital < i.cost ? `lipsesc ${Math.round((i.cost - party.capital) * 10) / 10} capital` : "";
+      return `<div class="row between" style="gap:8px;padding:6px 0"><div style="min-width:0"><b>${esc(i.name)}</b><div class="muted" style="font-size:12px">${esc(i.text)}</div><div style="font-size:12px">${i.cost} cap. · ${fmt(i.funds)} M€ · pauză ${i.cooldown} zile${why ? ` · ${why}` : ""}</div></div><button class="btn2" data-do="instrument" data-id="${i.id}" ${ok ? "" : "disabled"}>Folosește</button></div>`;
+    })
+    .join("");
+  return section("Instrumente mari", `<div>${cards}</div>`, { sub: "Capitalul politic acumulat se cheltuiește aici: efecte mai mari decât o campanie, dar mai rare." });
+}
+
 export function votesView(S) {
   const p = P(S);
   const open = p.bills.map((b) => voteCard(S, b)).join("");
@@ -185,6 +201,7 @@ export function votesView(S) {
     : `<p class="hint">Niciun vot încă.</p>`;
   return `${presView(S)}
     ${courtView(S)}
+    ${instrumentsView(S)}
     ${section("În dezbatere", open || `<p class="hint">Niciun vot programat. Poți depune o lege din tabul „Legi”, iar partidele AI depun și ele în fiecare lună.</p>`, { sub: "Fiecare lege și fiecare moțiune se votează în plen. Partidele votează după programul lor, relația cu inițiatorul și înțelegerile din culise." })}
     ${section("Voturi recente", done)}`;
 }

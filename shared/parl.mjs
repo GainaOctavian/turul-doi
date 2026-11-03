@@ -773,6 +773,39 @@ export function answerOffer(state, data, partyId, offerId, accept) {
   return { ok: true, message: `Ai primit ${offer.money} M€ și ${offer.capital} capital politic. Votezi pentru.` };
 }
 
+// Big instruments: a party with a lot of political capital can spend it on something large.
+// Each has a capital price, a small money price, and a cooldown. The effects are real but slow.
+const INSTRUMENTS = [
+  { id: "program", name: "Program național", cost: 30, funds: 2, cooldown: 60, text: "Un document de 200 de pagini, citit de trei jurnaliști și comentat de toți." },
+  { id: "reform", name: "Reformă internă", cost: 35, funds: 1, cooldown: 90, text: "Congres, organigramă nouă și o parte din vechea gardă mutată în afara listelor." },
+  { id: "tour", name: "Turneu național", cost: 40, funds: 4, cooldown: 60, text: "Patruzeci de orașe în patruzeci de zile. Două sunt pe listă și alea." },
+];
+
+export function instrument(state, data, partyId, id) {
+  const party = state.parties[partyId];
+  const def = INSTRUMENTS.find((i) => i.id === id);
+  if (!party || !def) return { ok: false, error: "Instrument necunoscut." };
+  const key = "inst:" + partyId + ":" + id;
+  const until = state.parl.cool[key] ?? -1;
+  if (until > state.day) return { ok: false, error: "Se poate folosi din ziua " + until + "." };
+  if (party.capital < def.cost) return { ok: false, error: "Capital politic insuficient (" + def.cost + " necesar)." };
+  if (party.funds < def.funds) return { ok: false, error: "Fonduri insuficiente (" + def.funds + " M€ necesari)." };
+  party.capital = round(party.capital - def.cost, 1);
+  party.funds = round(party.funds - def.funds, 2);
+  state.parl.cool[key] = state.day + def.cooldown;
+  const ctx = { partyId, title: def.name };
+  if (id === "program") {
+    applyEffects(state, data, { party: { self: 0.03 }, segments: { tineri_urbani: 0.01, muncitori: 0.01, pensionari_rural: 0.01 } }, ctx);
+  } else if (id === "reform") {
+    party.cohesion = round(clamp((party.cohesion ?? 72) + 12, 0, 100), 1);
+    applyEffects(state, data, { party: { self: 0.02 } }, ctx);
+  } else {
+    applyEffects(state, data, { party: { self: 0.05 }, segments: { pensionari_rural: 0.015, agricultori: 0.015, pensionari_urban: 0.01 } }, ctx);
+  }
+  log(state, "parl", def.name, def.text);
+  return { ok: true, message: def.name + ": " + def.text };
+}
+
 /* ------------------------------------------------------- courtesy and pacts */
 
 const COURTESY = { capital: 4, gain: 8, days: 20 };
@@ -903,6 +936,7 @@ export function parlSnapshot(state, data) {
     catalog: data.bills.bills.map((b) => ({ source: sourceOf(data, b), id: b.id, title: b.title, text: b.text, lean: b.lean, interest: b.interest, openNow: state.parl.bills.some((x) => x.bill === b.id), passedDay: state.parl.passed[b.id] ?? null })),
     splinters: Object.fromEntries(state.partyIds.map((p) => [p, splinterOptions(state, data, p).map((t) => ({ id: t.id, name: t.name, fullName: t.fullName }))])),
     costs: COST,
+    instruments: INSTRUMENTS,
     recruit: RECRUIT,
     free: state.parl.free ?? 0,
     supportOffers: (state.parl.supportOffers ?? []).map((o) => ({ ...o, title: state.parl.bills.find((b) => b.id === o.entry)?.title ?? "" })),
@@ -923,6 +957,7 @@ export function applyParl(state, data, partyId, a = {}) {
     case "amend": return amendBill(state, data, partyId, a.id, a.option);
     case "recruit": return recruitMps(state, data, partyId, { from: a.from, count: a.count });
     case "offer": return answerOffer(state, data, partyId, a.id, a.accept === true);
+    case "instrument": return instrument(state, data, partyId, a.id);
     case "lobby": return lobby(state, data, partyId, a.id, a.target, a.how, a.against === true);
     case "merge": return offerMerge(state, data, partyId, a.target, a.mode, a.name);
     case "courtesy": return courtesy(state, data, partyId, a.target);
