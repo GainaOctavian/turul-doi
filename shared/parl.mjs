@@ -3,7 +3,7 @@
 // State lives in `state.parl`; party definitions that change (merges, splits,
 // a shifted direction) live in `state.defs`.
 import { clamp, rand, log, round, partyDef, senateMapFrom, SENATE_MAJORITY } from "./util.mjs";
-import { computePoll, applyEffects } from "./engine.mjs";
+import { computePoll, applyEffects, thresholdOf } from "./engine.mjs";
 import { fallGovernment } from "./gov.mjs";
 import { queueLaw, challengeCCR, nominate, backCandidate, presCampaign } from "./presidency.mjs";
 import { describeEffects } from "./fx-text.mjs";
@@ -82,6 +82,15 @@ function lawScore(state, data, party, entry) {
     for (const [seg, v] of Object.entries(o.interest ?? {})) interest += v * (aff[seg] ?? 0.3);
   }
   let s = interest * 1.2 - Math.abs(bill.lean - (def.lean ?? 0)) * 1.1 + 0.3;
+  // A law that moves the electoral threshold is a question about who survives the new bar:
+  // small parties want it lower, big ones want it higher.
+  const moved = bill.effects?.rules?.electoralThreshold;
+  if (moved) {
+    const share = state.parties[party]?.share ?? 0;
+    const current = state.rules?.electoralThreshold ?? 5;
+    if (moved < current) s += share < 0.12 ? 0.45 : -0.15;
+    else if (moved > current) s += share > 0.15 ? 0.45 : -0.35;
+  }
   s += ((relation(state, data, party, entry.from) - 50) / 50) * 0.6;
   if (hasPact(state, party, entry.from)) s += 0.6;
   if (inGov(state, party) && inGov(state, entry.from)) s += 0.35;
@@ -877,10 +886,11 @@ function balanceMonthly(state, data) {
     // The player's party below the threshold gains ground on its own (up to 1.8x), as outsiders do
     // when voters look for something new; campaigning and decisions do the rest.
     const share = poll.national[p] ?? 0;
-    if (share < 0.05 && state.humans.includes(p)) {
+    const threshold = thresholdOf(state);
+    if (share < threshold && state.humans.includes(p)) {
       state.parl.base ??= {};
       const base = (state.parl.base[p] ??= state.strength[p]);
-      state.strength[p] = Math.min(base * 1.8, state.strength[p] * (1 + 0.02 * (1 - share / 0.05)));
+      state.strength[p] = Math.min(base * 1.8, state.strength[p] * (1 + 0.02 * (1 - share / threshold)));
     }
   }
 }

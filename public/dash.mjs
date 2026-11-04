@@ -276,11 +276,12 @@ function budgetView(S) {
     statCard({ label: "Dobânzi plătite", value: fmt(fl.spend.interest), unit: " M€", sub: `${fmt((fl.spend.interest / fl.revTotal) * 100, 1)}% din venituri · cost ${fmt(m.rate, 1)}%` }),
   ];
   const party = S.snap.parties[S.party];
+  const pressure = Object.values(g.budget.structural ?? {}).reduce((a, b) => a + b, 0);
   return `
     <div class="grid cards">${summary.join("")}</div>
     ${section("Taxe", `<div class="grid taxes">${taxCards(S)}</div>`, { sub: "Schimbarea unei taxe se simte în venituri, în prețuri și în creștere. Fiecare cotă se poate muta o dată la 30 de zile." })}
     ${section("Cheltuieli publice", `<div class="rows">${spendRows(S)}</div>`, {
-      sub: "Țintele sunt în milioane de euro pe an; banii se aliniază treptat. Bara marchează nivelul de bază. Capital politic: <b>" + fmt(party.capital, 0) + "</b>.",
+      sub: "Țintele sunt în milioane de euro pe an; banii se aliniază treptat. Bara marchează nivelul de bază. Capital politic: <b>" + fmt(party.capital, 0) + "</b>." + (pressure > 0.000005 ? ` Îmbătrânirea populației mai adaugă <b>${fmt(pressure * 100, 2)} pp din PIB</b> peste ținte (pensii și sănătate).` : ""),
     })}
     <div class="two">
       ${section("Venituri", revenueTable(S))}

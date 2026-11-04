@@ -101,7 +101,7 @@ test("the starting cabinet matches the real one", () => {
 /* --------------------------------------------------------------- content */
 
 function checkEffects(effects, where) {
-  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget", "buff", "lasting"];
+  const known = ["segments", "convert", "county", "party", "countyParty", "funds", "segBoost", "countyBoostAll", "politician", "macro", "metric", "confidence", "sol", "budget", "buff", "lasting", "rules"];
   for (const key of Object.keys(effects ?? {})) assert.ok(known.includes(key), `${where}: unknown effect ${key}`);
   const party = (id) => assert.ok(["self", "gov", "opp"].includes(id) || partyIds.has(id), `${where}: party ${id}`);
   const segments = (obj) => Object.keys(obj ?? {}).forEach((s) => assert.ok(segmentIds.has(s), `${where}: segment ${s}`));
@@ -127,6 +127,10 @@ function checkEffects(effects, where) {
     Object.keys(spec.party ?? {}).forEach(party);
   }
   for (const k of Object.keys(effects?.budget ?? {})) assert.ok(spendLines.includes(k) || k === "other", `${where}: budget ${k}`);
+  for (const [k, v] of Object.entries(effects?.rules ?? {})) {
+    assert.equal(k, "electoralThreshold", `${where}: unknown rule ${k}`);
+    assert.ok(v >= 1 && v <= 10, `${where}: threshold ${v}`);
+  }
   if (effects?.politician) assert.ok(politicianIds.has(effects.politician.id), `${where}: politician`);
   if (effects?.buff) {
     assert.ok(effects.buff.days > 0 && effects.buff.label, `${where}: buff needs days and a label`);
@@ -699,7 +703,11 @@ test("every law cites a verified act, and no retired act is used as a source", (
   }
   assert.ok(data.bills.bills.filter((b) => b.source).length >= 35, "most bills are grounded in an act");
   assert.ok(data.bills.bills.length >= 55);
-  for (const b of data.bills.bills) assert.ok(b.title && b.text && b.effects, b.id);
+  for (const b of data.bills.bills) {
+    assert.ok(b.title && b.text && b.effects, b.id);
+    checkEffects(b.effects, b.id);
+  }
+  assert.ok(data.bills.bills.filter((b) => b.effects.rules).length >= 2, "laws can change mechanics");
 });
 
 test("negotiating against a law lowers the target's support", () => {
@@ -956,6 +964,54 @@ test("rating: a long deficit moves the rating; below the reference each notch ta
   }
 });
 
+test("the economy has a cycle and ageing pressure, so a quiet run is not a flat line", () => {
+  const state = createGame(data, { seed: 11, scenario: "2026", humans: [] });
+  const potential0 = state.macro.potential;
+  let lo = Infinity;
+  let hi = -Infinity;
+  for (let m = 0; m < 120; m += 1) {
+    tick(state, data, 30);
+    lo = Math.min(lo, state.macro.growth);
+    hi = Math.max(hi, state.macro.growth);
+  }
+  assert.ok(hi - lo > 1.2, `growth swings: ${lo.toFixed(2)}..${hi.toFixed(2)}`);
+  assert.ok(state.budget.structural.pensions > 0.005, "ageing adds pension spending");
+  assert.ok(state.macro.potential < potential0, "the potential declines with the workforce");
+  assert.ok(state.rating.idx < 6, "the 2026 deficit costs a notch or more");
+});
+
+test("rating: a calm run with falling debt earns an upgrade", () => {
+  const state = createGame(data, { seed: 3, scenario: "2026", humans: ["psd"] });
+  state.macro.debt = state.macro.gdp * 0.3;
+  state.macro.rate = 3;
+  // No AI government to spend the surplus away: the test holds the budget itself.
+  for (const m of Object.values(state.gov.ministries)) m.party = "psd";
+  for (const k of Object.keys(state.budget.ratio)) {
+    state.budget.ratio[k] *= 0.8;
+    state.budget.paid[k] *= 0.8;
+  }
+  const before = state.rating.idx;
+  tick(state, data, 30 * 34);
+  assert.ok(state.rating.idx > before, `rating ${before} -> ${state.rating.idx}`);
+});
+
+test("a law can move the electoral threshold, and the next election uses it", () => {
+  const state = newGame("2026", ["psd"]);
+  assert.equal(state.rules.electoralThreshold, 5);
+  const lower = lawEffects(data, "prag-electoral-3");
+  applyEffects(state, data, lower, { partyId: "psd" });
+  assert.equal(state.rules.electoralThreshold, 3);
+  assert.ok(describeEffects(data, lower).some((l) => /pragul electoral: 3%/.test(l)));
+  const at4 = lists(state, { reper: 0.04 }, null).find((l) => l.parties[0] === "reper");
+  assert.equal(at4.need, 0.03);
+  assert.equal(at4.passes, true, "4% enters under the 3% bar");
+  applyEffects(state, data, lawEffects(data, "prag-electoral-7"), { partyId: "psd" });
+  assert.equal(state.rules.electoralThreshold, 7);
+  const at6 = lists(state, { reper: 0.06 }, null).find((l) => l.parties[0] === "reper");
+  assert.equal(at6.passes, false, "6% misses the 7% bar");
+  assert.equal(snapshot(state, data).rules.electoralThreshold, 7, "the snapshot carries the rule");
+});
+
 test("health, energy, agriculture and security each have laws grounded in an act in force", () => {
   const by = (slug) => data.bills.bills.filter((b) => b.source?.slug === slug).length;
   assert.ok(by("legea-95-2006") >= 3, "health: screening, hospital pay and telemedicine");
@@ -1163,6 +1219,20 @@ test("events with a role go only to the government or the opposition; a choice c
   assert.deepEqual(state.decisions.map((d2) => d2.party), ["usr"], "an opposition event reaches only the opposition");
 });
 
+test("role events are plentiful and each side can answer its own", () => {
+  assert.ok(data.events.events.filter((e) => e.role === "gov").length >= 15, "government events");
+  assert.ok(data.events.events.filter((e) => e.role === "opp").length >= 12, "opposition events");
+  const state = newGame("2026", ["psd", "usr"]);
+  state.gov.coalition = ["psd"];
+  fireEvent(state, data, "d3-gov-greva-profesori");
+  assert.deepEqual(state.decisions.map((d) => d.party), ["psd"]);
+  assert.equal(decide(state, data, "psd", state.decisions[0].id, 0).ok, true);
+  state.decisions = [];
+  fireEvent(state, data, "d3-opp-buget-discurs");
+  assert.deepEqual(state.decisions.map((d) => d.party), ["usr"]);
+  assert.equal(decide(state, data, "usr", state.decisions[0].id, 1).ok, true);
+});
+
 test("a buff leaves a lasting residue when it fades, and a later debuff can take it back", () => {
   const state = newGame("2026", ["usr"]);
   state.buffs = [{ id: 1, label: "Test", parties: ["usr"], factor: 1.02, from: state.day, until: state.day + 3 }];
@@ -1178,13 +1248,16 @@ test("a buff leaves a lasting residue when it fades, and a later debuff can take
 
 test("the poll history grows monthly with each party's share and the causes behind the month", () => {
   const state = newGame("2026", ["usr"]);
+  const startIds = [...state.partyIds];
   tick(state, data, 29);
   fireEvent(state, data, "d2-inundatii");
   tick(state, data, 2);
   const h = state.pollHist;
   assert.ok(h, "the history exists after a month");
   assert.equal(h.months.length, 1, "one entry at the month's end");
-  for (const p of state.partyIds) assert.equal(h.s[p].length, 1, p + " has one value");
+  for (const p of startIds) assert.equal(h.s[p].length, 1, p + " has one value");
+  // A party born after the month's record starts its series at the next month.
+  for (const p of state.partyIds) assert.ok((h.s[p]?.length ?? 0) <= 1, p + " has at most one value");
   assert.ok(h.months[0].causes.some((c) => c.text === "Inundații în Moldova"), "the flood is named as a cause");
   assert.ok(snapshot(state, data).pollHist.months.length === 1, "the snapshot carries it");
 });
@@ -1295,6 +1368,7 @@ test("the ctl drives scenarios, the budget, policies and the world", () => {
   assert.match(ctl.run("play psd"), /playing psd/);
   assert.match(ctl.run("play aur"), /^error/);
   assert.match(ctl.run("gov"), /Grindeanu/);
+  assert.match(ctl.run("rules"), /prag electoral 5%/);
   assert.match(ctl.run("budget"), /Total venituri/);
   const gdp = ctl.room.state.macro.gdp;
   assert.match(ctl.run(`spend health ${Math.round(ctl.room.state.budget.ratio.health * gdp * 1.1)}`), /^ok/);

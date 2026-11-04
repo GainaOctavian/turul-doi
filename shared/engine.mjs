@@ -185,6 +185,8 @@ export function createGame(data, opts = {}) {
     buffs: [],
     nextBuff: 1,
     lasting: {},
+    // Rules that a law can change during the game, not constants of the simulation.
+    rules: { electoralThreshold: 5 },
     nextDecision: 1,
     log: [],
   };
@@ -284,14 +286,17 @@ export function computePoll(state, data) {
   return { national, counties, seats };
 }
 
-// Every party runs its own list. It gets in with 5% nationally, or with 20% in four counties.
-const THRESHOLD = 0.05;
+// Every party runs its own list. It gets in with 5% nationally (a law can move the bar),
+// or with 20% in four counties.
+export const DEFAULT_THRESHOLD = 5;
+export const thresholdOf = (state) => (state.rules?.electoralThreshold ?? DEFAULT_THRESHOLD) / 100;
 
 export function lists(state, national, counties) {
+  const threshold = thresholdOf(state);
   return state.partyIds.map((id) => {
     const share = national[id] ?? 0;
     const strongCounties = counties ? Object.values(counties).filter((c) => (c[id] ?? 0) >= 0.2).length : 0;
-    return { parties: [id], share, need: THRESHOLD, strongCounties, passes: share >= THRESHOLD || strongCounties >= 4 };
+    return { parties: [id], share, need: threshold, strongCounties, passes: share >= threshold || strongCounties >= 4 };
   });
 }
 
@@ -479,6 +484,9 @@ function pickEvent(state, data) {
     .filter((e) => !e.scenarios || e.scenarios.includes(state.scenario))
     .filter((e) => !e.months || e.months.includes(Number(state.date.slice(5, 7))))
     .filter((e) => !e.after || recentlyFired(state, e.after))
+    // Role events only fire when somebody at the table is actually in that role; otherwise
+    // the news would arrive with nobody to answer it.
+    .filter((e) => !e.role || state.humans.some((p) => (e.role === "gov" ? inCoalition(state, p) : !inCoalition(state, p))))
     .map((e) => ({ e, w: (e.weight ?? 1) * (e.after ? 4 : 1) }));
   // News does not repeat until everything that fits the moment has been told once.
   const fresh = pool.filter((x) => state.fired[x.e.id] == null);
@@ -1122,6 +1130,7 @@ export function snapshot(state, data, opts = {}) {
     resultUntil: state.resultUntil,
     partyIds: state.partyIds,
     leaders: state.leaders,
+    rules: state.rules,
     minoritySeats: state.config.minoritySeats,
     counties: state.counties,
     parties,

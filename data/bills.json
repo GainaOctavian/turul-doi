@@ -1516,6 +1516,46 @@
         "slug": "legea-203-2015",
         "note": "Carta albă, supusă Parlamentului (art. 6)"
       }
+    },
+    {
+      "id": "prag-electoral-3",
+      "title": "Pragul electoral scade la 3%",
+      "text": "Pragul național pentru intrarea în Parlament scade de la 5% la 3%. Partidele mici intră mai ușor, iar cele mari pierd un avantaj. Pragul alternativ de 20% în patru județe rămâne.",
+      "lean": 0,
+      "interest": {
+        "tineri_urbani": 0.3,
+        "diaspora": 0.2,
+        "pensionari_rural": -0.2
+      },
+      "effects": {
+        "rules": {
+          "electoralThreshold": 3
+        }
+      },
+      "source": {
+        "slug": "legea-208-2015",
+        "note": "pragul electoral de 5%"
+      }
+    },
+    {
+      "id": "prag-electoral-7",
+      "title": "Pragul electoral urcă la 7%",
+      "text": "Pragul național urcă de la 5% la 7%. Susținătorii vorbesc despre stabilitate și guverne mai coerente; criticii, despre eliminarea reprezentării partidelor mici.",
+      "lean": 0,
+      "interest": {
+        "pensionari_rural": 0.2,
+        "muncitori": 0.2,
+        "tineri_urbani": -0.3
+      },
+      "effects": {
+        "rules": {
+          "electoralThreshold": 7
+        }
+      },
+      "source": {
+        "slug": "legea-208-2015",
+        "note": "pragul electoral de 5%"
+      }
     }
   ]
 }

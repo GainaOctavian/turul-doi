@@ -52,14 +52,15 @@ mandate, `startPoll` sub 5% (2016: PRU 2,79%, PRM 1,04%, PER ~0,9%; 2024: SENS 2
 Forța Dreptei 2,05%, PSDU 1,92%, REPER 1,24%, DREPT 1,16%) și se calibrează ca celelalte.
 `leaders[id]` poate fi `null` (conducere colectivă) dacă nu există un lider verificat.
 
-Fiecare partid candidează singur: 5% național sau 20% în patru județe (`snapshot.lists`).
+Fiecare partid candidează singur: pragul național în vigoare (5% la început, mutabil prin lege) sau 20% în patru județe (`snapshot.lists`).
 Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi Parlament).
 
 ## Parlament (`bills.json`, `splinters.json`, `shared/parl.mjs`)
 
 - `bills.json`: legi cu `lean` (− piață, + intervenționism), `interest` (segment → −1..1) și
-  `effects` (aceeași sintaxă ca evenimentele: `sol`, `metric`, `macro`, `budget`, `party`, `funds`).
-  `party.self` e inițiatorul.
+  `effects` (aceeași sintaxă ca evenimentele: `sol`, `metric`, `macro`, `budget`, `party`, `funds`, `rules`).
+  `party.self` e inițiatorul. `rules` schimbă o regulă a jocului la promulgare (`state.rules`), acum
+  pragul electoral (`electoralThreshold`, în procente): `prag-electoral-3` și `prag-electoral-7`.
 - Fiecare lege poate avea `source: {slug, note}` către `law-sources.json`. Unelte: `tools/law.mjs`,
   `tools/bills-law.mjs` (vezi `CLAUDE.md`, secțiunea Legislație).
 - Culisele merg și **împotriva** unei legi (`lobby ... against`): `deals` devine negativ pentru partidul țintă.
@@ -78,11 +79,14 @@ Nu există alianțe electorale cu prag; în schimb partidele fuzionează (vezi P
 - Relații: `courtesy` (4 capital, +8 relație, cooldown 20 de zile pe pereche) și pactul de
   colaborare (`merge` cu `mode: "pact"`, 10 capital, relație 55+): partenerii își votează mai ușor
   legile, relația crește lunar, iar fuziunea devine mai probabilă. Pactul se rupe dacă relația scade sub 45.
-- Economie: `government.json` `rating`: `reference` (BB-), `graceMonths`, `badMonths`, și `belowReference` (`strainPerNotch`, `graceMonthsPerNotch`). Sub treapta de referință fiecare coborâre cere mai multă presiune și un răgaz mai lung; nimic nu e exclus, iar o criză reală poate duce ratingul mai jos.
+- Economie: `government.json` `rating`: `reference` (BB-), `graceMonths`, `badMonths`, `upgrade`
+  (`months`, `strain`, `debtRise`) și `belowReference` (`strainPerNotch`, `graceMonthsPerNotch`).
+  Sub treapta de referință fiecare coborâre cere mai multă presiune și un răgaz mai lung; nimic nu e exclus, iar o criză reală poate duce ratingul mai jos. O treaptă în sus cere `upgrade.months` luni cu presiune sub `upgrade.strain` și o datorie care nu urcă mai mult de `upgrade.debtRise` puncte în acel interval.
+- Ciclul economic: `macro.cycle` e un AR(1) propriu (șocuri gaussiene, revenire spre zero), adăugat la ținta de creștere; `aging.potentialPerYear` scade potențialul lunar. `structural.pensions` și `structural.health` adaugă cheltuieli peste ținta jucătorului în fiecare lună (plafon `structural.cap`). Ambele se opresc cu `data.config.balance = false`.
 - Senat: 136 de locuri, împărțite proporțional cu locurile din Cameră (`senateMapFrom`, metoda celui mai mare rest, în `shared/util.mjs`); se calculează la cerere, deci se adaptează la uniri și divizări. Guvernul are nevoie de majoritate în ambele camere (`majorityOk`, `confidenceStep`). Legile și moțiunile trec de Senat (`senateTally` pe intrare). `config.totalSeats` = 331 (Camera, cu minorități).
 - Istoric sondaje: `state.pollHist` = `{ months: [{ day, date, causes: [{ text, party, net }] }], s: { partid: [procent lunar] } }`, notat în `recordPoll` la fiecare 30 de zile (cel mult 60 de luni). Un partid nou are o serie mai scurtă; UI-ul aliniază seriile la lunile de la final.
 - Efecte permanente: `state.lasting[partid]` (fracție, ±0,15 maxim) se adună la popularitate în `moodOf`. Un buff care expiră lasă jumătate din efect (`BUFF_RESIDUE`), iar un efect `lasting: { self: -x }` îl poate lua înapoi. Se afișează în „Efecte active”.
-- Evenimente: un eveniment poate avea `role` (`"gov"` sau `"opp"`) ca decizia să ajungă doar la coaliție sau doar la opoziție. O alegere poate avea `cost` (M€) și `capital`. Efectul `buff: { days, label, mood: { self|gov|opp|id: factor } }` adaugă o modificare temporară a popularității (`state.buffs`, factor între 0,9 și 1,1) care expiră singură. `shared/fx-text.mjs` (`describeEffects`) transformă orice `effects` în text (▲/▼), folosit în știri, decizii, jurnal, ctl și pentru legi (catalog, proiecte în dezbatere cu amendamentele adoptate, lista de la Cotroceni).
+- Evenimente: un eveniment poate avea `role` (`"gov"` sau `"opp"`) ca decizia să ajungă doar la coaliție sau doar la opoziție; `pickEvent` nu alege un astfel de eveniment decât dacă există un jucător uman în rolul respectiv. O alegere poate avea `cost` (M€) și `capital`. Efectul `buff: { days, label, mood: { self|gov|opp|id: factor } }` adaugă o modificare temporară a popularității (`state.buffs`, factor între 0,9 și 1,1) care expiră singură. `shared/fx-text.mjs` (`describeEffects`) transformă orice `effects` în text (▲/▼), inclusiv `rules` („pragul electoral: 3%”), folosit în știri, decizii, jurnal, ctl și pentru legi (catalog, proiecte în dezbatere cu amendamentele adoptate, lista de la Cotroceni).
 - Legi pe domenii: sănătate (`legea-95-2006`), energie (`legea-123-2012`, `legea-121-2014`), agricultură (`legea-17-2014`, `legea-138-2004`) și securitate (`legea-203-2015`, `legea-270-2015`); fiecare are `source.slug` în `data/law-sources.json` și articolul în `note`.
 - Campanie prezidențială: `state.pres.boost[partid]` (−0,3…+0,5) înmulțește scorul candidatului în `presShares`; se schimbă prin `presCampaign` (`rally`, `debate`, `attack`, cu pauze în `state.parl.cool["pc:partid:tip"]`) și se resetează după alegeri. `presSnapshot.projected` = estimarea primului tur.
 - Oferte: `supportOffers` au `want` (`yes` sau `no`); pentru o moțiune, inițiatorul cere „da”, iar partidul premierului (dacă e AI) cere „nu”; acceptarea leagă votul (`entry.pledged` pentru da, `entry.pledgedNo` pentru nu). Ofertele de coaliție (`state.offers`) pot avea `money` și `capital`, plătite la acceptare.
@@ -140,7 +144,7 @@ Valorile sunt orientative. `events` sunt evenimente globale sau pe țară, cu po
     "party": { "gov": -0.02, "usr": 0.02 },
     "macro": { "growth": -0.2, "inflation": 0.3 }, "metric": { "cpi": -1 },
     "confidence": -6, "sol": { "bugetari": -3 }, "budget": { "admin": 0.2 },
-    "funds": { "psd": -1.2 } } }
+    "funds": { "psd": -1.2 }, "rules": { "electoralThreshold": 3 } } }
 ```
 
 - `scenarios`, `months`: unde și când poate apărea.
@@ -149,17 +153,19 @@ Valorile sunt orientative. `events` sunt evenimente globale sau pe țară, cu po
   `hint`, `text`, `cost` (M€) și `effects`; `self` = partidul care alege.
 - În efecte, `gov`/`opp`/`self` înseamnă partidele de la guvernare, celelalte, respectiv jucătorul.
 - `macro` adaugă șocuri (creștere, inflație, șomaj) care se estompează; `metric` mută direct un
-  indicator; `sol` dă un șoc temporar standardului de viață; `budget` schimbă permanent o linie.
+  indicator; `sol` dă un șoc temporar standardului de viață; `budget` schimbă permanent o linie;
+  `rules` schimbă o regulă a jocului (pragul electoral).
 
 ## Starea jocului
 
 `createGame(data, { scenario, seed, humans })` produce o stare serializabilă:
 
 ```
-scenario, day, date, speed (0 = pauză), electionDay, partyIds, leaders, strength, rng,
-counties{ segments, boost }, parties{ funds, capital, seats, gov, segBoost, cooldown },
+scenario, day, date, speed (0 = pauză), electionDay, partyIds, leaders, rules{ electoralThreshold },
+strength, rng, counties{ segments, boost }, parties{ funds, capital, seats, gov, segBoost, cooldown },
 politicians, mood, govMult, coalitions[], offers[], negotiation, decisions[], fired{}, log[],
-macro{ gdp, growth, inflation, unemployment, debt, rate… }, budget{ tax, ratio, paid, flows },
+macro{ gdp, growth, potential, cycle, inflation, unemployment, debt, rate… },
+budget{ tax, ratio, paid, structural{ pensions, health }, flows },
 metrics{ health, education, infra, safety, cpi, arope, lifeExp, motorwayKm… },
 sol, solExpect, sat, comp, gov{ pm, coalition, support, ministries, confidence },
 policies{}, proposals[], rating{}, hist{}, world{ cycle, energy, ecb, countries }

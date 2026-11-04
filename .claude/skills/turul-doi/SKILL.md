@@ -43,7 +43,8 @@ game is not running with the ctl. If port 4173 is busy, stop the old server firs
 | `tick <days>`, `month [n]` | advance the clock (month = 30 days) |
 | `election` | run an election now |
 | `coalition <from> <to>`, `accept <to> <from>` | coalition offers during negotiations |
-| `lists` | electoral lists: share, threshold (5%), counties above 20%, whether they get in |
+| `lists` | electoral lists: share, the current electoral threshold, counties above 20%, whether they get in |
+| `rules` | the rules a law can move, now just the electoral threshold (starts at 5%) |
 | `parl`, `laws` | open votes with each party's stance; catalogue of laws |
 | `bill <law>`, `vote <n> <yes\|no\|abstain>` | file a law (any party with seats, also in opposition); vote |
 | `lobby <n> <party> <favor\|money\|swap>` | backroom deals on an open vote; price falls with relations |
@@ -84,5 +85,12 @@ Batch from a file: `npm run ctl -- script.txt` (lines, `#` comments). From stdin
   browser check. Use `?scenario=2017&party=psd&day=40` to start a solo game on a given scenario
   and day, and `&event=<id>` to fire one event at the start.
 - `node tools/sim.mjs <scenario> <years>` runs an AI-only game and prints macro numbers; use it
-  after changing the economy model.
+  after changing the economy model. The economy has its own cycle, ageing pressure on pensions
+  and health, and a slowly falling potential; a rating upgrade needs a long calm with falling
+  debt, so a six-year run should move the rating both ways.
+- Events with `role` (`gov`/`opp`) only fire when a human plays that side, so to test one use
+  `scenario` + `play <party>` in the right role, then `event <id>` (e.g. `d3-gov-greva-profesori`
+  or `d3-opp-buget-discurs`).
+- The electoral threshold is state, not a constant: pass `prag-electoral-3` or `prag-electoral-7`
+  with `bill`, advance a month, then `rules` and `lists` to see the new bar in effect.
 - Tests: `npm test` (engine, data integrity, scenarios, government, ctl).

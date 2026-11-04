@@ -220,6 +220,7 @@ export function votesView(S) {
 export function lawsView(S) {
   const p = P(S);
   const party = me(S);
+  const threshold = S.snap.rules?.electoralThreshold ?? 5;
   const cool = p.cool[`bill:${S.party}`] ?? -1;
   const open = p.bills.find((b) => b.from === S.party);
   const hasSeats = party.seats > 0;
@@ -243,7 +244,7 @@ export function lawsView(S) {
     })
     .join("");
   return `${motion ? section("Moțiune", motion) : ""}
-    ${section("Legi pe care le poți depune", rows, { sub: "Orice partid cu mandate poate depune legi, la guvernare sau în opoziție. O lege adoptată își produce efectele, iar inițiatorul primește capital politic." })}`;
+    ${section("Legi pe care le poți depune", rows, { sub: `Orice partid cu mandate poate depune legi, la guvernare sau în opoziție. O lege adoptată își produce efectele, iar inițiatorul primește capital politic. Prag electoral acum: ${threshold}%.` })}`;
 }
 
 /* -------------------------------------------------------------- relations */

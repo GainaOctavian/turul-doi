@@ -50,7 +50,8 @@ export const HELP = `turul-doi ctl
   tick <zile>               avansează ceasul; month [n] = 30 de zile
   election                  alegeri acum
   coalition <de> <catre>    ofertă de coaliție; accept <catre> <de>
-  lists                     listele la alegeri: prag 5%, procent, județe peste 20%
+  lists                     listele la alegeri: prag electoral, procent, județe peste 20%
+  rules                     regulile jucabile acum (pragul electoral)
   parl                      Parlamentul: legi în dezbatere, voturi, relații
   laws                      catalogul de legi pe care le poți depune
   bill <lege>               depune o lege (și opoziția poate)
@@ -129,6 +130,11 @@ export function createCtl(data, opts = {}) {
           `rating ${g.rating.level} (${g.rating.outlook})  încordare ${g.rating.strain}`,
           `alegeri în ${Math.max(0, snap.electionDay - snap.day)} zile`,
         ].join("\n");
+      }
+
+      case "rules": {
+        const rules = snapshot(state, data).rules ?? {};
+        return `prag electoral ${rules.electoralThreshold ?? 5}% (pe țară, sau 20% în patru județe)`;
       }
 
       case "parties": {

@@ -1,7 +1,7 @@
 // Governing the country: budget (in million euro), taxes, public services,
 // standard of living per voter segment, the cabinet, and the people who run it.
 // Pure functions over the shared game state, like the engine.
-import { clamp, round, rand, log, partyDef, senateOf, SENATE_MAJORITY } from "./util.mjs";
+import { clamp, round, rand, gauss, log, partyDef, senateOf, SENATE_MAJORITY } from "./util.mjs";
 import { fileMotion } from "./parl.mjs";
 
 export const LINES = ["pensions", "social", "health", "education", "defense", "order", "infra", "agri", "admin"];
@@ -39,6 +39,8 @@ export function initGov(state, data, sc) {
     debt: (eco.gdp * eco.debtPct) / 100, rate: eco.rate, rateMarg: eco.rate, deficitPct: 0,
     gdpPps: eco.gdpPps, realGdpIdx: 100, priceIdx: 100, wageIdx: 100, pensionerIdx: 100, pensionIdx: 100,
     shock: eco.drag ?? 0, infShock: 0, uShock: 0, vatImpulse: 0,
+    // Where the economy stands in its own cycle: a boom starts positive, a slowdown negative.
+    cycle: clamp((eco.growth - eco.potential) * 0.3, -1.5, 1.5),
     u0: eco.unemployment, infl0: eco.inflation, rate0: eco.rate,
     emigration: eco.emigration, e0: eco.emigration, spreadBase: eco.spreadBase, euTrend: eco.euTrend ?? 0,
   };
@@ -50,6 +52,8 @@ export function initGov(state, data, sc) {
   state.budget = {
     tax: { ...eco.tax }, tax0: { ...eco.tax },
     ratio, base: { ...ratio }, paid: { ...ratio }, rev0, cool: {}, flows: null,
+    // Spending that grows on its own (an ageing population) and sits on top of the player's target.
+    structural: { pensions: 0, health: 0 },
   };
 
   state.metrics = { ...eco.metrics, emigration: eco.emigration };
@@ -312,7 +316,18 @@ export function govMonthly(state, data) {
   const eu = w.countries.eu.v;
 
   // --- the books
-  for (const k of ALL) b.paid[k] += 0.15 * (b.ratio[k] + (agg.spend[k] ?? 0) - b.paid[k]);
+  // An ageing population makes pensions and health dearer every year, outside the
+  // player's own target. The only answer is to aim lower elsewhere or raise revenue.
+  const st = data.government.structural;
+  if (st && data.config.balance !== false) {
+    const cap = st.cap ?? 0.05;
+    b.structural.pensions = Math.min(cap, (b.structural.pensions ?? 0) + (st.pensions ?? 0) / 12);
+    b.structural.health = Math.min(cap, (b.structural.health ?? 0) + (st.health ?? 0) / 12);
+  }
+  for (const k of ALL) {
+    const target = b.ratio[k] + (agg.spend[k] ?? 0) + (b.structural[k] ?? 0);
+    b.paid[k] += 0.15 * (target - b.paid[k]);
+  }
   const rev = revenue(state, data);
   const spend = spendFlows(state);
   const flows = makeFlows(state, rev, spend);
@@ -331,8 +346,15 @@ export function govMonthly(state, data) {
   for (const k of ALL) spendRel += b.paid[k] - b.base[k];
   let taxDrag = 0;
   for (const t of data.government.taxes) taxDrag -= t.growthDrag * (b.tax[t.id] - b.tax0[t.id]);
+  // The workforce shrinks and the economy has a cycle of its own: neither waits for the player.
+  const aging = data.government.aging;
+  if (aging && data.config.balance !== false) {
+    m.potential = Math.max(1.2, m.potential - (aging.potentialPerYear ?? 0) / 12);
+  }
+  const cycle = data.config.balance === false ? 0 : m.cycle;
   const gTarget =
     m.potential +
+    1.1 * cycle +
     0.35 * spendRel * 100 +
     taxDrag +
     0.012 * (x.education - state.met0.education) +
@@ -347,13 +369,14 @@ export function govMonthly(state, data) {
     0.5 * Math.max(0, m.growth - m.potential - 1);
   m.growth += 0.18 * (gTarget - m.growth);
   m.growth = clamp(m.growth, -8, 10);
+  m.cycle = clamp(0.95 * m.cycle + 0.22 * gauss(state), -2.5, 2.5);
 
   const iTarget =
     2.8 + 0.28 * (m.growth - m.potential) + 0.012 * (w.energy - 100) + m.vatImpulse + m.infShock + agg.inflation + 0.35 * (eu.inflation - 2.0);
   m.inflation += 0.13 * (iTarget - m.inflation);
   m.inflation = clamp(m.inflation, -1.5, 25);
 
-  const uTarget = m.u0 - 0.3 * (m.growth - m.potential) + m.uShock + agg.unemployment - 0.01 * (m.emigration - m.e0);
+  const uTarget = m.u0 - 0.4 * (m.growth - m.potential) + m.uShock + agg.unemployment - 0.01 * (m.emigration - m.e0);
   m.unemployment += 0.07 * (uTarget - m.unemployment);
   m.unemployment = clamp(m.unemployment, 2, 25);
 
@@ -430,27 +453,35 @@ function stepRating(state, data) {
   const cfg = data.government.rating;
   const levels = cfg.levels;
   const ref = Math.max(0, levels.indexOf(cfg.reference ?? levels[0]));
+  const debtPct = (state.macro.debt / state.macro.gdp) * 100;
   // Below the reference level every notch needs more pressure and a longer wait; nothing is excluded.
   const notches = (idx) => Math.max(0, ref - idx);
   const threshold = 2.4 + cfg.belowReference.strainPerNotch * notches(r.idx);
+  const up = cfg.upgrade ?? { months: 18, strain: 0.5, debtRise: 0.5 };
   if (r.strain > threshold) {
     r.bad += 1;
     r.good = 0;
-  } else if (r.strain < 0.4) {
+    r.goodDebt = null;
+  } else if (r.strain < up.strain && debtPct <= (r.goodDebt ?? Infinity) + up.debtRise) {
+    // An upgrade needs a long calm and a debt that is not running away, not just a good month.
+    if (r.good === 0 || r.goodDebt == null) r.goodDebt = debtPct;
+    r.goodDebt = Math.min(r.goodDebt, debtPct);
     r.good += 1;
     r.bad = 0;
   } else {
     r.bad = Math.max(0, r.bad - 1);
     r.good = Math.max(0, r.good - 1);
+    r.goodDebt = null;
   }
   const was = r.idx;
   if (r.bad >= cfg.badMonths && r.idx > 0) {
     r.idx -= 1;
     // Agencies wait before cutting again: a grace period that grows with each notch below the reference.
     r.bad = -(cfg.graceMonths + cfg.belowReference.graceMonthsPerNotch * notches(r.idx));
-  } else if (r.good >= 24 && r.idx < levels.length - 1) {
+  } else if (r.good >= up.months && r.idx < levels.length - 1) {
     r.idx += 1;
     r.good = 0;
+    r.goodDebt = null;
   }
   r.outlook = r.strain > 2.2 ? "negativ" : r.strain < 1.0 ? "pozitiv" : "stabil";
   if (r.idx !== was) {
@@ -1019,6 +1050,11 @@ export function applyGovEffects(state, data, effects, ctx = {}) {
     }
   }
   if (effects.confidence) g.confidence = clamp(g.confidence + effects.confidence, 0, 100);
+  // Laws can change the rules of the game itself (the electoral threshold, for now).
+  for (const [k, v] of Object.entries(effects.rules ?? {})) {
+    state.rules ??= {};
+    state.rules[k] = v;
+  }
   void ctx;
 }
 
@@ -1050,6 +1086,7 @@ export function govSnapshot(state, data, opts = {}) {
       realWage: r((m.wageIdx / m.priceIdx) * 100, 1), pensionIdx: r(m.pensionIdx, 1),
       debt: r(m.debt, 0), debtPct: r((m.debt / m.gdp) * 100, 1), deficitPct: r(m.deficitPct, 2),
       rate: r(m.rate, 2), rateMarg: r(m.rateMarg, 2), gdpPps: r(m.gdpPps, 1), emigration: r(m.emigration, 0),
+      cycle: r(m.cycle, 2),
     },
     rating: {
       level: data.government.rating.levels[state.rating.idx],
@@ -1059,7 +1096,7 @@ export function govSnapshot(state, data, opts = {}) {
       investmentGrade: state.rating.idx >= data.government.rating.investmentGrade,
     },
     budget: {
-      tax: b.tax, tax0: b.tax0, ratio: b.ratio, base: b.base, paid: b.paid,
+      tax: b.tax, tax0: b.tax0, ratio: b.ratio, base: b.base, paid: b.paid, structural: b.structural,
       flows: b.flows, policy: state.agg.spend, policyRev: state.agg.rev, cool: b.cool,
     },
     metrics: Object.fromEntries(Object.entries(x).map(([k, v]) => [k, r(v, k === "motorwayKm" ? 0 : 1)])),

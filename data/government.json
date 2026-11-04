@@ -642,10 +642,26 @@
     "reference": "BB-",
     "graceMonths": 10,
     "badMonths": 4,
+    "upgrade": {
+      "months": 18,
+      "strain": 0.5,
+      "debtRise": 0.5,
+      "note": "O treaptă în sus cere 18 luni cu presiune mică și o datorie care nu fuge înainte."
+    },
     "belowReference": {
       "strainPerNotch": 0.25,
       "graceMonthsPerNotch": 4,
       "note": "Sub treapta de referință, fiecare treaptă cere o presiune mai mare și un răgaz mai lung. Coborârea rămâne posibilă, dar devine mai greu și mai previzibil."
     }
+  },
+  "structural": {
+    "pensions": 0.0018,
+    "health": 0.0009,
+    "cap": 0.05,
+    "note": "Îmbătrânirea populației: pensiile cresc cu 0,18 pp din PIB pe an, sănătatea cu 0,09 pp, peste ținta jucătorului, până la 5 pp fiecare."
+  },
+  "aging": {
+    "potentialPerYear": 0.04,
+    "note": "Forța de muncă se micșorează, deci potențialul de creștere scade cu 0,04 pp pe an."
   }
 }

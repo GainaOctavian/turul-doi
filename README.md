@@ -56,17 +56,23 @@ Reguli în pași mari:
   o controlează, deci partidului care îl conduce. Ceilalți din guvern trimit o propunere.
   Opoziția depune moțiuni. Partidul premierului poate face remanieri.
 - **Piețe**: deficitul și datoria mută ratingul (BBB- e ultima treaptă investițională) și
-  costul împrumuturilor.
+  costul împrumuturilor. O treaptă în sus cere 18 luni cu presiune mică și fără datorie în
+  creștere; sub BB- fiecare coborâre cere mai mult și vine mai rar.
+- **Economia nu stă pe loc**: are un ciclu propriu, îmbătrânirea populației adaugă bani la pensii
+  și sănătate peste ținta ta, iar potențialul de creștere scade încet. Un deficit mare nu se
+  rezolvă singur.
 - **Standardul de viață (SoL)**: fiecare segment își măsoară viața (salarii, pensii, prețuri,
   servicii, taxe…) față de așteptări. Peste așteptări, câștigă partidele de la guvernare.
 - **Campanie și decizii**: acțiuni de campanie în județe, decizii cu răspuns în câteva zile,
-  știri cu urmări și efecte locale (peste 290, fără repetări până se termină toate cele potrivite momentului).
-- **Alegeri**: la data fixă (la 4 ani), prin D'Hondt național cu prag de 5%; după alegeri,
-  negocieri de coaliție și ministere împărțite proporțional.
+  știri cu urmări și efecte locale (342, fără repetări până se termină toate cele potrivite
+  momentului). O parte sunt doar pentru guvern sau doar pentru opoziție.
+- **Alegeri**: la data fixă (la 4 ani), prin D'Hondt național cu pragul în vigoare (5% la
+  început; o lege îl poate coborî la 3% sau urca la 7%); după alegeri, negocieri de coaliție și
+  ministere împărțite proporțional.
 - **Partide mici**: pe lângă partidele din Parlament poți juca formațiuni care au candidat și au
   rămas sub prag (2017: PRU, PRM, PER; 2026: SENS, Forța Dreptei, REPER, PSD Unit, DREPT; rezultatele
   din 2016 și 2024 sunt reale). Fără mandate, jocul tău e drumul spre Parlament: campanie, decizii și
-  fuziuni. Fiecare partid candidează singur: 5% pe țară sau 20% în patru județe. Unde nu s-a găsit
+  fuziuni. Fiecare partid candidează singur: pragul în vigoare pe țară sau 20% în patru județe. Unde nu s-a găsit
   un lider verificat, partidul apare cu „conducere colectivă”.
 - **Parlament**: orice partid cu mandate poate depune o lege (8 capital politic), la guvernare
   sau în opoziție, și votează legile altora. Votul din plen depinde de programul partidului, de
@@ -114,6 +120,7 @@ npm run ctl -- "tax vat 21"
 npm run ctl -- "policy indexare-pensii"
 npm run ctl -- "month 6"
 npm run ctl -- metrics
+npm run ctl -- rules
 npm run ctl -- "world growth"
 npm run ctl -- help
 ```
@@ -127,13 +134,13 @@ Tot conținutul stă în `data/*.json` și se poate edita fără să atingi codu
 | Fișier | Ce conține |
 | --- | --- |
 | `scenarios.json` | scenariile 2017 și 2026: guvern, parlament, economie, buget de start |
-| `government.json` | ministere, linii de buget, taxe, indicatori, ponderile SoL, rating |
+| `government.json` | ministere, linii de buget, taxe, indicatori, ponderile SoL, rating, îmbătrânire |
 | `policies.json` | 31 de politici cu efecte pe buget, segmente și indicatori |
 | `countries.json` | UE și nouă țări (valori de start, evenimente externe) |
 | `parties.json` | 17 partide, parlamentare și extraparlamentare: afinități, bias pe județe, `lean`, `oppGain` |
 | `politicians.json` | 65 de profiluri cu fapte verificabile (inclusiv cazuri publice cunoscute), pe scenarii, cu portret |
-| `events.json` | ~290 de evenimente: naționale, sezoniere, pe județe, lanțuri, decizii (`tools/news-pool.mjs` a generat mare parte) |
-| `bills.json` | 57 de legi care pot fi depuse și votate (cele mai multe cu act-sursă verificat): poziție, categorii afectate, efecte |
+| `events.json` | 342 de evenimente: naționale, sezoniere, pe județe, lanțuri, decizii, unele doar pentru guvern sau opoziție (`tools/news-pool.mjs` a generat mare parte) |
+| `bills.json` | 67 de legi care pot fi depuse și votate (cele mai multe cu act-sursă verificat): poziție, categorii afectate, efecte; două mută pragul electoral |
 | `law-sources.json` | actele reale citate de legi (cu link la legislatie.just.ro) și actele abrogate care nu trebuie folosite |
 | `splinters.json` | modele istorice de grupări care se desprind (PDL, PLUS, UNPR, PRO, PC) |
 | `segments.json`, `counties.json`, `config.json` | segmente de votanți, județe, parametri |
